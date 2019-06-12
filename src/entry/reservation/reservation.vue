@@ -41,13 +41,6 @@
 	  		<div class="hero-list-item-right">
 	  			<h4 class="weui-media-box__title">25元(供参考)</h4>
 	  		</div>
-	  		<!--<div style="position: absolute;width: 50px;right: 0px;">
-	  			<el-collapse v-model="activeNames" @change="handleChange">
-				  <el-collapse-item title="更多" name="1">
-				    
-				  </el-collapse-item>
-				</el-collapse>
-	  		</div>-->
 	  	</div>
 	    
 	    <el-collapse v-model="activeNames" @change="handleChange">
@@ -221,7 +214,7 @@
 		margin-top: 5px;
 	}
 	.weui-panel__hd{
-		height: 23px;
+		height: 30px;
 		font-size: 18px;
 	}
 	.hero-panel-img{
