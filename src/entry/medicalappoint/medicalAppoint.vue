@@ -8,11 +8,11 @@
             <img
               class="weui-media-box__thumb1"
               style="width:80%;display: block;"
-              src="../../../images/bk1.png"
+              src="../../../static/images/bk1.png"
             >
           </div>
           <div class="weui-media-box__hd">
-            <img class="weui-media-box__thumb" src="../../../images/xb1.png">
+            <img class="weui-media-box__thumb" src="../../../static/images/xb1.png">
           </div>
           <div class="weui-media-box__bd">
             <h4 class="weui-media-box__title" style="margin-top: -5px;">张三 12345678912</h4>
@@ -20,7 +20,7 @@
             <p class="weui-media-box__desc" style="margin-top: 9px;">2018-6-11 8:20出结果</p>
           </div>
           <div class="weui-media-box__hd1">
-            <img class="weui-media-box__thumb" src="../../../images/yytb1.png">
+            <img class="weui-media-box__thumb" src="../../../static/images/yytb1.png">
           </div>
         </a>
 
@@ -29,11 +29,11 @@
             <img
               class="weui-media-box__thumb1"
               style="width:80%;display: block;"
-              src="../../../images/bk1.png"
+              src="../../../static/images/bk1.png"
             >
           </div>
           <div class="weui-media-box__hd">
-            <img class="weui-media-box__thumb" src="../../../images/xb1.png">
+            <img class="weui-media-box__thumb" src="../../../static/images/xb1.png">
           </div>
           <div class="weui-media-box__bd">
             <h4 class="weui-media-box__title" style="margin-top: -5px;">张三 12345678912</h4>
@@ -41,7 +41,7 @@
             <p class="weui-media-box__desc" style="margin-top: 9px;">2018-6-11 8:20出结果</p>
           </div>
           <div class="weui-media-box__hd1">
-            <img class="weui-media-box__thumb" src="../../../images/yytb1.png">
+            <img class="weui-media-box__thumb" src="../../../static/images/yytb1.png">
           </div>
         </a>
       </div>

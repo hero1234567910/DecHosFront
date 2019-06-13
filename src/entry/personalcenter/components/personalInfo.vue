@@ -64,7 +64,7 @@
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 export default {
-  name: "personalCenter.vue",
+  name: "personalInfo.vue",
   methods: {}
 };
 </script>

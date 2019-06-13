@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="hero-banner">
-      <img src="../../../images/bj1.png" class="hero-img" width="100%">
+      <img src="../../../static/images/bj1.png" class="hero-img" width="100%">
     </div>
     <div class="hero-panel">
       <div class="hero-panel2">
@@ -30,7 +30,7 @@
             </div>
             <div class="weui-cell__bd">
               <p style="margin-bottom: -10px;">我的预约</p>
-              <img style="width:45%" src="../../../images/圆角矩形-1.png">
+              <img style="width:45%" src="../../../static/images/圆角矩形-1.png">
             </div>
             <div class="weui-cell__ft"></div>
           </a>
@@ -48,7 +48,7 @@
             </div>
             <div class="weui-cell__bd">
               <p style="margin-bottom: -10px;">报告查询</p>
-              <img style="width:45%" src="../../../images/圆角矩形-2.png">
+              <img style="width:45%" src="../../../static/images/圆角矩形-2.png">
             </div>
             <div class="weui-cell__ft"></div>
           </a>
@@ -66,7 +66,7 @@
             </div>
             <div class="weui-cell__bd">
               <p style="margin-bottom: -10px;">体检预约</p>
-              <img style="width:45%" src="../../../images/圆角矩形-3.png">
+              <img style="width:45%" src="../../../static/images/圆角矩形-3.png">
             </div>
             <div class="weui-cell__ft"></div>
           </a>
@@ -84,7 +84,7 @@
             </div>
             <div class="weui-cell__bd">
               <p style="margin-bottom: -10px;">复诊预约</p>
-              <img style="width:45%" src="../../../images/圆角矩形-4.png">
+              <img style="width:45%" src="../../../static/images/圆角矩形-4.png">
             </div>
             <div class="weui-cell__ft"></div>
           </a>
