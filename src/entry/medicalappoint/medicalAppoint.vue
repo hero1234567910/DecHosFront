@@ -1,6 +1,6 @@
 <template>
   <div class="weui-panel weui-panel_access" style="height: 100%;">
-    <div id="bac" style="height:90%;width:100%">
+    <div id="bac" style="height:100%;width:100%">
       <div class="weui-panel__hd"></div>
       <div class="weui-panel__bd">
         <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
@@ -44,18 +44,6 @@
             <img class="weui-media-box__thumb" src="../../../images/yytb1.png">
           </div>
         </a>
-      </div>
-    </div>
-    <div class="page" style="height: 10%;">
-      <div class="weui-panel__hd" style="height: 50px;background-color: #FAFAFC;">
-        <div class="weui-flex">
-          <div class="weui-flex__item">
-            <img class="weui-media-box__thumb" src="../../../images/zjt.png">
-          </div>
-          <div class="weui-flex__item">
-            <img class="weui-media-box__thumb" src="../../../images/yjd.png">
-          </div>
-        </div>
       </div>
     </div>
   </div>
