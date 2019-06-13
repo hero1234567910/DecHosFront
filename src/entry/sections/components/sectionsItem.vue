@@ -10,8 +10,10 @@
 		  </div>
 		<div class="weui-row">
 		  <div class="weui-col-33">
-	  		<p>呼吸内科</p>
-		  </div>
+		  	<a>
+		  		<p>呼吸内科</p>
+		  	</a>
+			  </div>
 		  <div class="weui-col-33">
 		  	<p>呼吸内科</p>
 		  </div>
