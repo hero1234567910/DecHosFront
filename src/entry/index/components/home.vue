@@ -112,7 +112,7 @@
 						</div>
 			  </div>
 			  <div class="weui-flex__item">
-			  	<div class="hero-item-img" style="margin-top: 20px">
+			  	<div class="hero-item-img" style="margin-top: 20px;margin-left: 5px;">
 							<img src="../../../../static/img/图片1.png" style="width: 100%;"/>
 							<div class="hero-mButton" style="top: 56px;">
 								<img src="../../../../static/img/进入.png" style="width: 100%;"/>
