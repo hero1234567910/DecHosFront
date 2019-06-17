@@ -16,3 +16,4 @@ new Vue({
   el: '#app',
   render: h => h(UserFilingView)
 });
+$("#my-input").calendar();
