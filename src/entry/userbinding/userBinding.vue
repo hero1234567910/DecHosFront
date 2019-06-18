@@ -8,7 +8,7 @@
           v-bind:class="shows==true?'magnify':''"
           style="margin-top: 30px;width: 55%;margin-left: 31px;"
         >
-        <div class="hero-col-dec" style="min-width: 70px;">我是门诊患者</div>
+        <div class="hero-col-dec" style="min-width: 70px;" v-bind:style="{color:color1}">我是门诊患者</div>
         <div class="v-underline" v-bind:style="{left:underlineMove+'%'}"></div>
       </div>
       <div class="weui-flex__item">
@@ -18,7 +18,7 @@
           v-bind:class="shows==false?'magnify':''"
           style="margin-top: 30px;width: 55%;margin-left: 31px;"
         >
-        <div class="hero-col-dec" style="min-width: 70px;">我是住院患者</div>
+        <div class="hero-col-dec" style="min-width: 70px;" v-bind:style="{color:color2}">我是住院患者</div>
       </div>
     </div>
     <div class="weui-cells__title" style="font-size: 18px;">请输入身份证号</div>
@@ -39,17 +39,23 @@ export default {
   data() {
     return {
       shows: true,
-      underlineMove: 10
+      underlineMove: 10,
+      color1:'#000000',
+      color2:'#878787'
     };
   },
   methods: {
     mzBotton() {
       this.shows = true;
       this.underlineMove = 10;
+      this.color1='#000000';
+      this.color2='#878787';
     },
     zyBotton() {
       this.shows = false;
       this.underlineMove = 110;
+      this.color2='#000000';
+      this.color1='#878787';
     }
   }
 };
@@ -101,7 +107,7 @@ export default {
   margin-left: -10px;
   font-weight: 600;
 }
-.magingy {
+.maginfy {
   font-size: 30px;
 }
 .v-underline {
