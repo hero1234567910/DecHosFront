@@ -162,7 +162,10 @@ export default {
   methods: {
   	toSwitch(){
   		//切换患者
-  		window.location=""
+  		let self = this;
+//		console.log(this.$router)
+		this.$router.push('/userBinding');
+//		window.location="../../userBinding.html";
   	}
   }
 };

@@ -6,7 +6,7 @@
           <home></home>
         </div>
         <div id="tab2" class="weui-tab__bd-item weui-iframe" style="overflow: hidden;">
-          <mycenter></mycenter>
+          <router-view></router-view>
         </div>
       </div>
 		
@@ -35,9 +35,10 @@
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import home from './components/home'
 import mycenter from './components/mycenter'
+import userBinding from './components/userBinding'
 import model from './model.js'
   export default {
-	components:{home,mycenter},
+	components:{home,mycenter,userBinding},
 	data() {
     	this.model = model(this.axios)
       return {
