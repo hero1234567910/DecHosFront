@@ -1,34 +1,40 @@
-<template>
-  <div>
-    <div class="weui-flex">
-      <div class="weui-flex__item">
+<template style="background-color: #eff7fd;">
+  <div style="background-color: #eff7fd;">
+    <div class="weui-flex" style="height: 230px;">
+      <div class="weui-flex__item-wzl">
         <img
           src="../../../../static/images/门诊患者.png"
           v-on:click="mzBotton"
           v-bind:class="shows==true?'magnify':''"
           style="margin-top: 30px;width: 55%;margin-left: 31px;"
         >
-        <div class="hero-col-dec" style="min-width: 70px;" v-bind:style="{color:color1}">我是门诊患者</div>
+        <div class="wzl-col-dec" style="min-width: 70px;" v-bind:style="{color:color1}">我是门诊患者</div>
         <div class="v-underline" v-bind:style="{left:underlineMove+'%'}"></div>
       </div>
-      <div class="weui-flex__item">
+      <div class="weui-flex__item-wzl">
         <img
           src="../../../../static/images/住院患者.png"
           v-on:click="zyBotton"
           v-bind:class="shows==false?'magnify':''"
           style="margin-top: 30px;width: 55%;margin-left: 31px;"
         >
-        <div class="hero-col-dec" style="min-width: 70px;" v-bind:style="{color:color2}">我是住院患者</div>
+        <div class="wzl-col-dec" style="min-width: 70px;" v-bind:style="{color:color2}">我是住院患者</div>
       </div>
     </div>
-    <div class="weui-cells__title" style="font-size: 18px;">请输入身份证号</div>
-    <div class="weui-cells weui-cells_form">
-      <div class="weui-cell" style="margin-top: 0px;">
+    <div class="weui-cells__title wzl" style="font-size: 18px;">请输入身份证号</div>
+    <div class="weui-cells-wzl weui-cells_form">
+      <div class="weui-cell-wzl" style="margin-top: 0px;">
         <div class="weui-cell__bd">
           <input id="zjh" class="weui-input" type="number" placeholder>
         </div>
       </div>
     </div>
+
+    <div style="width: 100%;
+    height: 800px;">
+
+    </div>
+
   </div>
 </template>
 
@@ -74,20 +80,20 @@ export default {
   margin-left: -15px;
   padding-left: 35px;
 }
-.weui-cells {
+.weui-cells-wzl {
   background-color: #eff7fd;
 }
 #zjh {
   background: white;
 }
 
-.weui-cell:before {
+.weui-cell-wzl:before {
   position: fixed;
 }
-.weui-cells:before {
+.weui-cells-wzl:before {
   position: fixed;
 }
-.weui-flex__item {
+.weui-flex__item-wzl{
   height: 230px;
   background-color: white;
   border-top: outset;
@@ -97,7 +103,7 @@ export default {
   border-bottom-color: lightskyblue;
   border-bottom-width: thin;
 }
-.hero-col-dec {
+.wzl-col-dec {
   height: 20px;
   line-height: 27px;
   width: 100%;

@@ -8,7 +8,7 @@
           v-bind:class="shows==true?'magnify':''"
           style="margin-top: 30px;width: 55%;margin-left: 31px;"
         >
-        <div class="hero-col-dec" style="min-width: 70px;" v-bind:style="{color:color1}">我是门诊患者</div>
+        <div class="wzl-col-dec" style="min-width: 70px;" v-bind:style="{color:color1}">我是门诊患者</div>
         <div class="v-underline" v-bind:style="{left:underlineMove+'%'}"></div>
       </div>
       <div class="weui-flex__item">
@@ -18,7 +18,7 @@
           v-bind:class="shows==false?'magnify':''"
           style="margin-top: 30px;width: 55%;margin-left: 31px;"
         >
-        <div class="hero-col-dec" style="min-width: 70px;" v-bind:style="{color:color2}">我是住院患者</div>
+        <div class="wzl-col-dec" style="min-width: 70px;" v-bind:style="{color:color2}">我是住院患者</div>
       </div>
     </div>
     <div class="weui-cells__title" style="font-size: 18px;">请输入身份证号</div>
@@ -97,7 +97,7 @@ export default {
   border-bottom-color: lightskyblue;
   border-bottom-width: thin;
 }
-.hero-col-dec {
+.wzl-col-dec {
   height: 20px;
   line-height: 27px;
   width: 100%;
