@@ -47,7 +47,7 @@
                   <img class="weui-media-box__thumb1" src="../../../../static/img/二维码.png">
                 </div>
                 <h4
-                  style="font-size: 8px;position: absolute;margin-left: 71%;margin-top: 16px;"
+                  style="font-size: 8px;position: absolute;margin-left: 70%;margin-top: 20px;"
                 >点击出示二维码</h4>
               </a>
             </div>
@@ -84,8 +84,8 @@
     
     <div style="margin-top: 160px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
       <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
-        <div class="weui-cells">
-          <a class="weui-cell weui-cell_access" href="javascript:;">
+        <div class="weui-cells-wzl">
+          <a class="weui-cell weui-cell_access-wzl" href="javascript:;">
             <div class="weui-cell__hd">
               <img src="../../../../static/img/我的预约.png">
             </div>
@@ -102,8 +102,8 @@
     <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
     <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
       <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
-        <div class="weui-cells">
-          <a class="weui-cell weui-cell_access" href="javascript:;">
+        <div class="weui-cells-wzl">
+          <a class="weui-cell weui-cell_access-wzl" href="javascript:;">
             <div class="weui-cell__hd">
               <img src="../../../../static/img/报告.png">
             </div>
@@ -120,8 +120,8 @@
 
     <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
       <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
-        <div class="weui-cells">
-          <a class="weui-cell weui-cell_access" href="javascript:;">
+        <div class="weui-cells-wzl">
+          <a class="weui-cell weui-cell_access-wzl" href="javascript:;">
             <div class="weui-cell__hd">
               <img src="../../../../static/img/体检预约.png">
             </div>
@@ -138,8 +138,8 @@
 
     <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
       <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
-        <div class="weui-cells">
-          <a class="weui-cell weui-cell_access" href="javascript:;">
+        <div class="weui-cells-wzl">
+          <a class="weui-cell weui-cell_access-wzl" href="javascript:;">
             <div class="weui-cell__hd">
               <img src="../../../../static/img/复诊预约.png">
             </div>
@@ -187,20 +187,22 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #bac {
   background-color: aqua;
 }
 .weui-cells {
   margin-top: auto;
 }
-.weui-cells:before {
+.weui-cells-wzl:before {
   position: fixed;
 }
 .weui-cell {
+  position: fixed;
+  background-color: white;
   padding: 20px 1px;
 }
-.weui-cell_access .weui-cell__ft:after {
+.weui-cell_access-wzl .weui-cell__ft:after {
   height: 8px;
   width: 8px;
 }
