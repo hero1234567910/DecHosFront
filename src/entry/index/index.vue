@@ -51,10 +51,8 @@ import model from './model.js'
 		getUserInfo(){
 			let self = this;
     		let data = this.GetQueryString('code');
-    		alert(data);
     		this.model.getUserInfo(data).then(function(res){
     			console.log(res);
-    			alert(res)
     		})
 		},
 		//获取url中的参数
