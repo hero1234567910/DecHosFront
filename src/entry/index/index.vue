@@ -5,8 +5,8 @@
         <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active weui-iframe" style="overflow: hidden;">
           <home></home>
         </div>
-        <div id="tab2" class="weui-tab__bd-item weui-iframe">
-          
+        <div id="tab2" class="weui-tab__bd-item weui-iframe" style="overflow: hidden;">
+          <mycenter></mycenter>
         </div>
       </div>
 		
@@ -34,11 +34,36 @@
 	
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import home from './components/home'
+import mycenter from './components/mycenter'
+import model from './model.js'
   export default {
-  	components:{home},
-  	methods:{
-  		
-  	}
+	components:{home,mycenter},
+	data() {
+    	this.model = model(this.axios)
+      return {
+      }
+    },
+    mounted(){
+    	this.getUserInfo();
+    },
+	methods:{
+		getUserInfo(){
+			let self = this;
+    		let data = this.GetQueryString('code');
+    		alert(data);
+    		this.model.getUserInfo(data).then(function(res){
+    			console.log(res);
+    			alert(res)
+    		})
+		},
+		//获取url中的参数
+		 GetQueryString(name){
+			     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			     var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+			     if(r!=null)return  decodeURI(r[2]); return null;
+			},
+			
+	}
   }
   </script>
 

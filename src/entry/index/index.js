@@ -3,6 +3,9 @@ import IndexView from './index.vue'
 import axios from 'axios'
 import $ from 'jquery'
 import  FastClick  from  'fastclick'
+import '../../../static/css/jquery-weui.min.css'
+import '../../../static/lib/weui.css'
+import '../../../static/css/local.css'
    
    FastClick.attach(document.body);
 //Vue.use(ElementUI);
