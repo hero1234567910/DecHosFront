@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="weui-cells weui-cells_form">
+    <div class="weui-cells-wzl weui-cells_form">
       <div class="weui-cell" style="margin-top: 16px;">
         <div class="weui-cell__bd">
           <input id="zjh" class="weui-input" type="text" placeholder="请输入患者姓名">
         </div>
       </div>
-      <div class="weui-cells__title" style="font-size: 18px;">性别</div>
-      <div class="weui-cell" style="padding-top: 0px;">
+      <div class="weui-cells__title wzl" style="font-size: 18px;">性别</div>
+      <div class="weui-cell-wzl" style="padding-top: 0px;">
         <div class="weui-cell__bd">
-          <div class="weui-cells weui-cells_radio" >
+          <div class="weui-cells-wzl weui-cells_radio" >
             <label class="weui-cell weui-check__label" style="width: unset;background-color: white;border-top: outset;border-top-width: thin;border-top-color: lightskyblue;
                       border-bottom: inset;border-bottom-color: #d5ebf9;border-bottom-width: thin;padding-right:0px;padding-left:34px;" for="x11">
               <div class="weui-cell__bd">
@@ -23,7 +23,7 @@
             <label
               class="weui-cell weui-check__label"
               style="width: unset;background-color: white;
-                      border-bottom: inset;border-bottom-color: lightskyblue;border-bottom-width: thin;padding-left:34px;" for="x12">
+                      border-bottom: inset;border-bottom-color: lightskyblue;border-bottom-width: thin;padding-right:0px;padding-left:34px;" for="x12">
               <div class="weui-cell__bd">
                 <p>女</p>
               </div>
@@ -35,18 +35,18 @@
           </div>
         </div>
       </div>
-      <div class="weui-cell" style="margin-top: 0px;">
+      <div class="weui-cell-wzl" style="margin-top: 0px;">
         <div class="weui-cell__bd">
-          <input type="text" data-toggle="date" id="my-input" placeholder="请输入出生年月">
+          <input type="text" data-toggle="date" id="my-input" placeholder="请输入出生年月" style="margin-top: 27px;">
         </div>
       </div>
-      <div class="weui-cells__title" style="margin-top: 0px;font-size: 18px;">联系方式</div>
-      <div class="weui-cell" style="margin-top: 0px;padding-bottom:0px;padding-top:0px;border-bottom-color:#d5ebf9">
+      <div class="weui-cells__title wzl" style="margin-top: 0px;font-size: 18px;">联系方式</div>
+      <div class="weui-cell-wzl" style="margin-top: 0px;padding-bottom:0px;padding-top:0px;border-bottom-color:#d5ebf9">
         <div class="weui-cell__bd">
           <input id="zjh" class="weui-input" style="border-bottom-color:#d5ebf9" type="number" placeholder="电话">
         </div>
       </div>
-      <div class="weui-cell" style="margin-top: 0px;padding-top:0px;">
+      <div class="weui-cell-wzl" style="margin-top: 0px;padding-top:0px;">
         <div class="weui-cell__bd">
           <input id="zjh" class="weui-input" style="border-top:none;" type="text" placeholder="地址">
         </div>
@@ -67,7 +67,7 @@ $("#my-input").calendar();
 </script>
 
 <style>
-.weui-cells {
+.weui-cells-wzl {
   margin-top: 0px;
   background-color: #eff7fd;
 }
@@ -99,17 +99,17 @@ $("#my-input").calendar();
   border-bottom-width: thin;
   padding-left: 35px;
 }
-.weui-cells::before {
+.weui-cells-wzl::before {
   position: fixed;
 }
-.weui-cell:before {
+.weui-cell-wzl:before {
   position: fixed;
 }
 .weui-btn {
   margin-top: 78px;
   width: 86%;
 }
-weui-cell weui-check__label {
+weui-cell-wzl weui-check__label {
   width: unset;
   background-color: white;
   border-top: outset;
@@ -119,7 +119,7 @@ weui-cell weui-check__label {
   border-bottom-color: lightskyblue;
   border-bottom-width: thin;
 }
-.weui-cell{
+.weui-cell-wzl{
   padding-right: 0px;
   padding-left: 0px;
 }
