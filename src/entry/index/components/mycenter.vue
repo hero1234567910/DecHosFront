@@ -3,7 +3,7 @@
     <div class="hero-banner">
       <img src="../../../../static/images/bj1.png" class="hero-img" width="100%">
     </div>
-    <div class="hero-pane" style="display: none;">
+    <div class="hero-pane" style="display: none;" v-show="show">
       <div class="hero-panel2">
         <div style="margin-left: 5px;margin-right: 5px;width: calc(100% - 10px);">
           <div class="weui-row">
@@ -21,7 +21,7 @@
       </div>
     </div>
     
-    <div class="hero-panew">
+    <div class="hero-panew" v-show="!show">
       <div class="hero-panel2">
         <div style="margin-left: 5px;margin-right: 5px;width: calc(100% - 10px);">
           <div class="weui-panel weui-panel_access">
@@ -159,13 +159,29 @@
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 export default {
+	data() {
+    	this.model = model(this.axios)
+      return {
+      	show:true
+      }
+    },
+    mounted(){
+    	this.checkShow();
+    },
   methods: {
   	toSwitch(){
   		//切换患者
   		let self = this;
-//		console.log(this.$router)
-		this.$router.push('/userBinding');
-//		window.location="../../userBinding.html";
+			this.$router.push('/userBinding');
+  	},
+  	//判断是否展示
+  	checkShow(){
+  		let self = this;
+  		let cs = localStorage.getItem('sec_patientName');
+  		if(cs != null){
+  			//说明用户未绑定
+  			self.show = false;
+  		}
   	}
   }
 };

@@ -52,7 +52,9 @@ import model from './model.js'
 			let self = this;
     		let data = this.GetQueryString('code');
     		this.model.getUserInfo(data).then(function(res){
-    			console.log(res);
+    			localStorage.setItem('sec_openId',res.data.data.openid);
+    			localStorage.setItem('sec_patientName',res.data.data.patientName);
+    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl)
     		})
 		},
 		//获取url中的参数
@@ -62,7 +64,7 @@ import model from './model.js'
 			     if(r!=null)return  decodeURI(r[2]); return null;
 			},
 			
-	}
+		}
   }
   </script>
 
