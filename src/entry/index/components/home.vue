@@ -45,10 +45,12 @@
 								<div class="hero-col-dec" style="min-width: 70px;">导诊台确认</div>
 							</div>
 							<div class="weui-col-25">
-								<div class="hero-col-img">
-									<img src="../../../../static/img/咨询图标.png" style="width: 100%;"/>
-								</div>
-								<div class="hero-col-dec">门诊咨询</div>
+								<a href="javascript:void(0)" v-on:click="toconsultation()">
+									<div class="hero-col-img">
+										<img src="../../../../static/img/咨询图标.png" style="width: 100%;"/>
+									</div>
+									<div class="hero-col-dec">门诊咨询</div>
+								</a>
 							</div>
 							<div class="weui-col-25">
 								<div class="hero-col-img">
@@ -136,7 +138,9 @@
 	import model from './model.js'
   export default {
   	methods:{
-  		
+  		toconsultation(){
+  			window.location='../../consultation.html'
+  		}
   	}
   }
   </script>

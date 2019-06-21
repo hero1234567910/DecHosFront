@@ -46,22 +46,16 @@
                 <div class="weui-media-box__hd1">
                   <img class="weui-media-box__thumb1" src="../../../../static/img/二维码.png">
                 </div>
-<<<<<<< HEAD
-                <!--<h4
-                  style="font-size: 8px;position: absolute;margin-left: 71%;margin-top: 16px;"
-                >点击出示二维码</h4>-->
-=======
                 <h4
                   style="font-size: 8px;position: absolute;margin-left: 70%;margin-top: 20px;"
                 >点击出示二维码</h4>
->>>>>>> 95d519064e2e6665c6daa4396a8cc52bd9bbae51
               </a>
             </div>
           </div>
 
-          <div class="weui-panel weui-panel_access" style="height:20px">
+          <div class="weui-panel weui-panel_access" style="height:20px;margin-top: 0px;">
             <div class="weui-panel__bd">
-              <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" v-on:click="toSwitch()">
+              <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="margin-top: 0px;" v-on:click="toSwitch()">
                 <img
                   style="margin-left: 30%;width: 3%;height: auto;"
                   class="weui-media-box__thumb"
@@ -188,32 +182,32 @@ export default {
   	},
   	//判断是否展示
   	checkShow(){
+  		console.log('未复用')
   		let self = this;
   		let cs = localStorage.getItem('sec_patientName');
   		let img = localStorage.getItem('sec_headImg');
   		let birth = localStorage.getItem('sec_birth');
   		let sex = localStorage.getItem('sec_sex');
-  		if(cs == 'null'){
+  		if(cs == 'null' || cs == ''){
   			//说明用户未绑定
+  			
+  		}else{
   			self.patientName = cs;
   			self.headImg = img;
   			self.birth = birth;
   			self.sex = sex;
-  		}else{
   			self.show = false;
   		}
+  		console.log(self.patientName+'  '+self.headImg)
   	}
   }
 };
 </script>
 
 <style scoped>
-<<<<<<< HEAD
-	.wzl{
+	/*.wzl{
 		position: fixed;
-	}
-=======
->>>>>>> 95d519064e2e6665c6daa4396a8cc52bd9bbae51
+	}*/
 #bac {
   background-color: aqua;
 }
@@ -224,7 +218,7 @@ export default {
   position: fixed;
 }
 .weui-cell {
-  position: fixed;
+  /*position: fixed;*/
   background-color: white;
   padding: 20px 1px;
 }

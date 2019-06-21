@@ -70,34 +70,34 @@ export default {
   mounted(){
   	this.initY();
   },
-  watch: {
-　　// 利用watch方法检测路由变化：
-　　'$route': function (to, from) {
-				console.log('fff')
-　　　　this.cos();
-　　}
-	},
+//watch: {
+//　　// 利用watch方法检测路由变化：
+//	'$route'(to,from){
+//	    console.log('fff')
+//　　　　this.cos();
+//	  }
+//	},
   methods: {
-  	cos(){
-  		$.alert('aaaa');
-  	},
   	initY(){
   		$('#my-input').calendar({
   			dateFormat:'yyyymmdd'
   		});
   	},
   	save(){
-  		//获取提交参数
-  		let self = this;
-  		var hzxm = $('#hzxm').val();
-  		var sex = $("input[name='radio1']:checked").val();
-  		var birth = $('#my-input').val();
-  		var lxdh = $('#lxdh').val();
-  		var lxdz = $('#lxdz').val();
-  		var zjh = this.GetQueryString('zjh');
-  		
-  		if (
-  			this.panNull(hzxm, "患者姓名不能为空") ||
+		//获取提交参数
+		let self = this;
+		var hzxm = $('#hzxm').val();
+		var sex = $("input[name='radio1']:checked").val();
+		var birth = $('#my-input').val();
+		var lxdh = $('#lxdh').val();
+		var lxdz = $('#lxdz').val();
+		var zjh = self.GetQueryString('zjh');
+		console.log(zjh)
+		
+		
+		
+		if (
+			this.panNull(hzxm, "患者姓名不能为空") ||
 		    this.panNull(zjh, "证件号不能为空") ||
 		    this.panNull(sex, "性别不能为空") ||
 		    this.panNull(birth, "出生日期不能为空") ||
@@ -114,7 +114,6 @@ export default {
 		  	'lxdz':lxdz,
 		  	'zjh':zjh
 		  }
-		  console.log(data)
 		  this.model.savePatient(data).then(function(res){
 		  	if(res.data.code == '0'){
 		  		$.toast('建档成功', function() {
@@ -136,10 +135,10 @@ export default {
 		    return false;
 		  }
 		},
-		//获取url中的参数
+		//获取url中的参数(获取锚点的url)
 		 GetQueryString(name){
 			     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-			     var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+			     var r = window.location.hash.substr(13).match(reg);//search,查询？后面的参数，并匹配正则
 			     if(r!=null)return  decodeURI(r[2]); return null;
 			},
   	

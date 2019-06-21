@@ -64,7 +64,6 @@ export default {
     };
   },
   mounted(){
-  	
   },
   methods: {
   	bindingUser(){
@@ -84,26 +83,25 @@ export default {
   			'action':action,
   			'openid':openid
   		};
-  		self.$router.push('/userFiling')
-//		this.model.bindUser(data).then(function(res){
-//			console.log(res)
-//				if(res.data.code == '0'){
-//					$.toast('绑定成功', function() {
-//						  localStorage.setItem('sec_sex',res.data.data.patientSex);
-//  					localStorage.setItem('sec_birth',res.data.data.patientBirth);
-//  					localStorage.setItem('sec_patientName',res.data.data.patientName);
-//  					self.$router.push('/');
-//						});
-//  			}
-//				if(action == 'mz' && res.data.msg == '未查询到门诊患者'){
-//					$.toast('未查询到门诊患者,请先建立门诊档案')
-//					self.$router.push('/userFiling?zjh='+zjh)
-//				}
-//				if(action == 'zy' && res.data.code == '500'){
-//					$.toptip(res.data.msg, 'error');
-//				}
-//  			
-//  	})
+		this.model.bindUser(data).then(function(res){
+			console.log(res)
+				if(res.data.code == '0'){
+					$.toast('绑定成功', function() {
+						  localStorage.setItem('sec_sex',res.data.data.patientSex);
+    					localStorage.setItem('sec_birth',res.data.data.patientBirth);
+    					localStorage.setItem('sec_patientName',res.data.data.patientName);
+    					self.$router.push('/');
+						});
+    			}
+				if(action == 'mz' && res.data.msg == '未查询到门诊患者'){
+					$.toast('未查询到门诊患者,请先建立门诊档案')
+					self.$router.push('/userFiling?zjh='+zjh)
+				}
+				if(action == 'zy' && res.data.code == '500'){
+					$.toptip(res.data.msg, 'error');
+				}
+    			
+    	})
   	},
     mzBotton() {
     	let self = this;
