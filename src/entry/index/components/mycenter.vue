@@ -3,7 +3,7 @@
     <div class="hero-banner">
       <img src="../../../../static/images/bj1.png" class="hero-img" width="100%">
     </div>
-    <div class="hero-pane" style="display: none;" v-show="show">
+    <div class="hero-pane" v-if="show" style="position: relative;top: -71px;margin-left: 10px;margin-right: 10px;">
       <div class="hero-panel2">
         <div style="margin-left: 5px;margin-right: 5px;width: calc(100% - 10px);">
           <div class="weui-row">
@@ -16,28 +16,28 @@
               您还没有绑定或申请电子就诊卡
             </p>
           </div>
-          <a href="javascript:;" class="weui-btn weui-btn_plain-primary">立即办理</a>
+          <a href="javascript:;" class="weui-btn weui-btn_plain-primary" v-on:click="toSwitch()">立即办理</a>
         </div>
       </div>
     </div>
     
     <div class="hero-panew" v-show="!show">
       <div class="hero-panel2">
-        <div style="margin-left: 5px;margin-right: 5px;width: calc(100% - 10px);">
+        <div style="margin-left: 5px;margin-right: 5px;width: calc(100% - 10px);padding-top: 20px;">
           <div class="weui-panel weui-panel_access">
             <div class="weui-panel__bd">
               <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
                 <div class="weui-media-box__hd">
-                  <img class="weui-media-box__thumb" src="../../../../static/img/用户默认头像.png">
+                  <img class="weui-media-box__thumb" :src="headImg">
                 </div>
                 <div class="weui-media-box__bd">
                   <h4 class="weui-media-box__title" style="font-weight:600;margin-top:15px"></h4>
                   <h4
                     class="weui-media-box__title"
                     style="font-weight:600;margin-top:10px;width:40%"
-                  >张三</h4>
+                  >{{patientName}}</h4>
                   <h4 class="weui-media-box__title2">城镇医保</h4>
-                  <h4 class="weui-media-box__title" style="font-size:15px;margin-top:8px">女 / 25岁</h4>
+                  <h4 class="weui-media-box__title" style="font-size:15px;margin-top:8px">{{sex}} / {{birth}}</h4>
                   <h4
                     class="weui-media-box__title"
                     style="font-size:15px;margin-top:8px"
@@ -53,9 +53,9 @@
             </div>
           </div>
 
-          <div class="weui-panel weui-panel_access" style="height:20px">
+          <div class="weui-panel weui-panel_access" style="height:20px;margin-top: 0px;">
             <div class="weui-panel__bd">
-              <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" v-on:click="toSwitch()">
+              <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" style="margin-top: 0px;" v-on:click="toSwitch()">
                 <img
                   style="margin-left: 30%;width: 3%;height: auto;"
                   class="weui-media-box__thumb"
@@ -68,7 +68,7 @@
                     style="width: 38%;font-weight:400;margin-top:0px;font-size:10px;margin-bottom: 0px;text-align: center;color: cornflowerblue;text-decoration:underline"
                   >切换/添加就诊人</h4>
                 </div>
-                <div class="weui-media-box__hd1">
+                <div class="weui-media-box__hd1" style="display: none;">
                   <img
                     style="position: fixed;z-index: 19;width: 112px;height: 110px;margin-left: -92px;margin-top: -88px;"
                     class="weui-media-box__thumb1"
@@ -81,8 +81,8 @@
         </div>
       </div>
     </div>
-    
-    <div style="margin-top: 160px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
+    <div style="position: relative;top: -66px;">
+    <div style="margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
       <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
         <div class="weui-cells-wzl">
           <a class="weui-cell weui-cell_access-wzl" href="javascript:;">
@@ -152,17 +152,23 @@
         </div>
       </div>
     </div>
+    </div>
   </div>
 </template>
 
 
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
+import model from './model.js'
 export default {
 	data() {
     	this.model = model(this.axios)
       return {
-      	show:true
+      	show:true,
+      	patientName:'',
+      	headImg:'',
+      	birth:'',
+      	sex:''
       }
     },
     mounted(){
@@ -176,18 +182,32 @@ export default {
   	},
   	//判断是否展示
   	checkShow(){
+  		console.log('未复用')
   		let self = this;
   		let cs = localStorage.getItem('sec_patientName');
-  		if(cs != null){
+  		let img = localStorage.getItem('sec_headImg');
+  		let birth = localStorage.getItem('sec_birth');
+  		let sex = localStorage.getItem('sec_sex');
+  		if(cs == 'null' || cs == ''){
   			//说明用户未绑定
+  			
+  		}else{
+  			self.patientName = cs;
+  			self.headImg = img;
+  			self.birth = birth;
+  			self.sex = sex;
   			self.show = false;
   		}
+  		console.log(self.patientName+'  '+self.headImg)
   	}
   }
 };
 </script>
 
 <style scoped>
+	/*.wzl{
+		position: fixed;
+	}*/
 #bac {
   background-color: aqua;
 }
@@ -198,7 +218,7 @@ export default {
   position: fixed;
 }
 .weui-cell {
-  position: fixed;
+  /*position: fixed;*/
   background-color: white;
   padding: 20px 1px;
 }
@@ -265,8 +285,8 @@ export default {
 .hero-panew {
   height: 200px;
   width: 100%;
-  position: absolute;
-  top: 30px;
+position: relative;
+    top: -70px;
   padding-left: 13px;
   padding-right: 13px;
   width: calc(100% - 26px);
@@ -317,6 +337,8 @@ a.weui-media-box {
   padding-left: 4px;
 }
 .weui-btn_plain-primary {
+	    position: relative;
+    top: -10px;
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 23px;

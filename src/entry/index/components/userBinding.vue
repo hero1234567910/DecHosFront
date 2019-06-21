@@ -1,5 +1,5 @@
 <template style="background-color: #eff7fd;">
-  <div style="background-color: #eff7fd;">
+  <div style="background-color: #eff7fd;overflow-x: hidden;">
     <div class="weui-flex" style="height: 230px;">
       <div class="weui-flex__item-wzl">
         <img
@@ -21,15 +21,23 @@
         <div class="wzl-col-dec" style="min-width: 70px;" v-bind:style="{color:color2}">我是住院患者</div>
       </div>
     </div>
+    <div class="weui-cells__title wzl" style="font-size: 18px;">请输入患者姓名</div>
+    <div class="weui-cells-wzl weui-cells_form">
+      <div class="weui-cell-wzl" style="margin-top: 0px;">
+        <div class="weui-cell__bd">
+          <input id="hzxm" class="weui-input" placeholder>
+        </div>
+      </div>
+    </div>
     <div class="weui-cells__title wzl" style="font-size: 18px;">请输入身份证号</div>
     <div class="weui-cells-wzl weui-cells_form">
       <div class="weui-cell-wzl" style="margin-top: 0px;">
         <div class="weui-cell__bd">
-          <input id="zjh" class="weui-input" type="number" placeholder>
+          <input id="zjh" class="weui-input" placeholder>
         </div>
       </div>
     </div>
-
+		<a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 50px;width: 200px;" v-on:click="bindingUser">绑定</a>
     <div style="width: 100%;
     height: 800px;">
 
@@ -40,24 +48,70 @@
 
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
+import model from './model.js'
 export default {
   name: "userBinding.vue",
   data() {
+  	this.model = model(this.axios)
     return {
       shows: true,
       underlineMove: 10,
       color1:'#000000',
-      color2:'#878787'
+      color2:'#878787',
+      action:'',
+      sex:'',
+      birth:''
     };
   },
+  mounted(){
+  },
   methods: {
+  	bindingUser(){
+  		let self = this;
+  		let action = '';
+  		if(this.shows){
+  			action = 'mz';
+  		}else{
+  			action = 'zy';
+  		}
+  		let hzxm = $('#hzxm').val();
+  		let zjh = $('#zjh').val();
+  		let openid = localStorage.getItem('sec_openId');
+  		let data = {
+  			'hzxm':hzxm,
+  			'zjh':zjh,
+  			'action':action,
+  			'openid':openid
+  		};
+		this.model.bindUser(data).then(function(res){
+			console.log(res)
+				if(res.data.code == '0'){
+					$.toast('绑定成功', function() {
+						  localStorage.setItem('sec_sex',res.data.data.patientSex);
+    					localStorage.setItem('sec_birth',res.data.data.patientBirth);
+    					localStorage.setItem('sec_patientName',res.data.data.patientName);
+    					self.$router.push('/');
+						});
+    			}
+				if(action == 'mz' && res.data.msg == '未查询到门诊患者'){
+					$.toast('未查询到门诊患者,请先建立门诊档案')
+					self.$router.push('/userFiling?zjh='+zjh)
+				}
+				if(action == 'zy' && res.data.code == '500'){
+					$.toptip(res.data.msg, 'error');
+				}
+    			
+    	})
+  	},
     mzBotton() {
+    	let self = this;
       this.shows = true;
       this.underlineMove = 10;
       this.color1='#000000';
       this.color2='#878787';
     },
     zyBotton() {
+    	let self = this;
       this.shows = false;
       this.underlineMove = 110;
       this.color2='#000000';
@@ -67,7 +121,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .weui-input {
   height: 40px;
   width: 110%;
@@ -81,7 +135,7 @@ export default {
   padding-left: 35px;
 }
 .weui-cells-wzl {
-  background-color: #eff7fd;
+  background-color: #FFFFFF;
 }
 #zjh {
   background: white;

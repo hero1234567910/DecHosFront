@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow: hidden;">
+  <div style="overflow: auto;background-color: #FFFFFF;">
  		<div class="hero-banner">
  			<img src="../../../../static/img/图层-646-拷贝.png" class="hero-img" width="100%"/>
  		</div>
@@ -45,10 +45,12 @@
 								<div class="hero-col-dec" style="min-width: 70px;">导诊台确认</div>
 							</div>
 							<div class="weui-col-25">
-								<div class="hero-col-img">
-									<img src="../../../../static/img/咨询图标.png" style="width: 100%;"/>
-								</div>
-								<div class="hero-col-dec">门诊咨询</div>
+								<a href="javascript:void(0)" v-on:click="toconsultation()">
+									<div class="hero-col-img">
+										<img src="../../../../static/img/咨询图标.png" style="width: 100%;"/>
+									</div>
+									<div class="hero-col-dec">门诊咨询</div>
+								</a>
 							</div>
 							<div class="weui-col-25">
 								<div class="hero-col-img">
@@ -67,7 +69,7 @@
 				</div>
 			</div>
 		</div>
-		<div style="margin-top: 160px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
+		<div style="position: relative;top: -80px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
 			<div class="hero-panel2_header" style="height: 30px;"><strong>在院服务</strong></div>
 			<div style="margin-left: 20px;margin-right: 20px;height: 70px;">
 				<div class="weui-row" style="height: 80px;">
@@ -99,7 +101,8 @@
 			</div>
 		</div>
 		
-		<div style="height: 10px;width: 100%;margin-top: 15px;background-color: #e5e5e5;"></div>
+		<div style="height: 10px;width: 100%;position: relative;
+    top: -70px;;background-color: #e5e5e5;"></div>
 		
 		<div class="hero-panel3">
 			<div class="weui-flex">
@@ -122,8 +125,9 @@
 			</div>
 		</div>
 		
-		<div style="height: 10px;width: 100%;margin-top:8px;background-color: #e5e5e5;"></div>
-		<div style="width: 100%;height: 100px;">
+		<div style="height: 10px;width: 100%;    position: relative;
+    top: -83px;background-color: #e5e5e5;"></div>
+		<div style="width: 100%;height: 100px;    position: relative;top: -83px;">
 			<img src="../../../../static/img/体检.png" style="width: 100%;"/>
 		</div>
   </div>
@@ -131,15 +135,17 @@
 
 
 <script>
-	
+	import model from './model.js'
   export default {
   	methods:{
-  		
+  		toconsultation(){
+  			window.location='../../consultation.html'
+  		}
   	}
   }
   </script>
 
-<style>
+<style scoped>
 	.hero-mButton{
 		position: absolute;
     top: 77px;
@@ -158,6 +164,8 @@
 		margin-right: 13px;
 		width: calc(100% - 26px);
 		height: 100px;
+		position: relative;
+    top: -82px;
 	}
 	.hero-col-dec{
 		height: 20px;
@@ -204,8 +212,8 @@
 	.hero-panel{
 		height: 190px;
 		width: 100%;
-		position: absolute;
-		top: 53px;
+		    position: relative;
+    top: -90px;
 		padding-left: 13px;
     padding-right: 13px;
     width: calc(100% - 26px);
@@ -216,9 +224,9 @@
 		width: 100%;
 	}
 	.hero-search{
-		position: absolute;
+		position: relative;
     width: 100%;
-    top: 5px;
+    top: -95px;	
 	}
 	.weui-search-bar:before{
 		border-top: 0px solid #D7D6DC;

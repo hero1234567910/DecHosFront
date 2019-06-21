@@ -1,12 +1,12 @@
 <template>
-  <div style="height: 100%;">
+  <div style="height: 100%;background-color: #FFFFFF;">
  		<div class="weui-tab">
 		  <div class="weui-tab__bd" style="height: 92%;position: absolute;width: 100%;">
-        <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active weui-iframe" style="overflow: hidden;">
+        <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active weui-iframe" style="overflow: auto;height: calc(100vh - 53px);">
           <home></home>
         </div>
-        <div id="tab2" class="weui-tab__bd-item weui-iframe" style="overflow: hidden;">
-          <router-view></router-view>
+        <div id="tab2" class="weui-tab__bd-item weui-iframe" style="overflow: auto;height: calc(100vh - 53px);">
+          <router-view :key="$route.fullPath"></router-view>
         </div>
       </div>
 		
@@ -36,9 +36,10 @@ import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import home from './components/home'
 import mycenter from './components/mycenter'
 import userBinding from './components/userBinding'
+import userFiling from './components/userFiling'
 import model from './model.js'
   export default {
-	components:{home,mycenter,userBinding},
+	components:{home,mycenter,userBinding,userFiling},
 	data() {
     	this.model = model(this.axios)
       return {
@@ -52,9 +53,16 @@ import model from './model.js'
 			let self = this;
     		let data = this.GetQueryString('code');
     		this.model.getUserInfo(data).then(function(res){
-    			localStorage.setItem('sec_openId',res.data.data.openid);
-    			localStorage.setItem('sec_patientName',res.data.data.patientName);
-    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl)
+    			if(res.data.code == '0'){
+    				localStorage.setItem('sec_openId',res.data.data.openid);
+	    			localStorage.setItem('sec_patientName',res.data.data.patientName);
+	    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
+	    			localStorage.setItem('sec_sex',res.data.data.patientSex);
+    				localStorage.setItem('sec_birth',res.data.data.patientBirth);
+    			}else{
+    				$.alert(res.data.msg);
+    			}
+    			
     		})
 		},
 		//获取url中的参数
@@ -68,7 +76,7 @@ import model from './model.js'
   }
   </script>
 
-<style>
+<style scoped>
 	.hero-mButton{
 		position: absolute;
     top: 77px;
