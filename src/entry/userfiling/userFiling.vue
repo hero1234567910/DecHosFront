@@ -66,7 +66,7 @@ export default {
 $("#my-input").calendar();
 </script>
 
-<style>
+<style scoped>
 .weui-cells-wzl {
   margin-top: 0px;
   background-color: #eff7fd;
