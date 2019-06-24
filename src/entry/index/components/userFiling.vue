@@ -4,13 +4,13 @@
       <h6>温馨提示:请您确认个人信息无误后再保存信息</h6>
     </div>
     <div class="weui-cells-wzl weui-cells_form">
-      <div class="weui-cells__title wzl" style="font-size: 18px;margin-top:0px;">姓名</div>
+      <div class="weui-cells__title wzl" style="font-size: 18px;margin-top:0.2em;margin-bottom: 0.2em;">姓名</div>
       <div class="weui-cell-wzl">
         <div class="weui-cell__bd">
           <input id="hzxm" class="weui-input-wzl" type="text" placeholder="请输入患者姓名">
         </div>
       </div>
-      <div class="weui-cells__title wzl" style="font-size: 18px;margin-top:0px;">性别</div>
+      <div class="weui-cells__title wzl" style="font-size: 18px;margin-top:0.2em;margin-bottom: 0.2em;">性别</div>
       <div class="weui-cell-wzl" style="padding-top: 0px;">
         <div class="weui-cell__bd">
           <div class="weui-cells-wzl weui-cells_radio" >
@@ -39,13 +39,13 @@
           </div>
         </div>
       </div>
-       <div class="weui-cells__title wzl" style="margin-top: 0px;font-size: 18px;">出生日期</div>
+       <div class="weui-cells__title wzl" style="margin-top: 0.2em;font-size: 18px;margin-bottom: 0.2em;">出生日期</div>
       <div class="weui-cell-wzl" style="margin-top: 0px;">
         <div class="weui-cell__bd">
           <input type="text" data-toggle="date" id="my-input" placeholder="请输入出生年月" style="margin-top: 0px;">
         </div>
       </div>
-      <div class="weui-cells__title wzl" style="margin-top: 0px;font-size: 18px;">联系方式</div>
+      <div class="weui-cells__title wzl" style="margin-top: 0.2em;font-size: 18px;margin-bottom: 0.2em;">联系方式</div>
       <div class="weui-cell-wzl" style="margin-top: 0px;padding-bottom:0px;padding-top:0px;border-bottom-color:#d5ebf9">
         <div class="weui-cell__bd">
           <input id="lxdh" class="weui-input-wzl" style="border-bottom-color:#d5ebf9" type="number" placeholder="请输入电话">
@@ -224,5 +224,8 @@ weui-cell-wzl weui-check__label {
   background-color: #05b500;
   margin-left: 7%;
   position: absolute;
+}
+.weui-cells__title .wzl{
+  margin-bottom: 0em;
 }
 </style>
