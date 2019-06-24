@@ -7,7 +7,7 @@
       <div class="weui-cells__title wzl" style="font-size: 18px;margin-top:0px;">姓名</div>
       <div class="weui-cell-wzl">
         <div class="weui-cell__bd">
-          <input id="hzxm" class="weui-input" type="text" placeholder="请输入患者姓名">
+          <input id="hzxm" class="weui-input-wzl" type="text" placeholder="请输入患者姓名">
         </div>
       </div>
       <div class="weui-cells__title wzl" style="font-size: 18px;margin-top:0px;">性别</div>
@@ -48,12 +48,12 @@
       <div class="weui-cells__title wzl" style="margin-top: 0px;font-size: 18px;">联系方式</div>
       <div class="weui-cell-wzl" style="margin-top: 0px;padding-bottom:0px;padding-top:0px;border-bottom-color:#d5ebf9">
         <div class="weui-cell__bd">
-          <input id="lxdh" class="weui-input" style="border-bottom-color:#d5ebf9" type="number" placeholder="请输入电话">
+          <input id="lxdh" class="weui-input-wzl" style="border-bottom-color:#d5ebf9" type="number" placeholder="请输入电话">
         </div>
       </div>
       <div class="weui-cell-wzl" style="margin-top: 0px;padding-top:0px;">
         <div class="weui-cell__bd">
-          <input id="lxdz" class="weui-input" style="border-top:none;" type="text" placeholder="请输入地址">
+          <input id="lxdz" class="weui-input-wzl" style="border-top:none;" type="text" placeholder="请输入地址">
         </div>
       </div>
       <a href="javascript:;" class="weui-btn weui-btn_primary2" v-on:click="save">保存</a>
@@ -159,10 +159,11 @@ export default {
 #zjh {
   background: white;
 }
-.weui-input {
+.weui-input-wzl {
+  font-size: 17px;
 	background-color: #FFFF;
   height: 40px;
-  width: 110%;
+  width: -webkit-fill-available;
   border-top: outset;
   border-top-width: thin;
   border-top-color: lightskyblue;
@@ -170,12 +171,13 @@ export default {
   border-bottom-color: lightskyblue;
   border-bottom-width: thin;
   margin-left: -15px;
-  padding-left: 35px;
+  padding-left: 28px;
+  border-right: none;
 }
 #my-input {
   font-size: 17px;
   height: 40px;
-  width: 110%;
+  width: -webkit-fill-available;
   margin-left: -18px;
   border-top: outset;
   border-top-width: thin;
@@ -183,7 +185,8 @@ export default {
   border-bottom: inset;
   border-bottom-color: lightskyblue;
   border-bottom-width: thin;
-  padding-left: 35px;
+  padding-left: 28px;
+  border-right: none;
 }
 .weui-cells-wzl::before {
   position: fixed;

@@ -45,9 +45,7 @@
                 </div>
                 <div class="weui-media-box__hd1">
                   <img class="weui-media-box__thumb1" src="../../../../static/img/二维码.png">
-                  <h4
-                  style="font-size: 8px;position: absolute;margin-left: -20%;margin-top: 1%;"
-                >点击出示二维码</h4>
+                  <h4 style="font-size: 8px;position: absolute;margin-left: -19%;margin-top: 3%;" >点击出示二维码</h4>
                 </div>
                 
               </a>
@@ -308,14 +306,14 @@ a.weui-media-box {
   position: fixed;
 }
 .weui-media-box_appmsg .weui-media-box__thumb1 {
-  margin-left: -60px;
+  margin-left: -17%;
   margin-top: -50px;
   width: 19%;
   height: 45%;
   position: absolute;
 }
 .weui-media-box_appmsg .weui-media-box__thumb2 {
-  margin-left: -60px;
+  margin-left: -17%;
   margin-top: -50px;
   width: 20%;
   height: 46%;
@@ -329,9 +327,9 @@ a.weui-media-box {
   border-style: solid;
   border-radius: 5px;
   border-color: white;
-  margin-left: 13%;
+  margin-left: 24%;
   font-size: 12px;
-  margin-top: -6.5%;
+  margin-top: -7.5%;
   position: absolute;
   background-color: rgb(106, 208, 249);
   padding-right: 4px;

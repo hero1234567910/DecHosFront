@@ -123,7 +123,7 @@ export default {
 <style scoped>
 .weui-input {
   height: 40px;
-  width: 110%;
+  width: -webkit-fill-available;
   border-top: outset;
   border-top-width: thin;
   border-top-color: lightskyblue;
@@ -131,7 +131,8 @@ export default {
   border-bottom-color: lightskyblue;
   border-bottom-width: thin;
   margin-left: -15px;
-  padding-left: 35px;
+  padding-left: 28px;
+  border-right: none;
 }
 .weui-cells-wzl {
   background-color: #FFFFFF;
