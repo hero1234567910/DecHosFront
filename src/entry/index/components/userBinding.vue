@@ -1,5 +1,5 @@
 <template style="background-color: #eff7fd;">
-  <div style="background-color: #eff7fd;overflow-x: hidden;">
+  <div style="background-color: #eff7fd;overflow-x: hidden;height: 100%;">
     <div class="weui-flex" style="height: 230px;">
       <div class="weui-flex__item-wzl">
         <img
@@ -21,26 +21,25 @@
         <div class="wzl-col-dec" style="min-width: 70px;" v-bind:style="{color:color2}">我是住院患者</div>
       </div>
     </div>
-    <div class="weui-cells__title wzl" style="font-size: 18px;">请输入患者姓名</div>
+    <div class="weui-cells__title wzl" style="font-size: 18px;">姓名</div>
     <div class="weui-cells-wzl weui-cells_form">
       <div class="weui-cell-wzl" style="margin-top: 0px;">
         <div class="weui-cell__bd">
-          <input id="hzxm" class="weui-input" placeholder>
+          <input id="hzxm" class="weui-input" placeholder="请输入患者姓名">
         </div>
       </div>
     </div>
-    <div class="weui-cells__title wzl" style="font-size: 18px;">请输入身份证号</div>
+    <div class="weui-cells__title wzl" style="font-size: 18px;">身份证号</div>
     <div class="weui-cells-wzl weui-cells_form">
       <div class="weui-cell-wzl" style="margin-top: 0px;">
         <div class="weui-cell__bd">
-          <input id="zjh" class="weui-input" placeholder>
+          <input id="zjh" class="weui-input" placeholder="请输入身份证号">
         </div>
       </div>
     </div>
-		<a href="javascript:;" class="weui-btn weui-btn_primary" style="margin-top: 50px;width: 200px;" v-on:click="bindingUser">绑定</a>
-    <div style="width: 100%;
-    height: 800px;">
-
+		
+    <div style="width: 100%;height:;">
+        <a href="javascript:;" class="weui-btn weui-btn_primary1"  v-on:click="bindingUser">绑定</a>
     </div>
 
   </div>
@@ -178,5 +177,14 @@ export default {
   margin-left: 17px;
   margin-top: 2px;
   z-index: -1；;
+}
+.weui-btn {
+  margin-top: 7%;
+  width: 86%;
+}
+.weui-btn_primary1{
+  position: absolute;
+  margin-left: 7%;
+  background-color: #05b500;
 }
 </style>

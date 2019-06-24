@@ -3,6 +3,9 @@
     <div class="weui-tab" id="page-infinite-navbar" >
       <div class="weui-tab__bd" id="#app">
         <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+          <div style="width: 100%;height: 140px;position: relative;">
+            <img src="../../../static/images/二院图片.jpg" style="width: 100%;height:100%;">
+          </div>
           <h2 class="doc-head">医院简介</h2>
           <h4 class="doc-info">发布时间:2019-6-20 发布人:wzl</h4>
           <h6></h6>
