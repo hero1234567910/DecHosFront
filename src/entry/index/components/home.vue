@@ -109,9 +109,11 @@
 			  <div class="weui-flex__item">
 			  	<div class="hero-item-img">
 							<img src="../../../../static/img/住院中--.png" style="width: 100%;"/>
-							<div class="hero-mButton">
-								<img src="../../../../static/img/进入.png" style="width: 100%;"/>
-							</div>
+							<a href="javascript:;" v-on:click="toHospitalizationService()">
+								<div class="hero-mButton">
+									<img src="../../../../static/img/进入.png" style="width: 100%;"/>
+								</div>
+							</a>
 						</div>
 			  </div>
 			  <div class="weui-flex__item">
@@ -139,7 +141,18 @@
   export default {
   	methods:{
   		toconsultation(){
-  			window.location='../../consultation.html'
+  			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../consultation.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/consultation.html'
+				}
+  		},
+  		toHospitalizationService(){
+  			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../hospitalizationService.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/hospitalizationService.html'
+				}
   		}
   	}
   }

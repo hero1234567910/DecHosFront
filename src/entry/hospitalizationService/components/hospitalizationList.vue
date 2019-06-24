@@ -48,6 +48,12 @@
 	 			</div>
 	 		</div>
  		</a>
+ 		
+ 		<div style="margin-top: 30px;">
+				<div>
+					<a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
+				</div>
+			</div>
   </div>
 </template>
 
@@ -62,6 +68,13 @@
   		}
   	},
   	methods:{
+  		toindex(){
+  			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../index.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/index.html'
+				}
+  		},
   		toPay(){
   			this.$router.push('/advancePay')
   		},
@@ -76,6 +89,12 @@
 	
 </style>
 <style scoped>
+	.weui-btn_primary{
+		background-color: #4CCBDB;
+	}
+	.weui-btn{
+		width: 230px;
+	}
 	.hospital-arrow{
 		position: relative;
 		height: 85px;

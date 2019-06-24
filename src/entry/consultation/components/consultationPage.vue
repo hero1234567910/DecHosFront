@@ -38,7 +38,7 @@
  		
  		<div class="page-panel">
  			<div class="panel-img">
- 				<img src="../../../../static/img/手机 (2).png" width="35%" style="position: absolute;bottom: 3px;left: 20px;"/>
+ 				<img src="../../../../static/img/问题(2).png" width="45%" style="position: absolute;bottom: 3px;left: 20px;"/>
  			</div>
  			<div class="page-content">
  				<p style="position: absolute;bottom: 0px;left: 50px;">咨询内容</p>
