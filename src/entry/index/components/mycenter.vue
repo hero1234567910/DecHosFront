@@ -45,10 +45,11 @@
                 </div>
                 <div class="weui-media-box__hd1">
                   <img class="weui-media-box__thumb1" src="../../../../static/img/二维码.png">
-                </div>
-                <h4
-                  style="font-size: 8px;position: absolute;margin-left: 70%;margin-top: 20px;"
+                  <h4
+                  style="font-size: 8px;position: absolute;margin-left: -20%;margin-top: 1%;"
                 >点击出示二维码</h4>
+                </div>
+                
               </a>
             </div>
           </div>
@@ -65,7 +66,7 @@
                 <div class="weui-media-box__bd">
                   <h4
                     class="weui-media-box__title"
-                    style="width: 38%;font-weight:400;margin-top:0px;font-size:10px;margin-bottom: 0px;text-align: center;color: cornflowerblue;text-decoration:underline"
+                    style="width: 50%;font-weight:400;margin-top:0px;font-size:10px;margin-bottom: 0px;text-align: center;color: cornflowerblue;text-decoration:underline"
                   >切换/添加就诊人</h4>
                 </div>
                 <div class="weui-media-box__hd1" style="display: none;">
@@ -280,7 +281,7 @@ export default {
   background-color: white;
   height: 100%;
   width: 100%;
-  box-shadow: 1px 2px 6px #888888;
+  box-shadow: 1px 1px 6px #888888;
 }
 .hero-panew {
   height: 200px;

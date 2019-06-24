@@ -1,12 +1,16 @@
 <template>
   <div style="background-color: #eff7fd;height: 100%;overflow-x: hidden;">
+    <div class="tips-1">
+      <h6>温馨提示:请您确认个人信息无误后再保存信息</h6>
+    </div>
     <div class="weui-cells-wzl weui-cells_form">
-      <div class="weui-cell">
+      <div class="weui-cells__title wzl" style="font-size: 18px;margin-top:0px;">姓名</div>
+      <div class="weui-cell-wzl">
         <div class="weui-cell__bd">
           <input id="hzxm" class="weui-input" type="text" placeholder="请输入患者姓名">
         </div>
       </div>
-      <div class="weui-cells__title wzl" style="font-size: 18px;">性别</div>
+      <div class="weui-cells__title wzl" style="font-size: 18px;margin-top:0px;">性别</div>
       <div class="weui-cell-wzl" style="padding-top: 0px;">
         <div class="weui-cell__bd">
           <div class="weui-cells-wzl weui-cells_radio" >
@@ -35,23 +39,24 @@
           </div>
         </div>
       </div>
+       <div class="weui-cells__title wzl" style="margin-top: 0px;font-size: 18px;">出生日期</div>
       <div class="weui-cell-wzl" style="margin-top: 0px;">
         <div class="weui-cell__bd">
-          <input type="text" data-toggle="date" id="my-input" placeholder="请输入出生年月" style="margin-top: 27px;">
+          <input type="text" data-toggle="date" id="my-input" placeholder="请输入出生年月" style="margin-top: 0px;">
         </div>
       </div>
       <div class="weui-cells__title wzl" style="margin-top: 0px;font-size: 18px;">联系方式</div>
       <div class="weui-cell-wzl" style="margin-top: 0px;padding-bottom:0px;padding-top:0px;border-bottom-color:#d5ebf9">
         <div class="weui-cell__bd">
-          <input id="lxdh" class="weui-input" style="border-bottom-color:#d5ebf9" type="number" placeholder="电话">
+          <input id="lxdh" class="weui-input" style="border-bottom-color:#d5ebf9" type="number" placeholder="请输入电话">
         </div>
       </div>
       <div class="weui-cell-wzl" style="margin-top: 0px;padding-top:0px;">
         <div class="weui-cell__bd">
-          <input id="lxdz" class="weui-input" style="border-top:none;" type="text" placeholder="地址">
+          <input id="lxdz" class="weui-input" style="border-top:none;" type="text" placeholder="请输入地址">
         </div>
       </div>
-      <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="save">保存</a>
+      <a href="javascript:;" class="weui-btn weui-btn_primary2" v-on:click="save">保存</a>
     </div>
   </div>
 </template>
@@ -187,7 +192,7 @@ export default {
   position: fixed;
 }
 .weui-btn {
-  margin-top: 78px;
+  margin-top: 7%;
   width: 86%;
 }
 weui-cell-wzl weui-check__label {
@@ -203,5 +208,18 @@ weui-cell-wzl weui-check__label {
 .weui-cell-wzl{
   padding-right: 0px;
   padding-left: 0px;
+}
+.tips-1{
+  background-color: white;
+    text-align: center;
+    border-bottom: solid;
+    /* border-top: solid; */
+    border-width: thin;
+    border-color: lightskyblue;
+}
+.weui-btn_primary2{
+  background-color: #05b500;
+  margin-left: 7%;
+  position: absolute;
 }
 </style>
