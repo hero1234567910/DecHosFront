@@ -5,22 +5,27 @@ function model(http) {
   return {
     // 获取用户信息
     getHosIntroduction(data) {
-    	console.log(data);
-        $.ajax({
-            url: evn.SEC_HOSAPI+'/wx/sys/informationinfo/getHosIntroduction',
-            contentType: 'application/json;charset=utf-8',
-            method: 'get',
-            dataType: 'JSON',
-            success: function(res) {
-                if (res.code == '0') {
-                    data = res.data;
-                }
-                if (res.code == '500') {
-                    layer.msg(res.msg);
-                }
+    	//console.log(data);
+        return http.get(evn.SEC_HOSAPI+'/wx/sys/informationinfo/getHosIntroduction',data,{
+            headers:{
+                contentType:'application/json;charset=utf-8'
             }
         });
     },
+    getOutpatientProcess(data){
+        return http.get(evn.SEC_HOSAPI+'/wx/sys/informationinfo/getOutpatientProcess',data,{
+            headers:{
+                contentType:'application/json;charset=utf-8'
+            }
+        });
+    },
+    getFloorDistribution(data){
+        return http.get(evn.SEC_HOSAPI+'/wx/sys/informationinfo/getFloorDistribution',data,{
+            headers:{
+                contentType:'application/json;charset=utf-8'
+            }
+        });
+    }
   }
 
 }

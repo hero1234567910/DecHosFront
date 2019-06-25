@@ -20,7 +20,7 @@ import weui from "jquery-weui/dist/js/jquery-weui.min";
 //import evn from '../index/utils/evn.js';
 import model from './model.js'
 export default {
-  name: "hosProfile.vue",
+  name: "floorDistribution.vue",
   data(){
     this.model = model(this.axios)
     
@@ -32,13 +32,13 @@ export default {
     }
   },
   mounted(){
-    this.getHosIntroduction();
+    this.getFloorDistribution();
   },
   methods: {
-    getHosIntroduction(){
+    getFloorDistribution(){
       let self = this;
       let data = this;
-      this.model.getHosIntroduction(data).then(function(res){
+      this.model.getFloorDistribution(data).then(function(res){
         if(res.data.code == '0'){
           //console.log(res.data);
           //console.log(res.data.data);

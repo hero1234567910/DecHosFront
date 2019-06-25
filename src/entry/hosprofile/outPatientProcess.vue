@@ -20,7 +20,7 @@ import weui from "jquery-weui/dist/js/jquery-weui.min";
 //import evn from '../index/utils/evn.js';
 import model from './model.js'
 export default {
-  name: "hosProfile.vue",
+  name: "outPatientProcess.vue",
   data(){
     this.model = model(this.axios)
     
@@ -32,13 +32,13 @@ export default {
     }
   },
   mounted(){
-    this.getHosIntroduction();
+    this.getOutpatientProcess();
   },
   methods: {
-    getHosIntroduction(){
+    getOutpatientProcess(){
       let self = this;
       let data = this;
-      this.model.getHosIntroduction(data).then(function(res){
+      this.model.getOutpatientProcess(data).then(function(res){
         if(res.data.code == '0'){
           //console.log(res.data);
           //console.log(res.data.data);
