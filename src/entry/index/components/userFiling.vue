@@ -97,8 +97,6 @@ export default {
 		var lxdh = $('#lxdh').val();
 		var lxdz = $('#lxdz').val();
 		var zjh = self.GetQueryString('zjh');
-		console.log(zjh)
-		
 		
 		
 		if (
