@@ -15,7 +15,7 @@
 
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
-//import evn from '../index/utils/evn.js';
+import evn from '../index/utils/evn.js';
 import model from "./model.js";
 export default {
   name: "hosProfile.vue",
@@ -70,7 +70,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+url1
+              '<img class="hos-img" src='+evn.SEC_HOSAPI
             );            
             self.content = _str;
           } else {
@@ -93,7 +93,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+url1
+              '<img class="hos-img" src='+evn.SEC_HOSAPI
             );          
             self.content = _str;
           } else {
@@ -116,7 +116,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+url1
+              '<img class="hos-img" src='+evn.SEC_HOSAPI
             );            
             self.content = _str;
           } else {
@@ -139,9 +139,10 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+url1
+              '<img class="hos-img" src="'+evn.SEC_HOSAPI
             );
             self.content = _str;
+            console.log(_str)
           } else {
             $.alert(res.data.msg);
           }        
@@ -162,7 +163,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+url1
+              '<img class="hos-img" src="'+evn.SEC_HOSAPI
             );          
             self.content = _str;
           } else {
@@ -185,7 +186,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+url1
+              '<img class="hos-img" src="'+evn.SEC_HOSAPI
             );
             self.content = _str;
           } else {
@@ -208,7 +209,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+url1
+              '<img class="hos-img" src="'+evn.SEC_HOSAPI
             );
             
             self.content = _str;
@@ -232,7 +233,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+url1
+              '<img class="hos-img" src="'+evn.SEC_HOSAPI
             );
             self.content = _str;
           } else {
@@ -255,7 +256,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+url1
+              '<img class="hos-img" src="'+evn.SEC_HOSAPI
             );
             self.content = _str;
           } else {
@@ -278,7 +279,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+url1
+              '<img class="hos-img" src="'+evn.SEC_HOSAPI
             );
             self.content = _str;
           } else {

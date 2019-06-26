@@ -53,10 +53,12 @@
 								</a>
 							</div>
 							<div class="weui-col-25">
-								<div class="hero-col-img">
-									<img src="../../../../static/img/图层-579.png" style="width: 100%;"/>
-								</div>
-								<div class="hero-col-dec">就诊需知</div>
+								<a href="javascript:;" v-on:click="toInformation('jzxz')">
+									<div class="hero-col-img">
+										<img src="../../../../static/img/图层-579.png" style="width: 100%;"/>
+									</div>
+									<div class="hero-col-dec">就诊需知</div>
+								</a>
 							</div>
 							<div class="weui-col-25">
 								<div class="hero-col-img">
@@ -88,16 +90,20 @@
 						<div class="hero-col-dec">病房预约</div>
 					</div>
 					<div class="weui-col-25">
+						<a href="javascript:;" @click="toInformation('rydy')">
 						<div class="hero-col-img">
 							<img src="../../../../static/img/入院导引.png" style="width: 100%;"/>
 						</div>
 						<div class="hero-col-dec">入院导引</div>
+						</a>
 					</div>
 					<div class="weui-col-25">
+						<a href="javascript:;" @click="toInformation('zyxz')">
 						<div class="hero-col-img">
 							<img src="../../../../static/img/住院须知.png" style="width: 100%;"/>
 						</div>
 						<div class="hero-col-dec">住院须知</div>
+						</a>
 					</div>
 				</div>
 			</div>
@@ -161,6 +167,30 @@
 				  window.location='../../sections.html'
 				} else if (process.env.NODE_ENV == 'production') {
 				  window.location='../../sechos/sections.html'
+				}
+  		},
+  		toInformation(str){
+  			if (process.env.NODE_ENV == 'dev') {
+  				console.log(str);
+  				if(str == 'jzxz'){
+  					window.location='../../hosProfile.html?infoType=PatientNeedtoKnow'
+  				}
+  				if(str == 'rydy'){
+  					window.location='../../hosProfile.html?infoType=DirectAdmission'
+  				}
+  				if(str == 'zyxz'){
+  					window.location='../../hosProfile.html?infoType=Hospitalisation'
+  				}
+				} else if (process.env.NODE_ENV == 'production') {
+					if(str == 'jzxz'){
+  					window.location='../../sechos/hosProfile.html?infoType=PatientNeedtoKnow'
+  				}
+  				if(str == 'rydy'){
+  					window.location='../../sechos/hosProfile.html?infoType=DirectAdmission'
+  				}
+  				if(str == 'zyxz'){
+  					window.location='../../sechos/hosProfile.html?infoType=Hospitalisation'
+  				}
 				}
   		}
   	}
