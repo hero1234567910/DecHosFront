@@ -97,6 +97,7 @@ export default {
 		var lxdh = $('#lxdh').val();
 		var lxdz = $('#lxdz').val();
 		var zjh = self.GetQueryString('zjh');
+		var openid = localStorage.getItem('sec_openId');
 		
 		
 		if (
@@ -105,7 +106,8 @@ export default {
 		    this.panNull(sex, "性别不能为空") ||
 		    this.panNull(birth, "出生日期不能为空") ||
 		    this.panNull(lxdh, "联系电话不能为空") ||
-		    this.panNull(lxdz, "联系地址不能为空") 
+		    this.panNull(lxdz, "联系地址不能为空") ||
+		    this.panNull(openid,"openidb不能为空")
 		  ) {
 		    return;
 		  };
@@ -115,7 +117,8 @@ export default {
 		  	'birth':birth,
 		  	'lxdh':lxdh,
 		  	'lxdz':lxdz,
-		  	'zjh':zjh
+		  	'zjh':zjh,
+		  	'openid':openid
 		  }
 		  this.model.savePatient(data).then(function(res){
 		  	if(res.data.code == '0'){

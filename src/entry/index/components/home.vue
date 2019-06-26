@@ -74,10 +74,12 @@
 			<div style="margin-left: 20px;margin-right: 20px;height: 70px;">
 				<div class="weui-row" style="height: 80px;">
 					<div class="weui-col-25">
-						<div class="hero-col-img">
-							<img src="../../../../static/img/科室预约-.png" style="width: 100%;"/>
-						</div>
-						<div class="hero-col-dec" style="min-width: 70px;">科室预约</div>
+						<a href="javascript:;" v-on:click="toSection()">
+							<div class="hero-col-img">
+								<img src="../../../../static/img/科室预约-.png" style="width: 100%;"/>
+							</div>
+							<div class="hero-col-dec" style="min-width: 70px;">科室预约</div>
+						</a>
 					</div>
 					<div class="weui-col-25">
 						<div class="hero-col-img">
@@ -152,6 +154,13 @@
 				  window.location='../../hospitalizationService.html'
 				} else if (process.env.NODE_ENV == 'production') {
 				  window.location='../../sechos/hospitalizationService.html'
+				}
+  		},
+  		toSection(){
+  			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../sections.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/sections.html'
 				}
   		}
   	}

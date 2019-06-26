@@ -81,23 +81,24 @@
       </div>
     </div>
     <div style="position: relative;top: -66px;">
-    <div style="margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
-      <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
-        <div class="weui-cells-wzl">
-          <a class="weui-cell weui-cell_access-wzl" href="javascript:;">
-            <div class="weui-cell__hd">
-              <img src="../../../../static/img/我的预约.png">
-            </div>
-            <div class="weui-cell__bd">
-              <p style="margin-bottom: -10px;">我的预约</p>
-              <img style="width:45%" src="../../../../static/images/圆角矩形-1.png">
-            </div>
-            <div class="weui-cell__ft"></div>
-          </a>
-        </div>
-      </div>
-    </div>
-
+    <a href="javascript:;" v-on:click="toReserv()">
+	    <div style="margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
+	      <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
+	        <div class="weui-cells-wzl">
+	          <a class="weui-cell weui-cell_access-wzl" href="javascript:;">
+	            <div class="weui-cell__hd">
+	              <img src="../../../../static/img/我的预约.png">
+	            </div>
+	            <div class="weui-cell__bd">
+	              <p style="margin-bottom: -10px;">我的预约</p>
+	              <img style="width:45%" src="../../../../static/images/圆角矩形-1.png">
+	            </div>
+	            <div class="weui-cell__ft"></div>
+	          </a>
+	        </div>
+	      </div>
+	    </div>
+		</a>
     <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
     <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
       <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
@@ -198,6 +199,13 @@ export default {
   			self.show = false;
   		}
   		console.log(self.patientName+'  '+self.headImg)
+  	},
+  	toReserv(){
+  		if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../reservation.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/reservation.html'
+				}
   	}
   }
 };
