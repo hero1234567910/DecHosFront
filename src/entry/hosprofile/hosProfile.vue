@@ -48,7 +48,14 @@ export default {
     judge() {
       let self = this;
       var infoType = this.GetQueryString("infoType");
-      
+      var url1;
+      if (process.env.NODE_ENV == 'dev'){
+        url1 = "http://localhost:9091";
+      }else if (process.env.NODE_ENV == 'production'){
+        url1 = "";
+      }
+
+
       //医院简介
       if (infoType == "HosIntroduction") {
         let data = this;
@@ -63,7 +70,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="http://localhost:9091'
+              '<img class="hos-img" src="'+url1
             );            
             self.content = _str;
           } else {
@@ -86,7 +93,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="http://localhost:9091'
+              '<img class="hos-img" src="'+url1
             );          
             self.content = _str;
           } else {
@@ -109,7 +116,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="http://localhost:9091'
+              '<img class="hos-img" src="'+url1
             );            
             self.content = _str;
           } else {
@@ -132,7 +139,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="http://localhost:9091'
+              '<img class="hos-img" src="'+url1
             );
             self.content = _str;
           } else {
@@ -155,7 +162,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="http://localhost:9091'
+              '<img class="hos-img" src="'+url1
             );          
             self.content = _str;
           } else {
@@ -178,7 +185,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="http://localhost:9091'
+              '<img class="hos-img" src="'+url1
             );
             self.content = _str;
           } else {
@@ -201,7 +208,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="http://localhost:9091'
+              '<img class="hos-img" src="'+url1
             );
             
             self.content = _str;
@@ -225,7 +232,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="http://localhost:9091'
+              '<img class="hos-img" src="'+url1
             );
             self.content = _str;
           } else {
@@ -248,7 +255,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="http://localhost:9091'
+              '<img class="hos-img" src="'+url1
             );
             self.content = _str;
           } else {
@@ -271,7 +278,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="http://localhost:9091'
+              '<img class="hos-img" src="'+url1
             );
             self.content = _str;
           } else {
