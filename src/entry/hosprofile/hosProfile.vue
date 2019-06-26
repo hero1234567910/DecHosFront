@@ -48,15 +48,12 @@ export default {
     judge() {
       let self = this;
       var infoType = this.GetQueryString("infoType");
-      //console.log(infoType);
       
+      //医院简介
       if (infoType == "HosIntroduction") {
-        //let self = this;
         let data = this;
         this.model.getHosIntroduction(data).then(function(res) {
           if (res.data.code == "0") {
-            //console.log(res.data);
-            //console.log(res.data.data);
             let title = res.data.data.title;
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
@@ -67,23 +64,19 @@ export default {
             var _str = res.data.data.content.replace(
               /<img src="/g,
               '<img class="hos-img" src="http://localhost:9091'
-            );
-            //console.log(_str);
+            );            
             self.content = _str;
           } else {
             $.alert(res.data.msg);
-          }
-          //console.log(res.data.data);
+          }        
         });
       }
 
-      if(infoType == "OutpatientProcess"){
-        //let self = this;
+      //门诊流程
+      if(infoType == "OutpatientProcess"){       
         let data = this;
         this.model.getOutpatientProcess(data).then(function(res) {
           if (res.data.code == "0") {
-            //console.log(res.data);
-            //console.log(res.data.data);
             let title = res.data.data.title;
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
@@ -94,23 +87,19 @@ export default {
             var _str = res.data.data.content.replace(
               /<img src="/g,
               '<img class="hos-img" src="http://localhost:9091'
-            );
-            //console.log(_str);
+            );          
             self.content = _str;
           } else {
             $.alert(res.data.msg);
-          }
-          //console.log(res.data.data);
+          }         
         });
       }
 
+      //楼层分布
       if(infoType == "FloorDistribution"){
-        //let self = this;
         let data = this;
         this.model.getFloorDistribution(data).then(function(res) {
           if (res.data.code == "0") {
-            //console.log(res.data);
-            //console.log(res.data.data);
             let title = res.data.data.title;
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
@@ -121,23 +110,19 @@ export default {
             var _str = res.data.data.content.replace(
               /<img src="/g,
               '<img class="hos-img" src="http://localhost:9091'
-            );
-            //console.log(_str);
+            );            
             self.content = _str;
           } else {
             $.alert(res.data.msg);
-          }
-          //console.log(res.data.data);
+          }         
         });
       }
 
+      //就诊须知
       if(infoType == "PatientNeedtoKnow"){
-        //let self = this;
         let data = this;
         this.model.getPatientNeedtoKnow(data).then(function(res) {
           if (res.data.code == "0") {
-            //console.log(res.data);
-            //console.log(res.data.data);
             let title = res.data.data.title;
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
@@ -149,22 +134,18 @@ export default {
               /<img src="/g,
               '<img class="hos-img" src="http://localhost:9091'
             );
-            //console.log(_str);
             self.content = _str;
           } else {
             $.alert(res.data.msg);
-          }
-          //console.log(res.data.data);
+          }        
         });
       }
 
+      //入院引导
       if(infoType == "DirectAdmission"){
-        //let self = this;
         let data = this;
         this.model.getDirectAdmission(data).then(function(res) {
           if (res.data.code == "0") {
-            //console.log(res.data);
-            //console.log(res.data.data);
             let title = res.data.data.title;
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
@@ -175,23 +156,19 @@ export default {
             var _str = res.data.data.content.replace(
               /<img src="/g,
               '<img class="hos-img" src="http://localhost:9091'
-            );
-            //console.log(_str);
+            );          
             self.content = _str;
           } else {
             $.alert(res.data.msg);
-          }
-          //console.log(res.data.data);
+          }        
         });
       }
 
+      //住院须知
       if(infoType == "Hospitalisation"){
-        //let self = this;
         let data = this;
         this.model.getHospitalisation(data).then(function(res) {
           if (res.data.code == "0") {
-            //console.log(res.data);
-            //console.log(res.data.data);
             let title = res.data.data.title;
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
@@ -203,22 +180,18 @@ export default {
               /<img src="/g,
               '<img class="hos-img" src="http://localhost:9091'
             );
-            //console.log(_str);
             self.content = _str;
           } else {
             $.alert(res.data.msg);
           }
-          //console.log(res.data.data);
         });
       }
 
+      //出院导引
       if(infoType == "OutHospitalInfo"){
-        //let self = this;
         let data = this;
         this.model.getOutHospitalInfo(data).then(function(res) {
           if (res.data.code == "0") {
-            //console.log(res.data);
-            //console.log(res.data.data);
             let title = res.data.data.title;
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
@@ -230,22 +203,19 @@ export default {
               /<img src="/g,
               '<img class="hos-img" src="http://localhost:9091'
             );
-            //console.log(_str);
+            
             self.content = _str;
           } else {
             $.alert(res.data.msg);
           }
-          //console.log(res.data.data);
         });
       }
 
+      //出院须知
       if(infoType == "OutNeedKnow"){
-        //let self = this;
         let data = this;
         this.model.getOutNeedKnow(data).then(function(res) {
           if (res.data.code == "0") {
-            //console.log(res.data);
-            //console.log(res.data.data);
             let title = res.data.data.title;
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
@@ -257,22 +227,18 @@ export default {
               /<img src="/g,
               '<img class="hos-img" src="http://localhost:9091'
             );
-            //console.log(_str);
             self.content = _str;
           } else {
             $.alert(res.data.msg);
           }
-          //console.log(res.data.data);
         });
       }
 
+      //科室简介
       if(infoType == "DepartmentsIntroduction"){
-        //let self = this;
         let data = this;
         this.model.getDepartmentsIntroduction(data).then(function(res) {
           if (res.data.code == "0") {
-            //console.log(res.data);
-            //console.log(res.data.data);
             let title = res.data.data.title;
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
@@ -284,22 +250,18 @@ export default {
               /<img src="/g,
               '<img class="hos-img" src="http://localhost:9091'
             );
-            //console.log(_str);
             self.content = _str;
           } else {
             $.alert(res.data.msg);
           }
-          //console.log(res.data.data);
         });
       }
 
+      //健康教育
       if(infoType == "HealthEducation"){
-        //let self = this;
         let data = this;
         this.model.getHealthEducation(data).then(function(res) {
           if (res.data.code == "0") {
-            //console.log(res.data);
-            //console.log(res.data.data);
             let title = res.data.data.title;
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
@@ -311,12 +273,10 @@ export default {
               /<img src="/g,
               '<img class="hos-img" src="http://localhost:9091'
             );
-            //console.log(_str);
             self.content = _str;
           } else {
             $.alert(res.data.msg);
           }
-          //console.log(res.data.data);
         });
       }
     },
