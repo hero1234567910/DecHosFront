@@ -12,3 +12,6 @@ body{
 [v-cloak] {
    	  display: none;
 }
+.weui-toast{
+    margin-left: 0px;
+}

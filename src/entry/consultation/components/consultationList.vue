@@ -12,7 +12,8 @@
 	 			</div>
  				<div class="header-select weui-col-50">
  					<el-input
-				    placeholder="请输入内容" 
+ 						 @keyup.enter.native="searchKey()"
+				    placeholder="请输入咨询人姓名" 
 				    suffix-icon="el-icon-search"
 				    v-model="search"
 				    >
@@ -21,28 +22,34 @@
  			</div>
  		</div>
  		
- 		<div class="conlist-content">
- 			<div class="weui-panel weui-panel_access">
-			  <div class="weui-panel__hd">
-			  	<div class="panel-img"><img src="../../../../static/img/问题(1).png" width="57%">
-			  	</div>图文组合列表
-			  	</div>
-			  <div class="weui-panel__bd">
-			    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
-			      <div class="weui-media-box__bd">
-			        <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道图文组合列表图文组合列表图文组合列表图文组合列表图文组合列表图文组合列表图文组合列表图文组合列表图文组合列表。</p>
-			      </div>
-			    </a>
-			  </div>
-			  <div class="weui-panel__ft">
-			    <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link" v-on:click="todetail()">
-			      <div class="weui-cell__bd">【查看详情】</div>
-			      <span class="weui-cell__ft"></span>
-			    </a>    
-			  </div>
+ 		<div class="conlist-content" id="th">
+ 			<div id="list">
+	 			<div class="weui-panel weui-panel_access" v-for="item in consulList">
+				  <div class="weui-panel__hd">
+				  	<div class="panel-img"><img src="../../../../static/img/问题(1).png" width="57%">
+				  	</div>{{item.consultationTitle}}
+				  	</div>
+				  <div class="weui-panel__bd">
+				    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+				      <div class="weui-media-box__bd">
+				        <p class="weui-media-box__desc">{{item.consultationContent}}</p>
+				      </div>
+				    </a>
+				  </div>
+				  <div class="weui-panel__ft">
+				    <a href="javascript:void(0);" class="weui-cell weui-cell_access weui-cell_link" v-on:click="todetail(item.rowGuid)">
+				      <div class="weui-cell__bd">【查看详情】</div>
+				      <span class="weui-cell__ft"></span>
+				    </a>    
+				  </div>
+				</div>
+			</div>
+			<div v-if="isshow()" class="weui-loadmore" id="onloading">
+			  <i class="weui-loading"></i>
+			  <span class="weui-loadmore__tips">正在加载</span>
 			</div>
 			
-			<div style="margin-top: 30px;">
+			<div style="margin-top: 30px;margin-bottom: 30px;">
 				<div>
 					<a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
 				</div>
@@ -58,10 +65,105 @@
   	data(){
   		this.model = model(this.axios);
   		return{
-  			search:''
+  			search:'',
+  			consulList:[],
+  			loading:false,
+  			page:2
   		}
   	},
+  	mounted(){
+  		this.getConsultationList();
+  		this.init()
+  	},
+  	watch:{
+
+  	},
   	methods:{
+  		isshow(){
+				if(this.consulList.length >= 5){
+					return true;
+				}else{
+					return false;
+				}
+  		},
+  		searchKey(e){
+  			let self = this;
+  			$('#th').infinite();
+				let data = {
+					'page':'1',
+					'limit':'10',
+					'consultationName':this.search
+				}
+				this.model.getList(data).then(function(res){
+					if(res.data.code == '0'){
+						self.consulList = res.data.data;
+						self.page = 2;
+						$('#onloading').css('display','');
+					}else{
+						$.toptip(res.data.msg, 'error');
+					}
+			  					
+				})
+				
+
+  		},
+  		init(){
+  			let self = this;
+  			var loading = false;  //状态标记
+				$('#th').infinite();
+  			$('#th').on("infinite", function() {
+				 	 if(loading) return;
+					  loading = true;
+					  setTimeout(function() {
+					  	let data = {};
+					  	if(self.search != ''){
+					  		data = {
+					  			'limit':'10',
+					  			'page':self.page,
+					  			'consultationName':self.search
+					  		}
+					  	}else{
+					  		data = {
+						  		'limit':'10',
+						  		'page':self.page
+						  	};
+					  	}
+					  	
+					  	self.model.getList(data).then(function(res){
+			  				if(res.data.code == '0'){
+			  					if(res.data.data.length == 0){
+			  						$('#th').destroyInfinite();
+			  						$('#onloading').css('display','none');
+			  						self.page = 2;
+			  					}
+			  					
+			  					self.page++;
+			  					for(var i=0;i<res.data.data.length;i++){
+			  						self.consulList.push(res.data.data[i])
+			  					}
+			  				}else{
+			  					$.toptip(res.data.msg, 'error');
+			  				}
+			  			})
+					    loading = false;
+					  }, 1500);   //模拟延迟
+				});
+  		},
+  		//获取列表
+  		getConsultationList(){
+  			let self =this;
+  			let data = {
+  				'page':'1',
+  				'limit':'10'
+  			};
+  			this.model.getList(data).then(function(res){
+  				if(res.data.code == '0'){
+  					self.consulList = res.data.data;
+  				}else{
+  					$.toptip(res.data.msg, 'error');
+  				}
+  			})
+  		},
   		toindex(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../index.html'
@@ -69,8 +171,8 @@
 				  window.location='../../sechos/index.html'
 				}
   		},
-  		todetail(){
-  			this.$router.push('/consultationDetails');
+  		todetail(ele){
+				this.$router.push('/consultationDetails?rowGuid='+ele);
   		},
   		topage(){
   			this.$router.push('/consultationPage')
@@ -78,7 +180,6 @@
   	}
   }
   </script>
-
 <style>
 	.el-input__inner{
 		border-radius: 22px;

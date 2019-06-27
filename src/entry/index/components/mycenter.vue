@@ -198,7 +198,6 @@ export default {
   			self.sex = sex;
   			self.show = false;
   		}
-  		console.log(self.patientName+'  '+self.headImg)
   	},
   	toReserv(){
   		if (process.env.NODE_ENV == 'dev') {

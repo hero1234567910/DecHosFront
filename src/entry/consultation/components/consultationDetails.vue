@@ -4,12 +4,12 @@
  			<div class="weui-panel weui-panel_access" style="margin-top: 0px;">
 			  <div class="weui-panel__hd">
 			  	<div class="panel-img"><img src="../../../../static/img/问题(1).png" width="57%">
-			  	</div>为什么运动会受伤
+			  	</div>{{da.consultationTitle}}
 			  	</div>
 			  <div class="weui-panel__bd">
 			    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
 			      <div class="weui-media-box__bd">
-			        <p class="weui-media-box__desc">由各种物质组成的巨型球状天体，叫做星球。星球有一定的形状，有自己的运行轨道图文组合列表图文组合列表图文组合列表图文组合列表图文组合列表图文组合列表图文组合列表图文组合列表图文组合列表。</p>
+			        <p class="weui-media-box__desc">{{da.consultationContent}}</p>
 			      </div>
 			    </a>
 			  </div>
@@ -26,7 +26,7 @@
 			        <img class="weui-media-box__thumb" src="../../../../static/img/400398144.png">
 			      </div>
 			      <div class="weui-media-box__bd">
-			        <h4 class="weui-media-box__title"> 回复时间：   2019-6-12</h4>
+			        <h4 class="weui-media-box__title"> 回复时间：   {{da.replyTime}}</h4>
 			      </div>
 			    </a>
 			  </div>
@@ -35,7 +35,7 @@
 					  type="textarea"
 					  :autosize="{ minRows: 2, maxRows: 4}"
 					  placeholder=""
-					  v-model="textarea">
+					  v-model="da.replyContent">
 					</el-input>
 			  </div>
 			</div>
@@ -56,13 +56,37 @@
   		this.model = model(this.axios);
   		return{
   			visible: true,
-  			textarea:'这是一个错误的决定'
+  			textarea:'',
+  			da:{}
   		}
   	},
+  	mounted(){
+  		this.getDetail()
+  	},
   	methods:{
+  		getDetail(){
+  			let self = this;
+  			var rowGuid = this.GetQueryString('rowGuid');
+  			let data = {
+  				'rowGuid':rowGuid
+  			}
+  			this.model.getDetail(data).then(function(res){
+  				if(res.data.code == '0'){
+  					self.da = res.data.data;
+  				}else{
+  					$.toptip(res.data.msg, 'error');
+  				}
+  			})
+  		},
   		tolist(){
   			this.$router.push('/')
-  		}
+  		},
+  	//获取url中的参数(获取锚点的url)
+		 GetQueryString(name){
+			     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			     var r = window.location.hash.substr(22).match(reg);//search,查询？后面的参数，并匹配正则
+			     if(r!=null)return  decodeURI(r[2]); return null;
+			},
   	}
   }
   </script>
