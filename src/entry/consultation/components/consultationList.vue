@@ -87,7 +87,9 @@
 				}
   		},
   		searchKey(e){
+  			$.showLoading();
   			let self = this;
+  			$('#th').destroyInfinite();
   			$('#th').infinite();
 				let data = {
 					'page':'1',
@@ -96,7 +98,8 @@
 				}
 				this.model.getList(data).then(function(res){
 					if(res.data.code == '0'){
-						self.consulList = res.data.data;
+						$.hideLoading();
+          	self.consulList = res.data.data;
 						self.page = 2;
 						$('#onloading').css('display','');
 					}else{

@@ -73,6 +73,10 @@
   			this.model.getDetail(data).then(function(res){
   				if(res.data.code == '0'){
   					self.da = res.data.data;
+  					if(self.da.replyTime == null || self.da.replyTime == ''){
+  						self.da.replyTime = '暂未回复';
+  						self.da.replyContent = '暂未回复';
+  					}
   				}else{
   					$.toptip(res.data.msg, 'error');
   				}
