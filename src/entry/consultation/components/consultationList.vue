@@ -24,7 +24,7 @@
  		
  		<div class="conlist-content" id="th">
  			<div id="list">
-	 			<div class="weui-panel weui-panel_access" v-for="item in consulList">
+	 			<div class="weui-panel weui-panel_access" v-for="item in consulList" id="top">
 				  <div class="weui-panel__hd">
 				  	<div class="panel-img"><img src="../../../../static/img/问题(1).png" width="57%">
 				  	</div>{{item.consultationTitle}}
@@ -99,6 +99,7 @@
 				this.model.getList(data).then(function(res){
 					if(res.data.code == '0'){
 						$.hideLoading();
+						window.location.href="#top";
           	self.consulList = res.data.data;
 						self.page = 2;
 						$('#onloading').css('display','');

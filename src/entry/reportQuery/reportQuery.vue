@@ -9,13 +9,13 @@
 	
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import model from './model.js'
-import consultationList from './components/consultationList'
-import consultationPage from './components/consultationPage'
-import consiltationDetails from './components/consultationDetails'
+import reportMainList from './components/reportMainList'
+import reportTab from './components/reportTab'
+
   export default {
-	components:{consultationList,consultationPage,consiltationDetails},
+	components:{reportMainList,reportTab},
 	data() {
-   	this.model = model(this.axios)
+    	this.model = model(this.axios)
       return {
       }
     },

@@ -103,7 +103,7 @@
     <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
       <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
         <div class="weui-cells-wzl">
-          <a class="weui-cell weui-cell_access-wzl" href="javascript:;">
+          <a class="weui-cell weui-cell_access-wzl" href="javascript:;" v-on:click="toReport()">
             <div class="weui-cell__hd">
               <img src="../../../../static/img/报告.png">
             </div>
@@ -204,6 +204,13 @@ export default {
 				  window.location='../../reservation.html'
 				} else if (process.env.NODE_ENV == 'production') {
 				  window.location='../../sechos/reservation.html'
+				}
+  	},
+  	toReport(){
+  		if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../reportQuery.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/reportQuery.html'
 				}
   	}
   }
