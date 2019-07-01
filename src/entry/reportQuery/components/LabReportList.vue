@@ -2,13 +2,13 @@
   <div style="height: 100%;background-color: #EFF7FD;">
     <div class="re-header-select">
       <div class="select-left">
-        <input type="text" class="select-input1" data-toggle="date" id="ksrq" placeholder="开始日期" />
+        <input type="text" class="select-input1" data-toggle="date" id="ksrq1" placeholder="开始日期" />
       </div>
       <div class="select-middle">
         <img src="../../../../static/img/横线.svg" width="100%" style="position: absolute;top: 16px;" />
       </div>
       <div class="select-right">
-        <input type="text" class="select-input1" data-toggle="date" id="jsrq" placeholder="结束日期" />
+        <input type="text" class="select-input1" data-toggle="date" id="jsrq1" placeholder="结束日期" />
       </div>
       <div class="select-fin">
         <img src="../../../../static/img/搜索.png" width="100%" style="vertical-align: middle;" v-on:click="LabReport()"/>
@@ -78,14 +78,14 @@ export default {
 	// this.LabReport();
   },
   mounted() {
-    this.init2();
+    this.init();
   },
   methods: {
-    init2() {
-      $("#ksrq").calendar({
+    init() {
+      $("#ksrq1").calendar({
 		  dateFormat:'yyyy-mm-dd'
 	  });
-      $("#jsrq").calendar({
+      $("#jsrq1").calendar({
 		  dateFormat:'yyyy-mm-dd'
 	  });
     },
@@ -101,9 +101,9 @@ export default {
 		let hzxm = localStorage.getItem('sec_patientName');
 		let patid = localStorage.getItem('');
 		let jzlb = localStorage.getItem('');
-		let date1 = $('#ksrq').val();
+		let date1 = $('#ksrq1').val();
 		let ksrq = date1.replace(/\-/g, "");
-		let date2 = $('#jsrq').val();
+		let date2 = $('#jsrq1').val();
 		let jsrq = date2.replace(/\-/g, "");
 		let data = {
 			'hzxm':hzxm,

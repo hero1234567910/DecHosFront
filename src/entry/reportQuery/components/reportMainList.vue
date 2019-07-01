@@ -53,7 +53,14 @@
   	methods:{
   		toReport(){
   			this.$router.push('/reportTab');
-  		}
+  		},
+			toindex(){
+  			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../index.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/index.html'
+				}
+  		},
   	}
   }
   </script>
