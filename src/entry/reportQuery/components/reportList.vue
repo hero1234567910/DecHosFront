@@ -98,9 +98,16 @@ export default {
 	},
 	Report() {
 		let self = this;
-		let hzxm = localStorage.getItem('sec_patientName');
-		let patid = localStorage.getItem('');
-		let jzlb = localStorage.getItem('');
+    let hzxm = localStorage.getItem('sec_patientName');
+    if(localStorage.getItem('patientStatus')==1){
+        let patid = localStorage.getItem('sec_patientIdmz');
+        let jzlb = localStorage.getItem('patientStatus');
+    }
+    if(localStorage.getItem('patientStatus')==2){
+        let patid = localStorage.getItem('sec_patientIdzy');
+        let jzlb = localStorage.getItem('patientStatus');
+    }
+		
 		// let hzxm = "董翠影";
 		// let patid = "67147";
 		// let jzlb = 2;

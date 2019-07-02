@@ -35,12 +35,10 @@ export default {
     };
   },
   created() {
-    
+    this.judge();
     //this.GetQueryString();
-    
   },
   mounted() {
-    this.judge();
     this.getAttachList();
   },
   methods: {
@@ -335,10 +333,9 @@ export default {
       let data = {
         'guid': guid
       };
-      
+      localStorage.removeItem('attachGuid');
       this.model.getAttachList(data).then(function(res) {
         if ((res.data.code == "0" && res.data.data.length > 0)) {
-          localStorage.removeItem('attachGuid');
           for (let i = 0; i < res.data.data.length; i++) {
             let mdata = res.data.data;
             let last = mdata[i].contentType.substr(

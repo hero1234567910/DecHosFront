@@ -79,6 +79,7 @@ import model from './model.js'
 								if(val == outArray[i].medicalNumberMZ){
 									self.patientId = outArray[i].patidMZ;
 									localStorage.setItem('sec_patientIdmz',self.patientId);
+									localStorage.setItem('patientStatus',1);
 								}
 							}
     				}
@@ -95,7 +96,8 @@ import model from './model.js'
     						for(var i=0;i<hosArray.length;i++){
     							if(val == hosArray[i].medicalNumberMZ){
     								self.patientId = hosArray[i].patid;
-    								localStorage.setItem('sec_patientIdzy',self.patientId);
+									localStorage.setItem('sec_patientIdzy',self.patientId);
+									localStorage.setItem('patientStatus',2);
     							}
     						}
     				}

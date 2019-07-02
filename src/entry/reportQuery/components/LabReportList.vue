@@ -99,8 +99,14 @@ export default {
     LabReport() {
 		let self = this;
 		let hzxm = localStorage.getItem('sec_patientName');
-		let patid = localStorage.getItem('');
-		let jzlb = localStorage.getItem('');
+		if(localStorage.getItem('patientStatus')==1){
+        let patid = localStorage.getItem('sec_patientIdmz');
+        let jzlb = localStorage.getItem('patientStatus');
+    }
+    if(localStorage.getItem('patientStatus')==2){
+        let patid = localStorage.getItem('sec_patientIdzy');
+        let jzlb = localStorage.getItem('patientStatus');
+    }
 		let date1 = $('#ksrq1').val();
 		let ksrq = date1.replace(/\-/g, "");
 		let date2 = $('#jsrq1').val();
