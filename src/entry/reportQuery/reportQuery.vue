@@ -11,9 +11,11 @@ import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import model from './model.js'
 import reportMainList from './components/reportMainList'
 import reportTab from './components/reportTab'
+import reportDetail from './components/reportDetail'
+import labReportDetail from './components/labReportDetail'
 
   export default {
-	components:{reportMainList,reportTab},
+	components:{reportMainList,reportTab,reportDetail,labReportDetail},
 	data() {
     	this.model = model(this.axios)
       return {

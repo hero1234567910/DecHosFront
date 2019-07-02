@@ -29,6 +29,7 @@ import model from './model.js'
 import reportList from './reportList'
 import labReportList from './labReportList'
 
+
   export default {
 	components:{reportList,labReportList},
 	data() {

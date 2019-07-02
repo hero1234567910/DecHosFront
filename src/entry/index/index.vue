@@ -11,14 +11,14 @@
       </div>
 		
 		  <div class="weui-tabbar">
-		    <a href="#tab1" class="weui-tabbar__item weui-bar__item--on">
+		    <a href="#tab1" class="weui-tabbar__item weui-bar__item--on" id="ind">
 		      <!--<span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>-->
 		      <div class="weui-tabbar__icon">
 		        <img src="../../../static/img/icon_nav_button.png" alt="">
 		      </div>
 		      <p class="weui-tabbar__label">主页</p>
 		    </a>
-		    <a href="#tab2" class="weui-tabbar__item">
+		    <a href="#tab2" class="weui-tabbar__item" id="cen">
 		      <div class="weui-tabbar__icon">
 		        <img src="../../../static/img/icon_nav_cell.png" alt="">
 		      </div>
@@ -59,6 +59,46 @@ import model from './model.js'
 	    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
 	    			localStorage.setItem('sec_sex',res.data.data.patientSex);
     				localStorage.setItem('sec_birth',res.data.data.patientBirth);
+    				
+    				if(res.data.data.patientName == null || res.data.data.patientName == ''){
+    					//说明没有绑定患者信息，去绑定
+    					$.alert("您并未绑定患者信息，清先绑定", "提示", function() {
+							 	$('#cen').addClass('.weui-bar__item--on');
+							});
+    				}
+    				if(res.data.data.patientStatus == 1){
+    					let arr = [];
+							let outArray = res.data.data.outpatients;
+							for(var i=0;i<outArray.length;i++){
+									let blh = outArray[i].medicalNumberMZ;
+									arr.push(parseInt(blh));
+							}
+							arr.sort().reverse();
+							let val = arr[0];
+							for(var i=0;i<outArray.length;i++){
+								if(val == outArray[i].medicalNumberMZ){
+									self.patientId = outArray[i].patidMZ;
+									localStorage.setItem('sec_patientIdmz',self.patientId);
+								}
+							}
+    				}
+    				
+    				if(res.data.data.patientStatus == 2){
+    					let arr = [];
+    						let hosArray = res.data.data.hospitalizedList;
+    						for(var i=0;i<hosArray.length;i++){
+									let blh = hosArray[i].medicalNumber;
+									arr.push(parseInt(blh));
+    						}
+    						arr.sort().reverse();
+    						let val = arr[0];
+    						for(var i=0;i<hosArray.length;i++){
+    							if(val == hosArray[i].medicalNumberMZ){
+    								self.patientId = hosArray[i].patid;
+    								localStorage.setItem('sec_patientIdzy',self.patientId);
+    							}
+    						}
+    				}
     			}else{
     				$.alert(res.data.msg);
     			}

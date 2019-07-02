@@ -75,13 +75,7 @@ export default {
   mounted(){
   	this.initY();
   },
-//watch: {
-//　　// 利用watch方法检测路由变化：
-//	'$route'(to,from){
-//	    console.log('fff')
-//　　　　this.cos();
-//	  }
-//	},
+
   methods: {
   	initY(){
   		$('#my-input').calendar({
@@ -126,6 +120,21 @@ export default {
 						  localStorage.setItem('sec_sex',res.data.data.patientSex);
     					localStorage.setItem('sec_birth',res.data.data.patientBirth);
     					localStorage.setItem('sec_patientName',res.data.data.patientName);
+    					let arr = [];
+    						let outArray = res.data.data.outpatients;
+    						for(var i=0;i<outArray.length;i++){
+									let blh = outArray[i].medicalNumberMZ;
+									arr.push(parseInt(blh));
+    						}
+    						arr.sort().reverse();
+    						let val = arr[0];
+    						for(var i=0;i<outArray.length;i++){
+    							if(val == outArray[i].medicalNumberMZ){
+    								self.patientId = outArray[i].patidMZ;
+    								localStorage.setItem('sec_patientIdmz',self.patientId);
+    							}
+    						}
+    					
     					self.$router.push('/');
 						});
 		  	}else{

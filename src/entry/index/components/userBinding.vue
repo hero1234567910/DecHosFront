@@ -59,7 +59,8 @@ export default {
       color2:'#878787',
       action:'',
       sex:'',
-      birth:''
+      birth:'',
+      patientId:'',
     };
   },
   mounted(){
@@ -83,12 +84,45 @@ export default {
   			'openid':openid
   		};
 		this.model.bindUser(data).then(function(res){
-			console.log(res)
 				if(res.data.code == '0'){
 					$.toast('绑定成功', function() {
 						  localStorage.setItem('sec_sex',res.data.data.patientSex);
     					localStorage.setItem('sec_birth',res.data.data.patientBirth);
     					localStorage.setItem('sec_patientName',res.data.data.patientName);
+    					//获取最新patientid；（病历号最大的记录）
+    					if(action == 'mz'){
+    						let arr = [];
+    						let outArray = res.data.data.outpatients;
+    						for(var i=0;i<outArray.length;i++){
+									let blh = outArray[i].medicalNumberMZ;
+									arr.push(parseInt(blh));
+    						}
+    						arr.sort().reverse();
+    						let val = arr[0];
+    						for(var i=0;i<outArray.length;i++){
+    							if(val == outArray[i].medicalNumberMZ){
+    								self.patientId = outArray[i].patidMZ;
+    								localStorage.setItem('sec_patientIdmz',self.patientId);
+    							}
+    						}
+    					}
+    					if(action == 'zy'){
+    						let arr = [];
+    						let hosArray = res.data.data.hospitalizedList;
+    						for(var i=0;i<hosArray.length;i++){
+									let blh = hosArray[i].medicalNumber;
+									arr.push(parseInt(blh));
+    						}
+    						arr.sort().reverse();
+    						let val = arr[0];
+    						for(var i=0;i<hosArray.length;i++){
+    							if(val == hosArray[i].medicalNumberMZ){
+    								self.patientId = hosArray[i].patid;
+    								localStorage.setItem('sec_patientIdzy',self.patientId);
+    							}
+    						}
+    					}
+    					
     					self.$router.push('/');
 						});
     			}
