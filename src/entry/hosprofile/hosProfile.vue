@@ -7,6 +7,9 @@
           <h4 class="doc-info">发布时间:{{infoDate}}</h4>
           <h6></h6>
           <div class="hos-content" v-html="content">{{content}}</div>
+          <div class="hos-attach">
+            <span>附件下载: <span id="attachList"></span></span>
+          </div>
         </div>
       </div>
     </div>
@@ -15,9 +18,10 @@
 
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
-import evn from '../index/utils/evn.js';
+import evn from "../index/utils/evn.js";
 import model from "./model.js";
 export default {
+  
   name: "hosProfile.vue",
   data() {
     this.model = model(this.axios);
@@ -26,17 +30,21 @@ export default {
       title: "",
       infoDate: "",
       createUserName: "",
-      content: ""
+      content: "",
+      guid:""
     };
   },
-  created(){
-    this.judge();
+  created() {
+    
     //this.GetQueryString();
+    
   },
   mounted() {
-    //this.judge();
+    this.judge();
+    this.getAttachList();
   },
   methods: {
+
     //修改过的
     GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -46,15 +54,16 @@ export default {
     },
 
     judge() {
+      
       let self = this;
       var infoType = this.GetQueryString("infoType");
       var url1;
-      if (process.env.NODE_ENV == 'dev'){
+     
+      if (process.env.NODE_ENV == "dev") {
         url1 = "http://localhost:9091";
-      }else if (process.env.NODE_ENV == 'production'){
+      } else if (process.env.NODE_ENV == "production") {
         url1 = "";
       }
-
 
       //医院简介
       if (infoType == "HosIntroduction") {
@@ -65,22 +74,25 @@ export default {
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
+            let attachGuid = res.data.data.attachGuid;
+            localStorage.setItem('attachGuid',attachGuid);
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
+            self.guid = attachGuid;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src='+evn.SEC_HOSAPI
-            );            
+              '<img class="hos-img" src=' + evn.SEC_HOSAPI
+            );
             self.content = _str;
           } else {
             $.alert(res.data.msg);
-          }        
+          }
         });
       }
 
       //门诊流程
-      if(infoType == "OutpatientProcess"){       
+      if (infoType == "OutpatientProcess") {
         let data = this;
         this.model.getOutpatientProcess(data).then(function(res) {
           if (res.data.code == "0") {
@@ -88,22 +100,25 @@ export default {
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
+            let attachGuid = res.data.data.attachGuid;
+            localStorage.setItem('attachGuid',attachGuid);
+            self.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src='+evn.SEC_HOSAPI
-            );          
+              '<img class="hos-img" src=' + evn.SEC_HOSAPI
+            );
             self.content = _str;
           } else {
             $.alert(res.data.msg);
-          }         
+          }
         });
       }
 
       //楼层分布
-      if(infoType == "FloorDistribution"){
+      if (infoType == "FloorDistribution") {
         let data = this;
         this.model.getFloorDistribution(data).then(function(res) {
           if (res.data.code == "0") {
@@ -111,22 +126,25 @@ export default {
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
+            let attachGuid = res.data.data.attachGuid;
+            localStorage.setItem('attachGuid',attachGuid);
+            self.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src='+evn.SEC_HOSAPI
-            );            
+              '<img class="hos-img" src=' + evn.SEC_HOSAPI
+            );
             self.content = _str;
           } else {
             $.alert(res.data.msg);
-          }         
+          }
         });
       }
 
       //就诊须知
-      if(infoType == "PatientNeedtoKnow"){
+      if (infoType == "PatientNeedtoKnow") {
         let data = this;
         this.model.getPatientNeedtoKnow(data).then(function(res) {
           if (res.data.code == "0") {
@@ -134,23 +152,26 @@ export default {
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
+            let attachGuid = res.data.data.attachGuid;
+            localStorage.setItem('attachGuid',attachGuid);
+            self.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+evn.SEC_HOSAPI
+              '<img class="hos-img" src="' + evn.SEC_HOSAPI
             );
             self.content = _str;
-            console.log(_str)
+            console.log(_str);
           } else {
             $.alert(res.data.msg);
-          }        
+          }
         });
       }
 
       //入院引导
-      if(infoType == "DirectAdmission"){
+      if (infoType == "DirectAdmission") {
         let data = this;
         this.model.getDirectAdmission(data).then(function(res) {
           if (res.data.code == "0") {
@@ -158,22 +179,25 @@ export default {
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
+            let attachGuid = res.data.data.attachGuid;
+            localStorage.setItem('attachGuid',attachGuid);
+            self.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+evn.SEC_HOSAPI
-            );          
+              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+            );
             self.content = _str;
           } else {
             $.alert(res.data.msg);
-          }        
+          }
         });
       }
 
       //住院须知
-      if(infoType == "Hospitalisation"){
+      if (infoType == "Hospitalisation") {
         let data = this;
         this.model.getHospitalisation(data).then(function(res) {
           if (res.data.code == "0") {
@@ -181,12 +205,15 @@ export default {
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
+            let attachGuid = res.data.data.attachGuid;
+            localStorage.setItem('attachGuid',attachGuid);
+            self.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+evn.SEC_HOSAPI
+              '<img class="hos-img" src="' + evn.SEC_HOSAPI
             );
             self.content = _str;
           } else {
@@ -196,7 +223,7 @@ export default {
       }
 
       //出院导引
-      if(infoType == "OutHospitalInfo"){
+      if (infoType == "OutHospitalInfo") {
         let data = this;
         this.model.getOutHospitalInfo(data).then(function(res) {
           if (res.data.code == "0") {
@@ -204,14 +231,17 @@ export default {
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
+            let attachGuid = res.data.data.attachGuid;
+            localStorage.setItem('attachGuid',attachGuid);
+            self.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+evn.SEC_HOSAPI
+              '<img class="hos-img" src="' + evn.SEC_HOSAPI
             );
-            
+
             self.content = _str;
           } else {
             $.alert(res.data.msg);
@@ -220,7 +250,7 @@ export default {
       }
 
       //出院须知
-      if(infoType == "OutNeedKnow"){
+      if (infoType == "OutNeedKnow") {
         let data = this;
         this.model.getOutNeedKnow(data).then(function(res) {
           if (res.data.code == "0") {
@@ -228,12 +258,15 @@ export default {
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
+            let attachGuid = res.data.data.attachGuid;
+            localStorage.setItem('attachGuid',attachGuid);
+            self.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+evn.SEC_HOSAPI
+              '<img class="hos-img" src="' + evn.SEC_HOSAPI
             );
             self.content = _str;
           } else {
@@ -243,7 +276,7 @@ export default {
       }
 
       //科室简介
-      if(infoType == "DepartmentsIntroduction"){
+      if (infoType == "DepartmentsIntroduction") {
         let data = this;
         this.model.getDepartmentsIntroduction(data).then(function(res) {
           if (res.data.code == "0") {
@@ -251,12 +284,15 @@ export default {
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
+            let attachGuid = res.data.data.attachGuid;
+            localStorage.setItem('attachGuid',attachGuid);
+            self.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+evn.SEC_HOSAPI
+              '<img class="hos-img" src="' + evn.SEC_HOSAPI
             );
             self.content = _str;
           } else {
@@ -266,7 +302,7 @@ export default {
       }
 
       //健康教育
-      if(infoType == "HealthEducation"){
+      if (infoType == "HealthEducation") {
         let data = this;
         this.model.getHealthEducation(data).then(function(res) {
           if (res.data.code == "0") {
@@ -274,12 +310,15 @@ export default {
             let infoDate = res.data.data.infoDate;
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
+            let attachGuid = res.data.data.attachGuid;
+            localStorage.setItem('attachGuid',attachGuid);
+            self.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="'+evn.SEC_HOSAPI
+              '<img class="hos-img" src="' + evn.SEC_HOSAPI
             );
             self.content = _str;
           } else {
@@ -289,9 +328,40 @@ export default {
       }
     },
 
-
-    
-  }
+    getAttachList() {
+      let self = this;
+      //console.log(localStorage.getItem('attachGuid'));
+      let guid = localStorage.getItem('attachGuid')
+      let data = {
+        'guid': guid
+      };
+      
+      this.model.getAttachList(data).then(function(res) {
+        if ((res.data.code == "0" && res.data.data.length > 0)) {
+          localStorage.removeItem('attachGuid');
+          for (let i = 0; i < res.data.data.length; i++) {
+            let mdata = res.data.data;
+            let last = mdata[i].contentType.substr(
+              "1",
+              mdata[i].contentType.length
+            );
+            $("#attachList").append(
+              "<span><a href=" +
+                mdata[i].url +
+                " download=" +
+                mdata[i].attachName +
+                "><em></em>" +
+                mdata[i].attachName +
+                "</a></span>"
+            );
+          }
+        }else{
+          $.toptip(res.data.msg,'error');
+        }
+      });
+      }
+    },
+  
 };
 </script>
 
@@ -319,5 +389,10 @@ body {
   display: inline-block;
   height: auto;
   max-width: 100%;
+}
+.hos-attach{
+  margin-top: 0px;
+  margin-right: 12px;
+  margin-left: 12px;
 }
 </style>

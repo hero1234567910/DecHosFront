@@ -83,6 +83,14 @@ function model(http) {
                 contentType:'application/json;charset=utf-8'
             }
         });
+    },
+    //获取附件
+    getAttachList(data){
+        return http.post(evn.SEC_HOSAPI+'/wx/sys/frameAttach/getAttachList',data,{
+            headers:{
+                contentType:'application/json;charset=utf-8'
+            }
+        });
     }
   }
 
