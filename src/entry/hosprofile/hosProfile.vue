@@ -7,12 +7,12 @@
           <h4 class="doc-info">发布时间:{{infoDate}}</h4>
           <h6></h6>
           <div class="hos-content" v-html="content">{{content}}</div>
-          <div class="hos-attach">
+          <!-- <div class="hos-attach">
             <span class="attach-font">
               附件下载:
               <span id="attachList"></span>
             </span>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
