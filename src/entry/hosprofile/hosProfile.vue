@@ -8,7 +8,10 @@
           <h6></h6>
           <div class="hos-content" v-html="content">{{content}}</div>
           <div class="hos-attach">
-            <span>附件下载: <span id="attachList"></span></span>
+            <span class="attach-font">
+              附件下载:
+              <span id="attachList"></span>
+            </span>
           </div>
         </div>
       </div>
@@ -20,8 +23,8 @@
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import evn from "../index/utils/evn.js";
 import model from "./model.js";
+import Guid from "./Guid.vue";
 export default {
-  
   name: "hosProfile.vue",
   data() {
     this.model = model(this.axios);
@@ -31,7 +34,7 @@ export default {
       infoDate: "",
       createUserName: "",
       content: "",
-      guid:""
+      guid: ""
     };
   },
   created() {
@@ -42,7 +45,6 @@ export default {
     this.getAttachList();
   },
   methods: {
-
     //修改过的
     GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -52,11 +54,10 @@ export default {
     },
 
     judge() {
-      
       let self = this;
       var infoType = this.GetQueryString("infoType");
       var url1;
-     
+
       if (process.env.NODE_ENV == "dev") {
         url1 = "http://localhost:9091";
       } else if (process.env.NODE_ENV == "production") {
@@ -73,7 +74,8 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem('attachGuid',attachGuid);
+            self.guid = attachGuid;
+            Guid.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
@@ -99,8 +101,8 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem('attachGuid',attachGuid);
             self.guid = attachGuid;
+            Guid.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
@@ -125,8 +127,8 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem('attachGuid',attachGuid);
             self.guid = attachGuid;
+            Guid.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
@@ -151,8 +153,8 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem('attachGuid',attachGuid);
             self.guid = attachGuid;
+            Guid.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
@@ -161,7 +163,6 @@ export default {
               '<img class="hos-img" src="' + evn.SEC_HOSAPI
             );
             self.content = _str;
-            console.log(_str);
           } else {
             $.alert(res.data.msg);
           }
@@ -178,8 +179,9 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem('attachGuid',attachGuid);
+            localStorage.setItem("attachGuid", attachGuid);
             self.guid = attachGuid;
+            Guid.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
@@ -204,8 +206,8 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem('attachGuid',attachGuid);
             self.guid = attachGuid;
+            Guid.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
@@ -230,8 +232,9 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem('attachGuid',attachGuid);
+            localStorage.setItem("attachGuid", attachGuid);
             self.guid = attachGuid;
+            Guid.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
@@ -257,8 +260,9 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem('attachGuid',attachGuid);
+            localStorage.setItem("attachGuid", attachGuid);
             self.guid = attachGuid;
+            Guid.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
@@ -283,8 +287,8 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem('attachGuid',attachGuid);
             self.guid = attachGuid;
+            Guid.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
@@ -309,8 +313,8 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem('attachGuid',attachGuid);
             self.guid = attachGuid;
+            Guid.guid = attachGuid;
             self.title = title;
             self.infoDate = infoDate;
             self.createUserName = createUserName;
@@ -329,36 +333,36 @@ export default {
     getAttachList() {
       let self = this;
       //console.log(localStorage.getItem('attachGuid'));
-      let guid = localStorage.getItem('attachGuid')
-      let data = {
-        'guid': guid
-      };
-      localStorage.removeItem('attachGuid');
-      this.model.getAttachList(data).then(function(res) {
-        if ((res.data.code == "0" && res.data.data.length > 0)) {
-          for (let i = 0; i < res.data.data.length; i++) {
-            let mdata = res.data.data;
-            let last = mdata[i].contentType.substr(
-              "1",
-              mdata[i].contentType.length
-            );
-            $("#attachList").append(
-              "<span><a href=" +
-                mdata[i].url +
-                " download=" +
-                mdata[i].attachName +
-                "><em></em>" +
-                mdata[i].attachName +
-                "</a></span>"
-            );
+      setTimeout(function() {
+        let guid = Guid.guid;
+        let data = {
+          guid: guid
+        };
+        self.model.getAttachList(data).then(function(res) {
+          if (res.data.code == "0" && res.data.data.length > 0) {
+            for (let i = 0; i < res.data.data.length; i++) {
+              let mdata = res.data.data;
+              let last = mdata[i].contentType.substr(
+                "1",
+                mdata[i].contentType.length
+              );
+              $("#attachList").append(
+                "<span><a href=" +
+                  mdata[i].url +
+                  " download=" +
+                  mdata[i].attachName +
+                  "><em></em>" +
+                  mdata[i].attachName +
+                  "</a></span>"
+              );
+            }
+          } else {
+            $.toptip(res.data.msg, "error");
           }
-        }else{
-          $.toptip(res.data.msg,'error');
-        }
-      });
-      }
-    },
-  
+        });
+      },1500);
+    }
+  }
 };
 </script>
 
@@ -387,9 +391,13 @@ body {
   height: auto;
   max-width: 100%;
 }
-.hos-attach{
+.hos-attach {
   margin-top: 0px;
   margin-right: 12px;
   margin-left: 12px;
+}
+.attach-font {
+  font-size: medium;
+  font-weight: 600;
 }
 </style>
