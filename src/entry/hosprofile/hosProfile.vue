@@ -179,7 +179,6 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem("attachGuid", attachGuid);
             self.guid = attachGuid;
             Guid.guid = attachGuid;
             self.title = title;
@@ -232,7 +231,6 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem("attachGuid", attachGuid);
             self.guid = attachGuid;
             Guid.guid = attachGuid;
             self.title = title;
@@ -260,7 +258,6 @@ export default {
             let createUserName = res.data.data.createUserName;
             let content = res.data.data.content;
             let attachGuid = res.data.data.attachGuid;
-            localStorage.setItem("attachGuid", attachGuid);
             self.guid = attachGuid;
             Guid.guid = attachGuid;
             self.title = title;
