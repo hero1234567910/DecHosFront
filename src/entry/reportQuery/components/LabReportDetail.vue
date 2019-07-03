@@ -45,7 +45,7 @@
 		  </div>
 		</div>
 		<div class="r-content">
-			<div class="r-content-item" v-for="item in detailr">
+			<div class="r-content-item" v-for="item in detailr" :key="item">
 				<div class="item-header">	
 					<div class="item-header-img">
 						<img src="../../../../static/img/医院.svg" width="75%" style="position: absolute;top: 4px;"/>
@@ -129,7 +129,12 @@ export default {
   		let self = this;
 			this.bgdh = this.GetQueryString('bgdh');
 			this.bglbdm = this.GetQueryString('bglbdm');
-			this.jzlb = this.GetQueryString('jzlb');
+			if(this.GetQueryString('jzlb')==1){
+				this.jzlb ="门诊患者";
+			}
+			if(this.GetQueryString('jzlb')==2){
+				this.jzlb ="住院患者";
+			}
 			let time = this.GetQueryString('sqsj');
 			this.applyTime = this.insertStr(this.insertStr(this.insertStr(this.insertStr(this.insertStr(time,4,"/"),7,"/"),10,"  "),14,":"),17,":");
 			let data = {
@@ -156,8 +161,13 @@ export default {
 		   return soure.slice(0, start) + newStr + soure.slice(start);
 		},
 		toList(){
-			this.$router.push('/reportTab');
+			this.$router.push('/labReportList');
 		}
+  },
+  beforeRouteLeave(to, from, next) {
+     // 设置下一个路由的 meta
+    to.meta.keepAlive = true; // 让 A 缓存，即不刷新
+    next();
   }
 };
 </script>

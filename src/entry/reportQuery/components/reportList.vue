@@ -36,7 +36,7 @@
         </div>
       </div>
     </div> -->
-    <div class="re-row" v-for="item in ReportList">
+    <div class="re-row" v-for="item in ReportList" :key="item">
     	<a href="javascript:;" @click="toDetail(item)">
 	      <div class="row-cen" >
 	        <div class="re-img">
@@ -45,7 +45,7 @@
 	        <div class="re-main">
 	          <div class="re-content">
 	            <p style="font-size: 17px;margin-top: 11px;">报告单号: {{item.bgdh}}</p>
-	            <p style="color: #688795;">就诊类别: {{item.jzlb}}</p>
+	            <p style="color: #688795;">就诊类别: {{item.jzlb==1?'门诊患者':'住院患者'}}</p>
 	            <p style="color: #688795;">科室名称: {{item.jcksmc}}</p>
 	            <p style="color: #999999;">申请日期: {{item.sqsj}}</p>
 	          </div>
@@ -123,7 +123,6 @@ export default {
 //      patid = localStorage.getItem('sec_patientIdzy');
         jzlb = localStorage.getItem('patientStatus');
     }
-		
 		patid = "67147";
 		let date1 = $('#ksrq').val();
 		let ksrq = date1.replace(/\-/g, "");
