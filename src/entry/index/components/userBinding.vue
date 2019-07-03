@@ -103,6 +103,7 @@ export default {
     							if(val == outArray[i].medicalNumberMZ){
     								self.patientId = outArray[i].patidMZ;
     								localStorage.setItem('sec_patientIdmz',self.patientId);
+    								localStorage.setItem('patientStatus',1);
     							}
     						}
     					}
@@ -115,10 +116,12 @@ export default {
     						}
     						arr.sort().reverse();
     						let val = arr[0];
+    						console.log('zy')
     						for(var i=0;i<hosArray.length;i++){
-    							if(val == hosArray[i].medicalNumberMZ){
+    							if(val == hosArray[i].medicalNumber){
     								self.patientId = hosArray[i].patid;
     								localStorage.setItem('sec_patientIdzy',self.patientId);
+    								localStorage.setItem('patientStatus',2);
     							}
     						}
     					}

@@ -15,7 +15,21 @@ function model(http) {
             contentType: "application/json;charset=utf-8"
           }
         });
-    }
+    },
+    getDetail(data){
+    	return http.post(evn.SEC_HOSAPI + "/wx/common/getReportDetail" ,data,{
+          headers: {
+            contentType: "application/json;charset=utf-8"
+          }
+        });
+    },
+    getLabDetail(data){
+    	return http.post(evn.SEC_HOSAPI + "/wx/common/getLabReportDetail" ,data,{
+          headers: {
+            contentType: "application/json;charset=utf-8"
+          }
+        });
+    },
   };
 }
 

@@ -14,6 +14,7 @@ import reportTab from './components/reportTab'
 import reportDetail from './components/reportDetail'
 import labReportDetail from './components/labReportDetail'
 
+
   export default {
 	components:{reportMainList,reportTab,reportDetail,labReportDetail},
 	data() {

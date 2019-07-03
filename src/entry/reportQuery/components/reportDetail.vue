@@ -15,7 +15,7 @@
 		  			<p class="weui-media-box__desc">报告单号</p>
 		  		</div>
 		  		<div class="hero-list-item-right">
-		  			<h4 class="weui-media-box__title">XXXXXXX</h4>
+		  			<h4 class="weui-media-box__title">{{bgdh}}</h4>
 		  		</div>
 		  	</div>
 		  	<div class="hero-list-item">
@@ -23,7 +23,7 @@
 		  			<p class="weui-media-box__desc">申请时间</p>
 		  		</div>
 		  		<div class="hero-list-item-right">
-		  			<h4 class="weui-media-box__title">2018/10/20</h4>
+		  			<h4 class="weui-media-box__title">{{applyTime}}</h4>
 		  		</div>
 		  	</div>
 		  	<div class="hero-list-item">
@@ -31,7 +31,7 @@
 		  			<p class="weui-media-box__desc">就诊类别</p>
 		  		</div>
 		  		<div class="hero-list-item-right">
-		  			<h4 class="weui-media-box__title">普通门诊</h4>
+		  			<h4 class="weui-media-box__title">{{jzlb}}</h4>
 		  		</div>
 		  	</div>
 		  	<div class="hero-list-item" style="position: relative;margin-bottom: 10px;">
@@ -39,45 +39,29 @@
 		  			<p class="weui-media-box__desc">患者姓名</p>
 		  		</div>
 		  		<div class="hero-list-item-right">
-		  			<h4 class="weui-media-box__title">董翠影</h4>
+		  			<h4 class="weui-media-box__title">{{patientName}}</h4>
 		  		</div>
 		  	</div>
 		  </div>
 		</div>
 		<div class="r-content">
-			<div class="r-content-item">
+			<div class="r-content-item" v-for="item in detailr">
 				<div class="item-header">
 					<div class="item-header-img">
 						<img src="../../../../static/img/医院.svg" width="75%" style="position: absolute;top: 4px;"/>
 					</div>
-					<div class="item-header-title">指标名称:xx</div>
+					<div class="item-header-title">指标名称:{{item.zbxmmc}}</div>
 				</div>
 				<div class="item-content">
 					<el-input
 					  type="textarea"
 					  autosize
-					  v-model="textarea">
+					  v-model="item.zbjg">
 					 </el-input>
 				</div>
 			</div>
 			
-			<div class="r-content-item">
-				<div class="item-header">
-					<div class="item-header-img">
-						<img src="../../../../static/img/医院.svg" width="75%" style="position: absolute;top: 4px;"/>
-					</div>
-					<div class="item-header-title">指标名称:xx</div>
-				</div>
-				<div class="item-content">
-					<el-input
-					  type="textarea"
-					  autosize
-					  v-model="textarea">
-					 </el-input>
-				</div>
-			</div>
-			
-			<div style="margin-top: 30px;">
+			<div style="margin-top: 30px;margin-bottom: 30px;">
 				<div>
 					<a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toList()">返回列表</a>
 				</div>
@@ -91,28 +75,57 @@
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
+import util from "../utils/utils.js"
 
 export default {
   components: {},
   data() {
     this.model = model(this.axios);
     return {
-			textarea:'这是一个测试文本域，自动垃圾分类,测试测试测试测试'
+			textarea:'',
+			detailr:[],
+			bgdh:'',
+			patientName:localStorage.getItem('sec_patientName'),
+			applyTime:'',
+			jzlb:''
 		};
   },
   created(){
 		
   },
   mounted() {
-    
+    this.getDetail();
   },
   methods: {
+  	getDetail(){
+  		let self = this;
+			this.bgdh = this.GetQueryString('bgdh');
+			this.bglbdm = this.GetQueryString('bglbdm');
+			this.jzlb = this.GetQueryString('jzlb');
+			let time = this.GetQueryString('sqsj');
+			this.applyTime = this.insertStr(this.insertStr(this.insertStr(this.insertStr(this.insertStr(time,4,"/"),7,"/"),10,"  "),14,":"),17,":");
+			let data = {
+				'bgdh':self.bgdh,
+				'bglbdm':self.bglbdm
+			}
+			this.model.getDetail(data).then(function(res){
+				if(res.data.code == "0"){
+					self.detailr = res.data.data;
+				}else{
+					$.toptip(res.data.msg,'error');
+				}
+			})
+  	},
     //获取url中的参数
     GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-      var r = window.location.search.substr(1).match(reg); //search,查询？后面的参数，并匹配正则
+      var r = window.location.hash.substr(15).match(reg); //search,查询？后面的参数，并匹配正则
       if (r != null) return decodeURI(r[2]);
       return null;
+		},
+		//插入字符
+		insertStr(soure, start, newStr){   
+		   return soure.slice(0, start) + newStr + soure.slice(start);
 		},
 		toList(){
 			this.$router.push('/reportTab');
@@ -164,6 +177,7 @@ export default {
 	.r-content{
 		width: 100%;
 		height: calc(100vh - 164px);
+		overflow-y: auto
 	}
 	.weui-media-box__title{
 		font-size: 13px;

@@ -36,28 +36,35 @@
         </div>
       </div>
     </div> -->
-    <div class="re-row" v-for="item in ReportList" :key="item" v-cloak>
-      <div class="row-cen" >
-        <div class="re-img">
-          <img src="../../../../static/img/矩形 4 拷贝.png" width="68%" />
-        </div>
-        <div class="re-main">
-          <div class="re-content">
-            <p style="font-size: 17px;margin-top: 11px;">报告单号: {{item.bgdh}}</p>
-            <p style="color: #688795;">就诊类别: {{item.jzlb}}</p>
-            <p style="color: #688795;">科室名称: {{item.jcksmc}}</p>
-            <p style="color: #999999;">申请日期: {{item.sqsj}}</p>
-          </div>
-          <div class="re-main-ing">
-            <img
-              src="../../../../static/img/十字.png"
-              width="65%"
-              style="position: absolute;right: 10px;top: 5px;"
-            />
-          </div>
-        </div>
-      </div>
+    <div class="re-row" v-for="item in ReportList">
+    	<a href="javascript:;" @click="toDetail(item)">
+	      <div class="row-cen" >
+	        <div class="re-img">
+	          <img src="../../../../static/img/矩形 4 拷贝.png" width="68%" />
+	        </div>
+	        <div class="re-main">
+	          <div class="re-content">
+	            <p style="font-size: 17px;margin-top: 11px;">报告单号: {{item.bgdh}}</p>
+	            <p style="color: #688795;">就诊类别: {{item.jzlb}}</p>
+	            <p style="color: #688795;">科室名称: {{item.jcksmc}}</p>
+	            <p style="color: #999999;">申请日期: {{item.sqsj}}</p>
+	          </div>
+	          <div class="re-main-ing">
+	            <img
+	              src="../../../../static/img/十字.png"
+	              width="65%"
+	              style="position: absolute;right: 10px;top: 5px;"
+	            />
+	          </div>
+	        </div>
+	      </div>
+      </a>
     </div>
+    <div style="margin-top: 30px;margin-bottom: 30px;">
+				<div>
+					<a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回主列表</a>
+				</div>
+		</div>
   </div>
 </template>
 
@@ -65,6 +72,7 @@
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
+import util from "../utils/utils.js"
 
 export default {
   components: {},
@@ -81,6 +89,12 @@ export default {
     this.init();
   },
   methods: {
+  	tomainList(){
+  		this.$router.push('/');
+  	},
+  	toDetail(ele){
+			this.$router.push('/reportDetail?bgdh='+ele.bgdh+'&bglbdm='+ele.bglbdm+'&sqsj='+ele.sqsj+"&jzlb="+ele.jzlb);
+  	},
     init() {
       $("#ksrq").calendar({
 		  dateFormat:'yyyy-mm-dd'
@@ -99,18 +113,18 @@ export default {
 	Report() {
 		let self = this;
     let hzxm = localStorage.getItem('sec_patientName');
+    let patid = '';
+    let jzlb = '';
     if(localStorage.getItem('patientStatus')==1){
-        let patid = localStorage.getItem('sec_patientIdmz');
-        let jzlb = localStorage.getItem('patientStatus');
+        patid = localStorage.getItem('sec_patientIdmz');
+        jzlb = localStorage.getItem('patientStatus');
     }
     if(localStorage.getItem('patientStatus')==2){
-        let patid = localStorage.getItem('sec_patientIdzy');
-        let jzlb = localStorage.getItem('patientStatus');
+//      patid = localStorage.getItem('sec_patientIdzy');
+        jzlb = localStorage.getItem('patientStatus');
     }
 		
-		// let hzxm = "董翠影";
-		// let patid = "67147";
-		// let jzlb = 2;
+		patid = "67147";
 		let date1 = $('#ksrq').val();
 		let ksrq = date1.replace(/\-/g, "");
 		let date2 = $('#jsrq').val();
@@ -126,7 +140,6 @@ export default {
 			if(res.data.code == "0"){
 				let ReportList = res.data.data;
 				self.ReportList = ReportList;
-				console.log(res.data.data);
 			}else{
 				$.toptip(res.data.msg,'error');
 			}
@@ -138,6 +151,12 @@ export default {
 </script>
 
 <style scoped>
+	.weui-btn_primary{
+		background-color: #4CCBDB;
+	}
+	.weui-btn{
+		width: 230px;
+	}
 input::-webkit-input-placeholder {
   /* placeholder颜色  */
   color: #b2b2b2;

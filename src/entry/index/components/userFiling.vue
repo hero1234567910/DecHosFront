@@ -132,6 +132,7 @@ export default {
     							if(val == outArray[i].medicalNumberMZ){
     								self.patientId = outArray[i].patidMZ;
     								localStorage.setItem('sec_patientIdmz',self.patientId);
+    								localStorage.setItem('patientStatus',1);
     							}
     						}
     					
