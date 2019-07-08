@@ -4,6 +4,7 @@ import reportMainList from '../components/reportMainList.vue'
 import reportTab from '../components/reportTab.vue'
 import reportDetail from '../components/reportDetail'
 import labReportDetail from '../components/labReportDetail'
+import userFiling from '../components/userFiling'
 
 Vue.use(Router);
 
@@ -29,5 +30,10 @@ export default new Router({
       name: 'labReportDetail',
       component: labReportDetail
    },
+   {
+      path: '/userFiling',
+      name: 'userFiling',
+      component: userFiling
+   }
   ]
 })

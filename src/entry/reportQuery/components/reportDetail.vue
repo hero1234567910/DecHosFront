@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="r-content">
-      <div class="r-content-item" v-for="item in detailr" :key="item">
+      <div class="r-content-item" v-for="item in detailr">
         <div class="item-header">
           <div class="item-header-img">
             <img
@@ -89,7 +89,6 @@ export default {
       jzlb: ""
     };
   },
-  created() {},
   mounted() {
     this.getDetail();
   },
@@ -142,12 +141,7 @@ export default {
       return soure.slice(0, start) + newStr + soure.slice(start);
     },
     toList() {
-      this.$router.push("/reportList");
-    },
-    beforeRouteLeave(to, from, next) {
-      // 设置下一个路由的 meta
-      to.meta.keepAlive = true; // 让 A 缓存，即不刷新
-      next();
+      this.$router.push("/reportTab");
     }
   }
 };

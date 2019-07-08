@@ -41,7 +41,6 @@
     <div style="width: 100%;height:;">
         <a href="javascript:;" class="weui-btn weui-btn_primary1"  v-on:click="bindingUser">绑定</a>
     </div>
-
   </div>
 </template>
 
@@ -69,73 +68,75 @@ export default {
   	bindingUser(){
   		let self = this;
   		let action = '';
-  		if(this.shows){
-  			action = 'mz';
-  		}else{
-  			action = 'zy';
-  		}
+//		if(this.shows){
+//			action = 'mz';
+//		}else{
+//			action = 'zy';
+//		}
   		let hzxm = $('#hzxm').val();
   		let zjh = $('#zjh').val();
   		let openid = localStorage.getItem('sec_openId');
   		let data = {
   			'hzxm':hzxm,
   			'zjh':zjh,
-  			'action':action,
+//			'action':action,
   			'openid':openid
   		};
 		this.model.bindUser(data).then(function(res){
 				if(res.data.code == '0'){
 					$.toast('绑定成功', function() {
-						  localStorage.setItem('sec_sex',res.data.data.patientSex);
-    					localStorage.setItem('sec_birth',res.data.data.patientBirth);
-    					localStorage.setItem('sec_patientName',res.data.data.patientName);
-    					//获取最新patientid；（病历号最大的记录）
-    					if(action == 'mz'){
-    						let arr = [];
-    						let outArray = res.data.data.outpatients;
-    						for(var i=0;i<outArray.length;i++){
-									let blh = outArray[i].medicalNumberMZ;
-									arr.push(parseInt(blh));
-    						}
-    						arr.sort().reverse();
-    						let val = arr[0];
-    						for(var i=0;i<outArray.length;i++){
-    							if(val == outArray[i].medicalNumberMZ){
-    								self.patientId = outArray[i].patidMZ;
-    								localStorage.setItem('sec_patientIdmz',self.patientId);
-    								localStorage.setItem('patientStatus',1);
-    							}
-    						}
-    					}
-    					if(action == 'zy'){
-    						let arr = [];
-    						let hosArray = res.data.data.hospitalizedList;
-    						for(var i=0;i<hosArray.length;i++){
-									let blh = hosArray[i].medicalNumber;
-									arr.push(parseInt(blh));
-    						}
-    						arr.sort().reverse();
-    						let val = arr[0];
-    						console.log('zy')
-    						for(var i=0;i<hosArray.length;i++){
-    							if(val == hosArray[i].medicalNumber){
-    								self.patientId = hosArray[i].patid;
-    								localStorage.setItem('sec_patientIdzy',self.patientId);
-    								localStorage.setItem('patientStatus',2);
-    							}
-    						}
-    					}
+//						  localStorage.setItem('sec_sex',res.data.data.patientSex);
+//  					localStorage.setItem('sec_birth',res.data.data.patientBirth);
+//  					localStorage.setItem('sec_patientName',res.data.data.patientName);
+//  					//获取最新patientid；（病历号最大的记录）
+//  					if(action == 'mz'){
+//  						let arr = [];
+//  						let outArray = res.data.data.outpatients;
+//  						for(var i=0;i<outArray.length;i++){
+//									let blh = outArray[i].medicalNumberMZ;
+//									arr.push(parseInt(blh));
+//  						}
+//  						arr.sort().reverse();
+//  						let val = arr[0];
+//  						for(var i=0;i<outArray.length;i++){
+//  							if(val == outArray[i].medicalNumberMZ){
+//  								self.patientId = outArray[i].patidMZ;
+//  								localStorage.setItem('sec_patientIdmz',self.patientId);
+//  								localStorage.setItem('patientStatus',1);
+//  							}
+//  						}
+//  					}
+//  					if(action == 'zy'){
+//  						let arr = [];
+//  						let hosArray = res.data.data.hospitalizedList;
+//  						for(var i=0;i<hosArray.length;i++){
+//									let blh = hosArray[i].medicalNumber;
+//									arr.push(parseInt(blh));
+//  						}
+//  						arr.sort().reverse();
+//  						let val = arr[0];
+//  						console.log('zy')
+//  						for(var i=0;i<hosArray.length;i++){
+//  							if(val == hosArray[i].medicalNumber){
+//  								self.patientId = hosArray[i].patid;
+//  								localStorage.setItem('sec_patientIdzy',self.patientId);
+//  								localStorage.setItem('patientStatus',2);
+//  							}
+//  						}
+//  					}
     					
     					self.$router.push('/');
 						});
+    			}else{
+    				$.toptip(res.data.msg, 'error');
     			}
-				if(action == 'mz' && res.data.msg == '未查询到门诊患者'){
-					$.toast('未查询到门诊患者,请先建立门诊档案')
-					self.$router.push('/userFiling?zjh='+zjh)
-				}
-				if(action == 'zy' && res.data.code == '500'){
-					$.toptip(res.data.msg, 'error');
-				}
+//				if(action == 'mz' && res.data.msg == '未查询到门诊患者'){
+//					$.toast('未查询到门诊患者,请先建立门诊档案')
+//					self.$router.push('/userFiling?zjh='+zjh)
+//				}
+//				if(action == 'zy' && res.data.code == '500'){
+//					$.toptip(res.data.msg, 'error');
+//				}
     			
     	})
   	},

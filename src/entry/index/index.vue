@@ -36,10 +36,9 @@ import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import home from './components/home'
 import mycenter from './components/mycenter'
 import userBinding from './components/userBinding'
-import userFiling from './components/userFiling'
 import model from './model.js'
   export default {
-	components:{home,mycenter,userBinding,userFiling},
+	components:{home,mycenter,userBinding},
 	data() {
     	this.model = model(this.axios)
       return {
@@ -59,50 +58,51 @@ import model from './model.js'
 	    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
 	    			localStorage.setItem('sec_sex',res.data.data.patientSex);
     				localStorage.setItem('sec_birth',res.data.data.patientBirth);
+    				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
     				
-    				if(res.data.data.patientName == null || res.data.data.patientName == ''){
-    					//说明没有绑定患者信息，去绑定
-    					$.alert("您并未绑定患者信息，清先绑定", "提示", function() {
-							 	$('#cen').addClass('.weui-bar__item--on');
-							});
-    				}
-    				if(res.data.data.patientStatus == 1){
-    					let arr = [];
-							let outArray = res.data.data.outpatients;
-							for(var i=0;i<outArray.length;i++){
-									let blh = outArray[i].medicalNumberMZ;
-									arr.push(parseInt(blh));
-							}
-							arr.sort().reverse();
-							let val = arr[0];
-							for(var i=0;i<outArray.length;i++){
-								if(val == outArray[i].medicalNumberMZ){
-									self.patientId = outArray[i].patidMZ;
-									localStorage.setItem('sec_patientIdmz',self.patientId);
-									localStorage.setItem('patientStatus',1);
-								}
-							}
-    				}
-    				
-    				if(res.data.data.patientStatus == 2){
-    					let arr = [];
-    						let hosArray = res.data.data.hospitalizedList;
-    						for(var i=0;i<hosArray.length;i++){
-									let blh = hosArray[i].medicalNumber;
-									arr.push(parseInt(blh));
-    						}
-    						arr.sort().reverse();
-    						let val = arr[0];
-    						for(var i=0;i<hosArray.length;i++){
-    							if(val == hosArray[i].medicalNumberMZ){
-    								self.patientId = hosArray[i].patid;
-									localStorage.setItem('sec_patientIdzy',self.patientId);
-									localStorage.setItem('patientStatus',2);
-    							}
-    						}
-    				}
+//  				if(res.data.data.patientName == null || res.data.data.patientName == ''){
+//  					//说明没有绑定患者信息，去绑定
+//  					$.alert("您并未绑定患者信息，清先绑定", "提示", function() {
+//							 	$('#cen').addClass('.weui-bar__item--on');
+//							});
+//  				}
+//  				if(res.data.data.patientStatus == 1){
+//  					let arr = [];
+//							let outArray = res.data.data.outpatients;
+//							for(var i=0;i<outArray.length;i++){
+//									let blh = outArray[i].medicalNumberMZ;
+//									arr.push(parseInt(blh));
+//							}
+//							arr.sort().reverse();
+//							let val = arr[0];
+//							for(var i=0;i<outArray.length;i++){
+//								if(val == outArray[i].medicalNumberMZ){
+//									self.patientId = outArray[i].patidMZ;
+//									localStorage.setItem('sec_patientIdmz',self.patientId);
+//									localStorage.setItem('patientStatus',1);
+//								}
+//							}
+//  				}
+//  				
+//  				if(res.data.data.patientStatus == 2){
+//  					let arr = [];
+//  						let hosArray = res.data.data.hospitalizedList;
+//  						for(var i=0;i<hosArray.length;i++){
+//									let blh = hosArray[i].medicalNumber;
+//									arr.push(parseInt(blh));
+//  						}
+//  						arr.sort().reverse();
+//  						let val = arr[0];
+//  						for(var i=0;i<hosArray.length;i++){
+//  							if(val == hosArray[i].medicalNumberMZ){
+//  								self.patientId = hosArray[i].patid;
+//									localStorage.setItem('sec_patientIdzy',self.patientId);
+//									localStorage.setItem('patientStatus',2);
+//  							}
+//  						}
+//  				}
     			}else{
-    				$.alert(res.data.msg);
+    				$.toptip(res.data.msg, 'error');
     			}
     			
     		})

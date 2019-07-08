@@ -30,6 +30,14 @@ function model(http) {
           }
         });
     },
+    // 查询并绑定
+    bindUser(data) {
+      return http.put(evn.SEC_HOSAPI+'/wx/common/bindInfo',data,{
+      	headers:{
+      		contentType:'application/json;charset=utf-8'
+      	}
+      });
+    },
   };
 }
 

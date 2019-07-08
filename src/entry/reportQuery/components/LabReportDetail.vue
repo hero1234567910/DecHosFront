@@ -45,7 +45,7 @@
 		  </div>
 		</div>
 		<div class="r-content">
-			<div class="r-content-item" v-for="item in detailr" :key="item">
+			<div class="r-content-item" v-for="item in detailr">
 				<div class="item-header">	
 					<div class="item-header-img">
 						<img src="../../../../static/img/医院.svg" width="75%" style="position: absolute;top: 4px;"/>
@@ -161,7 +161,7 @@ export default {
 		   return soure.slice(0, start) + newStr + soure.slice(start);
 		},
 		toList(){
-			this.$router.push('/labReportList');
+			this.$router.push('/reportTab');
 		}
   },
   beforeRouteLeave(to, from, next) {

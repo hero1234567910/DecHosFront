@@ -28,10 +28,26 @@ export default {
   components: { reportList, labReportList },
   data() {
     this.model = model(this.axios);
-    return {};
+    return {
+    	
+    };
   },
-  mounted() {},
+  mounted() {
+  	this.init()
+  },
   methods: {
+  	init(){
+			let self = this;
+//				if(self.zjh == null || self.zjh == ''){
+//					$.alert("您并未绑定身份证，清先绑定","提示",function() {
+//							if (process.env.NODE_ENV == 'dev') {
+//							  window.location='../index.html'
+//							} else if (process.env.NODE_ENV == 'production') {
+//							  window.location='../sechos/index.html'
+//							}
+//					  });
+//				}
+		},
     //获取url中的参数
     GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");

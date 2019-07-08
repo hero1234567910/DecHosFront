@@ -32,7 +32,7 @@
 	 			</div>
 	 		</div>
  		</a>
- 		<a href="javascript:void(0)">
+ 		<a href="javascript:void(0)" @click="toSelect()">
 	 		<div class="hospital-panel">
 	 			<div class="hospital-inner">
 	 				<div class="hospital-img">
@@ -68,6 +68,9 @@
   		}
   	},
   	methods:{
+  		toSelect(){
+  			this.$router.push('/advanceSelect');
+  		},
   		toindex(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../index.html'

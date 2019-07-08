@@ -11,9 +11,10 @@ import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import model from './model.js'
 import hospitalizationList from './components/hospitalizationList'
 import advancePay from './components/advancePay'
+import advanceSelect from './components/advanceSelect'
 
   export default {
-	components:{hospitalizationList,advancePay},
+	components:{hospitalizationList,advancePay,advanceSelect},
 	data() {
     	this.model = model(this.axios)
       return {

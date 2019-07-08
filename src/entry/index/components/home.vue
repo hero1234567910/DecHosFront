@@ -26,7 +26,7 @@
 				<div class="hero-panel2_header"><strong>门诊服务</strong></div>
 				<div style="margin-left: 5px;margin-right: 5px;width: calc(100% - 10px);">
 					<div class="weui-row">
-					  <div class="weui-col-33"> <!--style="background-image:url(../../../../static/img/预约.png)	; background-size: 100% 100%;"-->
+					  <div class="weui-col-33" @click="toOutpatientAd()"> <!--style="background-image:url(../../../../static/img/预约.png)	; background-size: 100% 100%;"-->
 					  		<img src="../../../../static/img/预约.png" style="width: 100%;"/>
 					  </div>
 					  <div class="weui-col-33">
@@ -191,6 +191,13 @@
   				if(str == 'zyxz'){
   					window.location='../../sechos/hosProfile.html?infoType=Hospitalisation'
   				}
+				}
+  		},
+  		toOutpatientAd(){
+  			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../outpatientAdvance.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/outpatientAdvance.html'
 				}
   		}
   	}

@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>-->
-    <div class="re-row" v-for="item in LabReportList" :key="item">
+    <div class="re-row" v-for="item in LabReportList">
       <a href="javascript:;" @click="toDetail(item)">
         <div class="row-cen">
           <div class="re-img">

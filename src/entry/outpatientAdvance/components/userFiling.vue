@@ -56,7 +56,16 @@
           <input id="lxdz" class="weui-input-wzl" style="border-top:none;" type="text" placeholder="请输入地址">
         </div>
       </div>
-      <a href="javascript:;" class="weui-btn weui-btn_primary2" v-on:click="save">保存</a>
+      <div style="margin-top: 30px;">
+				<div>
+					<a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="save">保存</a>
+				</div>
+			</div>
+      <div style="margin-top: 10px;margin-bottom: 30px;">
+				<div>
+					<a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
+				</div>
+			</div>
     </div>
   </div>
 </template>
@@ -101,7 +110,7 @@ export default {
 		    this.panNull(birth, "出生日期不能为空") ||
 		    this.panNull(lxdh, "联系电话不能为空") ||
 		    this.panNull(lxdz, "联系地址不能为空") ||
-		    this.panNull(openid,"openidb不能为空")
+		    this.panNull(openid,"openid不能为空")
 		  ) {
 		    return;
 		  };
@@ -117,26 +126,11 @@ export default {
 		  this.model.savePatient(data).then(function(res){
 		  	if(res.data.code == '0'){
 		  		$.toast('建档成功', function() {
-						  localStorage.setItem('sec_sex',res.data.data.patientSex);
-    					localStorage.setItem('sec_birth',res.data.data.patientBirth);
-    					localStorage.setItem('sec_patientName',res.data.data.patientName);
-    					let arr = [];
-    						let outArray = res.data.data.outpatients;
-    						for(var i=0;i<outArray.length;i++){
-									let blh = outArray[i].medicalNumberMZ;
-									arr.push(parseInt(blh));
-    						}
-    						arr.sort().reverse();
-    						let val = arr[0];
-    						for(var i=0;i<outArray.length;i++){
-    							if(val == outArray[i].medicalNumberMZ){
-    								self.patientId = outArray[i].patidMZ;
-    								localStorage.setItem('sec_patientIdmz',self.patientId);
-    								localStorage.setItem('patientStatus',1);
-    							}
-    						}
-    					
-    					self.$router.push('/');
+    					if (process.env.NODE_ENV == 'dev') {
+							  window.location='../../index.html'
+							} else if (process.env.NODE_ENV == 'production') {
+							  window.location='../../sechos/index.html'
+							}
 						});
 		  	}else{
 		  		$.toptip(res.data.msg, 'error');
@@ -157,12 +151,25 @@ export default {
 			     var r = window.location.hash.substr(13).match(reg);//search,查询？后面的参数，并匹配正则
 			     if(r!=null)return  decodeURI(r[2]); return null;
 			},
+			toindex(){
+  			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../index.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/index.html'
+				}
+  		},
   	
   }
 };
 </script>
 
 <style scoped>
+	.weui-btn_primary{
+		background-color: #4CCBDB;
+	}
+	.weui-btn{
+		width: 230px;
+	}
 .weui-cells-wzl {
   margin-top: 0px;
   background-color: #eff7fd;
@@ -205,10 +212,6 @@ export default {
 .weui-cell-wzl:before {
   position: fixed;
 }
-.weui-btn {
-  margin-top: 7%;
-  width: 86%;
-}
 weui-cell-wzl weui-check__label {
   width: unset;
   background-color: white;
@@ -230,11 +233,6 @@ weui-cell-wzl weui-check__label {
     /* border-top: solid; */
     border-width: thin;
     border-color: lightskyblue;
-}
-.weui-btn_primary2{
-  background-color: #05b500;
-  margin-left: 7%;
-  position: absolute;
 }
 .weui-cells__title .wzl{
   margin-bottom: 0em;

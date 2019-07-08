@@ -13,13 +13,15 @@ import reportMainList from './components/reportMainList'
 import reportTab from './components/reportTab'
 import reportDetail from './components/reportDetail'
 import labReportDetail from './components/labReportDetail'
+import userFiling from './components/userFiling'
 
 
   export default {
-	components:{reportMainList,reportTab,reportDetail,labReportDetail},
+	components:{reportMainList,reportTab,reportDetail,labReportDetail,userFiling},
 	data() {
     	this.model = model(this.axios)
       return {
+      	
       }
     },
     mounted(){
