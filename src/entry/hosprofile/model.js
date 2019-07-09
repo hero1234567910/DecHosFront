@@ -84,6 +84,14 @@ function model(http) {
             }
         });
     },
+    //获取导诊台信息
+    getHospitalGuide(data){
+        return http.get(evn.SEC_HOSAPI+'/wx/sys/informationinfo/getHospitalGuide',data,{
+            headers:{
+                contentType:'application/json;charset=utf-8'
+            }
+        });
+    },
     //获取附件
     getAttachList(data){
         return http.post(evn.SEC_HOSAPI+'/wx/sys/frameAttach/getAttachList',data,{

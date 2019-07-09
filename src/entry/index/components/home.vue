@@ -39,10 +39,12 @@
 					<div style="margin-left: 20px;margin-right: 20px;margin-top: 10px;height: 60px;">
 						<div class="weui-row" style="height: 80px;">
 							<div class="weui-col-25">
-								<div class="hero-col-img">
-									<img src="../../../../static/img/导诊台.png" style="width: 100%;"/>
-								</div>
-								<div class="hero-col-dec" style="min-width: 70px;">导诊台确认</div>
+								<a href="javascript:void(0)" v-on:click="toInformation('dzt')">
+									<div class="hero-col-img">
+										<img src="../../../../static/img/导诊台.png" style="width: 100%;"/>
+									</div>
+									<div class="hero-col-dec" style="min-width: 70px;">导诊台确认</div>
+								</a>
 							</div>
 							<div class="weui-col-25">
 								<a href="javascript:void(0)" v-on:click="toconsultation()">
@@ -180,9 +182,12 @@
   				}
   				if(str == 'zyxz'){
   					window.location='../../hosProfile.html?infoType=Hospitalisation'
-  				}
+			    }
+				if(str == 'dzt'){
+  					window.location='../../hosProfile.html?infoType=HospitalGuide'
+			    }
 				} else if (process.env.NODE_ENV == 'production') {
-					if(str == 'jzxz'){
+				if(str == 'jzxz'){
   					window.location='../../sechos/hosProfile.html?infoType=PatientNeedtoKnow'
   				}
   				if(str == 'rydy'){
@@ -190,7 +195,10 @@
   				}
   				if(str == 'zyxz'){
   					window.location='../../sechos/hosProfile.html?infoType=Hospitalisation'
-  				}
+				}
+				if(str == 'dzt'){
+  					window.location='../../sechos/hosProfile.html?infoType=HospitalGuide'
+			    }
 				}
   		},
   		toOutpatientAd(){

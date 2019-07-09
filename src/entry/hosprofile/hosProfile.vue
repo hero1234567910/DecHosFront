@@ -325,6 +325,32 @@ export default {
           }
         });
       }
+
+      //健康教育
+      if (infoType == "HospitalGuide") {
+        let data = this;
+        this.model.getHospitalGuide(data).then(function(res) {
+          if (res.data.code == "0") {
+            let title = res.data.data.title;
+            let infoDate = res.data.data.infoDate;
+            let createUserName = res.data.data.createUserName;
+            let content = res.data.data.content;
+            let attachGuid = res.data.data.attachGuid;
+            self.guid = attachGuid;
+            Guid.guid = attachGuid;
+            self.title = title;
+            self.infoDate = infoDate;
+            self.createUserName = createUserName;
+            var _str = res.data.data.content.replace(
+              /<img src="/g,
+              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+            );
+            self.content = _str;
+          } else {
+            $.alert(res.data.msg);
+          }
+        });
+      }
     },
 
     getAttachList() {
