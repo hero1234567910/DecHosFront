@@ -17,6 +17,21 @@
   	
   	<div class="page-panel">
  			<div class="page-content">
+ 				<p style="position: absolute;bottom: 0px;left: 18px;">当前病历号</p>
+ 			</div>
+ 		</div>
+ 		<div class="page-input">
+			<div class="weui-cells">
+			  <div class="weui-cell">
+			    <div class="weui-cell__bd">
+			      <input class="weui-input" type="text" readonly="readonly" v-model="blh" @click="selectBlh()">
+			    </div>
+			  </div>
+			</div>
+ 		</div>
+  	
+  	<div class="page-panel">
+ 			<div class="page-content">
  				<p style="position: absolute;bottom: 0px;left: 18px;">预交金余额</p>
  			</div>
  		</div>
@@ -70,33 +85,83 @@
 				  <el-button type="primary" v-on:click="toList()">立即缴纳</el-button>
 				  <div class="ad-desc">
 				  	<p class="desc">1.请住院患者确认个人信息无误后再缴费</p>
-				  	<p class="desc">2.温馨提示：xxxxxx</p>
+				  	<p class="desc">2.请选择正确的病历号</p>
 				  </div>
 			</div>
  		</div>
+ 		
+ 		 <el-dialog title="选择要缴费的病历号" :visible.sync="isShow">
+			<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
+		</el-dialog>
   </div>
 </template>
 
 
 <script>
 	import model from './model.js'
+	import commonSelect from './commonSelect.vue'
   export default {
+  	components: {commonSelect},
   	data(){
   		this.model = model(this.axios);
   		return{
-  			money:120
+  			money:120,
+  			blh:'',
+  			zjh:localStorage.getItem('sec_patientIdcard'),
+				hzxm:localStorage.getItem('sec_patientName'),
+				patid:'',
+				isShow:false,
+				mzData:[],
   		}
   	},
+  	mounted(){
+  		this.init();
+  	},
   	methods:{
+  		handleCall(res){
+  			this.blh = res.blh;
+				this.isShow = false;
+			},
+  		selectBlh(){
+  			if(this.mzData.length != 0){
+  				this.isShow = true;
+  			}else{
+  				 $.showLoading();
+					let self = this;
+					let data={
+						hzxm:this.hzxm,
+						zjh:this.zjh,
+						action:'zy',
+						openid:localStorage.getItem('sec_openId')
+					}
+					
+					this.model.selectPatient(data).then(function(res){
+						 $.hideLoading();
+						if(res.data.code == '0'){
+							self.mzData = res.data.data;
+							self.isShow = true;
+						}else{
+							$.alert("未查询到您的住院信息", "提示", function() {
+							});
+						}
+					})
+  			}
+  		},
+  		init(){
+  			this.patid = this.$route.query.patid;
+  			this.blh = this.$route.query.blh;
+  		},
   		toList(){
   			this.$router.push('/')
-  		}
+  		},
   	}
   }
   </script>
 
 <style>
-	
+	.el-dialog{
+		width: calc(100vw - 20px);
+	}
 </style>
 <style scoped>
 	.desc{

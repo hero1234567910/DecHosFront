@@ -64,9 +64,15 @@
   	data(){
   		this.model = model(this.axios);
   		return{
-  			
+  			zjh:localStorage.getItem('sec_patientIdcard'),
+      	hzxm:localStorage.getItem('sec_patientName'),
+      	patientId:'',
+      	blh:''
   		}
   	},
+  	 mounted(){
+    	this.getInfo();
+    },
   	methods:{
   		toSelect(){
   			this.$router.push('/advanceSelect');
@@ -79,11 +85,55 @@
 				}
   		},
   		toPay(){
-  			this.$router.push('/advancePay')
+  			this.$router.push('/advancePay?patid='+this.patientId+'&blh='+this.blh)
   		},
   		toOrder(){
   			window.location='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc87dca29cc03656f&redirect_uri=http%3a%2f%2fey.nxjnjc.com%2fWXOrderSystem%2findex.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
-  		}
+  		},
+  		//检查是否有绑定并查询患者住院信息
+			getInfo(){
+				let self = this;
+				if(self.zjh == null || self.zjh == ''){
+					$.alert("您并未绑定身份证，清先绑定","提示",function() {
+							if (process.env.NODE_ENV == 'dev') {
+							  window.location='../index.html'
+							} else if (process.env.NODE_ENV == 'production') {
+							  window.location='../sechos/index.html'
+							}
+					  });
+				}
+				
+				let data={
+					hzxm:this.hzxm,
+					zjh:this.zjh,
+					action:'zy',
+					openid:localStorage.getItem('sec_openId')
+				}
+				
+				this.model.getInfo(data).then(function(res){
+					if(res.data.code == '0'){
+						//住院缴费模块 就取病历号最大的
+						let arr = [];
+						let hosArray = res.data.data;
+						for(var i=0;i<hosArray.length;i++){
+								let blh = hosArray[i].blh;
+								arr.push(parseInt(blh));
+						}
+						arr.sort().reverse();
+						let val = arr[0];
+						for(var i=0;i<hosArray.length;i++){
+							if(val == hosArray[i].blh){
+								self.patientId = hosArray[i].patid;
+								self.blh = hosArray[i].blh;
+							}
+						}
+						
+					}else{
+						$.alert("未查询到您的住院信息", "提示", function() {
+						});
+					}
+				})
+			}
   	}
   }
   </script>

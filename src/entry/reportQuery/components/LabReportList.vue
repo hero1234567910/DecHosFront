@@ -19,28 +19,6 @@
         />
       </div>
     </div>
-    <!-- <div class="re-row">
-      <div class="row-cen">
-        <div class="re-img">
-          <img src="../../../../static/img/矩形 4 拷贝.png" width="68%" />
-        </div>
-        <div class="re-main">
-          <div class="re-content">
-            <p style="font-size: 17px;margin-top: 11px;">报告单号: 123456789123</p>
-            <p style="color: #688795;">就诊类别: 门诊</p>
-            <p style="color: #688795;">科室名称: 骨科</p>
-            <p style="color: #999999;">申请日期: 2019-01-23</p>
-          </div>
-          <div class="re-main-ing">
-            <img
-              src="../../../../static/img/十字.png"
-              width="65%"
-              style="position: absolute;right: 10px;top: 5px;"
-            />
-          </div>
-        </div>
-      </div>
-    </div>-->
     <div class="re-row" v-for="item in LabReportList">
       <a href="javascript:;" @click="toDetail(item)">
         <div class="row-cen">
@@ -70,6 +48,9 @@
         <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回主列表</a>
       </div>
     </div>
+     <el-dialog title="选择要查看的病历" :visible.sync="isShow">
+			<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
+		</el-dialog>
   </div>
 </template>
 
@@ -77,14 +58,21 @@
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
+import commonSelect from './commonSelect.vue'
 
 export default {
-  components: {},
+  components: {commonSelect},
   data() {
     this.model = model(this.axios);
     return {
-      LabReportList: ""
-    };
+		LabReportList:"",
+		zjh:localStorage.getItem('sec_patientIdcard'),
+		hzxm:localStorage.getItem('sec_patientName'),
+		isShow:false,
+		mzData:[],
+		patid:'',
+		jzlb:''
+		};
   },
   created() {
     // this.LabReport();
@@ -116,6 +104,11 @@ export default {
         dateFormat: "yyyy-mm-dd"
       });
     },
+    handleCall(res){
+			this.isShow = false;
+			this.patid = res.patid;
+			this.reportFun();
+		},
     //获取url中的参数
     GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -123,21 +116,74 @@ export default {
       if (r != null) return decodeURI(r[2]);
       return null;
     },
+    selectMz(){
+    	$.showLoading();
+			let self = this;
+			let data={
+				hzxm:this.hzxm,
+				zjh:this.zjh,
+				action:'mz',
+				openid:localStorage.getItem('sec_openId')
+			}
+			
+			this.model.selectPatient(data).then(function(res){
+				$.hideLoading();
+				if(res.data.code == '0'){
+					self.isShow = true;
+					self.mzData = res.data.data;
+				}
+				if(res.data.msg == '未查询到门诊患者'){
+					$.alert("未查询到您的信息，清先建档", "提示", function() {
+					  //点击确认后的回调函数
+					  self.$router.push('/userFiling?zjh='+self.zjh)
+					});
+				}
+			})
+	},
+	selectZy(){
+		$.showLoading();
+		let self = this;
+		let data={
+			hzxm:this.hzxm,
+			zjh:this.zjh,
+			action:'zy',
+			openid:localStorage.getItem('sec_openId')
+		}
+		
+		this.model.selectPatient(data).then(function(res){
+			$.hideLoading();
+			if(res.data.code == '0'){
+				self.isShow = true;
+				self.mzData = res.data.data;
+			}else{
+				$.alert("未查询到您的住院信息", "提示", function() {
+				});
+			}
+		})
+	},
     LabReport() {
-      let self = this;
-      let hzxm = localStorage.getItem("sec_patientName");
-      let patid = "";
-      let jzlb = "";
-      if (localStorage.getItem("patientStatus") == 1) {
-        patid = localStorage.getItem("sec_patientIdmz");
-        jzlb = localStorage.getItem("patientStatus");
-      }
-      if (localStorage.getItem("patientStatus") == 2) {
-        //      patid = localStorage.getItem('sec_patientIdzy');
-        jzlb = localStorage.getItem("patientStatus");
-      }
+			let self = this;
+			 $.modal({
+			  title: "提示",
+			  text: "请选择门诊报告还是住院报告",
+			  buttons: [
+			    { text: "门诊", onClick: function(){
+			    	self.jzlb = 1;
+			    	self.selectMz();
+			    } },
+			    { text: "住院", onClick: function(){
+			    	self.jzlb = 2;
+			    	self.selectZy();
+			    } },
+			    { text: "取消", className: "default", onClick: function(){} },
+			  ]
+			});    
+    },
+   	reportFun(){
+   		let hzxm = localStorage.getItem("sec_patientName");
+      let patid = this.patid;
+      let jzlb = this.jzlb;
       
-      patid = "67147";
       let date1 = $("#ksrq1").val();
       let ksrq = date1.replace(/\-/g, "");
       let date2 = $("#jsrq1").val();
@@ -153,11 +199,12 @@ export default {
         if (res.data.code == "0") {
           let LabReportList = res.data.data;
           self.LabReportList = LabReportList;
+          self.isShow = false;
         } else {
           $.toptip(res.data.msg, "error");
         }
       });
-    }
+   	}
   }
 };
 </script>

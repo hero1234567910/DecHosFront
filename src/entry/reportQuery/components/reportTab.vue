@@ -2,8 +2,8 @@
   <div style="height: 100%;background-color: #EFF7FD;">
     <div class="weui-tab">
       <div class="weui-navbar">
-        <a class="weui-navbar__item weui-bar__item--on" href="#tab1">普通检查报告</a>
-        <a class="weui-navbar__item" href="#tab2">实验室检查报告</a>
+        <a class="weui-navbar__item weui-bar__item--on" href="#tab1">检查报告</a>
+        <a class="weui-navbar__item" href="#tab2">检验报告</a>
       </div>
       <div class="weui-tab__bd">
         <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
@@ -29,7 +29,7 @@ export default {
   data() {
     this.model = model(this.axios);
     return {
-    	
+    	zjh:localStorage.getItem('sec_patientIdcard')
     };
   },
   mounted() {
@@ -38,15 +38,15 @@ export default {
   methods: {
   	init(){
 			let self = this;
-//				if(self.zjh == null || self.zjh == ''){
-//					$.alert("您并未绑定身份证，清先绑定","提示",function() {
-//							if (process.env.NODE_ENV == 'dev') {
-//							  window.location='../index.html'
-//							} else if (process.env.NODE_ENV == 'production') {
-//							  window.location='../sechos/index.html'
-//							}
-//					  });
-//				}
+				if(self.zjh == null || self.zjh == ''){
+					$.alert("您并未绑定身份证，清先绑定","提示",function() {
+							if (process.env.NODE_ENV == 'dev') {
+							  window.location='../index.html'
+							} else if (process.env.NODE_ENV == 'production') {
+							  window.location='../sechos/index.html'
+							}
+					  });
+				}
 		},
     //获取url中的参数
     GetQueryString(name) {

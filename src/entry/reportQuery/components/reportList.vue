@@ -44,7 +44,7 @@
 				</div>
 		</div>
 		 <el-dialog title="选择要查看的病历号" :visible.sync="isShow">
-			<commonSelect v-bind:mzData='maData'></commonSelect>
+			<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
 		</el-dialog>
 		
   </div>
@@ -65,10 +65,11 @@ export default {
 		ReportList:"",
 		zjh:localStorage.getItem('sec_patientIdcard'),
 		hzxm:localStorage.getItem('sec_patientName'),
-		patientId:'',
 		isShow:false,
-		mzData:[]
-	};
+		mzData:[],
+		patid:'',
+		jzlb:''
+		};
   },
   created(){
 	// this.Report();
@@ -98,7 +99,12 @@ export default {
       if (r != null) return decodeURI(r[2]);
       return null;
 	},
+	handleCall(res){
+		this.patid = res.patid;
+		this.reportFun();
+	},
 	selectMz(){
+		 $.showLoading();
 		let self = this;
 		let data={
 			hzxm:this.hzxm,
@@ -107,7 +113,8 @@ export default {
 			openid:localStorage.getItem('sec_openId')
 		}
 		
-		this.model.bindUser(data).then(function(res){
+		this.model.selectPatient(data).then(function(res){
+			 $.hideLoading();
 			if(res.data.code == '0'){
 				self.isShow = true;
 				self.mzData = res.data.data;
@@ -115,12 +122,13 @@ export default {
 			if(res.data.msg == '未查询到门诊患者'){
 				$.alert("未查询到您的信息，清先建档", "提示", function() {
 				  //点击确认后的回调函数
-				  self.$router.push('/userFiling?zjh='+zjh)
+				  self.$router.push('/userFiling?zjh='+self.zjh)
 				});
 			}
 		})
 	},
 	selectZy(){
+		 $.showLoading();
 		let self = this;
 		let data={
 			hzxm:this.hzxm,
@@ -129,9 +137,11 @@ export default {
 			openid:localStorage.getItem('sec_openId')
 		}
 		
-		this.model.bindUser(data).then(function(res){
+		this.model.selectPatient(data).then(function(res){
+			 $.hideLoading();
 			if(res.data.code == '0'){
-				
+				self.isShow = true;
+				self.mzData = res.data.data;
 			}else{
 				$.alert("未查询到您的住院信息", "提示", function() {
 				});
@@ -145,48 +155,45 @@ export default {
 		  text: "请选择门诊报告还是住院报告",
 		  buttons: [
 		    { text: "门诊", onClick: function(){
-		    	console.log('aaaa')
+		    	self.jzlb = 1;
 		    	self.selectMz();
 		    } },
 		    { text: "住院", onClick: function(){
-		    	
+		    	self.jzlb = 2;
+		    	self.selectZy();
 		    } },
 		    { text: "取消", className: "default", onClick: function(){} },
 		  ]
 		});
-//  let hzxm = localStorage.getItem('sec_patientName');
-//  let patid = '';
-//  let jzlb = '';
-//  if(localStorage.getItem('patientStatus')==1){
-//      patid = localStorage.getItem('sec_patientIdmz');
-//      jzlb = localStorage.getItem('patientStatus');
-//  }
-//  if(localStorage.getItem('patientStatus')==2){
-////      patid = localStorage.getItem('sec_patientIdzy');
-//      jzlb = localStorage.getItem('patientStatus');
-//  }
-//		patid = "67147";
-//		let date1 = $('#ksrq').val();
-//		let ksrq = date1.replace(/\-/g, "");
-//		let date2 = $('#jsrq').val();
-//		let jsrq = date2.replace(/\-/g, "");
-//		let data = {
-//			'hzxm':hzxm,
-//			'patid':patid,
-//			'jzlb':jzlb,
-//			'ksrq':ksrq,
-//			'jsrq':jsrq
-//		};
-//		this.model.getReportList(data).then(function(res){
-//			if(res.data.code == "0"){
-//				let ReportList = res.data.data;
-//				self.ReportList = ReportList;
-//			}else{
-//				$.toptip(res.data.msg,'error');
-//			}
-//		});
+    
 		
-	}
+	},
+	reportFun(){
+   		let hzxm = localStorage.getItem('sec_patientName');
+    let patid = this.patid;
+    let jzlb = this.jzlb;
+    
+		let date1 = $('#ksrq').val();
+		let ksrq = date1.replace(/\-/g, "");
+		let date2 = $('#jsrq').val();
+		let jsrq = date2.replace(/\-/g, "");
+		let data = {
+			'hzxm':hzxm,
+			'patid':patid,
+			'jzlb':jzlb,
+			'ksrq':ksrq,
+			'jsrq':jsrq
+		};
+		this.model.getReportList(data).then(function(res){
+			if(res.data.code == "0"){
+				let ReportList = res.data.data;
+				self.ReportList = ReportList;
+				self.isShow = false;
+			}else{
+				$.toptip(res.data.msg,'error');
+			}
+		});
+   	}
  }
 };
 </script>

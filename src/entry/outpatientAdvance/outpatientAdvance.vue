@@ -1,6 +1,6 @@
 <template>
   <div style="height: 100%;background-color: #EFF7FD;">
- 		<router-view :key="$route.fullPath" :patientId="patientId"></router-view>
+ 		<router-view :key="$route.fullPath" :patid="patid"></router-view>
   </div>
 </template>
 
@@ -11,16 +11,17 @@ import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import model from './model.js'
 import outpatientMain from './components/outpatientMain'
 import userFiling from './components/userFiling'
+import appointDoc from './components/appointDoc'
 
 
   export default {
-	components:{outpatientMain,userFiling},
+	components:{outpatientMain,userFiling,appointDoc},
 	data() {
     	this.model = model(this.axios)
       return {
       	zjh:localStorage.getItem('sec_patientIdcard'),
       	hzxm:localStorage.getItem('sec_patientName'),
-      	patientId:''
+      	patid:''
       }
     },
     mounted(){
@@ -72,7 +73,7 @@ import userFiling from './components/userFiling'
 						let val = arr[0];
 						for(var i=0;i<outArray.length;i++){
 							if(val == outArray[i].blh){
-								self.patientId = outArray[i].patid;
+								self.patid = outArray[i].patid;
 							}
 						}
 					}
