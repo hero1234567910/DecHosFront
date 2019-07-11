@@ -129,18 +129,21 @@
 			  <div class="weui-flex__item">
 			  	<div class="hero-item-img" style="margin-top: 20px;margin-left: 5px;">
 							<img src="../../../../static/img/图片1.png" style="width: 100%;"/>
-							<div class="hero-mButton" style="top: 56px;">
-								<img src="../../../../static/img/进入.png" style="width: 100%;"/>
-							</div>
+							<a href="javascript:;" v-on:click="outHospitalService()">
+								<div class="hero-mButton" style="top: 56px;">
+									<img src="../../../../static/img/进入.png" style="width: 100%;"/>
+								</div>
+							</a>
 						</div>
 			  </div>
 			</div>
 		</div>
 		
-		<div style="height: 10px;width: 100%;    position: relative;
-    top: -83px;background-color: #e5e5e5;"></div>
-		<div style="width: 100%;height: 100px;    position: relative;top: -83px;">
-			<img src="../../../../static/img/体检.png" style="width: 100%;"/>
+		<div style="height: 10px;width: 100%;position: relative;top: -83px;background-color: #e5e5e5;"></div>
+		<div style="width: 100%;height: 100px;position: relative;top: -83px;">
+			<a href="javascript:;" v-on:click="toInformation('tjyy')">
+				<img src="../../../../static/img/体检.png" style="width: 100%;"/>
+			</a>
 		</div>
   </div>
 </template>
@@ -185,7 +188,10 @@
 			    }
 				if(str == 'dzt'){
   					window.location='../../hosProfile.html?infoType=HospitalGuide'
-			    }
+				}
+				if(str == 'tjyy'){
+  					window.location='../../hosProfile.html?infoType=MedicalAppointment'
+				}
 				} else if (process.env.NODE_ENV == 'production') {
 				if(str == 'jzxz'){
   					window.location='../../sechos/hosProfile.html?infoType=PatientNeedtoKnow'
@@ -198,6 +204,9 @@
 				}
 				if(str == 'dzt'){
   					window.location='../../sechos/hosProfile.html?infoType=HospitalGuide'
+				}
+				if(str == 'tjyy'){
+  					window.location='../../sechos/hosProfile.html?infoType=MedicalAppointment'
 			    }
 				}
   		},
@@ -207,7 +216,15 @@
 				} else if (process.env.NODE_ENV == 'production') {
 				  window.location='../../sechos/outpatientAdvance.html'
 				}
-  		}
+  		},
+		outHospitalService(){
+			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../outhospitalService.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/outhospitalService.html'
+				}
+		}
+		
   	}
   }
   </script>

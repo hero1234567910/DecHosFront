@@ -92,6 +92,30 @@ function model(http) {
             }
         });
     },
+    //获取出院导引信息
+    getOutHospitalGuide(data){
+        return http.get(evn.SEC_HOSAPI+'/wx/sys/informationinfo/getOutHospitalGuide',data,{
+            headers:{
+                contentType:'application/json;charset=utf-8'
+            }
+        });
+    },
+    //获取复诊预约信息
+    getFollowAppointment(data){
+        return http.get(evn.SEC_HOSAPI+'/wx/sys/informationinfo/getFollowAppointment',data,{
+            headers:{
+                contentType:'application/json;charset=utf-8'
+            }
+        });
+    },
+    //获取体检预约信息
+    getMedicalAppointment(data){
+        return http.get(evn.SEC_HOSAPI+'/wx/sys/informationinfo/getMedicalAppointment',data,{
+            headers:{
+                contentType:'application/json;charset=utf-8'
+            }
+        });
+    },
     //获取附件
     getAttachList(data){
         return http.post(evn.SEC_HOSAPI+'/wx/sys/frameAttach/getAttachList',data,{
