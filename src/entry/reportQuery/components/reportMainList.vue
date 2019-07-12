@@ -51,6 +51,9 @@
   		}
   	},
   	methods:{
+  		toTest(){
+  			this.$router.push('/examinationList')
+  		},
   		toReport(){
   			this.$router.push('/reportTab');
   		},

@@ -39,7 +39,7 @@
 			<div class="weui-cells">
 			  <div class="weui-cell">
 			    <div class="weui-cell__bd">
-			      <input class="weui-input" type="text" v-model="money">
+			      <input class="weui-input" type="text" v-model="money" readonly="readonly">
 			    </div>
 			  </div>
 			</div>
@@ -54,7 +54,7 @@
 			<div class="weui-cells">
 			  <div class="weui-cell">
 			    <div class="weui-cell__bd">
-			      <input class="weui-input" type="number" placeholder="请输入缴费金额">
+			      <input class="weui-input" type="number" placeholder="请输入缴费金额" v-model="yjMoney">
 			    </div>
 			  </div>
 			</div>
@@ -105,21 +105,30 @@
   	data(){
   		this.model = model(this.axios);
   		return{
-  			money:120,
+  			money:0,
   			blh:'',
   			zjh:localStorage.getItem('sec_patientIdcard'),
 				hzxm:localStorage.getItem('sec_patientName'),
 				patid:'',
 				isShow:false,
 				mzData:[],
+				yjMoney:'',
+				jzlsh:''
   		}
   	},
   	mounted(){
   		this.init();
+  		this.getJzlsh()
   	},
   	methods:{
+  		chooseMoney(){
+  			
+  		},
   		handleCall(res){
   			this.blh = res.blh;
+  			this.patid = res.patid;
+  			console.log(this.patid);
+  			this.getJzlsh();
 				this.isShow = false;
 			},
   		selectBlh(){
@@ -147,12 +156,95 @@
 					})
   			}
   		},
+  		getJzlsh(){
+  			let self = this;
+  			let data = {
+  				hzxm:this.hzxm,
+  				patid:this.patid
+  			}
+  			this.model.getJzlsh(data).then(function(res){
+  				if(res.data.code == 0){
+  					self.jzlsh = res.data.data.jzlsh;
+  					self.getSummary();
+  				}else{
+  					$.toptip(res.data.msg,'error');
+  				}
+  				
+  			})
+  		},
+  		getSummary(){
+  			let self = this;
+  			let data = {
+  				hzxm:this.hzxm,
+  				jzlsh:this.jzlsh
+  			}
+  			this.model.getSummary(data).then(function(res){
+  				if(res.data.code == 0){
+//					self.info = res.data.data;
+  					self.money = res.data.data.yjjye;
+  				}else{
+  					$.toptip(res.data.msg,'error');
+  				}
+  			})
+  		},
   		init(){
+  			let self = this;
+  			var lista = $('.weui-btn');
+  			lista.focus(function(ele){
+  				self.yjMoney = ele.target.text;
+  			})
   			this.patid = this.$route.query.patid;
   			this.blh = this.$route.query.blh;
   		},
   		toList(){
-  			this.$router.push('/')
+  			//发起支付
+  			let self = this;
+  			var yjMoney = this.yjMoney;
+  			var reg = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+  			if(!reg.test(yjMoney)){
+  				 $.alert("金额输入格式错误", "警告");
+  				 return;
+  			}
+  			if(yjMoney == '' || yjMoney == 0){
+  				 $.alert("金额必须大于0", "警告");
+  				 return;
+  			}
+  			if(this.blh == '' || this.blh == null){
+  				$.alert("病历号不能为空", "警告");
+  				return;
+  			}
+  			
+  			
+			let data = {
+				'hzxm':this.hzxm,
+				'openid':localStorage.getItem('sec_openId'),
+				'yjMoney':this.yjMoney,
+				'patientGuid':localStorage.getItem('sec_patientGuid'),
+				'patientName':this.hzxm
+			}
+			
+			this.model.placeOrder(data).then(function(res){
+				console.log(res);
+				if (res.data.code == '0') {
+					//下订单
+					localStorage.removeItem('orderItem');
+					//拼接参数
+					var appId = encrypt(res.data.appId);
+					var nonceStr = encrypt(res.data.nonceStr);
+					var pack = encrypt(res.data.package);
+					var paySign = encrypt(res.data.paySign);
+					var timestamp = encrypt(res.data.timeStamp+"");
+					$.toast("下单成功", function() {
+						if (process.env.NODE_ENV == 'dev') {
+							  window.location='../../pay.html?appId="+appId+"&nonceStr="+nonceStr+"&pack="+pack+"&paySign="+paySign+"&timeStamp="+timestamp'
+							} else if (process.env.NODE_ENV == 'production') {
+							  window.location='../../sechos/pay.html?appId="+appId+"&nonceStr="+nonceStr+"&pack="+pack+"&paySign="+paySign+"&timeStamp="+timestamp'
+							}
+					});
+				}
+			})
+			
+			this.$router.push('/')
   		},
   	}
   }

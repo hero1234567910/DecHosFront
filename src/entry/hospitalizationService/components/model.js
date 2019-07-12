@@ -39,6 +39,13 @@ function model(http) {
       	}
       });
     },
+     placeOrder(data) {
+      return http.post(evn.SEC_HOSAPI+'/wx/common/placeOrder',data,{
+      	headers:{
+      		'Content-Type': 'application/json;charset=utf-8'
+      	}
+      });
+    },
   }
 
 }

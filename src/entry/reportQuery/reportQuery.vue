@@ -14,10 +14,12 @@ import reportTab from './components/reportTab'
 import reportDetail from './components/reportDetail'
 import labReportDetail from './components/labReportDetail'
 import userFiling from './components/userFiling'
+import examinationList from './components/examinationList'
+import examinationDetail from './components/examinationDetail'
 
 
   export default {
-	components:{reportMainList,reportTab,reportDetail,labReportDetail,userFiling},
+	components:{reportMainList,reportTab,reportDetail,labReportDetail,userFiling,examinationList,examinationDetail},
 	data() {
     	this.model = model(this.axios)
       return {

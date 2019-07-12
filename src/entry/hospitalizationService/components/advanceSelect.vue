@@ -6,7 +6,6 @@
 		  		<img src="../../../../static/img/住院预交金.svg" style="position: absolute;top: -7px;width: 80%;"/>
 		  	</div>
 		    <span style="font-weight: 700;	">预交金信息汇总</span>
-		    
 		  </div>
 		  <div>
 		    <div class="hero-list-item">

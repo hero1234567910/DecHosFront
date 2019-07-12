@@ -5,6 +5,8 @@ import reportTab from '../components/reportTab.vue'
 import reportDetail from '../components/reportDetail'
 import labReportDetail from '../components/labReportDetail'
 import userFiling from '../components/userFiling'
+import examinationList from '../components/examinationList'
+import examinationDetail from '../components/examinationDetail'
 
 Vue.use(Router);
 
@@ -34,6 +36,16 @@ export default new Router({
       path: '/userFiling',
       name: 'userFiling',
       component: userFiling
+   },
+   {
+      path: '/examinationList',
+      name: 'examinationList',
+      component: examinationList
+   },
+   {
+      path: '/examinationDetail',
+      name: 'examinationDetail',
+      component: examinationDetail
    }
   ]
 })

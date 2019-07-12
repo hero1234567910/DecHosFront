@@ -59,6 +59,7 @@ import model from './model.js'
 	    			localStorage.setItem('sec_sex',res.data.data.patientSex);
     				localStorage.setItem('sec_birth',res.data.data.patientBirth);
     				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
+    				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
     				
 //  				if(res.data.data.patientName == null || res.data.data.patientName == ''){
 //  					//说明没有绑定患者信息，去绑定

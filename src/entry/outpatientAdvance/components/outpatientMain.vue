@@ -129,8 +129,8 @@
   		this.model = model(this.axios);
   		return{
   			patientId:'',
-        tabPosition: 'left'
-  			
+        tabPosition: 'left',
+				
   		}
   	},
   	props:['patid'],
