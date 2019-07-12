@@ -7,6 +7,7 @@ import labReportDetail from '../components/labReportDetail'
 import userFiling from '../components/userFiling'
 import examinationList from '../components/examinationList'
 import examinationDetail from '../components/examinationDetail'
+import examinationItemDetail from '../components/examinationItemDetail'
 
 Vue.use(Router);
 
@@ -46,6 +47,11 @@ export default new Router({
       path: '/examinationDetail',
       name: 'examinationDetail',
       component: examinationDetail
+   },
+   {
+      path: '/examinationItemDetail',
+      name: 'examinationItemDetail',
+      component: examinationItemDetail
    }
   ]
 })

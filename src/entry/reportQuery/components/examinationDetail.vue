@@ -30,18 +30,42 @@
 		<div class="weui-panel weui-panel_access" style="margin-top: 0px;">
 		  <div class="weui-panel__hd" style="background-color: #EFF7FD;line-height: 38px;">
 		  	<div class="img-panel">
+		  		<img src="../../../../static/img/项目检查结果.png" style="position: absolute;top: 8px;width: 45%;"/>
+		  	</div>
+		  	项目检查结果</div>
+		  <div class="weui-panel__bd">
+		      <div class="weui-media-box__bd">
+		      	<a href="javascript:;" @click="toItemDetail" style="color:#909399;">
+						  <div class="weui-cell">
+						    <div class="weui-cell__hd"><img src="../../../../static/img/项目小.png"></div>
+						    <div class="weui-cell__bd">
+						      <p>标题文字</p>
+						    </div>
+						    <div class="weui-cell__ft">
+						    	<div class="bd-img">
+							  		<img src="../../../../static/img/注意.png" style="position: absolute;top: 4px;width: 63%;right: 10px;"/>
+							  	</div>
+						    </div>
+						  </div>
+						</a>
+		      </div>
+		  </div>
+		</div>
+		
+		<div class="weui-panel weui-panel_access" style="margin-top: 0px;">
+		  <div class="weui-panel__hd" style="background-color: #EFF7FD;line-height: 38px;">
+		  	<div class="img-panel">
 		  		<img src="../../../../static/img/疾病及处理建议.png" style="position: absolute;top: 8px;width: 45%;"/>
 		  	</div>
-		  	疾病及处理建议</div>
+		  	体检结论</div>
 		  <div class="weui-panel__bd">
 		    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
 		      <div class="weui-media-box__bd">
 		        <el-input
 						  type="textarea"
-						  readonly="true"
+						  readonly
 						  autosize
-						  placeholder="请输入内容"
-						  v-model="duelWay">
+						  v-model="result">
 						  </el-input>
 		      </div>
 		    </a>
@@ -51,33 +75,23 @@
 		<div class="weui-panel weui-panel_access" style="margin-top: 0px;">
 		  <div class="weui-panel__hd" style="background-color: #EFF7FD;line-height: 38px;">
 		  	<div class="img-panel">
-		  		<img src="../../../../static/img/项目检查结果.png" style="position: absolute;top: 8px;width: 45%;"/>
+		  		<img src="../../../../static/img/疾病及处理建议.png" style="position: absolute;top: 8px;width: 45%;"/>
 		  	</div>
-		  	项目检查结果</div>
+		  	疾病及处理建议</div>
 		  <div class="weui-panel__bd">
+		    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
 		      <div class="weui-media-box__bd">
-						  <div class="weui-cell">
-						    <div class="weui-cell__hd"><img src="../../../../static/img/项目小.png"></div>
-						    <div class="weui-cell__bd">
-						      <p>标题文字</p>
-						    </div>
-						    <div class="weui-cell__ft">
-						    	<div class="bd-img">
-							  		<img src="../../../../static/img/注意.png" style="position: absolute;top: 6px;width: 63%;right: 10px;"/>
-							  	</div>
-						    </div>
-						  </div>
-						  
-						  <div class="weui-cell">
-						    <div class="weui-cell__hd"><img src="../../../../static/img/项目小.png"></div>
-						    <div class="weui-cell__bd">
-						      <p>标题文字</p>
-						    </div>
-						    <div class="weui-cell__ft">说明文字</div>
-						  </div>
+		        <el-input
+						  type="textarea"
+						  readonly
+						  autosize
+						  v-model="duelWay">
+						  </el-input>
 		      </div>
+		    </a>
 		  </div>
 		</div>
+		
   </div>
 </template>
 <script>
@@ -87,14 +101,17 @@ export default {
   data() {
     this.model = model(this.axios);
     return {
-			duelWay:'本次检验未见异常'
+			duelWay:'本次检验未见异常',
+			result:'正常'
 		};
   },
   mounted() {
     
   },
   methods: {
-  	
+  	toItemDetail(){
+  		this.$router.push('/examinationItemDetail');
+  	}
  }
 };
 </script>
@@ -110,7 +127,7 @@ export default {
 <style scoped>
 	.bd-img{
 		width: 30px;
-		height: 30px;
+		height: 25px;
 		line-height: 20px;
 		float: left;
 		position: relative;
