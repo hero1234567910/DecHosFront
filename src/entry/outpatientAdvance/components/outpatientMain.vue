@@ -11,110 +11,41 @@
 			  
 			  <div class="re-header-select">
 		      <div class="select-left">
-		        <input type="text" class="select-input" data-toggle="date" id="ksrq" placeholder="开始日期" />
+		        <input type="text" class="select-input" data-toggle="date" id="ksrq" placeholder="开始日期"/>
 		      </div>
 		      <div class="select-middle">
 		        <img src="../../../../static/img/横线.svg" width="100%" style="position: absolute;top: 16px;" />
 		      </div>
 		      <div class="select-right">
-		        <input type="text" class="select-input" data-toggle="date" id="jsrq" placeholder="结束日期" />
+		        <input type="text" class="select-input" data-toggle="date" id="jsrq" placeholder="结束日期"/>
 		      </div>
 		      <div class="select-fin">
 		        <img src="../../../../static/img/搜索.png" width="100%" style="vertical-align: middle;" v-on:click="Report()"/>
 		      </div>
 		    </div>
-			  
 			</el-card>
-			<!--<div class="hero-search">
-		 		<div class="weui-search-bar" id="searchBar">
-			 		<div class="hero-search-head">
-						<img src="../../../../static/img/圆角矩形-576.png" style="width: 100%;position: absolute;bottom: 0px;" />
-					</div>
-				  <form class="weui-search-bar__form">
-				    <div class="weui-search-bar__box">
-				      <i class="weui-icon-search"></i>
-				      <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
-				      <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-				    </div>
-				    <label class="weui-search-bar__label" id="searchText">
-				      <i class="weui-icon-search"></i>
-				      <span>搜索</span>
-				    </label>
-				  </form>
-				  <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-				</div>
-			</div>-->
 			
 			<div class="hero-main">
 				<el-tabs type="border-card" :tab-position="tabPosition">
-				  <el-tab-pane label="用户管理">
+				  <el-tab-pane :label="item.ksmc" v-for="item in arrItem">
 				  	<div style="">
 							<div class="weui-panel__hd">
 							  	<div class="hero-panel-img">
 							  		<img src="../../../../static/img/科室.png" style="width: 80%;"/>
 							  	</div>
 							  	<div class="hero-panel-title">
-							  	<strong>皮肤科</strong>
+							  	<strong>{{item.ksmc}}</strong>
 							  	</div>
 							  </div>
-							<div class="weui-row">
-							  <div class="weui-col-33">
-							  	<a href="javascript:;" @click="toChoseDoc()" style="color: #999999;">
-							  		<p>呼吸内科</p>
+							<div class="row">
+								<div class="row-item" v-for="it in item.children">
+									<a href="javascript:;" @click="toChoseDoc()" style="color: #999999;">
+							  		<p>{{it.ksmc}}</p>
 							  	</a>
-								  </div>
-							  <div class="weui-col-33">
-							  	<p>呼吸内科</p>
-							  </div>
-							  <div class="weui-col-33">
-							  	<p>呼吸内科</p>
-							  </div>
-							</div>
-							<div class="weui-row">
-							  <div class="weui-col-33">
-						  		<p>呼吸内科</p>
-							  </div>
-							  <div class="weui-col-33">
-							  	<p>呼吸内科</p>
-							  </div>
+								</div>
 							</div>
 						</div>
 				  </el-tab-pane>
-				  <el-tab-pane label="配置管理">
-				  	<div style="">
-							<div class="weui-panel__hd">
-							  	<div class="hero-panel-img">
-							  		<img src="../../../../static/img/科室.png" style="width: 80%;"/>
-							  	</div>
-							  	<div class="hero-panel-title">
-							  	<strong>皮肤科</strong>
-							  	</div>
-							  </div>
-							<div class="weui-row">
-							  <div class="weui-col-33">
-							  	<a>
-							  		<p>呼吸内科</p>
-							  	</a>
-								  </div>
-							  <div class="weui-col-33">
-							  	<p>呼吸内科</p>
-							  </div>
-							  <div class="weui-col-33">
-							  	<p>呼吸内科</p>
-							  </div>
-							</div>
-							<div class="weui-row">
-							  <div class="weui-col-33">
-						  		<p>呼吸内科</p>
-							  </div>
-							  <div class="weui-col-33">
-							  	<p>呼吸内科</p>
-							  </div>
-							</div>
-						</div>
-				  </el-tab-pane>
-				  <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-				  <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
 				</el-tabs>
 			</div>
 		</div>
@@ -130,7 +61,7 @@
   		return{
   			patientId:'',
         tabPosition: 'left',
-				
+        arrItem:[]
   		}
   	},
   	props:['patid'],
@@ -143,12 +74,26 @@
   		this.init();
   	},
   	methods:{
+  		Report(){
+  			let self = this;
+  			let data = {
+  				ksrq:$("#ksrq").val(),
+  				jsrq:$("#jsrq").val()
+  			}
+  			
+  			this.model.getAppointRoomInfo(data).then(function(res){
+  				if(res.data.code == 0){
+  					console.log(res)
+  					self.arrItem = res.data.data;
+  				}
+  			})
+  		},
   		init() {
 	      $("#ksrq").calendar({
-				  dateFormat:'yyyy-mm-dd'
+				  dateFormat:'yyyymmdd'
 			  });
 	      $("#jsrq").calendar({
-				  dateFormat:'yyyy-mm-dd'
+				  dateFormat:'yyyymmdd'
 			  });
 	    },
 	    toChoseDoc(){
@@ -164,6 +109,21 @@
 	}
 </style>
 <style scoped>
+	.row-item{
+		background-color: #F7F7F7;
+		height: 50px;
+		font-size: 13px;
+	    line-height: 50px;
+	    text-align: center;
+	    color: #999999;
+	        /*width: 80px;*/
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
+        padding-left: 8px;
+    padding-right: 8px;
+	}
 	.el-card{
 		margin-bottom: 10px;
 	}

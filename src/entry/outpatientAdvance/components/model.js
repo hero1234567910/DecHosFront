@@ -9,6 +9,13 @@ function model(http) {
     			contentType:'application/json;charset=utf-8'
     		}
     	})
+    },
+    getAppointRoomInfo(data){
+    	return http.post(evn.SEC_HOSAPI+'/wx/common/getAppointRoomInfo',data,{
+    		headers:{
+    			contentType:'application/json;charset=utf-8'
+    		}
+    	})
     }
   }
 
