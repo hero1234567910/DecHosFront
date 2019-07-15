@@ -16,6 +16,7 @@ function model(http) {
     			contentType:'application/json;charset=utf-8'
     		}
     	})
+    
     },
     getAppointDepartmentYNo(data){
     	return http.post(evn.SEC_HOSAPI+'/wx/common/getAppointDepartmentYNo',data,{
@@ -30,7 +31,16 @@ function model(http) {
     			contentType:'application/json;charset=utf-8'
     		}
     	})
-    }
+    
+	},
+	//当班出诊科室查询
+	getDepartmentOnDuty(data){
+		return http.post(evn.SEC_HOSAPI+'/wx/common/getDepartmentOnDuty',data,{
+			headers:{
+    			contentType:'application/json;charset=utf-8'
+    		}
+		})
+	}
   }
 
 }
