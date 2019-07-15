@@ -35,14 +35,12 @@
 <script>
 import Swiper from "swiper";
 import "swiper/dist/css/swiper.min.css";
-import model from './model.js';
+import model from "./model.js";
 
 export default {
   data() {
-    this.model = model(this.axios)
-    return{
-
-    }
+    this.model = model(this.axios);
+    return {};
   },
   mounted() {
     var mySwiper = new Swiper(".swiper-container", {
@@ -53,18 +51,19 @@ export default {
         delay: 3000
       },
       effect: "coverflow",
-      pagination: ".swiper-pagination"
+      pagination: {
+        el: ".swiper-pagination"
+      }
     });
-  }
-  ,
-  methods:{
-    toDayOutPatient(){
+  },
+  methods: {
+    toDayOutPatient() {
       let self = this;
-      self.$router.push('/outpatientMainToday');
+      self.$router.push("/outpatientMainToday");
     },
-    appointOutPatient(){
+    appointOutPatient() {
       let self = this;
-      self.$router.push('/outpatientMain');
+      self.$router.push("/outpatientMain");
     }
   }
 };
