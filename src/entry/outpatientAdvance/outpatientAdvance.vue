@@ -12,10 +12,12 @@ import model from './model.js'
 import outpatientMain from './components/outpatientMain'
 import userFiling from './components/userFiling'
 import appointDoc from './components/appointDoc'
+import outpatientMainToday from './components/outpatientMainToday'
+import appointChoice from './components/appointChoice'
 
 
   export default {
-	components:{outpatientMain,userFiling,appointDoc},
+	components:{outpatientMain,userFiling,appointDoc,outpatientMainToday,appointChoice},
 	data() {
     	this.model = model(this.axios)
       return {
@@ -25,7 +27,7 @@ import appointDoc from './components/appointDoc'
       }
     },
     mounted(){
-    	this.getInfo();
+    	// this.getInfo();
     },
 	methods:{
 		//获取url中的参数
