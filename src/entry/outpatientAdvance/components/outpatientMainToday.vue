@@ -9,110 +9,31 @@
               style="position: absolute;top: -7px;width: 80%;"
             />
           </div>
-          <span style="font-weight: 700;	">门诊预约</span>
+          <span style="font-weight: 700;	">当天门诊</span>
         </div>
-
-        <!-- <div class="re-header-select">
-          <div class="select-fin">
-            <img
-              src="../../../../static/img/搜索.png"
-              width="100%"
-              style="vertical-align: middle;"
-              v-on:click="Report()"
-            />
-          </div>
-        </div> -->
       </el-card>
-      <!--<div class="hero-search">
-		 		<div class="weui-search-bar" id="searchBar">
-			 		<div class="hero-search-head">
-						<img src="../../../../static/img/圆角矩形-576.png" style="width: 100%;position: absolute;bottom: 0px;" />
-					</div>
-				  <form class="weui-search-bar__form">
-				    <div class="weui-search-bar__box">
-				      <i class="weui-icon-search"></i>
-				      <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
-				      <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-				    </div>
-				    <label class="weui-search-bar__label" id="searchText">
-				      <i class="weui-icon-search"></i>
-				      <span>搜索</span>
-				    </label>
-				  </form>
-				  <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-				</div>
-      </div>-->
-
       <div class="hero-main">
-        <el-tabs type="border-card" :tab-position="tabPosition">
-          <el-tab-pane label="用户管理">
+        <el-tabs type="border-card" :tab-position="tabPosition" >
+          <el-tab-pane :label="item.ksmc" v-for="item in outpatientList">
             <div style>
               <div class="weui-panel__hd">
                 <div class="hero-panel-img">
                   <img src="../../../../static/img/科室.png" style="width: 80%;" />
                 </div>
                 <div class="hero-panel-title">
-                  <strong>皮肤科</strong>
+                  <strong>{{item.ksmc}}</strong>
                 </div>
               </div>
-              <div class="weui-row">
-                <div class="weui-col-33">
+              <div class="row">
+                <div class="row-item" v-for="it in item.children">
                   <a href="javascript:;" @click="toChoseDoc()" style="color: #999999;">
-                    <p>呼吸内科</p>
+                    <p>{{it.ksmc}}</p>
                   </a>
-                </div>
-                <div class="weui-col-33">
-                  <p>呼吸内科</p>
-                </div>
-                <div class="weui-col-33">
-                  <p>呼吸内科</p>
-                </div>
-              </div>
-              <div class="weui-row">
-                <div class="weui-col-33">
-                  <p>呼吸内科</p>
-                </div>
-                <div class="weui-col-33">
-                  <p>呼吸内科</p>
                 </div>
               </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="配置管理">
-            <div style>
-              <div class="weui-panel__hd">
-                <div class="hero-panel-img">
-                  <img src="../../../../static/img/科室.png" style="width: 80%;" />
-                </div>
-                <div class="hero-panel-title">
-                  <strong>皮肤科</strong>
-                </div>
-              </div>
-              <div class="weui-row">
-                <div class="weui-col-33">
-                  <a>
-                    <p>呼吸内科</p>
-                  </a>
-                </div>
-                <div class="weui-col-33">
-                  <p>呼吸内科</p>
-                </div>
-                <div class="weui-col-33">
-                  <p>呼吸内科</p>
-                </div>
-              </div>
-              <div class="weui-row">
-                <div class="weui-col-33">
-                  <p>呼吸内科</p>
-                </div>
-                <div class="weui-col-33">
-                  <p>呼吸内科</p>
-                </div>
-              </div>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="角色管理">角色管理</el-tab-pane>
-          <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
+
         </el-tabs>
       </div>
     </div>
@@ -127,7 +48,10 @@ export default {
     this.model = model(this.axios);
     return {
       patientId: "",
-      tabPosition: "left"
+      tabPosition: "left",
+      outpatientList:[],
+      faRoom:[],
+      chRoom:[]
     };
   },
   props: ["patid"],
@@ -138,6 +62,7 @@ export default {
   },
   mounted() {
     this.init();
+    this.getDepartmentOnDuty();
   },
   methods: {
     init() {
@@ -150,6 +75,18 @@ export default {
     },
     toChoseDoc() {
       this.$router.push("/appointDoc");
+    },
+    getDepartmentOnDuty(){
+      let self = this;
+      let data ={};
+      this.model.getDepartmentOnDuty(data).then(function(res){
+        if(res.data.code == "0"){
+          let arr = res.data.data;
+          self.outpatientList = res.data.data;
+        }else{
+          $.alert(res.data.msg,'error');
+        }
+      });
     }
   }
 };
@@ -161,10 +98,25 @@ export default {
 }
 </style>
 <style scoped>
-.el-card {
-  margin-bottom: 10px;
-}
-.select-input {
+.row-item{
+		background-color: #F7F7F7;
+		height: 50px;
+		font-size: 13px;
+	    line-height: 50px;
+	    text-align: center;
+	    color: #999999;
+	        /*width: 80px;*/
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
+        padding-left: 8px;
+    padding-right: 8px;
+	}
+	.el-card{
+		margin-bottom: 10px;
+	}
+	.select-input {
   width: 100px;
   height: 30px;
   border-radius: 30px;
@@ -204,95 +156,94 @@ export default {
   height: 60px;
   background-color: #ffffff;
 }
-.weui-panel__hd {
-  height: 30px;
-  font-size: 18px;
-  color: #000000;
-}
-.hero-panel-img {
-  float: left;
-  width: 35px;
-  height: 35px;
-}
-.weui-row {
-  height: 50px;
-  margin-top: 10px;
-}
-.weui-col-33 {
-  background-color: #f7f7f7;
-  height: 50px;
-  font-size: 13px;
-  line-height: 50px;
-  text-align: center;
-  color: #999999;
-}
-.el-tabs__nav-scroll {
-  overflow-y: auto;
-}
-.el-tabs--left,
-.el-tabs--right {
-  height: calc(100vh - 137px);
-}
-.hero-main {
-  height: calc(100vh - 135px);
-}
-.hero-search-head {
-  height: 28px;
-  bottom: -2px;
-  width: 30px;
-  position: relative;
-}
-.hero-search {
-  height: 44px;
-}
-.weui-search-bar__form {
-  border: 0px solid #e6e6ea;
-  border-radius: 10px;
-  margin-left: 10px;
-  margin-right: 15px;
-}
-.weui-btn_primary {
-  background-color: #4ccbdb;
-}
-.weui-btn {
-  width: 230px;
-}
-.hospital-arrow {
-  position: relative;
-  height: 85px;
-  line-height: 85px;
-  width: 35px;
-  float: left;
-}
-.hospital-title {
-  height: 85px;
-  width: 200px;
-  position: relative;
-  float: left;
-}
-.hospital-img {
-  width: 65px;
-  height: 85px;
-  line-height: 85px;
-  float: left;
-}
-.hospital-inner {
-  margin-left: auto;
-  margin-right: auto;
-  width: 300px;
-  height: 85px;
-}
-.hospital-panel {
-  margin-top: 5px;
-  width: 100%;
-  height: 85px;
-  background-color: #ffffff;
-}
-.card-hero {
-  width: 50px;
-  height: 40px;
-  line-height: 20px;
-  float: left;
-  position: relative;
-}
+	.weui-panel__hd{
+		height: 30px;
+		font-size: 18px;
+		color: #000000;
+	}
+	.hero-panel-img{
+		float: left;
+		width: 35px;
+		height: 35px;
+	}
+	.weui-row{
+		height: 50px;
+    margin-top: 10px;
+	}
+	.weui-col-33{
+		background-color: #F7F7F7;
+		height: 50px;
+		font-size: 13px;
+	    line-height: 50px;
+	    text-align: center;
+	    color: #999999;
+	}
+	.el-tabs__nav-scroll{
+		overflow-y: auto;
+	}
+	.el-tabs--left, .el-tabs--right{
+		height: calc(100vh - 137px);
+	}
+	.hero-main{
+		height: calc(100vh - 135px);
+	}
+	.hero-search-head{
+		height: 28px;
+    	bottom: -2px;
+		width: 30px;
+		position: relative;
+	}
+	.hero-search{
+    	height: 44px;
+	}
+	.weui-search-bar__form{
+    	border: 0px solid #E6E6EA;
+      border-radius: 10px;
+      margin-left: 10px;
+      margin-right: 15px;
+    }
+	.weui-btn_primary{
+		background-color: #4CCBDB;
+	}
+	.weui-btn{
+		width: 230px;
+	}
+	.hospital-arrow{
+		position: relative;
+		height: 85px;
+		line-height: 85px;
+		width: 35px;
+		float: left;
+	}
+	.hospital-title{
+		height: 85px;
+		width: 200px;
+		position: relative;
+		float: left;
+	}
+	.hospital-img{
+		width: 65px;
+		height: 85px;
+		line-height: 85px;
+		float: left;
+	}
+	.hospital-inner{
+		margin-left: auto;
+		margin-right: auto;
+		width: 300px;
+		height: 85px;
+	}
+	.hospital-panel{
+		margin-top: 5px;
+		width: 100%;
+		height: 85px;
+		background-color: #FFFFFF;
+	}
+	.card-hero{
+		width: 50px;
+		height: 40px;
+		line-height: 20px;
+		float: left;
+		position: relative;
+	}
 </style>
