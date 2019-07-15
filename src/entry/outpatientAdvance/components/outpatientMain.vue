@@ -27,7 +27,7 @@
 			
 			<div class="hero-main">
 				<el-tabs type="border-card" :tab-position="tabPosition">
-				  <el-tab-pane :label="item.ksmc" v-for="item in arrItem">
+				  <el-tab-pane :label="item.ksmc" v-for="item in arrItem" :key="item">
 				  	<div style="">
 							<div class="weui-panel__hd">
 							  	<div class="hero-panel-img">

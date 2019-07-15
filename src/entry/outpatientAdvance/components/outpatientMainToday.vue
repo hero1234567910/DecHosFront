@@ -13,8 +13,8 @@
         </div>
       </el-card>
       <div class="hero-main">
-        <el-tabs type="border-card" :tab-position="tabPosition" >
-          <el-tab-pane :label="item.ksmc" v-for="item in outpatientList">
+        <el-tabs type="border-card" :tab-position="tabPosition">
+          <el-tab-pane :label="item.ksmc" v-for="item in outpatientList" :key="item">
             <div style>
               <div class="weui-panel__hd">
                 <div class="hero-panel-img">
@@ -26,14 +26,20 @@
               </div>
               <div class="row">
                 <div class="row-item" v-for="it in item.children">
-                  <a href="javascript:;" @click="toChoseDoc()" style="color: #999999;">
-                    <p>{{it.ksmc}}</p>
+                  <a
+                    href="javascript:;"
+                    @click="toChoseDoc(it.ksdm,it.czlx)"
+                    style="color: #999999;"
+                  >
+                    <p>
+                      {{it.ksmc}}
+                      <span style="color:green;">{{it.czlx == "1"?'(专家)':''}}</span>
+                    </p>
                   </a>
                 </div>
               </div>
             </div>
           </el-tab-pane>
-
         </el-tabs>
       </div>
     </div>
@@ -49,9 +55,9 @@ export default {
     return {
       patientId: "",
       tabPosition: "left",
-      outpatientList:[],
-      faRoom:[],
-      chRoom:[]
+      outpatientList: [],
+      faRoom: [],
+      chRoom: []
     };
   },
   props: ["patid"],
@@ -73,18 +79,24 @@ export default {
         dateFormat: "yyyy-mm-dd"
       });
     },
-    toChoseDoc() {
-      this.$router.push("/appointDoc");
-    },
-    getDepartmentOnDuty(){
+    toChoseDoc(e1, e2) {
       let self = this;
-      let data ={};
-      this.model.getDepartmentOnDuty(data).then(function(res){
-        if(res.data.code == "0"){
+      console.log(e1, e2);
+      if (e2 == "1") {
+        self.$router.push("/appointDocToday?ksdm=" + e1 + "&czlx=" + e2);
+      } else {
+        self.$router.push("/appointSourceToday?ksdm=" + e1 + "&czlx=" + e2);
+      }
+    },
+    getDepartmentOnDuty() {
+      let self = this;
+      let data = {};
+      this.model.getDepartmentOnDuty(data).then(function(res) {
+        if (res.data.code == "0") {
           let arr = res.data.data;
           self.outpatientList = res.data.data;
-        }else{
-          $.alert(res.data.msg,'error');
+        } else {
+          $.alert(res.data.msg, "error");
         }
       });
     }
@@ -98,25 +110,25 @@ export default {
 }
 </style>
 <style scoped>
-.row-item{
-		background-color: #F7F7F7;
-		height: 50px;
-		font-size: 13px;
-	    line-height: 50px;
-	    text-align: center;
-	    color: #999999;
-	        /*width: 80px;*/
-    float: left;
-    margin-right: 10px;
-    margin-left: 10px;
-    margin-top: 5px;
-        padding-left: 8px;
-    padding-right: 8px;
-	}
-	.el-card{
-		margin-bottom: 10px;
-	}
-	.select-input {
+.row-item {
+  background-color: #f7f7f7;
+  height: 50px;
+  font-size: 13px;
+  line-height: 50px;
+  text-align: center;
+  color: #999999;
+  /*width: 80px;*/
+  float: left;
+  margin-right: 10px;
+  margin-left: 10px;
+  margin-top: 5px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.el-card {
+  margin-bottom: 10px;
+}
+.select-input {
   width: 100px;
   height: 30px;
   border-radius: 30px;
@@ -156,94 +168,95 @@ export default {
   height: 60px;
   background-color: #ffffff;
 }
-	.weui-panel__hd{
-		height: 30px;
-		font-size: 18px;
-		color: #000000;
-	}
-	.hero-panel-img{
-		float: left;
-		width: 35px;
-		height: 35px;
-	}
-	.weui-row{
-		height: 50px;
-    margin-top: 10px;
-	}
-	.weui-col-33{
-		background-color: #F7F7F7;
-		height: 50px;
-		font-size: 13px;
-	    line-height: 50px;
-	    text-align: center;
-	    color: #999999;
-	}
-	.el-tabs__nav-scroll{
-		overflow-y: auto;
-	}
-	.el-tabs--left, .el-tabs--right{
-		height: calc(100vh - 137px);
-	}
-	.hero-main{
-		height: calc(100vh - 135px);
-	}
-	.hero-search-head{
-		height: 28px;
-    	bottom: -2px;
-		width: 30px;
-		position: relative;
-	}
-	.hero-search{
-    	height: 44px;
-	}
-	.weui-search-bar__form{
-    	border: 0px solid #E6E6EA;
-      border-radius: 10px;
-      margin-left: 10px;
-      margin-right: 15px;
-    }
-	.weui-btn_primary{
-		background-color: #4CCBDB;
-	}
-	.weui-btn{
-		width: 230px;
-	}
-	.hospital-arrow{
-		position: relative;
-		height: 85px;
-		line-height: 85px;
-		width: 35px;
-		float: left;
-	}
-	.hospital-title{
-		height: 85px;
-		width: 200px;
-		position: relative;
-		float: left;
-	}
-	.hospital-img{
-		width: 65px;
-		height: 85px;
-		line-height: 85px;
-		float: left;
-	}
-	.hospital-inner{
-		margin-left: auto;
-		margin-right: auto;
-		width: 300px;
-		height: 85px;
-	}
-	.hospital-panel{
-		margin-top: 5px;
-		width: 100%;
-		height: 85px;
-		background-color: #FFFFFF;
-	}
-	.card-hero{
-		width: 50px;
-		height: 40px;
-		line-height: 20px;
-		float: left;
-		position: relative;
-	}
+.weui-panel__hd {
+  height: 30px;
+  font-size: 18px;
+  color: #000000;
+}
+.hero-panel-img {
+  float: left;
+  width: 35px;
+  height: 35px;
+}
+.weui-row {
+  height: 50px;
+  margin-top: 10px;
+}
+.weui-col-33 {
+  background-color: #f7f7f7;
+  height: 50px;
+  font-size: 13px;
+  line-height: 50px;
+  text-align: center;
+  color: #999999;
+}
+.el-tabs__nav-scroll {
+  overflow-y: auto;
+}
+.el-tabs--left,
+.el-tabs--right {
+  height: calc(100vh - 137px);
+}
+.hero-main {
+  height: calc(100vh - 135px);
+}
+.hero-search-head {
+  height: 28px;
+  bottom: -2px;
+  width: 30px;
+  position: relative;
+}
+.hero-search {
+  height: 44px;
+}
+.weui-search-bar__form {
+  border: 0px solid #e6e6ea;
+  border-radius: 10px;
+  margin-left: 10px;
+  margin-right: 15px;
+}
+.weui-btn_primary {
+  background-color: #4ccbdb;
+}
+.weui-btn {
+  width: 230px;
+}
+.hospital-arrow {
+  position: relative;
+  height: 85px;
+  line-height: 85px;
+  width: 35px;
+  float: left;
+}
+.hospital-title {
+  height: 85px;
+  width: 200px;
+  position: relative;
+  float: left;
+}
+.hospital-img {
+  width: 65px;
+  height: 85px;
+  line-height: 85px;
+  float: left;
+}
+.hospital-inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: 85px;
+}
+.hospital-panel {
+  margin-top: 5px;
+  width: 100%;
+  height: 85px;
+  background-color: #ffffff;
+}
+.card-hero {
+  width: 50px;
+  height: 40px;
+  line-height: 20px;
+  float: left;
+  position: relative;
+}
 </style>
