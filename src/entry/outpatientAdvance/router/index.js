@@ -5,7 +5,8 @@ import userFiling from '../components/userFiling.vue'
 import appointDoc from '../components/appointDoc.vue'
 import outpatientMainToday from '../components/outpatientMainToday.vue'
 import appointChoice from '../components/appointChoice.vue'
-import selectDepartment from '../components/selectDepartment'
+import appointDocToday from '../components/appointDocToday.vue'
+import appointSourceToday from '../components/appointSourceToday.vue'
 
 
 Vue.use(Router);
@@ -38,9 +39,14 @@ export default new Router({
       component: outpatientMainToday
    },
    {
-      path: '/selectDepartment',
-      name: 'selectDepartment',
-      component: selectDepartment
+      path: '/appointDocToday',
+      name: 'appointDocToday',
+      component: appointDocToday
+   },
+   {
+      path: '/appointSourceToday',
+      name: 'appointSourceToday',
+      component: appointSourceToday
    }
   ]
 })
