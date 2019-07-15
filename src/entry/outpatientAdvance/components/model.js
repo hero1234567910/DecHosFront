@@ -16,6 +16,20 @@ function model(http) {
     			contentType:'application/json;charset=utf-8'
     		}
     	})
+    },
+    getAppointDepartmentYNo(data){
+    	return http.post(evn.SEC_HOSAPI+'/wx/common/getAppointDepartmentYNo',data,{
+    		headers:{
+    			contentType:'application/json;charset=utf-8'
+    		}
+    	})
+    },
+    getOutpatientAppointmentReg(data){
+    	return http.post(evn.SEC_HOSAPI+'/wx/common/getOutpatientAppointmentReg',data,{
+    		headers:{
+    			contentType:'application/json;charset=utf-8'
+    		}
+    	})
     }
   }
 

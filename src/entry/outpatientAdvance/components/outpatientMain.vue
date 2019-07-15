@@ -27,7 +27,7 @@
 			
 			<div class="hero-main">
 				<el-tabs type="border-card" :tab-position="tabPosition">
-				  <el-tab-pane :label="item.ksmc" v-for="item in arrItem">
+				  <el-tab-pane :label="item.ksmc" v-for="item in arrItem" :key="item.rowGuid">
 				  	<div style="">
 							<div class="weui-panel__hd">
 							  	<div class="hero-panel-img">
@@ -39,9 +39,12 @@
 							  </div>
 							<div class="row">
 								<div class="row-item" v-for="it in item.children">
-									<a href="javascript:;" @click="toChoseDoc()" style="color: #999999;">
+									<a href="javascript:;" @click="toChoseDoc(it)" style="color: #999999;">
 							  		<p>{{it.ksmc}}</p>
 							  	</a>
+							  	<div style="position: absolute;top: -13px;right: -21px;height: 50px;width: 50px;">
+							  		<img src="../../../../static/img/专家 (1).svg" v-show="it.czlx == 1" style="width: 42%;"/>
+							  	</div>
 								</div>
 							</div>
 						</div>
@@ -61,7 +64,9 @@
   		return{
   			patientId:'',
         tabPosition: 'left',
-        arrItem:[]
+        arrItem:[],
+        ksrq:'',
+        jsrq:''
   		}
   	},
   	props:['patid'],
@@ -75,16 +80,20 @@
   	},
   	methods:{
   		Report(){
+  			 $.showLoading();
   			let self = this;
   			let data = {
   				ksrq:$("#ksrq").val(),
   				jsrq:$("#jsrq").val()
   			}
-  			
+  			this.ksrq = data.ksrq;
+  			this.jsrq = data.jsrq;
   			this.model.getAppointRoomInfo(data).then(function(res){
+  				$.hideLoading();
   				if(res.data.code == 0){
-  					console.log(res)
   					self.arrItem = res.data.data;
+  				}else{
+  					$.toptip(res.data.msg, "error");
   				}
   			})
   		},
@@ -96,8 +105,14 @@
 				  dateFormat:'yyyymmdd'
 			  });
 	    },
-	    toChoseDoc(){
-	    	this.$router.push('/appointDoc');
+	    toChoseDoc(ele){
+	    	if(ele.czlx == 0){
+	    		this.$router.push('/selectDepartment?ksdm='+ele.ksdm+'&ksrq='+this.ksrq+'&jsrq='+this.jsrq);
+	    	}
+	    	if(ele.czlx == 1){
+		    	this.$router.push('/appointDoc');
+	    	}
+
 	    }
   	}
   }
@@ -123,6 +138,7 @@
     margin-top: 5px;
         padding-left: 8px;
     padding-right: 8px;
+    position: relative;
 	}
 	.el-card{
 		margin-bottom: 10px;
