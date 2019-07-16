@@ -75,7 +75,7 @@
       sub(ele){
       	let self = this;
       	if(ele.kyhx <= 0){
-      		$.toptip(res.data.msg,'error');
+      		$.toptip('预约号已满','error');
       		return;
       	}
       	let pbxh = ele.pbxh;
