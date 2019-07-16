@@ -31,11 +31,15 @@
                     @click="toChoseDoc(it.ksdm,it.czlx)"
                     style="color: #999999;"
                   >
-                    <p>
-                      {{it.ksmc}}
-                      <span style="color:green;">{{it.czlx == "1"?'(专家)':''}}</span>
-                    </p>
+                    <p>{{it.ksmc}}</p>
                   </a>
+                  <div style="position: absolute;top: -13px;right: -21px;height: 50px;width: 50px;">
+                    <img
+                      src="../../../../static/img/专家 (1).svg"
+                      v-show="it.czlx == 1"
+                      style="width: 42%;"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -66,6 +70,12 @@ export default {
       this.patientId = val;
     }
   },
+  props:['patid'],
+  watch: {
+      patientId: function (val) {       
+      	this.patientId = val;
+      }
+  },
   mounted() {
     this.init();
     this.getDepartmentOnDuty();
@@ -83,21 +93,23 @@ export default {
       let self = this;
       console.log(e1, e2);
       if (e2 == "1") {
-        self.$router.push("/appointDocToday?ksdm=" + e1 + "&czlx=" + e2);
+        self.$router.push("/appointDocToday?ksdm=" + e1);
       } else {
-        self.$router.push("/appointSourceToday?ksdm=" + e1 + "&czlx=" + e2);
+        self.$router.push("/appointSourceToday?ksdm=" + e1);
       }
     },
     getDepartmentOnDuty() {
+      $.showLoading();
       let self = this;
       let data = {};
       this.model.getDepartmentOnDuty(data).then(function(res) {
+        $.hideLoading();
         if (res.data.code == "0") {
           let arr = res.data.data;
           self.outpatientList = res.data.data;
           console.log(self.outpatientList);
         } else {
-          $.alert(res.data.msg, "error");
+          $.toptip(res.data.msg, "error");
         }
       });
     }
@@ -125,6 +137,7 @@ export default {
   margin-top: 5px;
   padding-left: 8px;
   padding-right: 8px;
+  position: relative;
 }
 .el-card {
   margin-bottom: 10px;

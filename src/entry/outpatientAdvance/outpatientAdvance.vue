@@ -27,7 +27,7 @@ import appointChoice from './components/appointChoice'
       }
     },
     mounted(){
-      	 this.getInfo();
+      	 //this.getInfo();
     },
 	methods:{
 		//获取url中的参数

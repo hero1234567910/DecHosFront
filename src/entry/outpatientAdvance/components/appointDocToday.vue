@@ -29,6 +29,7 @@
           href="javascript:void(0);"
           class="weui-media-box weui-media-box_appmsg"
           v-for="item in doctorList"
+          :key="item.pbxh"
         >
           <div class="weui-media-box__hd">
             <img class="weui-media-box__thumb" src="../../../../static/img/400398144.png" />
@@ -40,10 +41,9 @@
             </div>
 
             <h4 class="weui-media-box__title" style="clear: both;">职位: {{item.yszc}}</h4>
-            <h4 class="weui-media-box__title">挂号费用: ¥{{item.zje}}元</h4>
-            <h4 class="weui-media-box__title">时间: {{item.zzlxmc}}元</h4>
+            <h4 class="weui-media-box__title">科室名称: {{item.ksmc}}</h4>
             <div class="hero-button">
-              <el-button type="primary" round>预约</el-button>
+              <el-button type="primary" round @click="toSelect(item)">选择</el-button>
             </div>
           </div>
         </a>
@@ -63,31 +63,75 @@ export default {
       doctorList: ""
     };
   },
-  created(){
-	
-  },
+  created() {},
+  props: ["patid"],
   mounted() {
     this.search();
   },
   methods: {
-    GetQueryString(name) {
-      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-      var r = location.search.substr(1).match(reg); //search,查询？后面的参数，并匹配正则
-      if (r != null) return decodeURI(r[2]);
-      return null;
-    },
     search() {
       let self = this;
-      var ksdm1 = this.GetQueryString("ksdm");
-      console.log(this.GetQueryString("ksdm"));
-      let data = {
-        ksdm:ksdm1
-      };
-      this.model.getDoctorOnDuty(data).then(function(res) {
+      let da = this.$route.query;
+      this.model.getDoctorOnDuty(da).then(function(res) {
         if (res.data.code == "0") {
           self.doctorList = res.data.data;
         } else {
-          $.alert(res.data.msg, "error");
+          $.toptip(res.data.msg, "error");
+        }
+      });
+    },
+    toSelect(ele){
+      	var da = this.$route.query;
+      	this.$router.push('/docTodaySource?ysdm='+ele.ysdm);
+      },
+
+    toSubmit(ele) {
+      let self = this;
+      $.confirm(
+        "您确定要预约吗？",
+        "提示",
+        function() {
+          self.sub(ele);
+        },
+        function() {
+          return;
+        }
+      );
+    },
+    sub(ele) {
+      let self = this;
+      let pbmxxh = ele.pbxh;
+      let hzxm = localStorage.getItem("sec_patientName");
+      let bxh = localStorage.getItem("sec_patientIdcard");
+      let data = {
+        patid: this.patid,
+        pbmxxh: pbmxxh,
+        hzxm: hzxm,
+        bxh: bxh,
+        isynzh: 0,
+        iszfjs: 1
+      };
+      this.model.RegisteredBudget(data).then(function(res) {
+        if (res.data.code == 0) {
+          $.modal({
+            title: "提示",
+            text: "预约成功",
+            buttons: [
+              {
+                text: "预约信息",
+                onClick: function() {
+                  if (process.env.NODE_ENV == "dev") {
+                    window.location = "../../reservation.html";
+                  } else if (process.env.NODE_ENV == "production") {
+                    window.location = "../../sechos/reservation.html";
+                  }
+                }
+              },
+              { text: "取消", className: "default", onClick: function() {} }
+            ]
+          });
+        } else {
+          $.toptip(res.data.msg, "error");
         }
       });
     }

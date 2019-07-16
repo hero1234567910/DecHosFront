@@ -41,8 +41,8 @@ function model(http) {
 		})
 	},
 	//当班科室号源信息查询
-	getDepartmentNumberSource(data){
-		return http.post(evn.SEC_HOSAPI+'/wx/common/getDepartmentNumberSource',data,{
+	getDepartmentOnDutyYNo(data){
+		return http.post(evn.SEC_HOSAPI+'/wx/common/getDepartmentOnDutyYNo',data,{
 			headers:{
     			contentType:'application/json;charset=utf-8'
     		}
@@ -70,8 +70,23 @@ function model(http) {
     		}
 		})
 	}
-	
-	
+	,
+	//挂号预算
+	RegisteredBudget(data){
+		return http.post(evn.SEC_HOSAPI+'/wx/common/RegisteredBudget',data,{
+			headers:{
+    			contentType:'application/json;charset=utf-8'
+    		}
+		})
+	}
+	,
+	getDoctorOnDutyYNo(data){
+		return http.post(evn.SEC_HOSAPI+'/wx/common/getDoctorOnDutyYNo',data,{
+			headers:{
+    			contentType:'application/json;charset=utf-8'
+    		}
+		})
+	}
   }
 
 }
