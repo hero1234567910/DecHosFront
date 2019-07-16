@@ -24,23 +24,22 @@
                   <strong>{{item.ksmc}}</strong>
                 </div>
               </div>
-              <div class="row">
-                <div class="row-item" v-for="it in item.children">
-                  <a
-                    href="javascript:;"
-                    @click="toChoseDoc(it.ksdm,it.czlx)"
-                    style="color: #999999;"
-                  >
+              <div class="row" v-for="it in item.children">
+                <a href="javascript:;" @click="toChoseDoc(it.ksdm,it.czlx)" style="color: #999999;">
+                  <div class="row-item">
                     <p>{{it.ksmc}}</p>
-                  </a>
-                  <div style="position: absolute;top: -13px;right: -21px;height: 50px;width: 50px;">
-                    <img
-                      src="../../../../static/img/专家 (1).svg"
-                      v-show="it.czlx == 1"
-                      style="width: 42%;"
-                    />
+
+                    <div
+                      style="position: absolute;top: -13px;right: -21px;height: 50px;width: 50px;"
+                    >
+                      <img
+                        src="../../../../static/img/专家 (1).svg"
+                        v-show="it.czlx == 1"
+                        style="width: 42%;"
+                      />
+                    </div>
                   </div>
-                </div>
+                </a>
               </div>
             </div>
           </el-tab-pane>
@@ -70,11 +69,11 @@ export default {
       this.patientId = val;
     }
   },
-  props:['patid'],
+  props: ["patid"],
   watch: {
-      patientId: function (val) {       
-      	this.patientId = val;
-      }
+    patientId: function(val) {
+      this.patientId = val;
+    }
   },
   mounted() {
     this.init();
@@ -91,7 +90,7 @@ export default {
     },
     toChoseDoc(e1, e2) {
       let self = this;
-      console.log(e1, e2);
+      //console.log(e1, e2);
       if (e2 == "1") {
         self.$router.push("/appointDocToday?ksdm=" + e1);
       } else {
@@ -107,7 +106,7 @@ export default {
         if (res.data.code == "0") {
           let arr = res.data.data;
           self.outpatientList = res.data.data;
-          console.log(self.outpatientList);
+          //console.log(self.outpatientList);
         } else {
           $.toptip(res.data.msg, "error");
         }

@@ -35,7 +35,7 @@
             <img class="weui-media-box__thumb" src="../../../../static/img/科室.png" />
           </div>
           <div class="weui-media-box__bd">
-            <h4 class="weui-media-box__title" style="float: left;">可挂号数量：{{item.kghys}}</h4>
+            <h4 class="weui-media-box__title" style="float: left;">剩余挂号数量：{{item.kghys}}</h4>
             <h4 class="weui-media-box__title" style="clear: both;">科室：{{item.pbmc}}</h4>
             <h4 class="weui-media-box__title">费用：¥{{item.zje}} 排班：{{item.zzlxmc}}</h4>
             <div class="hero-button">
@@ -56,10 +56,11 @@ export default {
     this.model = model(this.axios);
     return {
       tabPosition: "left",
-      sourceList:[]
+      sourceList: [],
+      kghys: ""
     };
   },
-  props:['patid'],
+  props: ["patid"],
   mounted() {
     this.search();
   },
@@ -71,61 +72,67 @@ export default {
       this.model.getDepartmentOnDutyYNo(da).then(function(res) {
         if (res.data.code == "0") {
           self.sourceList = res.data.data;
-          console.log(res.data.data)
         } else {
-          $.toptip(res.data.msg,'error');
+          $.toptip(res.data.msg, "error");
         }
       });
     },
     toSubmit(ele) {
       let self = this;
-      $.confirm(
-        "您确定要预约吗？",
-        "提示",
-        function() {
-          self.sub(ele);
-        },
-        function() {
-          return;
-        }
-      );
+      if (ele.kghys == 0) {
+        $.alert("已无可预约号码", "error");
+      } else {
+        $.confirm(
+          "您确定要预约吗？",
+          "提示",
+          function() {
+            self.sub(ele);
+          },
+          function() {
+            return;
+          }
+        );
+      }
     },
-    sub(ele){
+    sub(ele) {
       let self = this;
       let pbmxxh = ele.pbxh;
       let hzxm = localStorage.getItem("sec_patientName");
       let bxh = localStorage.getItem("sec_patientIdcard");
       let data = {
-        patid:this.patid,
-        pbmxxh:pbmxxh,
-        hzxm:hzxm,
-        bxh:bxh,
-        isynzh:0,
-        iszfjs:1
-      } 
-      this.model.RegisteredBudget(data).then(function(res){
-        if(res.data.code==0){
+        patid: this.patid,
+        pbmxxh: pbmxxh,
+        hzxm: hzxm,
+        bxh: bxh,
+        isynzh: 0,
+        iszfjs: 1
+      };
+      this.model.RegisteredBudget(data).then(function(res) {
+        if (res.data.code == 0) {
           $.modal({
-				  title: "提示",
-				  text: "预约成功",
-				  buttons: [
-				    { text: "预约信息", onClick: function(){
-				    	if (process.env.NODE_ENV == 'dev') {
-						  window.location='../../reservation.html'
-						} else if (process.env.NODE_ENV == 'production') {
-						  window.location='../../sechos/reservation.html'
-						}
-				    } },
-				    { text: "取消", className: "default", onClick: function(){ } },
-				  ]
-				});
-      		}else{
-      			$.toptip(res.data.msg,'error');
-      		}
-        });
+            title: "提示",
+            text: "预约成功",
+            buttons: [
+              {
+                text: "预约信息",
+                onClick: function() {
+                  if (process.env.NODE_ENV == "dev") {
+                    window.location = "../../reservation.html";
+                  } else if (process.env.NODE_ENV == "production") {
+                    window.location = "../../sechos/reservation.html";
+                  }
+                }
+              },
+              { text: "取消", className: "default", onClick: function() {} }
+            ]
+          });
+        } else {
+          $.toptip(res.data.msg, "error");
+        }
+      });
     }
   }
-}
+};
 </script>
 
 <style>

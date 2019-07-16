@@ -60,7 +60,8 @@ export default {
     this.model = model(this.axios);
     return {
       tabPosition: "left",
-      doctorList: ""
+      doctorList: "",
+      kghys:''
     };
   },
   created() {},

@@ -24,7 +24,7 @@
 	        <img class="weui-media-box__thumb" src="../../../../static/img/科室.png">
 	      </div>
 	      <div class="weui-media-box__bd">
-	        <h4 class="weui-media-box__title" style="float: left;">日期：{{item.yyrq}}</h4>
+	        <h4 class="weui-media-box__title" style="float: left;">日期：{{item.yyrq | formatDate}}</h4>
 	        <h4 class="weui-media-box__title" style="clear: both;">科室：{{item.pbmc}}</h4>
 	        <h4 class="weui-media-box__title">费用：¥{{item.zje}}   排班：{{item.zzlxmc}}</h4>
 	        <div class="hero-button">
@@ -40,6 +40,7 @@
 <script>
 	import weui from 'jquery-weui/dist/js/jquery-weui.min'
 	import model from './model.js'
+	import moment from 'moment'
   export default {
   	  data() {
   	  	this.model = model(this.axios);
@@ -47,6 +48,11 @@
         tabPosition: 'left',
         arr:[]
       };
+	},
+	filters: {
+      formatDate: function (value) {
+        return moment(value).format('YYYY-MM-DD')
+      }
     },
     props:['patid'],
     mounted(){
@@ -105,7 +111,7 @@
       			$.toptip(res.data.msg,'error');
       		}
       	})
-      }
+	  },
     }
   }
 </script>

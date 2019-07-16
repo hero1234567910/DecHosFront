@@ -77,16 +77,20 @@ export default {
     },
     toSubmit(ele) {
       let self = this;
-      $.confirm(
-        "您确定要预约吗？",
-        "提示",
-        function() {
-          self.sub(ele);
-        },
-        function() {
-          return;
-        }
-      );
+      if (ele.kghys == 0) {
+        $.alert("已无可预约号码", "error");
+      } else {
+        $.confirm(
+          "您确定要预约吗？",
+          "提示",
+          function() {
+            self.sub(ele);
+          },
+          function() {
+            return;
+          }
+        );
+      }
     },
     sub(ele) {
       let self = this;
