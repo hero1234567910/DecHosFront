@@ -83,21 +83,7 @@ export default {
     toSelect(ele){
       	var da = this.$route.query;
       	this.$router.push('/docTodaySource?ysdm='+ele.ysdm);
-      },
-
-    toSubmit(ele) {
-      let self = this;
-      $.confirm(
-        "您确定要预约吗？",
-        "提示",
-        function() {
-          self.sub(ele);
-        },
-        function() {
-          return;
-        }
-      );
-    },
+      }
     
   }
 };
