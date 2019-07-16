@@ -17,6 +17,21 @@ function model(http) {
     		}
     	})
 	},
+	getAppointDepartmentYNo(data){
+    	return http.post(evn.SEC_HOSAPI+'/wx/common/getAppointDepartmentYNo',data,{
+    		headers:{
+    			contentType:'application/json;charset=utf-8'
+    		}
+    	})
+    },
+    getOutpatientAppointmentReg(data){
+    	return http.post(evn.SEC_HOSAPI+'/wx/common/getOutpatientAppointmentReg',data,{
+    		headers:{
+    			contentType:'application/json;charset=utf-8'
+    		}
+    	})
+    
+	},
 	//当班出诊科室查询
 	getDepartmentOnDuty(data){
 		return http.post(evn.SEC_HOSAPI+'/wx/common/getDepartmentOnDuty',data,{

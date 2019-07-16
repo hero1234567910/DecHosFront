@@ -14,7 +14,7 @@
       </el-card>
       <div class="hero-main">
         <el-tabs type="border-card" :tab-position="tabPosition">
-          <el-tab-pane :label="item.ksmc" v-for="item in outpatientList" :key="item">
+          <el-tab-pane :label="item.ksmc" v-for="item in outpatientList" :key="item.rowGuid">
             <div style>
               <div class="weui-panel__hd">
                 <div class="hero-panel-img">
@@ -95,6 +95,7 @@ export default {
         if (res.data.code == "0") {
           let arr = res.data.data;
           self.outpatientList = res.data.data;
+          console.log(self.outpatientList);
         } else {
           $.alert(res.data.msg, "error");
         }
