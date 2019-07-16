@@ -98,43 +98,7 @@ export default {
         }
       );
     },
-    sub(ele) {
-      let self = this;
-      let pbmxxh = ele.pbxh;
-      let hzxm = localStorage.getItem("sec_patientName");
-      let bxh = localStorage.getItem("sec_patientIdcard");
-      let data = {
-        patid: this.patid,
-        pbmxxh: pbmxxh,
-        hzxm: hzxm,
-        bxh: bxh,
-        isynzh: 0,
-        iszfjs: 1
-      };
-      this.model.RegisteredBudget(data).then(function(res) {
-        if (res.data.code == 0) {
-          $.modal({
-            title: "提示",
-            text: "预约成功",
-            buttons: [
-              {
-                text: "预约信息",
-                onClick: function() {
-                  if (process.env.NODE_ENV == "dev") {
-                    window.location = "../../reservation.html";
-                  } else if (process.env.NODE_ENV == "production") {
-                    window.location = "../../sechos/reservation.html";
-                  }
-                }
-              },
-              { text: "取消", className: "default", onClick: function() {} }
-            ]
-          });
-        } else {
-          $.toptip(res.data.msg, "error");
-        }
-      });
-    }
+    
   }
 };
 </script>
