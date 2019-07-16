@@ -26,7 +26,7 @@
 	      <div class="weui-media-box__bd">
 	        <h4 class="weui-media-box__title" style="float: left;">日期：{{item.yyrq}}</h4>
 	        <h4 class="weui-media-box__title" style="clear: both;">科室：{{item.pbmc}}</h4>
-	        <h4 class="weui-media-box__title">¥{{item.zje}}   {{item.zzlxmc}}</h4>
+	        <h4 class="weui-media-box__title">费用：¥{{item.zje}}   排班：{{item.zzlxmc}}</h4>
 	        <div class="hero-button">
 	        	<el-button type="primary" round @click="toSubmit(item)">预约</el-button>
 	        </div>

@@ -55,7 +55,23 @@ function model(http) {
     			contentType:'application/json;charset=utf-8'
     		}
 		})
+	},
+	getAppointDoctorInfo(data){
+		return http.post(evn.SEC_HOSAPI+'/wx/common/getAppointDoctorInfo',data,{
+			headers:{
+    			contentType:'application/json;charset=utf-8'
+    		}
+		})
+	},
+	getAppointDoctorYNo(data){
+		return http.post(evn.SEC_HOSAPI+'/wx/common/getAppointDoctorYNo',data,{
+			headers:{
+    			contentType:'application/json;charset=utf-8'
+    		}
+		})
 	}
+	
+	
   }
 
 }

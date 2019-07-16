@@ -19,18 +19,16 @@
 	
 	<div class="weui-panel weui-panel_access">
 	  <div class="weui-panel__bd">
-	    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" v-for="item in arr">
+	    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" v-for="item in arr" :key="item.yyrq">
 	      <div class="weui-media-box__hd">
-	        <img class="weui-media-box__thumb" src="../../../../static/img/400398144.png">
+	        <img class="weui-media-box__thumb" src="../../../../static/img/科室.png">
 	      </div>
 	      <div class="weui-media-box__bd">
-	        <h4 class="weui-media-box__title" style="float: left;">{{item.ysmc}}</h4>
-	        	<div style="width: 50px;float: left;margin-left: 10px;width: 40px;line-height: 27px;"><img src="../../../../static/img/专家.png" style="width: 100%;"/></div>
-	        
-	        <h4 class="weui-media-box__title" style="clear: both;">职位: {{item.yszc}}</h4>
-	        <h4 class="weui-media-box__title">科室名：{{item.ksmc}}</h4>
+	        <h4 class="weui-media-box__title" style="float: left;">日期：{{item.yyrq}}</h4>
+	        <h4 class="weui-media-box__title" style="clear: both;">医生：{{item.pbmc}}</h4>
+	        <h4 class="weui-media-box__title">费用：¥{{item.zje}}   排班：{{item.zzlxmc}}</h4>
 	        <div class="hero-button">
-	        	<el-button type="primary" round @click="toSelect(item)">选择</el-button>
+	        	<el-button type="primary" round @click="toSubmit(item)">预约</el-button>
 	        </div>
 	      </div>
 	    </a>
@@ -50,6 +48,7 @@
         arr:[]
       };
     },
+    props:['patid'],
     mounted(){
     	this.init();
     },
@@ -57,7 +56,7 @@
       init(){
       	let self = this;
       	var da = this.$route.query;
-      	this.model.getAppointDoctorInfo(da).then(function(res){
+      	this.model.getAppointDoctorYNo(da).then(function(res){
       		if(res.data.code == 0){
       			self.arr = res.data.data;
       		}else{
@@ -65,25 +64,66 @@
       		}
       	})
       },
-      toSelect(ele){
-      	var da = this.$route.query;
-      	this.$router.push('/selectDocSource?ysdm='+ele.ysdm+'&ksrq='+da.ksrq+'&jsrq='+da.jsrq);
+      toSubmit(ele){
+      	let self = this;
+      	$.confirm("您确定要预约吗？",'提示', function() {
+		  	self.sub(ele);
+		  }, function() {
+		 	return;
+		  });
+      },
+      sub(ele){
+      	let self = this;
+      	if(ele.kyhx <= 0){
+      		$.toptip(res.data.msg,'error');
+      		return;
+      	}
+      	let pbxh = ele.pbxh;
+      	let data = {
+      		pbxh:pbxh,
+      		yyhx:0,
+      		patid:this.patid
+      	}
+      	
+      	this.model.getOutpatientAppointmentReg(data).then(function(res){
+      		if(res.data.code == 0){
+				$.modal({
+				  title: "提示",
+				  text: "预约成功",
+				  buttons: [
+				    { text: "预约信息", onClick: function(){
+				    	if (process.env.NODE_ENV == 'dev') {
+						  window.location='../../reservation.html'
+						} else if (process.env.NODE_ENV == 'production') {
+						  window.location='../../sechos/reservation.html'
+						}
+				    } },
+				    { text: "取消", className: "default", onClick: function(){ } },
+				  ]
+				});
+      		}else{
+      			$.toptip(res.data.msg,'error');
+      		}
+      	})
       }
     }
   }
 </script>
 
-<style>
+<style scoped>
+.weui-panel:after{
+		border-bottom: 0px solid #E5E5E5; 
+	}
 	.weui-panel{
 		overflow: auto;
 	    top: 44px;
 	    height: calc(100vh - 44px);
 	}
 	.el-button.is-round{
-	    width: 70px;
-	    height: 30px;
-	    font-size: 14px;
-	    line-height: 5px;
+		    width: 70px;
+    height: 30px;
+    font-size: 14px;
+    line-height: 5px;
 	}
 	.weui-media-box__bd{
 		position: relative;

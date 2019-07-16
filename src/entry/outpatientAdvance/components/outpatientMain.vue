@@ -110,7 +110,7 @@
 	    		this.$router.push('/selectDepartment?ksdm='+ele.ksdm+'&ksrq='+this.ksrq+'&jsrq='+this.jsrq);
 	    	}
 	    	if(ele.czlx == 1){
-		    	this.$router.push('/appointDoc');
+		    	this.$router.push('/appointDoc?ksdm='+ele.ksdm+'&ksrq='+this.ksrq+'&jsrq='+this.jsrq);
 	    	}
 
 	    }

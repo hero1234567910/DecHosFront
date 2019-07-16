@@ -8,6 +8,7 @@ import appointChoice from '../components/appointChoice.vue'
 import appointDocToday from '../components/appointDocToday.vue'
 import appointSourceToday from '../components/appointSourceToday.vue'
 import selectDepartment from '../components/selectDepartment'
+import selectDocSource from '../components/selectDocSource'
 
 
 Vue.use(Router);
@@ -53,6 +54,11 @@ export default new Router({
       path: '/selectDepartment',
       name: 'selectDepartment',
       component: selectDepartment
+   },
+   {
+      path: '/selectDocSource',
+      name: 'selectDocSource',
+      component: selectDocSource
    }
   ]
 })
