@@ -38,14 +38,14 @@
 							  	</div>
 							  </div>
 							<div class="row">
-								<div class="row-item" v-for="it in item.children">
-									<a href="javascript:;" @click="toChoseDoc(it)" style="color: #999999;">
-							  		<p>{{it.ksmc}}</p>
-							  	</a>
-							  	<div style="position: absolute;top: -13px;right: -21px;height: 50px;width: 50px;">
-							  		<img src="../../../../static/img/专家 (1).svg" v-show="it.czlx == 1" style="width: 42%;"/>
-							  	</div>
-								</div>
+								<a href="javascript:;" @click="toChoseDoc(it)" style="color: #999999;" v-for="it in item.children">
+									<div class="row-item">
+								  		<p>{{it.ksmc}}</p>
+								  	<div style="position: absolute;top: -13px;right: -21px;height: 50px;width: 50px;">
+								  		<img src="../../../../static/img/专家 (1).svg" v-show="it.czlx == 1" style="width: 42%;"/>
+								  	</div>
+									</div>
+								</a>
 							</div>
 						</div>
 				  </el-tab-pane>
