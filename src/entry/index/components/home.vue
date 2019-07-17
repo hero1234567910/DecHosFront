@@ -29,7 +29,7 @@
 					  <div class="weui-col-33" @click="toOutpatientAd()"> <!--style="background-image:url(../../../../static/img/预约.png)	; background-size: 100% 100%;"-->
 					  		<img src="../../../../static/img/预约.png" style="width: 100%;"/>
 					  </div>
-					  <div class="weui-col-33">
+					  <div class="weui-col-33" @click="toOutpatientPay()">
 					  	<img src="../../../../static/img/缴费.png" style="width: 100%;"/>
 					  </div>
 					  <div class="weui-col-33">
@@ -153,6 +153,13 @@
 	import model from './model.js'
   export default {
   	methods:{
+  		toOutpatientPay(){
+  			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../outpatientPay.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/outpatientPay.html'
+				}
+  		},
   		toconsultation(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../consultation.html'
