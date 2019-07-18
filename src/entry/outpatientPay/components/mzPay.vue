@@ -1,140 +1,191 @@
 <template>
-  <div style="overflow: auto;background-color: #EFF7FD;">
- 		 <div class="ad-header">
-  		<div class="ad-headerImg">
-  			<img src="../../../../static/img/缴费.svg" style="width: 11%;position: absolute;top: 7px;
-	    left: 17px;"/>
-	  		</div>
-	  		<div class="ad-title">
-	  			<p style="font-size: 20px;font-weight: 700;">门诊缴费</p>
-	  		</div>
-  		</div>
-  		<div style="overflow-y: auto;margin-bottom: 20px;height: calc(100vh - 60px);">
-	  		<div class="panel-hero">
-	  			<el-card class="box-card">
+  <div style="overflow: auto;height: 100%;">
+  	<el-card class="box-card">
+		  <div slot="header" class="clearfix">
+		  	<div class="card-hero">
+		  		<img src="../../../../static/img/门诊缴费.svg" style="position: absolute;top: -7px;width: 80%;"/>
+		  	</div>
+		    <span style="font-weight: 700;	">门诊预结算信息</span>
+		  </div>
+		  <div>
+		    <div class="hero-list-item">
+		  		<div class="hero-list-item-left">
+		  			<p class="weui-media-box__desc" style="font-size: 17px;">收据号</p>
+		  		</div>
+		  		<div class="hero-list-item-right" style="margin-left: 37px;">
+		  			<h4 class="weui-media-box__title">{{info.sjh}}</h4>
+		  		</div>
+		  	</div>
+		  	<div class="hero-list-item">
+		  		<div class="hero-list-item-left">
+		  			<p class="weui-media-box__desc" style="font-size: 17px;">应付金额</p>
+		  		</div>
+		  		<div class="hero-list-item-right">
+		  			<h4 class="weui-media-box__title">¥{{info.yfje}}</h4>
+		  		</div>
+		  	</div>
+		  </div>
+		</el-card>
+		<el-button-group>
+		  <el-button type="primary" icon="el-icon-arrow-left"  @click="show = !show">查看明细</el-button>
+		  <el-button type="primary" @click="toIndex()">返回主列表<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+		</el-button-group>
+		
+		<div style="display: flex; margin-top: 20px; height: 100px;">
+      <transition name="el-fade-in-linear">
+        <div v-show="show" class="transition-box" style="width: calc(100vw - 30px);margin-left: auto;margin-right: auto;">
+        	<el-card class="box-card">
 					  <div slot="header" class="clearfix">
-					    <span>挂号结算</span>
-					    <el-button style="float: right; padding: 3px 0" type="text">点我结算</el-button>
-					  </div>
-					 <div class="text item">
-					    1.请先选择您要结算的病历号   
-					  </div>
-					  <div class="text item">
-					    2.可以查看挂号预结算信息
+					    <div class="card-hero">
+					  		<img src="../../../../static/img/明细.svg" style="position: absolute;top: -4px;width: 80%;"/>
+					  	</div>
+					    <span>总金额: ¥{{info.zje}}</span>
 					  </div>
 					  <div class="text item">
-					    3.结算付款
-					  </div>
-					  <div class="text item">
-					    4.可前往个人中心查看缴费记录
+					    <div class="hero-list-item">
+					  		<div class="hero-list-item-left">
+					  			<p class="weui-media-box__desc">自负金额</p>
+					  		</div>
+					  		<div class="hero-list-item-right" style="margin-left: 63px;">
+					  			<h4 class="weui-media-box__title">¥{{info.zfje}}</h4>
+					  		</div>
+					  	</div>
+					  	<div class="hero-list-item">
+					  		<div class="hero-list-item-left">
+					  			<p class="weui-media-box__desc">总金额</p>
+					  		</div>
+					  		<div class="hero-list-item-right">
+					  			<h4 class="weui-media-box__title">¥{{info.zje}}</h4>
+					  		</div>
+					  	</div>
+					  	<div class="hero-list-item">
+					  		<div class="hero-list-item-left">
+					  			<p class="weui-media-box__desc">优惠金额</p>
+					  		</div>
+					  		<div class="hero-list-item-right" style="margin-left: 63px;">
+					  			<h4 class="weui-media-box__title">¥{{info.yhje}}</h4>
+					  		</div>
+					  	</div>
+					  	<div class="hero-list-item">
+					  		<div class="hero-list-item-left">
+					  			<p class="weui-media-box__desc">备注</p>
+					  		</div>
+					  		<div class="hero-list-item-right">
+					  			<h4 class="weui-media-box__title">{{info.memo}}</h4>
+					  		</div>
+					  	</div>
 					  </div>
 					</el-card>
-	  		</div>
-	  		
-	  		<div class="panel-hero">
-	  			<el-card class="box-card">
-					  <div slot="header" class="clearfix">
-					    <span>门诊结算</span>
-					    <el-button style="float: right; padding: 3px 0" type="text">点我结算</el-button>
-					  </div>
-					  <div class="text item">
-					    1.请先选择您要结算的病历号   
-					  </div>
-					  <div class="text item">
-					    2.可以查看代缴费处方信息
-					  </div>
-					  <div class="text item">
-					    3.可以查看门诊预结算信息
-					  </div>
-					  <div class="text item">
-					    4.结算付款
-					  </div>
-					  <div class="text item">
-					    5.可前往个人中心查看缴费记录
-					  </div>
-					</el-card>
-	  		</div>
-  		</div>
+					<div style="margin-top: 10px;margin-bottom: 30px;">
+						<div>
+							<a href="javascript:;" class="weui-btn weui-btn_primary">立即支付</a>
+						</div>
+					</div>
+        </div>
+      </transition>
+    </div>
   </div>
 </template>
 
 
 <script>
 	import model from './model.js'
+	import commonSelect from './commonSelect.vue'
   export default {
-  	data() {
-    	this.model = model(this.axios)
-      return {
-      }
-    },
-    mounted(){
-    	
-    },
+  	components: {commonSelect},
+  	data(){
+  		this.model = model(this.axios);
+  		return{
+  			show: false,
+  			blh:'',
+  			zjh:localStorage.getItem('sec_patientIdcard'),
+				hzxm:localStorage.getItem('sec_patientName'),
+				patid:'',
+				cfxh:'',
+				info:{}
+  		}
+  	},
+  	mounted(){
+  		this.init();
+  	},
   	methods:{
+  		init(){
+  			let self = this;
+  			let da = this.$route.query;
+  			this.patid = da.patid;
+  			this.cfxh = da.cfxh;
+  			
+  			let data = {
+  				patid:this.patid,
+  				cfxhhj:this.cfxh,
+  				isynzh:0
+  			}
+  			this.model.getOutpatientFeeBudget(data).then(function(res){
+  				if(res.data.code == 0){
+  					self.info = res.data.data;
+  				}else{
+  					$toptip(res.data.msg,'error');
+  				}
+  			})
+  		},
+  		toIndex(){
+  			this.$router.push('/');
+  		},
   		
-		
+  		
   	}
   }
   </script>
 
-
+<style>
+	.el-dialog{
+		width: calc(100vw - 20px);
+	}
+</style>
 <style scoped>
-	/*.el-button--primary.is-plain{
-		    height: 22px;
-    line-height: 22px;
-        position: absolute;
-    right: 30px;
+	.weui-btn_primary{
+		background-color: #4CCBDB;
+	}
+	.weui-btn{
+		width: 230px;
+	}
+	.el-card{
+		margin-bottom: 10px;
+	}
+	.el-button--primary{
+		color: #409eff;
+    background-color: #ffffff;
+	}
+	.el-button-group{
+		width: 100%;
 	}
 	.el-button{
-		padding: 0px;
-	}*/
-	.panel-hero{
-		width: calc(100vw - 20px);
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: 10px;
+		width:50%
 	}
-	 .text {
-    font-size: 14px;
-  }
-
-  .item {
-    margin-bottom: 18px;
-  }
-
-  .clearfix:before,
-  .clearfix:after {
-    display: table;
-    content: "";
-  }
-  .clearfix:after {
-    clear: both
-  }
-
-  .box-card {
-    
-  }
-	.ad-fin{
-		height: 60px;
-		width: 60px;
-		line-height: 60px;
-		position: relative;
+	.weui-media-box__title{
+		font-size: 13px;
 	}
-	.ad-title{
-		float:left;
-		height: 60px;
-		line-height: 60px;
-	}
-	.ad-headerImg{
-		width: 80px;
-		height: 60px;
-		line-height: 60px;
+	.card-hero{
+		width: 50px;
+		height: 40px;
+		line-height: 20px;
 		float: left;
-	}
-	.ad-header{
 		position: relative;
-		width: 100%;
-		height: 60px;
-		background-color: #FFFFFF;
+	}
+	.hero-list-item-left{
+		float: left;
+		height: 20px;
+		line-height: 20px;
+		margin-left: 20px;
+	}
+	.hero-list-item-right{
+		height: 20px;
+		line-height: 20px;
+		margin-left: 76px;
+    	float: left;
+	}
+	.hero-list-item{
+		height: 20px;
+		margin-top: 5px;
 	}
 </style>

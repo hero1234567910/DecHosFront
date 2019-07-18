@@ -5,39 +5,23 @@
 		  	<div class="card-hero">
 		  		<img src="../../../../static/img/挂号.svg" style="position: absolute;top: -7px;width: 80%;"/>
 		  	</div>
-		    <span style="font-weight: 700;	">挂号结算</span>
+		    <span style="font-weight: 700;	">挂号预结算信息</span>
 		  </div>
 		  <div>
 		    <div class="hero-list-item">
 		  		<div class="hero-list-item-left">
-		  			<p class="weui-media-box__desc">预交金额累计充值</p>
+		  			<p class="weui-media-box__desc" style="font-size: 17px;">收据号</p>
 		  		</div>
 		  		<div class="hero-list-item-right" style="margin-left: 37px;">
-		  			<h4 class="weui-media-box__title">{{info.yjjlj}}</h4>
+		  			<h4 class="weui-media-box__title">{{info.sjh}}</h4>
 		  		</div>
 		  	</div>
 		  	<div class="hero-list-item">
 		  		<div class="hero-list-item-left">
-		  			<p class="weui-media-box__desc">预交金余额</p>
+		  			<p class="weui-media-box__desc" style="font-size: 17px;">应付金额</p>
 		  		</div>
 		  		<div class="hero-list-item-right">
-		  			<h4 class="weui-media-box__title">{{info.yjjye}}</h4>
-		  		</div>
-		  	</div>
-		  	<div class="hero-list-item">
-		  		<div class="hero-list-item-left">
-		  			<p class="weui-media-box__desc">费用总金额</p>
-		  		</div>
-		  		<div class="hero-list-item-right">
-		  			<h4 class="weui-media-box__title">{{info.fyzje}}</h4>
-		  		</div>
-		  	</div>
-		  	<div class="hero-list-item" style="position: relative;">
-		  		<div class="hero-list-item-left">
-		  			<p class="weui-media-box__desc">费用自付金额</p>
-		  		</div>
-		  		<div class="hero-list-item-right" style="margin-left: 63px;">
-		  			<h4 class="weui-media-box__title">{{info.fyzfje}}</h4>
+		  			<h4 class="weui-media-box__title">¥{{info.yfje}}</h4>
 		  		</div>
 		  	</div>
 		  </div>
@@ -50,72 +34,64 @@
 		<div style="display: flex; margin-top: 20px; height: 100px;">
       <transition name="el-fade-in-linear">
         <div v-show="show" class="transition-box" style="width: calc(100vw - 30px);margin-left: auto;margin-right: auto;">
-        	<el-card class="box-card" v-for="(item, idx) in detail"  :key="idx">
+        	<el-card class="box-card">
 					  <div slot="header" class="clearfix">
 					    <div class="card-hero">
 					  		<img src="../../../../static/img/明细.svg" style="position: absolute;top: -4px;width: 80%;"/>
 					  	</div>
-					    <span>预交序号: {{item.yjxh}}</span>
+					    <span>总金额: ¥{{info.zje}}</span>
 					  </div>
 					  <div class="text item">
 					    <div class="hero-list-item">
 					  		<div class="hero-list-item-left">
-					  			<p class="weui-media-box__desc">操作类别</p>
-					  		</div>
-					  		<div class="hero-list-item-right" style="margin-left: 37px;">
-					  			<h4 class="weui-media-box__title">{{item.czlb}}</h4>
-					  		</div>
-					  	</div>
-					  	<div class="hero-list-item">
-					  		<div class="hero-list-item-left">
-					  			<p class="weui-media-box__desc">预交金额</p>
-					  		</div>
-					  		<div class="hero-list-item-right">
-					  			<h4 class="weui-media-box__title">{{item.yjje}}</h4>
-					  		</div>
-					  	</div>
-					  	<div class="hero-list-item">
-					  		<div class="hero-list-item-left">
-					  			<p class="weui-media-box__desc">发票号</p>
-					  		</div>
-					  		<div class="hero-list-item-right">
-					  			<h4 class="weui-media-box__title">{{item.fph}}</h4>
-					  		</div>
-					  	</div>
-					  	<div class="hero-list-item">
-					  		<div class="hero-list-item-left">
-					  			<p class="weui-media-box__desc">缴费日期</p>
-					  		</div>
-					  		<div class="hero-list-item-right">
-					  			<h4 class="weui-media-box__title">{{item.jfrq}}</h4>
-					  		</div>
-					  	</div>
-					  	<div class="hero-list-item">
-					  		<div class="hero-list-item-left">
-					  			<p class="weui-media-box__desc">支付方式</p>
-					  		</div>
-					  		<div class="hero-list-item-right">
-					  			<h4 class="weui-media-box__title">{{item.zffs}}</h4>
-					  		</div>
-					  	</div>
-					  	<div class="hero-list-item" style="position: relative;">
-					  		<div class="hero-list-item-left">
-					  			<p class="weui-media-box__desc">状态</p>
+					  			<p class="weui-media-box__desc">自负金额</p>
 					  		</div>
 					  		<div class="hero-list-item-right" style="margin-left: 63px;">
-					  			<h4 class="weui-media-box__title">{{item.jlzt}}</h4>
+					  			<h4 class="weui-media-box__title">¥{{info.zfje}}</h4>
+					  		</div>
+					  	</div>
+					  	<div class="hero-list-item">
+					  		<div class="hero-list-item-left">
+					  			<p class="weui-media-box__desc">挂号费</p>
+					  		</div>
+					  		<div class="hero-list-item-right">
+					  			<h4 class="weui-media-box__title">¥{{info.ghf}}</h4>
+					  		</div>
+					  	</div>
+					  	<div class="hero-list-item">
+					  		<div class="hero-list-item-left">
+					  			<p class="weui-media-box__desc">优惠金额</p>
+					  		</div>
+					  		<div class="hero-list-item-right" style="margin-left: 63px;">
+					  			<h4 class="weui-media-box__title">¥{{info.yhje}}</h4>
+					  		</div>
+					  	</div>
+					  	<div class="hero-list-item">
+					  		<div class="hero-list-item-left">
+					  			<p class="weui-media-box__desc">挂号序号</p>
+					  		</div>
+					  		<div class="hero-list-item-right" style="margin-left: 63px;">
+					  			<h4 class="weui-media-box__title">{{info.ghxh}}</h4>
+					  		</div>
+					  	</div>
+					  	<div class="hero-list-item">
+					  		<div class="hero-list-item-left">
+					  			<p class="weui-media-box__desc">备注</p>
+					  		</div>
+					  		<div class="hero-list-item-right">
+					  			<h4 class="weui-media-box__title">{{info.memo}}</h4>
 					  		</div>
 					  	</div>
 					  </div>
 					</el-card>
+					<div style="margin-top: 10px;margin-bottom: 30px;">
+						<div>
+							<a href="javascript:;" class="weui-btn weui-btn_primary">立即支付</a>
+						</div>
+					</div>
         </div>
       </transition>
     </div>
-    
-     <el-dialog title="选择要结算的病历号" :visible.sync="isShow">
-			<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
-		 </el-dialog>
-    
   </div>
 </template>
 
@@ -133,96 +109,42 @@
   			zjh:localStorage.getItem('sec_patientIdcard'),
 				hzxm:localStorage.getItem('sec_patientName'),
 				patid:'',
-				isShow:false,
-				mzData:[],
-				jzlsh:'',
-				info:{},
-				detail:[]
+				pbxh:'',
+				info:{}
   		}
   	},
   	mounted(){
   		this.init();
   	},
   	methods:{
-  		handleCall(res){
-  			this.blh = res.blh;
-  			this.patid = res.patid;
-				this.isShow = false;
-				//获取jzlsh并获取汇总信息
-				this.getJzlsh();
-				
-				
-			},
-  		toIndex(){
-  			this.$router.push('/');
-  		},
   		init(){
-  			//获取
-  			 $.showLoading();
-					let self = this;
-					let data={
-						hzxm:this.hzxm,
-						zjh:this.zjh,
-						action:'zy',
-						openid:localStorage.getItem('sec_openId')
-					}
-					
-					this.model.selectPatient(data).then(function(res){
-						 $.hideLoading();
-						if(res.data.code == '0'){
-							self.mzData = res.data.data;
-							self.isShow = true;
-						}else{
-							$.alert("未查询到您的住院信息", "提示", function() {
-							});
-						}
-					})
-  		},
-  		getJzlsh(){
   			let self = this;
+  			let da = this.$route.query;
+  			this.patid = da.patid;
+  			this.pbxh = da.pbxh;
+  			
   			let data = {
+  				patid:this.patid,
+  				bxh:this.zjh,
   				hzxm:this.hzxm,
-  				patid:this.patid
+  				pbmxxh:this.pbxh,
+  				isynzh:0,
+  				iszfjs:1
   			}
-  			this.model.getJzlsh(data).then(function(res){
-  				if(res.data.code == 0){
-  					self.jzlsh = res.data.data.jzlsh;
-  					self.getSummary();
-  					self.getAdvanceDetail();
-  				}else{
-  					$.toptip(res.data.msg,'error');
-  				}
-  				
-  			})
-  		},
-  		getSummary(){
-  			let self = this;
-  			let data = {
-  				hzxm:this.hzxm,
-  				jzlsh:this.jzlsh
-  			}
-  			this.model.getSummary(data).then(function(res){
+  			this.model.RegisteredBudget(data).then(function(res){
+  				console.log(res)
   				if(res.data.code == 0){
   					self.info = res.data.data;
   				}else{
-  					$.toptip(res.data.msg,'error');
+  					$toptip(res.data.msg,'error');
   				}
   			})
   		},
-  		getAdvanceDetail(){
-  			let self = this;
-  			let data = {
-  				hzxm:this.hzxm,
-  				jzlsh:this.jzlsh
-  			}
-  			this.model.getAdvanceDetail(data).then(function(res){
-  				if(res.data.code == 0){
-  					self.detail = res.data.data;
-  				}else{
-  					$.toptip(res.data.msg,'error');
-  				}
-  			})
-  		}
+  		toIndex(){
+  			this.$router.push('/');
+  		},
+  		
+  		
   	}
   }
   </script>
@@ -233,6 +155,12 @@
 	}
 </style>
 <style scoped>
+	.weui-btn_primary{
+		background-color: #4CCBDB;
+	}
+	.weui-btn{
+		width: 230px;
+	}
 	.el-card{
 		margin-bottom: 10px;
 	}

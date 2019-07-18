@@ -28,14 +28,8 @@ export default {
   },
   props:['mzData'],
   mounted() {
-  	this.init()
   },
   methods: {
-  	init(){
-			let self = this;
-			
-
-		},
 		handleClick(row) {
         this.$emit('handleCall',row);
     },		
