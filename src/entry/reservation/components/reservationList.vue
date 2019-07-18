@@ -2,10 +2,13 @@
   <div style="height: 100%;background-color: #EFF7FD;overflow:auto;">
     <div class="guding">
       <div class="wzl-panel-title">
-        <img style="float: left;width: 49px;margin-top: -8px;" src="../../../../static/img/记录_2.png" />
-        <span>门诊缴费记录</span>
+        <img
+          style="float: left;width: 49px;margin-top: -8px;"
+          src="../../../../static/img/记录_2.png"
+        />
+        <span>门诊预约记录</span>
       </div>
-      <div class="re-header-select">
+      <!-- <div class="re-header-select">
         <div class="select-left">
           <input type="text" class="select-input1" data-toggle="date" id="ksrq1" placeholder="开始日期" />
         </div>
@@ -27,37 +30,37 @@
             v-on:click="selectMz()"
           />
         </div>
-      </div>
+      </div>-->
     </div>
 
-    <div class="flow" style="margin-top: 130px;">
-    <div class="re-row" v-for="item in PaymentList">
-      <a href="javascript:;" @click="toDetail(item)">
-        <div class="row-cen">
-          <div class="re-img">
-            <img src="../../../../static/img/矩形 4 拷贝.png" width="68%" />
-          </div>
-          <div class="re-main-ing">
-            <img
-              src="../../../../static/img/记录.png"
-              width="65%"
-              style="position: absolute;right: 24px;top: 32px;"
-            />
-          </div>
-          <div class="re-main-wzl">
-            <div class="re-content-wzl">
-              <p style="font-size: 17px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
-              <p style="color: #688795;font-size:14px;">结算时间: {{item.jssj | formatDate}}</p>
-              <p style="color: #688795;font-size:14px;">支付金额: {{item.zje}} 元</p>
-              <p style="color: #999999;font-size:14px;">
-                收费类型:
-                <span style="color:black;">{{item.sflx==1?'退费':'正常'}}</span>
-              </p>
+    <div class="flow" style="margin-top: 80px;">
+      <div class="re-row" v-for="item in AppointList">
+        <a href="javascript:;" @click="toDetail(item)">
+          <div class="row-cen">
+            <div class="re-img">
+              <img src="../../../../static/img/矩形 4 拷贝.png" width="68%" />
+            </div>
+            <div class="re-main-ing">
+              <img
+                src="../../../../static/img/mz预约.png"
+                width="65%"
+                style="position: absolute;right: 24px;top: 32px;"
+              />
+            </div>
+            <div class="re-main-wzl">
+              <div class="re-content-wzl">
+                <p style="font-size: 17px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
+                <p style="color: #688795;font-size:14px;">结算时间: {{item.yyrq | formatDate}}</p>
+                <p style="color: #688795;font-size:14px;">支付金额: {{item.zlf}} 元</p>
+                <p style="color: #999999;font-size:14px;">
+                  收费类型:
+                  <span style="color:black;">{{item.zfzt==1?'已支付':'未支付'}}</span>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
-    </div>
+        </a>
+      </div>
     </div>
 
     <div style="margin-top: 30px;margin-bottom: 30px;">
@@ -83,7 +86,7 @@ export default {
   data() {
     this.model = model(this.axios);
     return {
-      PaymentList: [],
+      AppointList: [],
       zjh: localStorage.getItem("sec_patientIdcard"),
       hzxm: localStorage.getItem("sec_patientName"),
       mzData: [],
@@ -94,6 +97,7 @@ export default {
   //props: ["patid"],
   mounted() {
     this.init();
+    this.selectMz();
   },
   methods: {
     tomainList() {
@@ -112,12 +116,51 @@ export default {
       });
     },
     toDetail(ele) {
-      this.$router.push("/outPaymentRecordsDetail?jssjh=" + ele.jssjh);
+      var mc = ele.ksmc;
+      var hzxm = localStorage.getItem("sec_patientName");
+      if (ele.ysdm == "") {
+        var mzlx = "普通门诊";
+      } else {
+        var ysmc = ele.ysmc;
+        var mzlx = "专家门诊" + ysmc;
+      }
+      this.$router.push(
+        "/reservationDetail?ksmc=" +
+          mc +
+          "&ghrq=" +
+          ele.ghrq +
+          "&mzlx=" +
+          mzlx +
+          "&zje=" +
+          ele.zje +
+          "&jzdz=" +
+          ele.jzdz +
+          "&memo=" +
+          ele.memo +
+          "&yyzt=" +
+          ele.yyzt +
+          "&yyxh=" +
+          ele.yyxh +
+          "&yysd=" +
+          ele.yysd +
+          "&hzxm=" +
+          hzxm +
+          "&zjhm=" +
+          ele.zjhm +
+          "&bxh=" +
+          ele.bxh +
+          "&lxdh=" +
+          ele.lxdh +
+          "&zfzt=" +
+          ele.zfzt +
+          "&yyhx=" +
+          ele.yyhx
+      );
     },
     handleCall(res) {
       this.isShow = false;
       this.patid = res.patid;
-      this.payList();
+      this.appointList();
     },
     selectMz() {
       $.showLoading();
@@ -143,25 +186,19 @@ export default {
         }
       });
     },
-    payList() {
+    appointList() {
       let self = this;
       let hzxm = localStorage.getItem("sec_patientName");
-      let patid = this.patid;
-      //let patid = "349246";
-      let date1 = $("#ksrq1").val();
-      let ksrq = date1.replace(/\-/g, "");
-      let date2 = $("#jsrq1").val();
-      let jsrq = date2.replace(/\-/g, "");
+      //let patid = this.patid;
+      let patid = "349246";
       let data = {
         hzxm: hzxm,
-        patid: patid,
-        ksrq: ksrq,
-        jsrq: jsrq
+        patid: patid
       };
-      this.model.getOutpatientFeeSettlementInfo(data).then(function(res) {
+      this.model.getPatientAppointInfo(data).then(function(res) {
         if (res.data.code == "0") {
-          let paymentList = res.data.data;
-          self.PaymentList = paymentList;
+          let appointList = res.data.data;
+          self.AppointList = appointList;
           self.isShow = false;
         } else {
           $.toptip(res.data.msg, "error");
@@ -287,10 +324,10 @@ input::-webkit-input-placeholder {
   font-size: 20px;
   color: #4e4e4e;
 }
-.guding{
+.guding {
   /* margin-top: -19px; */
-    position: absolute;
-    z-index: 99;
-    width: 100%;
+  position: absolute;
+  z-index: 99;
+  width: 100%;
 }
 </style>
