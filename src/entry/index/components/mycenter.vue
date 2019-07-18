@@ -37,17 +37,17 @@
                     style="font-weight:600;margin-top:10px;width:50%"
                   >{{patientName}}</h4>
                   <!-- <h4 class="weui-media-box__title2">城镇医保</h4> -->
-                  <h4 class="weui-media-box__title" style="font-size:15px;margin-top:8px">{{sex}} / {{birth}}</h4>
+                  <!-- <h4 class="weui-media-box__title" style="font-size:15px;margin-top:8px">{{sex}} / {{birth}}</h4> -->
                   <h4
                     class="weui-media-box__title"
                     style="font-size:15px;margin-top:8px"
-                  >证件号：12345678999</h4>
+                  >证件号：{{patientIdCard}}</h4>
                 </div>
-                <!-- <div class="weui-media-box__hd1">
-                  <img class="weui-media-box__thumb1" src="../../../../static/img/二维码.png">
-                  <h4 style="font-size: 8px;position: absolute;margin-left: -19%;margin-top: 3%;" >点击出示二维码</h4>
-                </div> -->
-                
+                <div class="weui-media-box__hd1">
+                  <img class="weui-media-box__thumb1" src="../../../../static/images/医院-2.png">
+                  <!-- <h4 style="font-size: 8px;position: absolute;margin-left: -19%;margin-top: 3%;" >点击出示二维码</h4> -->
+                </div> 
+      
               </a>
             </div>
           </div>
@@ -168,7 +168,8 @@ export default {
       	patientName:'',
       	headImg:'',
       	birth:'',
-      	sex:''
+        sex:'',
+        patientIdCard:''
       }
     },
     mounted(){
@@ -182,13 +183,16 @@ export default {
   	},
   	//判断是否展示
   	checkShow(){
-  		console.log('未复用')
+      console.log('未复用')
+      console.log(this.show)
   		let self = this;
   		let cs = localStorage.getItem('sec_patientName');
   		let img = localStorage.getItem('sec_headImg');
   		let birth = localStorage.getItem('sec_birth');
-  		let sex = localStorage.getItem('sec_sex');
-  		if(cs == 'null' || cs == ''){
+      let sex = localStorage.getItem('sec_sex');
+      let patientIdCard = localStorage.getItem('sec_patientIdcard');
+      console.log(cs);
+  		if(cs == null || cs == ''){
   			//说明用户未绑定
   			
   		}else{
@@ -196,7 +200,8 @@ export default {
   			self.headImg = img;
   			self.birth = birth;
   			self.sex = sex;
-  			self.show = false;
+        self.show = false;
+        self.patientIdCard = patientIdCard;
   		}
   	},
   	toReserv(){
@@ -328,9 +333,9 @@ a.weui-media-box {
 }
 .weui-media-box_appmsg .weui-media-box__thumb1 {
   margin-left: -17%;
-  margin-top: -50px;
+  margin-top: -47px;
   width: 19%;
-  height: 45%;
+  height: 55%;
   position: absolute;
 }
 .weui-media-box_appmsg .weui-media-box__thumb2 {
