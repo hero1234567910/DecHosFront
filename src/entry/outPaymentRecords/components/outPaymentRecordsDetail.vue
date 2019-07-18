@@ -124,7 +124,7 @@
 
         <div class="hero-list-item">
           <div class="hero-list-item-left">
-            <p class="weui-media-box__desc wzl1">金额 : ￥ {{item.fsje}}</p>
+            <p class="weui-media-box__desc wzl1">金额 : ￥ {{item.fsje}}元</p>
           </div>
           <div class="hero-list-item-right" style="margin-left: 37px;">
             <h4 class="weui-media-box__title"></h4>

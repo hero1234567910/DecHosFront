@@ -1,28 +1,36 @@
 <template>
   <div style="height: 100%;background-color: #EFF7FD;overflow:auto;">
-    <div class="wzl-panel-title">
-          <strong>门诊缴费记录</strong>
-    </div>
-    <div class="re-header-select">
-      <div class="select-left">
-        <input type="text" class="select-input1" data-toggle="date" id="ksrq1" placeholder="开始日期" />
+    <div class="guding">
+      <div class="wzl-panel-title">
+        <img style="float: left;width: 49px;margin-top: -8px;" src="../../../../static/img/记录_2.png" />
+        <span>门诊缴费记录</span>
       </div>
-      <div class="select-middle">
-        <img src="../../../../static/img/横线.svg" width="100%" style="position: absolute;top: 16px;" />
-      </div>
-      <div class="select-right">
-        <input type="text" class="select-input1" data-toggle="date" id="jsrq1" placeholder="结束日期" />
-      </div>
-      <div class="select-fin">
-        <img
-          src="../../../../static/img/搜索.png"
-          width="100%"
-          style="vertical-align: middle;"
-          v-on:click="selectMz()"
-        />
+      <div class="re-header-select">
+        <div class="select-left">
+          <input type="text" class="select-input1" data-toggle="date" id="ksrq1" placeholder="开始日期" />
+        </div>
+        <div class="select-middle">
+          <img
+            src="../../../../static/img/横线.svg"
+            width="100%"
+            style="position: absolute;top: 16px;"
+          />
+        </div>
+        <div class="select-right">
+          <input type="text" class="select-input1" data-toggle="date" id="jsrq1" placeholder="结束日期" />
+        </div>
+        <div class="select-fin">
+          <img
+            src="../../../../static/img/搜索.png"
+            width="100%"
+            style="vertical-align: middle;"
+            v-on:click="selectMz()"
+          />
+        </div>
       </div>
     </div>
 
+    <div class="flow" style="margin-top: 130px;">
     <div class="re-row" v-for="item in PaymentList">
       <a href="javascript:;" @click="toDetail(item)">
         <div class="row-cen">
@@ -30,23 +38,26 @@
             <img src="../../../../static/img/矩形 4 拷贝.png" width="68%" />
           </div>
           <div class="re-main-ing">
-              <img
-                src="../../../../static/img/记录.png"
-                width="65%"
-                style="position: absolute;right: 24px;top: 32px;"
-              />
+            <img
+              src="../../../../static/img/记录.png"
+              width="65%"
+              style="position: absolute;right: 24px;top: 32px;"
+            />
           </div>
           <div class="re-main-wzl">
             <div class="re-content-wzl">
               <p style="font-size: 17px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
-              <p style="color: #688795;">结算时间: {{item.jssj}}</p>
-              <p style="color: #688795;">支付金额: {{item.zje}}</p>
-              <p style="color: #999999;">收费类型: <span style="color:black;">{{item.sflx==1?'退费':'正常'}}</span></p>
+              <p style="color: #688795;font-size:14px;">结算时间: {{item.jssj | formatDate}}</p>
+              <p style="color: #688795;font-size:14px;">支付金额: {{item.zje}} 元</p>
+              <p style="color: #999999;font-size:14px;">
+                收费类型:
+                <span style="color:black;">{{item.sflx==1?'退费':'正常'}}</span>
+              </p>
             </div>
-            
           </div>
         </div>
       </a>
+    </div>
     </div>
 
     <div style="margin-top: 30px;margin-bottom: 30px;">
@@ -54,29 +65,30 @@
         <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回主页面</a>
       </div>
     </div>
+
     <el-dialog title="选择要查看的病历" :visible.sync="isShow">
       <commonSelect v-bind:mzData="mzData" @handleCall="handleCall"></commonSelect>
     </el-dialog>
   </div>
-
 </template>
 
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
-import commonSelect from './commonSelect.vue'
+import commonSelect from "./commonSelect.vue";
+import moment from "moment";
 
 export default {
-  components: {commonSelect},
+  components: { commonSelect },
   data() {
     this.model = model(this.axios);
     return {
-        PaymentList:[],
-        zjh:localStorage.getItem('sec_patientIdcard'),
-        hzxm:localStorage.getItem('sec_patientName'),
-        mzData:[],
-        patid:'',
-        isShow:false
+      PaymentList: [],
+      zjh: localStorage.getItem("sec_patientIdcard"),
+      hzxm: localStorage.getItem("sec_patientName"),
+      mzData: [],
+      patid: "",
+      isShow: false
     };
   },
   //props: ["patid"],
@@ -96,73 +108,83 @@ export default {
       });
     },
     toDetail(ele) {
-      this.$router.push(
-        "/outPaymentRecordsDetail?jssjh=" +
-          ele.jssjh
-      );
+      this.$router.push("/outPaymentRecordsDetail?jssjh=" + ele.jssjh);
     },
-    handleCall(res){
-		this.isShow = false;
-        this.patid = res.patid;
-        this.payList();
+    handleCall(res) {
+      this.isShow = false;
+      this.patid = res.patid;
+      this.payList();
     },
-    selectMz(){
-    	$.showLoading();
-			let self = this;
-			let data={
-				hzxm:this.hzxm,
-				zjh:this.zjh,
-				action:'mz',
-				openid:localStorage.getItem('sec_openId')
-			}
-			
-			this.model.selectPatient(data).then(function(res){
-				$.hideLoading();
-				if(res.data.code == '0'){
-					self.isShow = true;
-					self.mzData = res.data.data;
-				}
-				if(res.data.msg == '未查询到门诊患者'){
-					$.alert("未查询到您的信息，请先建档", "提示", function() {
-					  //点击确认后的回调函数
-					  self.$router.push('/userFiling?zjh='+self.zjh)
-					});
-				}
-			})
-	},
-    payList(){
-        let self = this;
-        let hzxm = localStorage.getItem("sec_patientName");
-        let patid = this.patid;
-        //let patid = "349246";
-        let date1 = $("#ksrq1").val();
-        let ksrq = date1.replace(/\-/g, "");
-        let date2 = $("#jsrq1").val();
-        let jsrq = date2.replace(/\-/g, "");
-        let data = {
-            hzxm:hzxm,
-            patid:patid,
-            ksrq: ksrq,
-            jsrq: jsrq
-        };
-        this.model.getOutpatientFeeSettlementInfo(data).then(function(res){
-            if(res.data.code=="0"){
-                let paymentList = res.data.data;
-                self.PaymentList = paymentList;
-                self.isShow = false;
-            }else{
-                $.toptip(res.data.msg, "error");
-            }
-        });
+    selectMz() {
+      $.showLoading();
+      let self = this;
+      let data = {
+        hzxm: this.hzxm,
+        zjh: this.zjh,
+        action: "mz",
+        openid: localStorage.getItem("sec_openId")
+      };
+
+      this.model.selectPatient(data).then(function(res) {
+        $.hideLoading();
+        if (res.data.code == "0") {
+          self.isShow = true;
+          self.mzData = res.data.data;
+        }
+        if (res.data.msg == "未查询到门诊患者") {
+          $.alert("未查询到您的信息，请先建档", "提示", function() {
+            //点击确认后的回调函数
+            self.$router.push("/userFiling?zjh=" + self.zjh);
+          });
+        }
+      });
+    },
+    payList() {
+      let self = this;
+      let hzxm = localStorage.getItem("sec_patientName");
+      let patid = this.patid;
+      //let patid = "349246";
+      let date1 = $("#ksrq1").val();
+      let ksrq = date1.replace(/\-/g, "");
+      let date2 = $("#jsrq1").val();
+      let jsrq = date2.replace(/\-/g, "");
+      let data = {
+        hzxm: hzxm,
+        patid: patid,
+        ksrq: ksrq,
+        jsrq: jsrq
+      };
+      this.model.getOutpatientFeeSettlementInfo(data).then(function(res) {
+        if (res.data.code == "0") {
+          let paymentList = res.data.data;
+          self.PaymentList = paymentList;
+          self.isShow = false;
+        } else {
+          $.toptip(res.data.msg, "error");
+        }
+      });
+    }
+  },
+  filters: {
+    formatDate: function(value) {
+      var y = value.substr(0, 4);
+      var M = value.substr(4, 2);
+      var D = value.substr(6, 2);
+      var H = value.substr(8, 2);
+      var m = value.substr(10, 2);
+      var s = value.substr(12, 2);
+      var time = y + "-" + M + "-" + D + " " + H + ":" + m + ":" + s;
+      console.log(time);
+      return time;
     }
   }
 };
 </script>
 
 <style>
-	.el-dialog{
-		width: calc(100vw - 20px);
-	}
+.el-dialog {
+  width: calc(100vw - 20px);
+}
 </style>
 <style scoped>
 .weui-btn_primary {
@@ -253,10 +275,18 @@ input::-webkit-input-placeholder {
   height: 125px;
   margin-top: 20px;
 }
-.wzl-panel-title{
-  text-align: center;
+.wzl-panel-title {
+  text-align: -webkit-left;
   background-color: #f1f1f1;
-  height: 35px;
-  padding-top: 7px;
+  height: 50px;
+  padding-top: 12px;
+  font-size: 20px;
+  color: #4e4e4e;
+}
+.guding{
+  /* margin-top: -19px; */
+    position: absolute;
+    z-index: 99;
+    width: 100%;
 }
 </style>
