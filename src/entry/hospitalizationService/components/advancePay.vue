@@ -100,6 +100,7 @@
 <script>
 	import model from './model.js'
 	import commonSelect from './commonSelect.vue'
+	import CryptoJS from 'crypto-js'
   export default {
   	components: {commonSelect},
   	data(){
@@ -216,6 +217,7 @@
   			
   			
 			let data = {
+				'action':'yj',
 				'hzxm':this.hzxm,
 				'openid':localStorage.getItem('sec_openId'),
 				'yjMoney':this.yjMoney,
@@ -224,28 +226,27 @@
 			}
 			
 			this.model.placeOrder(data).then(function(res){
-				console.log(res);
-				if (res.data.code == '0') {
-					//下订单
-					localStorage.removeItem('orderItem');
-					//拼接参数
-					var appId = encrypt(res.data.appId);
-					var nonceStr = encrypt(res.data.nonceStr);
-					var pack = encrypt(res.data.package);
-					var paySign = encrypt(res.data.paySign);
-					var timestamp = encrypt(res.data.timeStamp+"");
-					$.toast("下单成功", function() {
+					if(res.data.code == 0){
 						if (process.env.NODE_ENV == 'dev') {
-							  window.location='../../pay.html?appId="+appId+"&nonceStr="+nonceStr+"&pack="+pack+"&paySign="+paySign+"&timeStamp="+timestamp'
+							  window.location='../pay.html?appid='+this.getAesString(res.appId)+'&timeStamp='+this.getAesString(res.timeStamp)+'&nonceStr='+this.getAesString(res.nonceStr)+'&pack='+this.getAesString(res.pack)+'&paySign='+this.getAesString(res.paySign)+'&action=gh';
 							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../../sechos/pay.html?appId="+appId+"&nonceStr="+nonceStr+"&pack="+pack+"&paySign="+paySign+"&timeStamp="+timestamp'
+							  window.location='../sechos/pay.html?appid='+this.getAesString(res.appId)+'&timeStamp='+this.getAesString(res.timeStamp)+'&nonceStr='+this.getAesString(res.nonceStr)+'&pack='+this.getAesString(res.pack)+'&paySign='+this.getAesString(res.paySign)+'&action=gh';
 							}
-					});
-				}
-			})
-			
-			this.$router.push('/')
+					}else{
+						$.toptip(res.data.msg,'error');
+					}
+				})
   		},
+  		getAesString(word, keyStr) { // 加密
+			  keyStr = keyStr ? keyStr : 'expsofthero12345';
+			  let key = CryptoJS.enc.Utf8.parse(keyStr);
+			  let srcs = CryptoJS.enc.Utf8.parse(word);
+			  let encrypted = CryptoJS.AES.encrypt(srcs, key, {
+			    mode: CryptoJS.mode.ECB,
+			    padding: CryptoJS.pad.Pkcs7
+			  });
+			  return encrypted.toString();
+			},
   	}
   }
   </script>
