@@ -34,19 +34,19 @@
                   <h4 class="weui-media-box__title" style="font-weight:600;margin-top:15px"></h4>
                   <h4
                     class="weui-media-box__title"
-                    style="font-weight:600;margin-top:10px;width:40%"
+                    style="font-weight:600;margin-top:10px;width:50%"
                   >{{patientName}}</h4>
-                  <h4 class="weui-media-box__title2">城镇医保</h4>
+                  <!-- <h4 class="weui-media-box__title2">城镇医保</h4> -->
                   <h4 class="weui-media-box__title" style="font-size:15px;margin-top:8px">{{sex}} / {{birth}}</h4>
                   <h4
                     class="weui-media-box__title"
                     style="font-size:15px;margin-top:8px"
-                  >卡号：12345678999</h4>
+                  >证件号：12345678999</h4>
                 </div>
-                <div class="weui-media-box__hd1">
+                <!-- <div class="weui-media-box__hd1">
                   <img class="weui-media-box__thumb1" src="../../../../static/img/二维码.png">
                   <h4 style="font-size: 8px;position: absolute;margin-left: -19%;margin-top: 3%;" >点击出示二维码</h4>
-                </div>
+                </div> -->
                 
               </a>
             </div>
@@ -121,12 +121,12 @@
     <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
       <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
         <div class="weui-cells-wzl">
-          <a class="weui-cell weui-cell_access-wzl" href="javascript:;">
+          <a class="weui-cell weui-cell_access-wzl" href="javascript:;" v-on:click="toPayRecord()">
             <div class="weui-cell__hd">
-              <img src="../../../../static/img/体检预约.png">
+              <img src="../../../../static/images/缴费记录.png">
             </div>
             <div class="weui-cell__bd">
-              <p style="margin-bottom: -10px;">体检预约</p>
+              <p style="margin-bottom: -10px;">门诊缴费记录</p>
               <img style="width:45%" src="../../../../static/images/圆角矩形-3.png">
             </div>
             <div class="weui-cell__ft"></div>
@@ -137,7 +137,7 @@
     <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
 
     <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
-      <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
+      <!-- <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
         <div class="weui-cells-wzl">
           <a class="weui-cell weui-cell_access-wzl" href="javascript:;">
             <div class="weui-cell__hd">
@@ -150,7 +150,7 @@
             <div class="weui-cell__ft"></div>
           </a>
         </div>
-      </div>
+      </div> -->
     </div>
     </div>
   </div>
@@ -212,7 +212,14 @@ export default {
 				} else if (process.env.NODE_ENV == 'production') {
 				  window.location='../../sechos/reportQuery.html'
 				}
-  	}
+    },
+    toPayRecord(){
+      if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../outPaymentRecords.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/outPaymentRecords.html'
+				}
+    }
   }
 };
 </script>
