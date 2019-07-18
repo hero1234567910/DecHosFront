@@ -1,6 +1,6 @@
 <template>
   <div style="height: 100%;">
- 		
+ 		<router-view></router-view>
   </div>
 </template>
 
@@ -9,6 +9,7 @@
 	
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import model from './model.js'
+import CryptoJS from 'crypto-js'
   export default {
 	data() {
     	this.model = model(this.axios)
@@ -16,7 +17,6 @@ import model from './model.js'
       }
     },
     mounted(){
-//  	this.getUserInfo();
 			this.init();
     },
 	methods:{
@@ -25,57 +25,57 @@ import model from './model.js'
 				//吊起支付控件
 				if (typeof WeixinJSBridge == "undefined"){
 				   if( document.addEventListener ){
-				       document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+				       document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady, false);
 				   }else if (document.attachEvent){
-				       document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-				       document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+				       document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady); 
+				       document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady);
 				   }
 				}else{
-				   onBridgeReady();
+				   this.onBridgeReady();
 				}
 		},
 		
 		onBridgeReady(){
-					var appId = GetQueryString('appId');
-					var nonceStr = GetQueryString('nonceStr');
-					var pack = GetQueryString('pack');
-					var paySign = GetQueryString('paySign');
-					var timestamp = GetQueryString('timeStamp');
-					console.log(dcrypt(appId)+"  "+timestamp+"   "+dcrypt(nonceStr)+"    "+dcrypt(pack)+"   "+dcrypt(paySign));
+					let self = this;
+					let key = 'expsoft123'; //密钥  
+					let iv = 'expsoft123';//向量，只能是16位
+					let action = this.GetQueryString('action');
+					var appId = this.GetQueryString('appId');
+					var nonceStr = this.GetQueryString('nonceStr');
+					var pack = this.GetQueryString('pack');
+					var paySign = this.GetQueryString('paySign');
+					var timestamp = this.GetQueryString('timeStamp');
 				   WeixinJSBridge.invoke(
 				      'getBrandWCPayRequest', {
-				         "appId":dcrypt(appId),     //公众号名称，由商户传入     
-				         "timeStamp":dcrypt(timestamp),         //时间戳，自1970年以来的秒数     
-				         "nonceStr":dcrypt(nonceStr), //随机串     
-				         "package":dcrypt(pack),     
+				         "appId":this.getDAesString(appId),     //公众号名称，由商户传入     
+				         "timeStamp":this.getDAesString(timestamp),         //时间戳，自1970年以来的秒数     
+				         "nonceStr":this.getDAesString(nonceStr),//随机串     
+				         "package":this.getDAesString(pack),     
 				         "signType":"MD5",         //微信签名方式：     
-				         "paySign":dcrypt(paySign) //微信签名 
+				         "paySign":this.getDAesString(paySign), //微信签名 
 				      },
 				      function(res){
-				      if(res.err_msg == "get_brand_wcpay_request:ok" ){
-				      		if (process.env.NODE_ENV == 'dev') {
-								  window.location='../hospitalizationService.html/advancePay'
-								} else if (process.env.NODE_ENV == 'production') {
-								  window.location='../sechos/hospitalizationService.html/advancePay'
-								}
-				      	location.href="../../../WXOrderSystem/pages/notice/noticeSuccess.html"
-				      } 
-				      if(res.err_msg == "get_brand_wcpay_request:cancel" ){
-				      	$.toast("取消支付", "forbidden");
-				      	if (process.env.NODE_ENV == 'dev') {
-								  window.location='../hospitalizationService.html/advancePay'
-								} else if (process.env.NODE_ENV == 'production') {
-								  window.location='../sechos/hospitalizationService.html/advancePay'
-								}
-				      } 
-				      if(res.err_msg == "get_brand_wcpay_request:fail" ){
-				      	$.toast("支付失败", "forbidden");
-				      	if (process.env.NODE_ENV == 'dev') {
-								  window.location='../hospitalizationService.html/advancePay'
-								} else if (process.env.NODE_ENV == 'production') {
-								  window.location='../sechos/hospitalizationService.html/advancePay'
-								}
-				      } 
+								if(res.err_msg == "get_brand_wcpay_request:ok" ){
+						      	self.$router.push('/noticeSuccess?action='+self.action)
+						      } 				      	
+				      	if(res.err_msg == "get_brand_wcpay_request:cancel" ){
+						      	$.toast("取消支付", "forbidden");
+						      	if (process.env.NODE_ENV == 'dev') {
+										  window.location='../index.html'
+										} else if (process.env.NODE_ENV == 'production') {
+										  window.location='../sechos/index.html'
+										}
+						      } 
+						      if(res.err_msg == "get_brand_wcpay_request:fail" ){
+						      	$.toast("支付失败", "forbidden");
+						      	if (process.env.NODE_ENV == 'dev') {
+										  window.location='../index.html'
+										} else if (process.env.NODE_ENV == 'production') {
+										  window.location='../sechos/index.html'
+										}
+						      } 
+				      	
+				     
 				   }); 
 				},
 		//获取url中的参数
@@ -83,6 +83,22 @@ import model from './model.js'
 			     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
 			     var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
 			     if(r!=null)return  decodeURI(r[2]); return null;
+			},
+
+		/*
+			* 对加密之后的密文在页面上进行解密，以便用户进行修改
+			* @param {String}   word  需要加密的密码
+			* @param {String}   keyStr  对密码加密的秘钥
+			* @return {String}   解密的明文
+			* */
+			getDAesString(word, keyStr) { // 解密
+			  keyStr = keyStr ? keyStr : 'expsofthero12345';
+			  let key = CryptoJS.enc.Utf8.parse(keyStr);
+			  let decrypt = CryptoJS.AES.decrypt(word, key, {
+			    mode: CryptoJS.mode.ECB,
+			    padding: CryptoJS.pad.Pkcs7
+			  });
+			  return CryptoJS.enc.Utf8.stringify(decrypt).toString();
 			},
 			
 		}

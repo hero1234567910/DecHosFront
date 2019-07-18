@@ -86,7 +86,7 @@
 					</el-card>
 					<div style="margin-top: 10px;margin-bottom: 30px;">
 						<div>
-							<a href="javascript:;" class="weui-btn weui-btn_primary">立即支付</a>
+							<a href="javascript:;" class="weui-btn weui-btn_primary" @click="toPay()">立即支付</a>
 						</div>
 					</div>
         </div>
@@ -99,6 +99,7 @@
 <script>
 	import model from './model.js'
 	import commonSelect from './commonSelect.vue'
+	import CryptoJS from 'crypto-js'
   export default {
   	components: {commonSelect},
   	data(){
@@ -110,13 +111,52 @@
 				hzxm:localStorage.getItem('sec_patientName'),
 				patid:'',
 				pbxh:'',
-				info:{}
+				info:{},
+				patientGuid:localStorage.getItem('sec_patientGuid')
   		}
   	},
   	mounted(){
   		this.init();
   	},
   	methods:{
+  		getAesString(word, keyStr) { // 加密
+			  keyStr = keyStr ? keyStr : 'expsofthero12345';
+			  let key = CryptoJS.enc.Utf8.parse(keyStr);
+			  let srcs = CryptoJS.enc.Utf8.parse(word);
+			  let encrypted = CryptoJS.AES.encrypt(srcs, key, {
+			    mode: CryptoJS.mode.ECB,
+			    padding: CryptoJS.pad.Pkcs7
+			  });
+			  return encrypted.toString();
+			},
+
+  		toPay(){
+  			let self = this;
+  			
+  			let data = {
+  				action:'gh',
+  				ghMoney:this.info.yfje,
+  				patientGuid:this.patientGuid,
+  				patid:this.patid,
+  				patientName:this.hzxm,
+  				ghxh:this.info.ghxh,
+  				sjh:this.info.sjh,
+  				zje:this.info.zje,
+  				yfje:this.info.yfje,
+  				zfje:this.info.zfje
+  			}
+			this.model.placeOrder(data).then(function(res){
+				if(res.data.code == 0){
+					if (process.env.NODE_ENV == 'dev') {
+						  window.location='../pay.html?appid='+this.getAesString(res.appId)+'&timeStamp='+this.getAesString(res.timeStamp)+'&nonceStr='+this.getAesString(res.nonceStr)+'&pack='+this.getAesString(res.pack)+'&paySign='+this.getAesString(res.paySign)+'&action=gh';
+						} else if (process.env.NODE_ENV == 'production') {
+						  window.location='../sechos/pay.html?appid='+this.getAesString(res.appId)+'&timeStamp='+this.getAesString(res.timeStamp)+'&nonceStr='+this.getAesString(res.nonceStr)+'&pack='+this.getAesString(res.pack)+'&paySign='+this.getAesString(res.paySign)+'&action=gh';
+						}
+				}else{
+					$.toptip(res.data.msg,'error');
+				}
+			})
+  		},
   		init(){
   			let self = this;
   			let da = this.$route.query;
