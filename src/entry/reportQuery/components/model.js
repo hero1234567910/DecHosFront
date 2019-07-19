@@ -38,6 +38,22 @@ function model(http) {
       	}
       });
     },
+    // 获取体检列表
+    getMedicalReportList(data) {
+      return http.post(evn.SEC_HOSAPI+'/wx/common/getMedicalReportList',data,{
+      	headers:{
+      		contentType:'application/json;charset=utf-8'
+      	}
+      });
+    },
+    // 获取体检详细信息
+    getMedicalReportInfo(data) {
+      return http.post(evn.SEC_HOSAPI+'/wx/common/getMedicalReportInfo',data,{
+      	headers:{
+      		contentType:'application/json;charset=utf-8'
+      	}
+      });
+    },
   };
 }
 

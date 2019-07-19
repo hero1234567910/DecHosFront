@@ -9,8 +9,9 @@ import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
 import reservationDetail from "./components/reservationDetail";
 import reservationList from "./components/reservationList";
+import userFiling from "./components/userFiling";
 export default {
-  components: { reservationDetail, reservationDetail },
+  components: { reservationDetail, reservationDetail,userFiling },
   data() {
     this.model = model(this.axios);
     return {

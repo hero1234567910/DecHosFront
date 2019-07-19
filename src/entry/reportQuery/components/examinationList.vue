@@ -1,11 +1,13 @@
 <template>
-  <div class="weui-panel weui-panel_access" style="height: 100%;">
+  <div class="weui-panel weui-panel_access" style="height: 100%;overflow:auto;">
     <div id="bac" style="height:100%;width:100%">
-      <div class="weui-panel__hd">
-      	体检报告列表
+      <div class="guding">
+        <div class="weui-panel__hd">
+          体检报告列表
+        </div>
       </div>
-      <div class="weui-panel__bd">
-        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" @click="toExaminationDetail">
+      <div class="weui-panel__bd" v-for="item in ExaminationList">
+        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" @click="toExaminationDetail(item.bhkcode)">
           <div class="weui-media-box__hd1">
             <img
               class="weui-media-box__thumb1"
@@ -17,16 +19,16 @@
             <img class="weui-media-box__thumb" src="../../../../static/images/xb1.png">
           </div>
           <div class="weui-media-box__bd">
-            <h4 class="weui-media-box__title" style="margin-top: -5px;">张三 12345678912</h4>
-            <p class="weui-media-box__desc" style="color:#0f82b0;margin-top: 2px;">血液常规检查</p>
-            <p class="weui-media-box__desc" style="margin-top: 9px;">2018-6-11 8:20出结果</p>
+            <h4 class="weui-media-box__title" style="margin-top: -5px;">体检编号 : {{item.bhkcode}}</h4>
+            <p class="weui-media-box__desc" style="color:#0f82b0;margin-top: 2px;">体检状态 : {{statusCheck(item.bhksta)}}</p>
+            <p class="weui-media-box__desc" style="margin-top: 9px;">登记日期 : {{item.regdate}}</p>
           </div>
           <div class="weui-media-box__hd1">
             <img class="weui-media-box__thumb" src="../../../../static/images/yytb1.png">
           </div>
         </a>
 
-        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" @click="toExaminationDetail">
+        <!-- <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg" @click="toExaminationDetail">
           <div class="weui-media-box__hd1">
             <img
               class="weui-media-box__thumb1"
@@ -45,9 +47,15 @@
           <div class="weui-media-box__hd1">
             <img class="weui-media-box__thumb" src="../../../../static/images/yytb1.png">
           </div>
-        </a>
+        </a> -->
+      </div>
+      <div style="margin-top: 30px;margin-bottom: 30px;">
+      <div>
+        <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回报告查询页面</a>
       </div>
     </div>
+    </div>
+    
   </div>
 </template>
 <script>
@@ -57,16 +65,50 @@ export default {
   data() {
     this.model = model(this.axios);
     return {
-		
+      ExaminationList:[],
+      idc:localStorage.getItem("sec_patientIdcard")
 		};
   },
   mounted() {
-    
+    this.examinationList();
+    this.statusCheck();
   },
   methods: {
-  	toExaminationDetail(){
-  		this.$router.push('/examinationDetail');
-  	}
+  	toExaminationDetail(ele){
+  		this.$router.push('/examinationDetail?bkhcode='+ele);
+    },
+    tomainList(){
+      this.$router.push('/');
+    },
+    examinationList(){
+      $.showLoading();
+      let self = this;
+      let idc = localStorage.getItem("sec_patientIdcard");
+      let data={
+        idc:idc
+      };
+      this.model.getMedicalReportList(data).then(function(res){
+        $.hideLoading();
+        if(res.data.code == 1){
+          self.ExaminationList = res.data.data;
+        }else{
+          $.toptip(res.data.msg, "error");
+        }
+      });
+    },
+    statusCheck(ele){
+      switch(ele){
+        case "0":
+          return "未完成体检";
+          break;
+        case "1":
+          return "已完成体检";
+          break;
+        case "2":
+          return "已完成主检";
+          break;
+      }
+    }
  }
 };
 </script>
@@ -135,5 +177,12 @@ body {
   bottom: 0;
   line-height: 60px;
 }
+.weui-btn_primary {
+  background-color: #4ccbdb;
+}
+.weui-btn {
+  width: 230px;
+}
+
 </style>
  

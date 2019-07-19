@@ -1,29 +1,29 @@
 <template>
-  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;"">
+  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;">
    <el-card class="box-card">
 		  <div slot="header" class="clearfix">
 		  	<div class="card-hero">
 		  		<img src="../../../../static/img/项目大.png" style="position: absolute;top: -2px;width: 70%;"/>
 		  	</div>
-		    <span style="font-weight: 700;font-size: 16px;float: left;">一般情况检查</span>
+		    <span style="font-weight: 700;font-size: 16px;float: left;">{{groupname}}</span>
 		    <div class="card-hero-t">
-		  		<img src="../../../../static/img/无异常.png" style="position: absolute;top: 1px;width: 120%;"/>
+		  		<img src="../../../../static/img/无异常.png" v-show="groupconclusion=='正常'" style="position: absolute;top: 1px;width: 120%;"/>
 		  	</div>
 		  </div>
 		  
 		  <div>
-		  	<span style="color: #999999;">检查医生：托尼.史塔克</span>
+		  	<span style="color: #999999;">检查医生 : {{doctors}}</span>
 		  </div>
 		  
 	 </el-card>
 	 
 	  <div class="weui-panel weui-panel_access" style="margin-top: 0px;">
-		  <div class="weui-panel__hd" style="background-color: #EFF7FD;line-height: 38px;">
+		  <!-- <div class="weui-panel__hd" style="background-color: #EFF7FD;line-height: 38px;">
 		  	<div class="img-panel">
 		  		<img src="../../../../static/img/疾病及处理建议.png" style="position: absolute;top: 8px;width: 45%;"/>
 		  	</div>
-		  	小结</div>
-		  <div class="weui-panel__bd">
+		  	小结</div> -->
+		  <!-- <div class="weui-panel__bd">
 		    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
 		      <div class="weui-media-box__bd">
 		        <el-input
@@ -34,7 +34,7 @@
 						  </el-input>
 		      </div>
 		    </a>
-		  </div>
+		  </div> -->
 		</div>
 		
 		<div class="weui-panel weui-panel_access" style="margin-top: 0px;">
@@ -46,25 +46,25 @@
 		  <div class="weui-panel__bd">
 		      <div class="weui-media-box__bd">
 		        
-		        <div class="weui-cell">
+		        <div class="weui-cell" v-for="item in ItemDetails">
 						    <!--<div class="weui-cell__hd"><img src="../../../../static/img/项目小.png"></div>-->
 						    <div class="weui-cell__bd">
-						      <p>舒张压</p>
+						      <p>{{item.itemname}}</p>
 						    </div>
 						    <div class="weui-cell__ft">
-						    	130mmhg
+						    	{{item.positive==0?'阳性':'阴性'}}  {{item.itemresult}}
 						    </div>
 						</div>
 						
-						<div class="weui-cell">
-						    <!--<div class="weui-cell__hd"><img src="../../../../static/img/项目小.png"></div>-->
+						<!-- <div class="weui-cell">
+						    <div class="weui-cell__hd"><img src="../../../../static/img/项目小.png"></div>
 						    <div class="weui-cell__bd">
 						      <p>收缩压</p>
 						    </div>
 						    <div class="weui-cell__ft">
 						    	80mmhg
 						    </div>
-						</div>
+						</div> -->
 		        
 		      </div>
 		  </div>
@@ -87,18 +87,40 @@
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
+import global1 from "./global1.vue"
 export default {
   data() {
     this.model = model(this.axios);
     return {
-			xresult:'正常'
+			xresult:'正常',
+			bhkconclusion:'',
+			checkdoctors:'',
+			ItemDetails:[],
+			groupname:'',
+			groupconclusion:'',
+			doctors:''//医生姓名
 		};
   },
   mounted() {
-    
+    this.showDetails();
   },
   methods: {
-  	
+  	showDetails(){
+		  let self = this;
+		  let data = this.$route.query;
+		  let doctorName;
+		  self.ItemDetails = this.$route.query;  
+		  self.groupname = global1.groupname;
+		  self.groupconclusion = global1.groupconclusion;
+		  for(var i=0;i<self.ItemDetails.length;i++){
+			  doctorName = self.ItemDetails[i].checkdoctor;
+			  doctorName = +","+ doctorName;
+		  }
+		  self.doctors = doctorName;
+	  },
+	  toList(){
+		  this.$router.push('/examinationDetail');
+	  }
  }
 };
 </script>

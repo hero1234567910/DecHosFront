@@ -14,14 +14,19 @@ export default new Router({
       component: reservationList
     },
     {
-        path: "/reservationDetail",
-        name: "reservationDetail",
-        component: reservationDetail
+      path: "/reservationDetail",
+      name: "reservationDetail",
+      component: reservationDetail
     },
     {
       path: "/mycenter",
       name: "mycenter",
       component: mycenter
-  },
+    },
+    {
+      path: "/userFiling",
+      name: "userFiling",
+      component: userFiling
+    }
   ]
 });

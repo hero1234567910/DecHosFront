@@ -189,8 +189,8 @@ export default {
     appointList() {
       let self = this;
       let hzxm = localStorage.getItem("sec_patientName");
-      //let patid = this.patid;
-      let patid = "349246";
+      let patid = this.patid;
+      //let patid = "349246";
       let data = {
         hzxm: hzxm,
         patid: patid

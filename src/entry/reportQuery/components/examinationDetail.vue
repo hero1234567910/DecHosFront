@@ -1,11 +1,11 @@
 <template>
-  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;"">
+  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;">
    <el-card class="box-card">
 		  <div slot="header" class="clearfix">
 		  	<div class="card-hero">
 		  		<img src="../../../../static/img/baogao.png" style="position: absolute;top: -9px;width: 70%;"/>
 		  	</div>
-		    <span style="font-weight: 700;font-size: 18px;">张三</span>
+		    <span style="font-weight: 700;font-size: 18px;">{{name}}</span>
 		  </div>
 		  <div>
 		    <div class="hero-list-item">
@@ -13,7 +13,7 @@
 		  			<p class="weui-media-box__desc">体检编号</p>
 		  		</div>
 		  		<div class="hero-list-item-right" style="margin-left: 37px;">
-		  			<h4 class="weui-media-box__title">xxxxx</h4>
+		  			<h4 class="weui-media-box__title">{{bhkcode}}</h4>
 		  		</div>
 		  	</div>
 		  	<div class="hero-list-item">
@@ -21,7 +21,7 @@
 		  			<p class="weui-media-box__desc">体检日期</p>
 		  		</div>
 		  		<div class="hero-list-item-right" style="margin-left: 37px;">
-		  			<h4 class="weui-media-box__title">xxxxxxx</h4>
+		  			<h4 class="weui-media-box__title">{{bhkdate}}</h4>
 		  		</div>
 		  	</div>
 		  </div>
@@ -33,17 +33,17 @@
 		  		<img src="../../../../static/img/项目检查结果.png" style="position: absolute;top: 8px;width: 45%;"/>
 		  	</div>
 		  	项目检查结果</div>
-		  <div class="weui-panel__bd">
+		  <div class="weui-panel__bd" v-for="item in ExaminationDetails">
 		      <div class="weui-media-box__bd">
-		      	<a href="javascript:;" @click="toItemDetail" style="color:#909399;">
+		      	<a href="javascript:;" @click="toItemDetail(item.groupconclusion,item.groupname,item.itemlist)" style="color:#909399;">
 						  <div class="weui-cell">
 						    <div class="weui-cell__hd"><img src="../../../../static/img/项目小.png"></div>
 						    <div class="weui-cell__bd">
-						      <p>标题文字</p>
+						      <p>{{item.groupname}}</p>
 						    </div>
 						    <div class="weui-cell__ft">
 						    	<div class="bd-img">
-							  		<img src="../../../../static/img/注意.png" style="position: absolute;top: 4px;width: 63%;right: 10px;"/>
+							  		<img src="../../../../static/img/注意.png" v-show="!item.groupconclusion == '正常' " style="position: absolute;top: 4px;width: 63%;right: 10px;"/>
 							  	</div>
 						    </div>
 						  </div>
@@ -65,7 +65,7 @@
 						  type="textarea"
 						  readonly
 						  autosize
-						  v-model="result">
+						  v-model="bhkconclusion">
 						  </el-input>
 		      </div>
 		    </a>
@@ -77,7 +77,7 @@
 		  	<div class="img-panel">
 		  		<img src="../../../../static/img/疾病及处理建议.png" style="position: absolute;top: 8px;width: 45%;"/>
 		  	</div>
-		  	疾病及处理建议</div>
+		  	体检结果</div>
 		  <div class="weui-panel__bd">
 		    <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
 		      <div class="weui-media-box__bd">
@@ -85,7 +85,7 @@
 						  type="textarea"
 						  readonly
 						  autosize
-						  v-model="duelWay">
+						  v-model="bhkresult">
 						  </el-input>
 		      </div>
 		    </a>
@@ -97,21 +97,50 @@
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
+import global1 from "./global1.vue";//全局变量
 export default {
   data() {
     this.model = model(this.axios);
     return {
 			duelWay:'本次检验未见异常',
-			result:'正常'
+			result:'正常',
+			ExaminationDetails:[],
+			name:'',
+			bhkcode:'',
+			bhkdate:'',
+			bhkconclusion:'',
+			bhkresult:'',
+			groupname:'',
+			groupconclusion:''
 		};
   },
   mounted() {
-    
+    this.getExaminatinoDetail();
   },
   methods: {
-  	toItemDetail(){
-  		this.$router.push('/examinationItemDetail');
-  	}
+  	toItemDetail(e1,e2,e3){
+		global1.groupconclusion = e1;
+		global1.groupname = e2;
+  		this.$router.push('/examinationItemDetail'+ele);
+	  },
+	getExaminatinoDetail(){
+		$.showLoading();
+		let self = this;
+		let da = this.$route.query;
+		this.model.getMedicalReportInfo(da).then(function(res){
+			$.hideLoading();
+			if(res.data.code == 1){
+				self.ExaminationDetails = res.data.data.grouplist;
+				self.name = res.data.data.name;
+				self.bhkcode = res.data.data.bhkcode;
+				self.bhkdate = res.data.data.bhkdate;
+				self.bhkconclusion = res.data.data.bhkconclusion;
+				self.bhkresult = res.data.data.bhkresult;
+			}else{
+				$.toptip(res.data.msg, "error");
+			}
+		})
+	}
  }
 };
 </script>
