@@ -125,7 +125,7 @@ export default {
 //  						}
 //  					}
     					
-    					self.$router.push('/');
+    					self.$router.push('/?act=bind');
 						});
     			}else{
     				$.toptip(res.data.msg, 'error');

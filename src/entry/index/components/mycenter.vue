@@ -176,6 +176,72 @@ export default {
     	this.checkShow();
     },
   methods: {
+  	getUserInfo(){
+			let self = this;
+    		let data = this.GetQueryString('code');
+    		this.model.getUserInfo(data).then(function(res){
+    			if(res.data.code == '0'){
+    				localStorage.setItem('sec_openId',res.data.data.openid);
+	    			localStorage.setItem('sec_patientName',res.data.data.patientName);
+	    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
+	    			localStorage.setItem('sec_sex',res.data.data.patientSex);
+    				localStorage.setItem('sec_birth',res.data.data.patientBirth);
+    				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
+    				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
+    				
+//  				if(res.data.data.patientName == null || res.data.data.patientName == ''){
+//  					//说明没有绑定患者信息，去绑定
+//  					$.alert("您并未绑定患者信息，清先绑定", "提示", function() {
+//							 	$('#cen').addClass('.weui-bar__item--on');
+//							});
+//  				}
+//  				if(res.data.data.patientStatus == 1){
+//  					let arr = [];
+//							let outArray = res.data.data.outpatients;
+//							for(var i=0;i<outArray.length;i++){
+//									let blh = outArray[i].medicalNumberMZ;
+//									arr.push(parseInt(blh));
+//							}
+//							arr.sort().reverse();
+//							let val = arr[0];
+//							for(var i=0;i<outArray.length;i++){
+//								if(val == outArray[i].medicalNumberMZ){
+//									self.patientId = outArray[i].patidMZ;
+//									localStorage.setItem('sec_patientIdmz',self.patientId);
+//									localStorage.setItem('patientStatus',1);
+//								}
+//							}
+//  				}
+//  				
+//  				if(res.data.data.patientStatus == 2){
+//  					let arr = [];
+//  						let hosArray = res.data.data.hospitalizedList;
+//  						for(var i=0;i<hosArray.length;i++){
+//									let blh = hosArray[i].medicalNumber;
+//									arr.push(parseInt(blh));
+//  						}
+//  						arr.sort().reverse();
+//  						let val = arr[0];
+//  						for(var i=0;i<hosArray.length;i++){
+//  							if(val == hosArray[i].medicalNumberMZ){
+//  								self.patientId = hosArray[i].patid;
+//									localStorage.setItem('sec_patientIdzy',self.patientId);
+//									localStorage.setItem('patientStatus',2);
+//  							}
+//  						}
+//  				}
+    			}else{
+    				$.toptip(res.data.msg, 'error');
+    			}
+    			
+    		})
+		},
+		//获取url中的参数
+		 GetQueryString(name){
+			     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+			     var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
+			     if(r!=null)return  decodeURI(r[2]); return null;
+			},
   	toSwitch(){
   		//切换患者
   		let self = this;
@@ -183,16 +249,20 @@ export default {
   	},
   	//判断是否展示
   	checkShow(){
-      console.log('未复用')
-      console.log(this.show)
   		let self = this;
+     	let da = this.$route.query;
+     if(da != null && da.act == 'bind'){
+     	this.getUserInfo();
+     }
+     
+  		
   		let cs = localStorage.getItem('sec_patientName');
   		let img = localStorage.getItem('sec_headImg');
   		let birth = localStorage.getItem('sec_birth');
       let sex = localStorage.getItem('sec_sex');
       let patientIdCard = localStorage.getItem('sec_patientIdcard');
-      console.log(cs);
-  		if(cs == null || cs == ''){
+      $.alert(cs);
+  		if(cs == null || cs == '' || cs == 'null'){
   			//说明用户未绑定
   			
   		}else{
@@ -203,6 +273,7 @@ export default {
         self.show = false;
         self.patientIdCard = patientIdCard;
   		}
+  		 console.log(this.show);
   	},
   	toReserv(){
   		if (process.env.NODE_ENV == 'dev') {
