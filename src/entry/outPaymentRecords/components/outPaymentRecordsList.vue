@@ -1,63 +1,71 @@
 <template>
-  <div style="height: 100%;background-color: #EFF7FD;overflow:auto;">
-    <div class="guding">
-      <div class="wzl-panel-title">
-        <img style="float: left;width: 49px;margin-top: -8px;" src="../../../../static/img/记录_2.png" />
-        <span>门诊缴费记录</span>
-      </div>
-      <div class="re-header-select">
-        <div class="select-left">
-          <input type="text" class="select-input1" data-toggle="date" id="ksrq1" placeholder="开始日期" />
+  <div style="height: 100%;overflow:auto;">
+    <div>
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
+          <div class="card-hero">
+            <img
+              src="../../../../static/img/记录_2.png"
+              style="position: absolute;top: -7px;width: 80%;"
+            />
+          </div>
+          <span style="font-weight: 700;	">门诊缴费记录</span>
         </div>
-        <div class="select-middle">
-          <img
-            src="../../../../static/img/横线.svg"
-            width="100%"
-            style="position: absolute;top: 16px;"
-          />
+
+        <div class="re-header-select">
+          <div class="select-left">
+            <input type="text" class="select-input" data-toggle="date" id="ksrq1" placeholder="开始日期" />
+          </div>
+          <div class="select-middle">
+            <img
+              src="../../../../static/img/横线.svg"
+              width="100%"
+              style="position: absolute;top: 16px;"
+            />
+          </div>
+          <div class="select-right">
+            <input type="text" class="select-input" data-toggle="date" id="jsrq1" placeholder="结束日期" />
+          </div>
+          <div class="select-fin">
+            <img
+              src="../../../../static/img/搜索.png"
+              width="100%"
+              style="vertical-align: middle;"
+              v-on:click="selectMz()"
+            />
+          </div>
         </div>
-        <div class="select-right">
-          <input type="text" class="select-input1" data-toggle="date" id="jsrq1" placeholder="结束日期" />
-        </div>
-        <div class="select-fin">
-          <img
-            src="../../../../static/img/搜索.png"
-            width="100%"
-            style="vertical-align: middle;"
-            v-on:click="selectMz()"
-          />
-        </div>
-      </div>
+      </el-card>
     </div>
 
     <div class="flow" style="margin-top: 130px;">
-    <div class="re-row" v-for="item in PaymentList">
-      <a href="javascript:;" @click="toDetail(item)">
-        <div class="row-cen">
-          <div class="re-img">
-            <img src="../../../../static/img/矩形 4 拷贝.png" width="68%" />
-          </div>
-          <div class="re-main-ing">
-            <img
-              src="../../../../static/img/记录.png"
-              width="65%"
-              style="position: absolute;right: 24px;top: 32px;"
-            />
-          </div>
-          <div class="re-main-wzl">
-            <div class="re-content-wzl">
-              <p style="font-size: 17px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
-              <p style="color: #688795;font-size:14px;">结算时间: {{item.jssj | formatDate}}</p>
-              <p style="color: #688795;font-size:14px;">支付金额: {{item.zje}} 元</p>
-              <p style="color: #999999;font-size:14px;">
-                收费类型:
-                <span style="color:black;">{{item.sflx==1?'退费':'正常'}}</span>
-              </p>
+      <div class="re-row" v-for="item in PaymentList">
+        <a href="javascript:;" @click="toDetail(item)">
+          <div class="row-cen">
+            <div class="re-img">
+              <img src="../../../../static/img/矩形 4 拷贝.png" width="68%" />
+            </div>
+            <div class="re-main-ing">
+              <img
+                src="../../../../static/img/记录.png"
+                width="65%"
+                style="position: absolute;right: 24px;top: 32px;"
+              />
+            </div>
+            <div class="re-main-wzl">
+              <div class="re-content-wzl">
+                <p style="font-size: 17px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
+                <p style="color: #688795;font-size:14px;">结算时间: {{item.jssj | formatDate}}</p>
+                <p style="color: #688795;font-size:14px;">支付金额: {{item.zje}} 元</p>
+                <p style="color: #999999;font-size:14px;">
+                  收费类型:
+                  <span style="color:black;">{{item.sflx==1?'退费':'正常'}}</span>
+                </p>
+              </div>
             </div>
           </div>
-        </div>
-      </a>
-    </div>
+        </a>
+      </div>
     </div>
 
     <div style="margin-top: 30px;margin-bottom: 30px;">
@@ -189,6 +197,9 @@ export default {
 .el-dialog {
   width: calc(100vw - 20px);
 }
+ .el-card__body {
+    padding: 2px;
+}
 </style>
 <style scoped>
 .weui-btn_primary {
@@ -287,10 +298,160 @@ input::-webkit-input-placeholder {
   font-size: 20px;
   color: #4e4e4e;
 }
-.guding{
+.guding {
   /* margin-top: -19px; */
-    position: absolute;
-    z-index: 99;
-    width: 100%;
+  position: absolute;
+  z-index: 99;
+  width: 100%;
 }
+.row-item{
+		background-color: #F7F7F7;
+		height: 50px;
+		font-size: 13px;
+	    line-height: 50px;
+	    text-align: center;
+	    color: #999999;
+	        /*width: 80px;*/
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-top: 5px;
+        padding-left: 8px;
+    padding-right: 8px;
+    position: relative;
+	}
+	.el-card{
+		margin-bottom: 10px;
+	}
+	.select-input {
+  width: 100px;
+  height: 30px;
+  border-radius: 30px;
+  border-style: solid;
+  border-color: #9bdff0;
+  text-align: center;
+  font-size: medium;
+}
+.select-fin {
+  width: 50px;
+  height: 100%;
+  float: left;
+  line-height: 60px;
+}
+.select-middle {
+  width: 30px;
+  height: 100%;
+  float: left;
+  position: relative;
+}
+.select-right {
+  float: left;
+  height: 100%;
+  width: 130px;
+  line-height: 60px;
+  text-align: center;
+}
+.select-left {
+  width: 130px;
+  float: left;
+  height: 100%;
+  line-height: 60px;
+  text-align: center;
+}
+.re-header-select {
+  width: 100%;
+  height: 60px;
+  background-color: #ffffff;
+}
+	.weui-panel__hd{
+		height: 30px;
+		font-size: 18px;
+		color: #000000;
+	}
+	.hero-panel-img{
+		float: left;
+		width: 35px;
+		height: 35px;
+	}
+	.weui-row{
+		height: 50px;
+    margin-top: 10px;
+	}
+	.weui-col-33{
+		background-color: #F7F7F7;
+		height: 50px;
+		font-size: 13px;
+	    line-height: 50px;
+	    text-align: center;
+	    color: #999999;
+	}
+	.el-tabs__nav-scroll{
+		overflow-y: auto;
+	}
+	.el-tabs--left, .el-tabs--right{
+		height: calc(100vh - 137px);
+	}
+	.hero-main{
+		height: calc(100vh - 135px);
+	}
+	.hero-search-head{
+		height: 28px;
+    	bottom: -2px;
+		width: 30px;
+		position: relative;
+	}
+	.hero-search{
+    	height: 44px;
+	}
+	.weui-search-bar__form{
+    	border: 0px solid #E6E6EA;
+      border-radius: 10px;
+      margin-left: 10px;
+      margin-right: 15px;
+    }
+	.weui-btn_primary{
+		background-color: #4CCBDB;
+	}
+	.weui-btn{
+		width: 230px;
+	}
+	.hospital-arrow{
+		position: relative;
+		height: 85px;
+		line-height: 85px;
+		width: 35px;
+		float: left;
+	}
+	.hospital-title{
+		height: 85px;
+		width: 200px;
+		position: relative;
+		float: left;
+	}
+	.hospital-img{
+		width: 65px;
+		height: 85px;
+		line-height: 85px;
+		float: left;
+	}
+	.hospital-inner{
+		margin-left: auto;
+		margin-right: auto;
+		width: 300px;
+		height: 85px;
+	}
+	.hospital-panel{
+		margin-top: 5px;
+		width: 100%;
+		height: 85px;
+		background-color: #FFFFFF;
+	}
+	.card-hero{
+		width: 50px;
+		height: 40px;
+		line-height: 20px;
+		float: left;
+		position: relative;
+	}
+ 
 </style>

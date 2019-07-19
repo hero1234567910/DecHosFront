@@ -1,36 +1,14 @@
 <template>
   <div style="height: 100%;background-color: #EFF7FD;overflow:auto;">
-    <div class="guding">
-      <div class="wzl-panel-title">
-        <img
-          style="float: left;width: 49px;margin-top: -8px;"
-          src="../../../../static/img/记录_2.png"
-        />
-        <span>门诊预约记录</span>
-      </div>
-      <!-- <div class="re-header-select">
-        <div class="select-left">
-          <input type="text" class="select-input1" data-toggle="date" id="ksrq1" placeholder="开始日期" />
-        </div>
-        <div class="select-middle">
-          <img
-            src="../../../../static/img/横线.svg"
-            width="100%"
-            style="position: absolute;top: 16px;"
-          />
-        </div>
-        <div class="select-right">
-          <input type="text" class="select-input1" data-toggle="date" id="jsrq1" placeholder="结束日期" />
-        </div>
-        <div class="select-fin">
-          <img
-            src="../../../../static/img/搜索.png"
-            width="100%"
-            style="vertical-align: middle;"
-            v-on:click="selectMz()"
-          />
-        </div>
-      </div>-->
+    <div>
+      <el-card class="box-card">
+	  		<div slot="header" class="clearfix">
+			  	<div class="card-hero">
+			  		<img src="../../../../static/img/记录_2.png" style="position: absolute;top: -7px;width: 80%;"/>
+			  	</div>
+			    <span style="font-weight: 700;	">门诊预约记录</span>
+			  </div>
+			</el-card>
     </div>
 
     <div class="flow" style="margin-top: 80px;">
@@ -226,6 +204,9 @@ export default {
 .el-dialog {
   width: calc(100vw - 20px);
 }
+.el-card__body {
+    padding: 0px;
+}
 </style>
 <style scoped>
 .weui-btn_primary {
@@ -329,5 +310,15 @@ input::-webkit-input-placeholder {
   position: absolute;
   z-index: 99;
   width: 100%;
+}
+.card-hero{
+		width: 50px;
+		height: 40px;
+		line-height: 20px;
+		float: left;
+		position: relative;
+	}
+.el-card__body {
+    padding: 0px;
 }
 </style>

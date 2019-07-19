@@ -3,6 +3,7 @@ import Router from "vue-router";
 import reservationDetail from "../components/reservationDetail.vue";
 import reservationList from "../components/reservationList.vue";
 import mycenter from "../../index/components/mycenter.vue";
+import userFiling from '../components/userFiling.vue'
 
 Vue.use(Router);
 
