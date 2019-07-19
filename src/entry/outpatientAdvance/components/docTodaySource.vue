@@ -99,13 +99,10 @@ export default {
       let bxh = localStorage.getItem("sec_patientIdcard");
       let data = {
         patid: this.patid,
-        pbmxxh: pbmxxh,
-        hzxm: hzxm,
-        bxh: bxh,
-        isynzh: 0,
-        iszfjs: 1
+        pbxh: pbmxxh,
+        yyhx:0
       };
-      this.model.RegisteredBudget(data).then(function(res) {
+      this.model.getOutpatientAppointmentReg(data).then(function(res) {
         if (res.data.code == 0) {
           $.modal({
             title: "提示",
@@ -115,9 +112,9 @@ export default {
                 text: "预约信息",
                 onClick: function() {
                   if (process.env.NODE_ENV == "dev") {
-                    window.location = "../../reservation.html";
+                    window.location = "../../outpatientPay.html";
                   } else if (process.env.NODE_ENV == "production") {
-                    window.location = "../../sechos/reservation.html";
+                    window.location = "../../sechos/outpatientPay.html";
                   }
                 }
               },
