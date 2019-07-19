@@ -176,7 +176,7 @@
   				if(res.data.code == 0){
   					self.info = res.data.data;
   				}else{
-  					$toptip(res.data.msg,'error');
+  					$.toptip(res.data.msg,'error');
   				}
   			})
   		},

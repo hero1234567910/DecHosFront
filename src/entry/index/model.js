@@ -11,6 +11,13 @@ function model(http) {
       	}
       });
     },
+    getUserByToken(data){
+    	return http.post(evn.SEC_HOSAPI+'/wx/common/getUserByToken',data,{
+      	headers:{
+      		'Content-Type': 'application/json;charset=utf-8'
+      	}
+      });
+    }
   }
 
 }

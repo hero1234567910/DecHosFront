@@ -160,6 +160,7 @@
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from './model.js'
+import CryptoJS from 'crypto-js'
 export default {
 	data() {
     	this.model = model(this.axios)
@@ -176,10 +177,75 @@ export default {
     	this.checkShow();
     },
   methods: {
+  	getAesString(word, keyStr) { // 加密
+			  keyStr = keyStr ? keyStr : 'expsofthero12345';
+			  let key = CryptoJS.enc.Utf8.parse(keyStr);
+			  let srcs = CryptoJS.enc.Utf8.parse(word);
+			  let encrypted = CryptoJS.AES.encrypt(srcs, key, {
+			    mode: CryptoJS.mode.ECB,
+			    padding: CryptoJS.pad.Pkcs7
+			  });
+			  return encrypted.toString();
+			},
+			/*
+			* 对加密之后的密文在页面上进行解密，以便用户进行修改
+			* @param {String}   word  需要加密的密码
+			* @param {String}   keyStr  对密码加密的秘钥
+			* @return {String}   解密的明文
+			* */
+			getDAesString(word, keyStr) { // 解密
+			  keyStr = keyStr ? keyStr : 'expsofthero12345';
+			  let key = CryptoJS.enc.Utf8.parse(keyStr);
+			  let decrypt = CryptoJS.AES.decrypt(word, key, {
+			    mode: CryptoJS.mode.ECB,
+			    padding: CryptoJS.pad.Pkcs7
+			  });
+			  return CryptoJS.enc.Utf8.stringify(decrypt).toString();
+			},
   	getUserInfo(){
 			let self = this;
     		let data = this.GetQueryString('code');
-    		this.model.getUserInfo(data).then(function(res){
+    		let to = localStorage.getItem('sec_acessToken');
+    		if(to != null && to != '' && to != 'null'){
+    			let data = {
+    				openid:localStorage.getItem('sec_openId'),
+    				access_token:this.getDAesString(to)
+    			}
+    			this.model.getUserByToken(data).then(function(res){
+    				if(res.data.code == '0'){
+	    				localStorage.setItem('sec_openId',res.data.data.openid);
+		    			localStorage.setItem('sec_patientName',res.data.data.patientName);
+		    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
+		    			localStorage.setItem('sec_sex',res.data.data.patientSex);
+	    				localStorage.setItem('sec_birth',res.data.data.patientBirth);
+	    				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
+	    				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
+	    				localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.accessToken));
+	    				
+	    				let cs = localStorage.getItem('sec_patientName');
+				  		let img = localStorage.getItem('sec_headImg');
+				  		let birth = localStorage.getItem('sec_birth');
+				      let sex = localStorage.getItem('sec_sex');
+				      let patientIdCard = localStorage.getItem('sec_patientIdcard');
+				      $.alert(cs);
+				  		if(cs == null || cs == '' || cs == 'null'){
+				  			//说明用户未绑定
+				  			
+				  		}else{
+				  			self.patientName = cs;
+				  			self.headImg = img;
+				  			self.birth = birth;
+				  			self.sex = sex;
+				        self.show = false;
+				        self.patientIdCard = patientIdCard;
+				  		}
+	    				
+	    			}else{
+	    				$.toptip(res.data.msg, 'error');
+	    			}
+    			})
+    		}else{
+    			this.model.getUserInfo(data).then(function(res){
     			if(res.data.code == '0'){
     				localStorage.setItem('sec_openId',res.data.data.openid);
 	    			localStorage.setItem('sec_patientName',res.data.data.patientName);
@@ -188,53 +254,32 @@ export default {
     				localStorage.setItem('sec_birth',res.data.data.patientBirth);
     				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
     				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
-    				
-//  				if(res.data.data.patientName == null || res.data.data.patientName == ''){
-//  					//说明没有绑定患者信息，去绑定
-//  					$.alert("您并未绑定患者信息，清先绑定", "提示", function() {
-//							 	$('#cen').addClass('.weui-bar__item--on');
-//							});
-//  				}
-//  				if(res.data.data.patientStatus == 1){
-//  					let arr = [];
-//							let outArray = res.data.data.outpatients;
-//							for(var i=0;i<outArray.length;i++){
-//									let blh = outArray[i].medicalNumberMZ;
-//									arr.push(parseInt(blh));
-//							}
-//							arr.sort().reverse();
-//							let val = arr[0];
-//							for(var i=0;i<outArray.length;i++){
-//								if(val == outArray[i].medicalNumberMZ){
-//									self.patientId = outArray[i].patidMZ;
-//									localStorage.setItem('sec_patientIdmz',self.patientId);
-//									localStorage.setItem('patientStatus',1);
-//								}
-//							}
-//  				}
-//  				
-//  				if(res.data.data.patientStatus == 2){
-//  					let arr = [];
-//  						let hosArray = res.data.data.hospitalizedList;
-//  						for(var i=0;i<hosArray.length;i++){
-//									let blh = hosArray[i].medicalNumber;
-//									arr.push(parseInt(blh));
-//  						}
-//  						arr.sort().reverse();
-//  						let val = arr[0];
-//  						for(var i=0;i<hosArray.length;i++){
-//  							if(val == hosArray[i].medicalNumberMZ){
-//  								self.patientId = hosArray[i].patid;
-//									localStorage.setItem('sec_patientIdzy',self.patientId);
-//									localStorage.setItem('patientStatus',2);
-//  							}
-//  						}
-//  				}
+    				localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.accessToken));
+    				let cs = localStorage.getItem('sec_patientName');
+			  		let img = localStorage.getItem('sec_headImg');
+			  		let birth = localStorage.getItem('sec_birth');
+			      let sex = localStorage.getItem('sec_sex');
+			      let patientIdCard = localStorage.getItem('sec_patientIdcard');
+			      $.alert(cs);
+			  		if(cs == null || cs == '' || cs == 'null'){
+			  			//说明用户未绑定
+			  			
+			  		}else{
+			  			self.patientName = cs;
+			  			self.headImg = img;
+			  			self.birth = birth;
+			  			self.sex = sex;
+			        self.show = false;
+			        self.patientIdCard = patientIdCard;
+			  		}
     			}else{
     				$.toptip(res.data.msg, 'error');
     			}
     			
     		})
+    		}
+    		
+    		
 		},
 		//获取url中的参数
 		 GetQueryString(name){
@@ -253,10 +298,8 @@ export default {
      	let da = this.$route.query;
      if(da != null && da.act == 'bind'){
      	this.getUserInfo();
-     }
-     
-  		
-  		let cs = localStorage.getItem('sec_patientName');
+     }else{
+     	let cs = localStorage.getItem('sec_patientName');
   		let img = localStorage.getItem('sec_headImg');
   		let birth = localStorage.getItem('sec_birth');
       let sex = localStorage.getItem('sec_sex');
@@ -273,7 +316,10 @@ export default {
         self.show = false;
         self.patientIdCard = patientIdCard;
   		}
-  		 console.log(this.show);
+     }
+     
+  		
+  		
   	},
   	toReserv(){
   		if (process.env.NODE_ENV == 'dev') {

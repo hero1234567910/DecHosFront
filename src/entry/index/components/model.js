@@ -25,6 +25,13 @@ function model(http) {
     			contentType:'application/json;charset=utf-8'
     		}
     	})
+    },
+    getUserByToken(data){
+    	return http.post(evn.SEC_HOSAPI+'/wx/common/getUserByToken',data,{
+      	headers:{
+      		'Content-Type': 'application/json;charset=utf-8'
+      	}
+      });
     }
   }
 

@@ -135,18 +135,17 @@
   				yfje:this.info.yfje,
   				zfje:this.info.zfje
   			}
-  			window.location='../pay.html';
-//			this.model.placeOrder(data).then(function(res){
-//				if(res.data.code == 0){
-//					if (process.env.NODE_ENV == 'dev') {
-//						  window.location='../pay.html?appid='+this.getAesString(res.appId)+'&timeStamp='+this.getAesString(res.timeStamp)+'&nonceStr='+this.getAesString(res.nonceStr)+'&pack='+this.getAesString(res.pack)+'&paySign='+this.getAesString(res.paySign)+'&action=gh';
-//						} else if (process.env.NODE_ENV == 'production') {
-//						  window.location='../sechos/pay.html?appid='+this.getAesString(res.appId)+'&timeStamp='+this.getAesString(res.timeStamp)+'&nonceStr='+this.getAesString(res.nonceStr)+'&pack='+this.getAesString(res.pack)+'&paySign='+this.getAesString(res.paySign)+'&action=gh';
-//						}
-//				}else{
-//					$.toptip(res.data.msg,'error');
-//				}
-//			})
+			this.model.placeOrder(data).then(function(res){
+				if(res.data.code == 0){
+					if (process.env.NODE_ENV == 'dev') {
+						  window.location='../pay.html?appid='+this.getAesString(res.appId)+'&timeStamp='+this.getAesString(res.timeStamp)+'&nonceStr='+this.getAesString(res.nonceStr)+'&pack='+this.getAesString(res.pack)+'&paySign='+this.getAesString(res.paySign)+'&action=gh';
+						} else if (process.env.NODE_ENV == 'production') {
+						  window.location='../sechos/pay.html?appid='+this.getAesString(res.appId)+'&timeStamp='+this.getAesString(res.timeStamp)+'&nonceStr='+this.getAesString(res.nonceStr)+'&pack='+this.getAesString(res.pack)+'&paySign='+this.getAesString(res.paySign)+'&action=gh';
+						}
+				}else{
+					$.toptip(res.data.msg,'error');
+				}
+			})
   		},
   		init(){
   			let self = this;
