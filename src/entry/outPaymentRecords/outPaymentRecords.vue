@@ -9,6 +9,7 @@ import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
 import outPaymentRecordsDetail from "./components/outPaymentRecordsDetail";
 import outPaymentRecordsList from "./components/outPaymentRecordsList";
+import userFiling from "./components/userFiling"
 export default {
   components: { outPaymentRecordsDetail, outPaymentRecordsDetail },
   data() {
