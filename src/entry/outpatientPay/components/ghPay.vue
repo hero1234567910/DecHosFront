@@ -109,6 +109,7 @@
   			blh:'',
   			zjh:localStorage.getItem('sec_patientIdcard'),
 				hzxm:localStorage.getItem('sec_patientName'),
+				openid:localStorage.getItem('sec_openId'),
 				patid:'',
 				pbxh:'',
 				info:{},
@@ -143,14 +144,15 @@
   				sjh:this.info.sjh,
   				zje:this.info.zje,
   				yfje:this.info.yfje,
-  				zfje:this.info.zfje
+  				zfje:this.info.zfje,
+  				openid:this.openid
   			}
 			this.model.placeOrder(data).then(function(res){
 				if(res.data.code == 0){
 					if (process.env.NODE_ENV == 'dev') {
-						  window.location='../pay.html?appid='+this.getAesString(res.appId)+'&timeStamp='+this.getAesString(res.timeStamp)+'&nonceStr='+this.getAesString(res.nonceStr)+'&pack='+this.getAesString(res.pack)+'&paySign='+this.getAesString(res.paySign)+'&action=gh';
+						  window.location='../pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
 						} else if (process.env.NODE_ENV == 'production') {
-						  window.location='../sechos/pay.html?appid='+this.getAesString(res.appId)+'&timeStamp='+this.getAesString(res.timeStamp)+'&nonceStr='+this.getAesString(res.nonceStr)+'&pack='+this.getAesString(res.pack)+'&paySign='+this.getAesString(res.paySign)+'&action=gh';
+						  window.location='../sechos/pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
 						}
 				}else{
 					$.toptip(res.data.msg,'error');

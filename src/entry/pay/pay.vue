@@ -21,17 +21,18 @@ import CryptoJS from 'crypto-js'
     },
 	methods:{
 		init(){
+			let self = this;
 			$.toptip('下单成功，请在5分钟内完成支付', 3600000, 'success');
 				//吊起支付控件
 				if (typeof WeixinJSBridge == "undefined"){
 				   if( document.addEventListener ){
-				       document.addEventListener('WeixinJSBridgeReady', this.onBridgeReady, false);
+				       document.addEventListener('WeixinJSBridgeReady', self.onBridgeReady(), false);
 				   }else if (document.attachEvent){
-				       document.attachEvent('WeixinJSBridgeReady', this.onBridgeReady); 
-				       document.attachEvent('onWeixinJSBridgeReady', this.onBridgeReady);
+				       document.attachEvent('WeixinJSBridgeReady', self.onBridgeReady()); 
+				       document.attachEvent('onWeixinJSBridgeReady', self.onBridgeReady());
 				   }
 				}else{
-				   this.onBridgeReady();
+				   self.onBridgeReady();
 				}
 		},
 		
@@ -45,16 +46,21 @@ import CryptoJS from 'crypto-js'
 					var pack = this.GetQueryString('pack');
 					var paySign = this.GetQueryString('paySign');
 					var timestamp = this.GetQueryString('timeStamp');
-				   WeixinJSBridge.invoke(
+					
+					console.log(appId+' '+nonceStr+'  '+pack);
+					
+					console.log(self.getDAesString(appId)+'  '+self.getDAesString(timestamp)+'   '+self.getDAesString(nonceStr)+'   '+self.getDAesString(pack)+'   '+self.getDAesString(paySign));
+				  window.WeixinJSBridge.invoke(
 				      'getBrandWCPayRequest', {
-				         "appId":this.getDAesString(appId),     //公众号名称，由商户传入     
-				         "timeStamp":this.getDAesString(timestamp),         //时间戳，自1970年以来的秒数     
-				         "nonceStr":this.getDAesString(nonceStr),//随机串     
-				         "package":this.getDAesString(pack),     
+				         "appId":self.getDAesString(appId),     //公众号名称，由商户传入     
+				         "timeStamp":self.getDAesString(timestamp),         //时间戳，自1970年以来的秒数     
+				         "nonceStr":self.getDAesString(nonceStr),//随机串     
+				         "package":self.getDAesString(pack),     
 				         "signType":"MD5",         //微信签名方式：     
-				         "paySign":this.getDAesString(paySign), //微信签名 
+				         "paySign":self.getDAesString(paySign), //微信签名 
 				      },
 				      function(res){
+				      	$.alert(res.err_code);
 								if(res.err_msg == "get_brand_wcpay_request:ok" ){
 						      	self.$router.push('/noticeSuccess?action='+self.action)
 						      } 				      	

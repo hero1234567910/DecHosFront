@@ -6,7 +6,7 @@
           <home></home>
         </div>
         <div id="tab2" class="weui-tab__bd-item weui-iframe" style="overflow: auto;height: calc(100vh - 53px);">
-          <router-view :key="$route.fullPath"></router-view>
+          <router-view :patientName="patientName" :key="$route.fullPath"></router-view>
         </div>
       </div>
 		
@@ -43,9 +43,13 @@ import CryptoJS from 'crypto-js'
 	data() {
     	this.model = model(this.axios)
       return {
+      	patientName:''
       }
     },
     mounted(){
+//  	this.getUserInfo();
+    },
+    created(){
     	this.getUserInfo();
     },
 	methods:{
@@ -78,10 +82,43 @@ import CryptoJS from 'crypto-js'
 			let self = this;
     		let data = this.GetQueryString('code');
     		let to = localStorage.getItem('sec_acessToken');
-    		if(to != null && to != '' && to != 'null'){
+    		let re = localStorage.getItem('sec_refreshToken');
+    		if(to == null || to == '' || to == 'null' || this.getDAesString(to) == 'null'){
+    			this.model.getUserInfo(data).then(function(res){
+	    			if(res.data.code == '0'){
+	    				$.alert(self.getAesString(res.data.data.accessToken));
+	    				localStorage.setItem('sec_openId',res.data.data.openid);
+		    			localStorage.setItem('sec_patientName',res.data.data.patientName);
+		    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
+		    			localStorage.setItem('sec_sex',res.data.data.patientSex);
+	    				localStorage.setItem('sec_birth',res.data.data.patientBirth);
+	    				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
+	    				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
+	    				localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.accessToken));
+	    				localStorage.setItem('sec_refreshToken',self.getAesString(res.data.data.refreshToken));
+	    				self.patientName = res.data.data.patientName;
+	    			}else if(res.data.data == '42001'){
+		    				//token过期 刷新
+		    				let data = {
+		    					refresh_token:self.getDAesString(localStorage.getItem("sec_refreshToken"))
+		    				}
+		    				self.model.refreshToken(data).then(function(res){
+		    					if(res.data.code == 0){
+		    						localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.access_token));
+		    						localStorage.setItem('sec_refreshToken',self.getAesString(res.data.data.refresh_token));
+		    					}else{
+		    						$.toptip(res.data.msg, 'error');
+		    					}
+		    				})
+		    			}else{
+		    				$.toptip(res.data.msg, 'error');
+		    			}
+	    		})
+    		}else{
     			let data = {
     				openid:localStorage.getItem('sec_openId'),
-    				access_token:this.getDAesString(to)
+    				access_token:this.getDAesString(to),
+    				refresh_token:this.getDAesString(re)
     			}
     			this.model.getUserByToken(data).then(function(res){
     				if(res.data.code == '0'){
@@ -93,29 +130,26 @@ import CryptoJS from 'crypto-js'
 	    				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
 	    				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
 	    				localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.accessToken));
+	    				localStorage.setItem('sec_refreshToken',self.getAesString(res.data.data.refreshToken));
+	    				self.patientName = res.data.data.patientName;
+	    			}else if(res.data.data == '42001'){
+	    				//token过期 刷新
+	    				let data = {
+	    					refresh_token:self.getDAesString(localStorage.getItem("sec_refreshToken"))
+	    				}
+	    				self.model.refreshToken(data).then(function(res){
+	    					if(res.data.code == 0){
+	    						localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.access_token));
+	    						localStorage.setItem('sec_refreshToken',self.getAesString(res.data.data.refresh_token));
+	    					}else{
+	    						$.toptip(res.data.msg, 'error');
+	    					}
+	    				})
 	    			}else{
 	    				$.toptip(res.data.msg, 'error');
 	    			}
     			})
-    		}else{
-    			this.model.getUserInfo(data).then(function(res){
-    			if(res.data.code == '0'){
-    				localStorage.setItem('sec_openId',res.data.data.openid);
-	    			localStorage.setItem('sec_patientName',res.data.data.patientName);
-	    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
-	    			localStorage.setItem('sec_sex',res.data.data.patientSex);
-    				localStorage.setItem('sec_birth',res.data.data.patientBirth);
-    				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
-    				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
-    				localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.accessToken));
-    			}else{
-    				$.toptip(res.data.msg, 'error');
-    			}
-    			
-    		})
     		}
-    		
-    		
 		},
 			//获取url中的参数
 		 GetQueryString(name){

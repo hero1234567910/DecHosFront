@@ -166,15 +166,33 @@ export default {
     	this.model = model(this.axios)
       return {
       	show:true,
-      	patientName:'',
       	headImg:'',
       	birth:'',
         sex:'',
         patientIdCard:''
       }
     },
+    props:['patientName'],
+    watch:{
+    	 patientName(val, oldVal){//普通的watch监听
+         console.log(val);
+         if(val == null || val == '' || val == 'null'){
+         		
+         }else{
+			  		let img = localStorage.getItem('sec_headImg');
+			  		let birth = localStorage.getItem('sec_birth');
+			      let sex = localStorage.getItem('sec_sex');
+			      let patientIdCard = localStorage.getItem('sec_patientIdcard');
+		  			this.headImg = img;
+		  			this.birth = birth;
+		  			this.sex = sex;
+		        this.show = false;
+		        this.patientIdCard = patientIdCard;
+         }
+     	},
+    },
     mounted(){
-    	this.checkShow();
+//  	this.checkShow();
     },
   methods: {
   	getAesString(word, keyStr) { // 加密
@@ -203,81 +221,83 @@ export default {
 			  return CryptoJS.enc.Utf8.stringify(decrypt).toString();
 			},
   	getUserInfo(){
-			let self = this;
-    		let data = this.GetQueryString('code');
-    		let to = localStorage.getItem('sec_acessToken');
-    		if(to != null && to != '' && to != 'null'){
-    			let data = {
-    				openid:localStorage.getItem('sec_openId'),
-    				access_token:this.getDAesString(to)
-    			}
-    			this.model.getUserByToken(data).then(function(res){
-    				if(res.data.code == '0'){
-	    				localStorage.setItem('sec_openId',res.data.data.openid);
-		    			localStorage.setItem('sec_patientName',res.data.data.patientName);
-		    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
-		    			localStorage.setItem('sec_sex',res.data.data.patientSex);
-	    				localStorage.setItem('sec_birth',res.data.data.patientBirth);
-	    				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
-	    				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
-	    				localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.accessToken));
-	    				
-	    				let cs = localStorage.getItem('sec_patientName');
-				  		let img = localStorage.getItem('sec_headImg');
-				  		let birth = localStorage.getItem('sec_birth');
-				      let sex = localStorage.getItem('sec_sex');
-				      let patientIdCard = localStorage.getItem('sec_patientIdcard');
-				      $.alert(cs);
-				  		if(cs == null || cs == '' || cs == 'null'){
-				  			//说明用户未绑定
-				  			
-				  		}else{
-				  			self.patientName = cs;
-				  			self.headImg = img;
-				  			self.birth = birth;
-				  			self.sex = sex;
-				        self.show = false;
-				        self.patientIdCard = patientIdCard;
-				  		}
-	    				
-	    			}else{
-	    				$.toptip(res.data.msg, 'error');
-	    			}
-    			})
-    		}else{
-    			this.model.getUserInfo(data).then(function(res){
-    			if(res.data.code == '0'){
-    				localStorage.setItem('sec_openId',res.data.data.openid);
-	    			localStorage.setItem('sec_patientName',res.data.data.patientName);
-	    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
-	    			localStorage.setItem('sec_sex',res.data.data.patientSex);
-    				localStorage.setItem('sec_birth',res.data.data.patientBirth);
-    				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
-    				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
-    				localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.accessToken));
-    				let cs = localStorage.getItem('sec_patientName');
-			  		let img = localStorage.getItem('sec_headImg');
-			  		let birth = localStorage.getItem('sec_birth');
-			      let sex = localStorage.getItem('sec_sex');
-			      let patientIdCard = localStorage.getItem('sec_patientIdcard');
-			      $.alert(cs);
-			  		if(cs == null || cs == '' || cs == 'null'){
-			  			//说明用户未绑定
-			  			
-			  		}else{
-			  			self.patientName = cs;
-			  			self.headImg = img;
-			  			self.birth = birth;
-			  			self.sex = sex;
-			        self.show = false;
-			        self.patientIdCard = patientIdCard;
-			  		}
-    			}else{
-    				$.toptip(res.data.msg, 'error');
-    			}
-    			
-    		})
-    		}
+//			let self = this;
+//  		let data = this.GetQueryString('code');
+//  		let to = localStorage.getItem('sec_acessToken');
+//  		let re = localStorage.getItem('sec_refreshToken');
+//  		if(to != null && to != '' && to != 'null'){
+//  			let data = {
+//  				openid:localStorage.getItem('sec_openId'),
+//  				access_token:this.getDAesString(to),
+//  				refresh_token:this.getDAesString(re)
+//  			}
+//  			this.model.getUserByToken(data).then(function(res){
+//  				if(res.data.code == '0'){
+//	    				localStorage.setItem('sec_openId',res.data.data.openid);
+//		    			localStorage.setItem('sec_patientName',res.data.data.patientName);
+//		    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
+//		    			localStorage.setItem('sec_sex',res.data.data.patientSex);
+//	    				localStorage.setItem('sec_birth',res.data.data.patientBirth);
+//	    				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
+//	    				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
+//	    				localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.accessToken));
+//	    				localStorage.setItem('sec_refreshToken',self.getAesString(res.data.data.refreshToken));
+//	    				
+//	    				let cs = localStorage.getItem('sec_patientName');
+//				  		let img = localStorage.getItem('sec_headImg');
+//				  		let birth = localStorage.getItem('sec_birth');
+//				      let sex = localStorage.getItem('sec_sex');
+//				      let patientIdCard = localStorage.getItem('sec_patientIdcard');
+//				  		if(cs == null || cs == '' || cs == 'null'){
+//				  			//说明用户未绑定
+//				  			
+//				  		}else{
+//				  			self.patientName = cs;
+//				  			self.headImg = img;
+//				  			self.birth = birth;
+//				  			self.sex = sex;
+//				        self.show = false;
+//				        self.patientIdCard = patientIdCard;
+//				  		}
+//	    				
+//	    			}else{
+//	    				$.toptip(res.data.msg, 'error');
+//	    			}
+//  			})
+//  		}else{
+//  			this.model.getUserInfo(data).then(function(res){
+//  			if(res.data.code == '0'){
+//  				localStorage.setItem('sec_openId',res.data.data.openid);
+//	    			localStorage.setItem('sec_patientName',res.data.data.patientName);
+//	    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
+//	    			localStorage.setItem('sec_sex',res.data.data.patientSex);
+//  				localStorage.setItem('sec_birth',res.data.data.patientBirth);
+//  				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
+//  				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
+//  				localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.accessToken));
+//  				localStorage.setItem('sec_refreshToken',self.getAesString(res.data.data.refreshToken));
+//  				let cs = localStorage.getItem('sec_patientName');
+//			  		let img = localStorage.getItem('sec_headImg');
+//			  		let birth = localStorage.getItem('sec_birth');
+//			      let sex = localStorage.getItem('sec_sex');
+//			      let patientIdCard = localStorage.getItem('sec_patientIdcard');
+//			  		if(cs == null || cs == '' || cs == 'null'){
+//			  			//说明用户未绑定
+//			  			
+//			  		}else{
+//			  			self.patientName = cs;
+//			  			self.headImg = img;
+//			  			self.birth = birth;
+//			  			self.sex = sex;
+//			        self.show = false;
+//			        self.patientIdCard = patientIdCard;
+//			  		}
+//  			}else{
+//  				$.toptip(res.data.msg, 'error');
+//  			}
+//  			
+//  		})
+//  		}
     		
     		
 		},
@@ -295,10 +315,7 @@ export default {
   	//判断是否展示
   	checkShow(){
   		let self = this;
-     	let da = this.$route.query;
-     if(da != null && da.act == 'bind'){
-     	this.getUserInfo();
-     }else{
+     
      	let cs = localStorage.getItem('sec_patientName');
   		let img = localStorage.getItem('sec_headImg');
   		let birth = localStorage.getItem('sec_birth');
@@ -316,10 +333,6 @@ export default {
         self.show = false;
         self.patientIdCard = patientIdCard;
   		}
-     }
-     
-  		
-  		
   	},
   	toReserv(){
   		if (process.env.NODE_ENV == 'dev') {
