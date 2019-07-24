@@ -38,7 +38,7 @@
       </el-card>
     </div>
 
-    <div class="flow" style="margin-top: 130px;">
+    <div class="flow" style="margin-top: 0px;">
       <div class="re-row" v-for="item in PaymentList">
         <a href="javascript:;" @click="toDetail(item)">
           <div class="row-cen">
@@ -54,7 +54,7 @@
             </div>
             <div class="re-main-wzl">
               <div class="re-content-wzl">
-                <p style="font-size: 17px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
+                <p style="font-size: 16px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
                 <p style="color: #688795;font-size:14px;">结算时间: {{item.jssj | formatDate}}</p>
                 <p style="color: #688795;font-size:14px;">支付金额: {{item.zje}} 元</p>
                 <p style="color: #999999;font-size:14px;">

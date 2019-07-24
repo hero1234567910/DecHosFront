@@ -11,7 +11,7 @@
 			</el-card>
     </div>
 
-    <div class="flow" style="margin-top: 80px;">
+    <div class="flow" style="margin-top:0px;">
       <div class="re-row" v-for="item in AppointList">
         <a href="javascript:;" @click="toDetail(item)">
           <div class="row-cen">
