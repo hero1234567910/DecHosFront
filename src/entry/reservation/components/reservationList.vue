@@ -27,7 +27,7 @@
             </div>
             <div class="re-main-wzl">
               <div class="re-content-wzl">
-                <p style="font-size: 17px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
+                <p style="font-size: 15px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
                 <p style="color: #688795;font-size:14px;">结算时间: {{item.yyrq | formatDate}}</p>
                 <p style="color: #688795;font-size:14px;">支付金额: {{item.zlf}} 元</p>
                 <p style="color: #999999;font-size:14px;">
@@ -132,7 +132,9 @@ export default {
           "&zfzt=" +
           ele.zfzt +
           "&yyhx=" +
-          ele.yyhx
+          ele.yyhx +
+          "&patid=" +
+          ele.patid 
       );
     },
     handleCall(res) {

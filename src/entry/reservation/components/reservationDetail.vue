@@ -229,9 +229,11 @@ export default {
       bxh: "",
       lxdh: "",
       yyhx: "",
-      zfzt: ""
+      zfzt: "",
+      patid:""
     };
   },
+  props:['patid'],
   mounted() {
     this.showDetail();
   },
@@ -260,6 +262,7 @@ export default {
       self.bxh = this.$route.query.bxh;
       self.lxdh = this.$route.query.lxdh;
       self.yyhx = this.$route.query.yyhx;
+      self.patid = this.$route.query.patid;
       //console.log(data);
     },
     statusCheck(ele) {
@@ -302,13 +305,13 @@ export default {
         );
       }
     },
-    sub(yyxh){
+    sub(yyxh,patid){
         let self = this;
         let hzxm = localStorage.getItem("sec_patientName");
         let data = {
             yyxh:yyxh,
             hzxm:hzxm,
-            patid:this.patid
+            patid:patid
         };
         this.model.cancelSubmit(data).then(function(res){
             if(res.data.code == '0'){

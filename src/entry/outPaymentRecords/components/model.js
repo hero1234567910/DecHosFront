@@ -33,7 +33,14 @@ function model(http) {
           contentType: "application/json;charset=utf-8"
         }
       });
-    }
+    },
+    savePatient(data){
+    	return http.post(evn.SEC_HOSAPI+'/wx/common/bingdingPatient',data,{
+    		headers:{
+    			contentType:'application/json;charset=utf-8'
+    		}
+    	})
+    },
   };
 }
 export default model;
