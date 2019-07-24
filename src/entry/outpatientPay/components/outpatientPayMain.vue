@@ -28,7 +28,7 @@
 					    3.结算付款<el-button style="float: right; padding: 3px 0" type="text" @click="toghPay">点我结算</el-button>
 					  </div>
 					  <div class="text item">
-					    4.可前往个人中心查看缴费记录<el-button style="float: right; padding: 3px 0" type="text">立即前往</el-button>
+					    4.可前往个人中心查看缴费记录<el-button style="float: right; padding: 3px 0" type="text" @click="toRecord()">立即前往</el-button>
 					  </div>
 					</el-card>
 	  		</div>
@@ -54,7 +54,7 @@
 					    4.结算付款<el-button style="float: right; padding: 3px 0" type="text" @click="toSePay">点我结算</el-button>
 					  </div>
 					  <div class="text item">
-					    5.可前往个人中心查看缴费记录<el-button style="float: right; padding: 3px 0" type="text">立即前往</el-button>
+					    5.可前往个人中心查看缴费记录<el-button style="float: right; padding: 3px 0" type="text" @click="toRecord()">立即前往</el-button>
 					  </div>
 					</el-card>
 	  		</div>
@@ -107,6 +107,13 @@
     	
     },
   	methods:{
+  		toRecord(){
+  			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../outPaymentRecords.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/outPaymentRecords.html'
+				}
+  		},
   		toSePay(){
   			if(this.patid == ''){
 						$.alert("清先选择病历号", "提示", function() {
