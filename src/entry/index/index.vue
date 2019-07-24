@@ -86,7 +86,6 @@ import CryptoJS from 'crypto-js'
     		if(to == null || to == '' || to == 'null' || this.getDAesString(to) == 'null'){
     			this.model.getUserInfo(data).then(function(res){
 	    			if(res.data.code == '0'){
-	    				$.alert(self.getAesString(res.data.data.accessToken));
 	    				localStorage.setItem('sec_openId',res.data.data.openid);
 		    			localStorage.setItem('sec_patientName',res.data.data.patientName);
 		    			localStorage.setItem('sec_headImg',res.data.data.headImgUrl);
