@@ -8,8 +8,8 @@
           v-bind:class="shows==true?'magnify':''"
           style="margin-top: 30px;width: 55%;margin-left: 31px;"
         >
-        <div class="wzl-col-dec" style="min-width: 70px;" v-bind:style="{color:color1}">我是门诊患者</div>
-        <div class="v-underline" v-bind:style="{left:underlineMove+'%'}"></div>
+        <!--<div class="wzl-col-dec" style="min-width: 70px;" v-bind:style="{color:color1}">请输入正确的证件号</div>-->
+        <!--<div class="v-underline" v-bind:style="{left:underlineMove+'%'}"></div>-->
       </div>
       <div class="weui-flex__item-wzl">
         <img
@@ -18,10 +18,14 @@
           v-bind:class="shows==false?'magnify':''"
           style="margin-top: 30px;width: 55%;margin-left: 31px;"
         >
-        <div class="wzl-col-dec" style="min-width: 70px;" v-bind:style="{color:color2}">我是住院患者</div>
+        <!--<div class="wzl-col-dec" style="min-width: 70px;" v-bind:style="{color:color2}">请输入</div>-->
       </div>
     </div>
-    <div class="weui-cells__title wzl" style="font-size: 18px;">姓名</div>
+    <div class="weui-cells__title wzl" style="font-size: 18px;">
+    	<div class="panel-img">
+    		<img src="../../../../static/img/姓名 (1).svg" width="80%" style="position: absolute;top: 2px;"/>
+    	</div>
+    	姓名</div>
     <div class="weui-cells-wzl weui-cells_form">
       <div class="weui-cell-wzl" style="margin-top: 0px;">
         <div class="weui-cell__bd">
@@ -29,7 +33,11 @@
         </div>
       </div>
     </div>
-    <div class="weui-cells__title wzl" style="font-size: 18px;">身份证号</div>
+    <div class="weui-cells__title wzl" style="font-size: 18px;">
+    	<div class="panel-img">
+    		<img src="../../../../static/img/身份证 (1).svg" width="100%" style="position: absolute;top: 4px;"/>
+    	</div>
+    	身份证号</div>
     <div class="weui-cells-wzl weui-cells_form">
       <div class="weui-cell-wzl" style="margin-top: 0px;">
         <div class="weui-cell__bd">
@@ -66,7 +74,6 @@ export default {
   },
   methods: {
   	bindingUser(){
-  		
 		let self = this;
 		let action = '';
 		let hzxm = $('#hzxm').val();
@@ -110,6 +117,13 @@ export default {
 </script>
 
 <style scoped>
+.panel-img{
+	position: relative;
+    float: left;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
 .weui-input {
   height: 40px;
   width: -webkit-fill-available;
