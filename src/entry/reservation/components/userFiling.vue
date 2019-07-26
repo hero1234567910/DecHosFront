@@ -25,7 +25,7 @@
                 <p>男</p>
               </div>
               <div class="weui-cell__ft">
-                <input type="radio" class="weui-check" name="radio1" id="x11" value="男">
+                <input type="radio" class="weui-check" name="radio1" id="x11" value="男" checked="checked">
                 <span class="weui-icon-checked" style="margin-right:50px"></span>
               </div>
             </label>
@@ -38,7 +38,7 @@
                 <p>女</p>
               </div>
               <div class="weui-cell__ft">
-                <input type="radio" name="radio1" class="weui-check" id="x12" checked="checked" value="女">
+                <input type="radio" name="radio1" class="weui-check" id="x12"  value="女">
                 <span class="weui-icon-checked" style="margin-right:50px"></span>
               </div>
             </label>
