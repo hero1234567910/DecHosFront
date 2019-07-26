@@ -186,7 +186,7 @@
             <a
               href="javascript:;"
               class="weui-btn weui-btn_primary hero-button"
-              @click="cancelAppoint(yyxh,yyzt)"
+              @click="cancelAppoint(yyxh,yyzt,patid)"
             >取消挂号预约</a>
           </div>
           <div class="weui-col-50">
@@ -287,7 +287,7 @@ export default {
     returnList() {
       this.$router.push("/");
     },
-    cancelAppoint(yyxh,yyzt) {
+    cancelAppoint(yyxh,yyzt,patid) {
       //console.log(yyxh+" "+yyzt)
       let self = this;
       if (yyzt == "2"||yyzt=="3"||yyzt=="8") {
@@ -297,7 +297,7 @@ export default {
           "您确定要取消吗？",
           "提示",
           function() {
-            self.sub(yyxh);
+            self.sub(yyxh,patid);
           },
           function() {
             return;
@@ -310,7 +310,6 @@ export default {
         let hzxm = localStorage.getItem("sec_patientName");
         let data = {
             yyxh:yyxh,
-            hzxm:hzxm,
             patid:patid
         };
         this.model.cancelSubmit(data).then(function(res){

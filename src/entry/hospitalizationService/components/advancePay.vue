@@ -6,7 +6,7 @@
     left: 17px;"/>
   		</div>
   		<div class="ad-title">
-  			<p style="font-size: 20px;font-weight: 700;">张三</p>
+  			<p style="font-size: 20px;font-weight: 700;">{{hzxm}}</p>
   		</div>
   		<div class="ad-fin">
   			<img src="../../../../static/img/在院.png" style="position: absolute;width: 73%;
@@ -107,7 +107,8 @@
   		this.model = model(this.axios);
   		return{
   			money:0,
-  			blh:'',
+			blh:'',
+			hzxm:localStorage.getItem('sec_patientName'),  
   			zjh:localStorage.getItem('sec_patientIdcard'),
 				hzxm:localStorage.getItem('sec_patientName'),
 				patid:'',
