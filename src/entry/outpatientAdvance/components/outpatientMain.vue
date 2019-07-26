@@ -82,9 +82,12 @@
   		Report(){
   			 $.showLoading();
   			let self = this;
-  			let data = {
-  				ksrq:$("#ksrq").val(),
-  				jsrq:$("#jsrq").val()
+			let date1 = $("#ksrq").val();
+			let date2 = $("#jsrq").val();
+			
+			let data = {
+  				ksrq:date1.replace(/\-/g, ""),
+  				jsrq:date2.replace(/\-/g, "")
   			}
   			this.ksrq = data.ksrq;
   			this.jsrq = data.jsrq;
@@ -99,10 +102,10 @@
   		},
   		init() {
 	      $("#ksrq").calendar({
-				  dateFormat:'yyyymmdd'
+				  dateFormat:'yyyy-mm-dd'
 			  });
 	      $("#jsrq").calendar({
-				  dateFormat:'yyyymmdd'
+				  dateFormat:'yyyy-mm-dd'
 			  });
 	    },
 	    toChoseDoc(ele){
