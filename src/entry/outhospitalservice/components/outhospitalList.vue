@@ -32,6 +32,22 @@
 	 			</div>
 	 		</div>
  		</a>
+ 		<a href="javascript:void(0)">
+	 		<div class="hospital-panel">
+	 			<div class="hospital-inner">
+	 				<div class="hospital-img">
+	 					<img src="../../../../static/img/评价.svg" style="vertical-align: middle;width: 80%;"/>
+	 				</div>
+	 				<div class="hospital-title">
+	 						<p style="color: #000000;font-size: 17px;position: absolute;top: 23px;">出院评价</p>
+	 						<img src="../../../../static/images/圆角矩形-3.png"  style="position: absolute;top: 56px;width: 51%;"/>
+	 				</div>
+	 				<div class="hospital-arrow">
+	 					<img src="../../../../static/img/ARROW.svg" style="position: absolute;top: 29px;width: 85%;left: 30px;"/>
+	 				</div>
+	 			</div>
+	 		</div>
+ 		</a>
  		
  		<div style="margin-top: 30px;">
 				<div>

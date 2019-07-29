@@ -60,6 +60,7 @@ import CryptoJS from 'crypto-js'
 				         "paySign":self.getDAesString(paySign), //微信签名 
 				      },
 				      function(res){
+				      	$.alert(res.err_code);
 								if(res.err_msg == "get_brand_wcpay_request:ok" ){
 						      	self.$router.push('/noticeSuccess?action='+self.action)
 						      } 				      	
