@@ -109,6 +109,33 @@
 					</div>
 				</div>
 			</div>
+
+			<div style="margin-left: 20px;margin-right: 20px;height: 70px;margin-top:6px;">
+				<div class="weui-row" style="height: 80px;">
+					<div class="weui-col-25">
+						<a href="javascript:;" v-on:click="toDepartment()">
+							<div class="hero-col-img">
+								<img src="../../../../static/images/全科.png" style="width: 100%;"/>
+							</div>
+							<div class="hero-col-dec" style="min-width: 70px;">科室简介</div>
+						</a>
+					</div>
+					<div class="weui-col-25">
+						<a href="javascript:;" v-on:click="toProfessor()">
+						<div class="hero-col-img">
+							<img src="../../../../static/images/专家.png" style="width: 100%;"/>
+						</div>
+						<div class="hero-col-dec">专家信息</div>
+						</a>
+					</div>
+					<div class="weui-col-25">
+						
+					</div>
+					<div class="weui-col-25">
+						
+					</div>
+				</div>
+			</div>
 		</div>
 		
 		<div style="height: 10px;width: 100%;position: relative;
@@ -303,6 +330,20 @@
 				  window.location='../../outhospitalService.html'
 				} else if (process.env.NODE_ENV == 'production') {
 				  window.location='../../sechos/outhospitalService.html'
+				}
+		},
+		toDepartment(){
+			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../introduceDepartment.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/introduceDepartment.html'
+				}
+		},
+		toProfessor(){
+			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../introductionProfessor.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../sechos/introductionProfessor.html'
 				}
 		}
 		
