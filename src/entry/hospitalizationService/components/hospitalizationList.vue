@@ -75,7 +75,12 @@
     },
   	methods:{
   		toSelect(){
-  			this.$router.push('/advanceSelect');
+  			if(this.patientId == '' || this.patientId == null){
+  				$.alert("未查询到您的住院信息", "提示", function() {
+						});
+  			}else{
+  				this.$router.push('/advanceSelect');
+  			}
   		},
   		toindex(){
   			if (process.env.NODE_ENV == 'dev') {
@@ -85,7 +90,12 @@
 				}
   		},
   		toPay(){
-  			this.$router.push('/advancePay?patid='+this.patientId+'&blh='+this.blh)
+  			if(this.patientId == '' || this.patientId == null){
+  				$.alert("未查询到您的住院信息", "提示", function() {
+						});
+  			}else{
+  				this.$router.push('/advancePay?patid='+this.patientId+'&blh='+this.blh)
+  			}
   		},
   		toOrder(){
   			window.location='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc87dca29cc03656f&redirect_uri=http%3a%2f%2fey.nxjnjc.com%2fWXOrderSystem%2findex.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';

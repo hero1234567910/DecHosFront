@@ -148,6 +148,7 @@
   				openid:this.openid
   			}
 			this.model.placeOrder(data).then(function(res){
+				console.log(res.data);
 				if(res.data.code == 0){
 					if (process.env.NODE_ENV == 'dev') {
 						  window.location='../pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';

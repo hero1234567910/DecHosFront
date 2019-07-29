@@ -11,7 +11,7 @@
   		<div class="ad-fin">
   			<img src="../../../../static/img/在院.png" style="position: absolute;width: 73%;
     top: 20px;
-    left: 100px;"/>
+    left: 5px;"/>
   		</div>
   	</div>
   	
@@ -317,10 +317,11 @@
 		width: 60px;
 		line-height: 60px;
 		position: relative;
+		float: left;
 	}
 	.ad-title{
 		float:left;
-		width: 50px;
+		/*width: 50px;*/
 		height: 60px;
 		line-height: 60px;
 	}

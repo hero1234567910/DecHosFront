@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="hero-search">
+    <!--<div class="hero-search">
       <div class="weui-search-bar" id="searchBar">
         <form class="weui-search-bar__form">
           <div class="weui-search-bar__box">
@@ -21,7 +21,7 @@
         </form>
         <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">专家</a>
       </div>
-    </div>
+    </div>-->
 
     <div class="weui-panel weui-panel_access">
       <div class="weui-panel__bd">

@@ -45,37 +45,37 @@ import outhospitalList from './components/outhospitalList'
 					  });
 				}
 				
-				let data={
-					hzxm:this.hzxm,
-					zjh:this.zjh,
-					action:'mz',
-					openid:localStorage.getItem('sec_openId')
-				}
-				
-				this.model.getInfo(data).then(function(res){
-					if(res.data.code == '0'){
-						//预约模块 就取病历号最大的
-						let arr = [];
-						let outArray = res.data.data;
-						for(var i=0;i<outArray.length;i++){
-								let blh = outArray[i].blh;
-								arr.push(parseInt(blh));
-						}
-						arr.sort().reverse();
-						let val = arr[0];
-						for(var i=0;i<outArray.length;i++){
-							if(val == outArray[i].blh){
-								self.patid = outArray[i].patid;
-							}
-						}
-					}
-					if(res.data.msg == '未查询到门诊患者'){
-						$.alert("未查询到您的信息，清先建档", "提示", function() {
-						  //点击确认后的回调函数
-						  self.$router.push('/userFiling?zjh='+self.zjh)
-						});
-					}
-				})
+//				let data={
+//					hzxm:this.hzxm,
+//					zjh:this.zjh,
+//					action:'mz',
+//					openid:localStorage.getItem('sec_openId')
+//				}
+//				
+//				this.model.getInfo(data).then(function(res){
+//					if(res.data.code == '0'){
+//						//预约模块 就取病历号最大的
+//						let arr = [];
+//						let outArray = res.data.data;
+//						for(var i=0;i<outArray.length;i++){
+//								let blh = outArray[i].blh;
+//								arr.push(parseInt(blh));
+//						}
+//						arr.sort().reverse();
+//						let val = arr[0];
+//						for(var i=0;i<outArray.length;i++){
+//							if(val == outArray[i].blh){
+//								self.patid = outArray[i].patid;
+//							}
+//						}
+//					}
+//					if(res.data.msg == '未查询到门诊患者'){
+//						$.alert("未查询到您的信息，清先建档", "提示", function() {
+//						  //点击确认后的回调函数
+//						  self.$router.push('/userFiling?zjh='+self.zjh)
+//						});
+//					}
+//				})
 		},
 		
 		//获取url中的参数
