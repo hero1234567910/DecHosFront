@@ -15,7 +15,7 @@
     </div>
 
     <div class="flow" style="margin-top: 0px;">
-      <div class="weui-cells"  style="margin-top: 4.176471em;">
+      <div class="weui-cells" style="margin-top: 4.176471em;">
         <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="xxgnk()">
           <div class="weui-cell__hd">
             <img src="../../../../static/images/心血管.png" />
@@ -165,6 +165,12 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
+
+        <div style="margin-top: 10px;margin-bottom: 10px;">
+          <div>
+            <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回主页</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -176,53 +182,59 @@ export default {
     // this.model = model(this.axios);
     return {};
   },
-  methods:{
-      xxgnk(){
-          this.$router.push('/departmentDetail?ksmc='+'xxgnk');
-      },
-      hxnk(){
-          this.$router.push('/departmentDetail?ksmc='+'hxnk');
-      },
-      xhnk(){
-          this.$router.push('/departmentDetail?ksmc='+'xhnk');
-      },
-      gk(){
-          this.$router.push('/departmentDetail?ksmc='+'gk');
-      },
-      szwk(){
-          this.$router.push('/departmentDetail?ksmc='+'szwk');
-      },
-      pwk(){
-          this.$router.push('/departmentDetail?ksmc='+'pwk');
-      },
-      sjwk(){
-          this.$router.push('/departmentDetail?ksmc='+'sjwk');
-      },
-      fck(){
-          this.$router.push('/departmentDetail?ksmc='+'fck');
-      },
-      erg(){
-          this.$router.push('/departmentDetail?ksmc='+'erg');
-      },
-      sjnk(){
-          this.$router.push('/departmentDetail?ksmc='+'sjnk');
-      },
-      zyk(){
-          this.$router.push('/departmentDetail?ksmc='+'zyk');
-      },
-      ssmzk(){
-          this.$router.push('/departmentDetail?ksmc='+'ssmzk');
-      },
-      fsk(){
-          this.$router.push('/departmentDetail?ksmc='+'fsk');
-      },
-      gnk(){
-          this.$router.push('/departmentDetail?ksmc='+'gnk');
-      },
-      jyk(){
-          this.$router.push('/departmentDetail?ksmc='+'jyk');
-      },
-
+  methods: {
+    tomainList() {
+      if (process.env.NODE_ENV == "dev") {
+        window.location = "../../index.html";
+      } else if (process.env.NODE_ENV == "production") {
+        window.location = "../../sechos/index.html";
+      }
+    },
+    xxgnk() {
+      this.$router.push("/departmentDetail?ksmc=" + "xxgnk");
+    },
+    hxnk() {
+      this.$router.push("/departmentDetail?ksmc=" + "hxnk");
+    },
+    xhnk() {
+      this.$router.push("/departmentDetail?ksmc=" + "xhnk");
+    },
+    gk() {
+      this.$router.push("/departmentDetail?ksmc=" + "gk");
+    },
+    szwk() {
+      this.$router.push("/departmentDetail?ksmc=" + "szwk");
+    },
+    pwk() {
+      this.$router.push("/departmentDetail?ksmc=" + "pwk");
+    },
+    sjwk() {
+      this.$router.push("/departmentDetail?ksmc=" + "sjwk");
+    },
+    fck() {
+      this.$router.push("/departmentDetail?ksmc=" + "fck");
+    },
+    erg() {
+      this.$router.push("/departmentDetail?ksmc=" + "erg");
+    },
+    sjnk() {
+      this.$router.push("/departmentDetail?ksmc=" + "sjnk");
+    },
+    zyk() {
+      this.$router.push("/departmentDetail?ksmc=" + "zyk");
+    },
+    ssmzk() {
+      this.$router.push("/departmentDetail?ksmc=" + "ssmzk");
+    },
+    fsk() {
+      this.$router.push("/departmentDetail?ksmc=" + "fsk");
+    },
+    gnk() {
+      this.$router.push("/departmentDetail?ksmc=" + "gnk");
+    },
+    jyk() {
+      this.$router.push("/departmentDetail?ksmc=" + "jyk");
+    }
   }
 };
 </script>
@@ -254,9 +266,15 @@ export default {
 .el-tabs--right {
   height: calc(100vh - 137px);
 }
-.wzl-head{
-    position: absolute;
-    width: 100%;
-    z-index: 99;
+.wzl-head {
+  position: absolute;
+  width: 100%;
+  z-index: 99;
+}
+.weui-btn_primary {
+  background-color: #4ccbdb;
+}
+.weui-btn {
+  width: 230px;
 }
 </style>

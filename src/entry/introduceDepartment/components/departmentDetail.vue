@@ -21,6 +21,13 @@
         <p class="wzl-font" v-html="kscontent">{{kscontent}}</p>
       </div>
     </div>
+    <div class="weui-col-50">
+      <a
+        href="javascript:;"
+        class="weui-btn weui-btn_primary hero-button"
+        @click="returnList()"
+      >返回列表</a>
+    </div>
   </div>
 </template>
 
@@ -39,6 +46,9 @@ export default {
     this.showDetails();
   },
   methods: {
+    returnList() {
+      this.$router.push("/");
+    },
     showDetails() {
       let self = this;
       self.ksmc = this.$route.query.ksmc;
@@ -149,6 +159,15 @@ export default {
   position: absolute;
   width: 100%;
   z-index: 99;
+}
+.weui-row .weui-col-50 {
+  height: 50px;
+}
+.weui-btn_primary {
+  background-color: #4ccbdb;
+}
+.weui-btn {
+  width: 230px;
 }
 </style>
 

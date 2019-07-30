@@ -341,9 +341,9 @@
 		},
 		toProfessor(){
 			if (process.env.NODE_ENV == 'dev') {
-				  window.location='../../introductionProfessor.html'
+				  window.location='../../introduceProfessor.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/introductionProfessor.html'
+				  window.location='../../sechos/introduceProfessor.html'
 				}
 		}
 		

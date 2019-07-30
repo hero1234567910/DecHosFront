@@ -319,7 +319,7 @@ export default {
             text: "取消成功",
             buttons: [
               {
-                text: "取消预约",
+                text: "返回预约列表",
                 onClick: function() {
                   if (process.env.NODE_ENV == "dev") {
                     window.location = "../../reservation.html";
@@ -327,8 +327,7 @@ export default {
                     window.location = "../../sechos/reservation.html";
                   }
                 }
-              },
-              { text: "取消", className: "default", onClick: function() {} }
+              }
             ]
           });
         } else {
