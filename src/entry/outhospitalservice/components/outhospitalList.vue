@@ -32,7 +32,7 @@
 	 			</div>
 	 		</div>
  		</a>
- 		<a href="javascript:void(0)">
+ 		<a href="javascript:void(0)" @click="toEvaluate()">
 	 		<div class="hospital-panel">
 	 			<div class="hospital-inner">
 	 				<div class="hospital-img">
@@ -67,7 +67,8 @@
   			zjh:localStorage.getItem('sec_patientIdcard'),
       	hzxm:localStorage.getItem('sec_patientName'),
       	patientId:'',
-      	blh:''
+      	blh:'',
+      	flag:true
   		}
   	},
   	 mounted(){
@@ -96,7 +97,16 @@
   				if(str == 'fzyy'){
   					window.location='../../sechos/hosProfile.html?infoType=FollowAppointment'
   				}
-			}
+				}
+  		},
+  		toEvaluate(){
+  			if(flag){
+  				this.$router.push('/evaluate');
+  			}else{
+  				$.alert("未查询到您的住院信息", "提示", function() {
+						});
+  			}
+  			
   		},
   		//检查是否有绑定并查询患者住院信息
 			getInfo(){
@@ -111,36 +121,22 @@
 					  });
 				}
 				
-//				let data={
-//					hzxm:this.hzxm,
-//					zjh:this.zjh,
-//					action:'zy',
-//					openid:localStorage.getItem('sec_openId')
-//				}
-//				
-//				this.model.getInfo(data).then(function(res){
-//					if(res.data.code == '0'){
-//						//住院缴费模块 就取病历号最大的
-//						let arr = [];
-//						let hosArray = res.data.data;
-//						for(var i=0;i<hosArray.length;i++){
-//								let blh = hosArray[i].blh;
-//								arr.push(parseInt(blh));
-//						}
-//						arr.sort().reverse();
-//						let val = arr[0];
-//						for(var i=0;i<hosArray.length;i++){
-//							if(val == hosArray[i].blh){
-//								self.patientId = hosArray[i].patid;
-//								self.blh = hosArray[i].blh;
-//							}
-//						}
-//						
-//					}else{
-//						$.alert("未查询到您的住院信息", "提示", function() {
-//						});
-//					}
-//				})
+				let data={
+					hzxm:this.hzxm,
+					zjh:this.zjh,
+					action:'zy',
+					openid:localStorage.getItem('sec_openId')
+				}
+				
+				this.model.getInfo(data).then(function(res){
+					if(res.data.code == '0'){
+						
+					}else{
+						$.alert("未查询到您的住院信息", "提示", function() {
+							self.flag = false;
+						});
+					}
+				})
 			}
   	}
   }
