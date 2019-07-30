@@ -76,8 +76,8 @@
 <style>
 	.weui-panel{
 		overflow: auto;
-	    top: 44px;
-	    height: calc(100vh - 44px);
+	    /*top: 44px;
+	    height: calc(100vh - 44px);*/
 	}
 	.el-button.is-round{
 	    width: 70px;
