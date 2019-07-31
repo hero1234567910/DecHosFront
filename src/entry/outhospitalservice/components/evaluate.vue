@@ -10,10 +10,10 @@
 	  		</div>
 	  		
 	  		<div class="ad-button">
-	  			 <el-button type="primary">选择病历</el-button>
+	  			 <el-button type="primary" @click="getInfo">选择病历</el-button>
 	  		</div>
   		</div>
-  	<div class="ad-content">
+  	<div class="ad-content" v-show="showContent">
   		<div class="content-text">
   			<p class="text-ev">主治医生满意度</p>
   			<el-rate
@@ -53,13 +53,13 @@
 				</div>
 			</div>
 			
-			<el-dialog title="选择要结算的病历号" :visible.sync="isShow">
-				<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
-			 </el-dialog>
-			
   	</div>
   		
   	</div>
+  	
+  	<el-dialog title="选择病历号" :visible.sync="isShow">
+				<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
+			</el-dialog>
   </div>
 </template>
 
@@ -68,6 +68,7 @@
 	import model from './model.js'
 	import commonSelect from './commonSelect'
   export default {
+  	components: {commonSelect},
   	data(){
   		this.model = model(this.axios);
   		return{
@@ -81,12 +82,81 @@
 				patid:'',
 				isShow:false,
 				mzData:[],
+				showContent:false,
   		}
   	},
   	mounted(){
-    	
+    	this.getInfo()
     },
   	methods:{
+  		handleCall(res){
+  			this.isShow = false;
+  			if(res.zyzt != 4){
+  				this.showContent = false;
+  				$.alert("您暂未出院", "提示", function() {});
+  			}else{
+  				this.blh = res.blh;
+  				this.patid = res.patid;
+  				this.showContent = true;
+  			}
+			},
+  		opendialog(){
+  			
+  		},
+  		//获取病历号
+  		getInfo(){
+				let self = this;
+				$.showLoading();
+				let data={
+					hzxm:this.hzxm,
+					zjh:this.zjh,
+					action:'zy',
+					openid:localStorage.getItem('sec_openId')
+				}
+				
+				this.model.getInfo(data).then(function(res){
+					$.hideLoading();
+					if(res.data.code == '0'){
+						self.mzData = res.data.data;
+						self.isShow = true;
+						self.val1 = 0;
+						self.val2 = 0;
+						self.val3 = 0;
+					}else{
+						$.toptip(res.data.msg,'error');
+					}
+				})
+			},
+			sub(){
+				let self = this;
+				if(this.val1 == 0 || this.val2 == 0 || this.val3 == 0){
+					$.alert("评分不能为空", "提示", function() {
+							});
+					return;
+				}
+				//评价
+				let data = {
+					evaluateDoc:this.val1,
+					evaluateNurse:this.val2,
+					evaluateFacilities:this.val3,
+					evaluateOpinion:this.textarea2,
+					patientRowGuid:localStorage.getItem('sec_patientGuid')
+				}
+				
+				this.model.saveEvaluate(data).then(function(res){
+					if(res.data.code == 0){
+						$.toast("感谢您的评价", function() {
+							if(process.env.NOED_ENV == 'dev'){
+								window.location = '../../index.html'
+							}else if(process.env.NODE_ENV == 'production'){
+								window.location = '../../sechos/index.html'
+							}
+						});
+					}else{
+						$.toptip(res.data.msg,'error');
+					}
+				})
+			}
   		
   	}
   }
@@ -95,6 +165,9 @@
 <style>
 	.el-rate__icon{
 		font-size: 35px;
+	}
+	.el-dialog{
+		width: calc(100vw - 20px);
 	}
 </style>
 <style scoped>

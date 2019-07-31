@@ -100,7 +100,7 @@
 				}
   		},
   		toEvaluate(){
-  			if(flag){
+  			if(this.flag){
   				this.$router.push('/evaluate');
   			}else{
   				$.alert("未查询到您的住院信息", "提示", function() {
