@@ -223,7 +223,8 @@
 				'openid':localStorage.getItem('sec_openId'),
 				'yjMoney':this.yjMoney,
 				'patientGuid':localStorage.getItem('sec_patientGuid'),
-				'patientName':this.hzxm
+				'patientName':this.hzxm,
+				patid:this.patid
 			}
 			
 			this.model.placeOrder(data).then(function(res){
