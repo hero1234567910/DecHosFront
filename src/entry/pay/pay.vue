@@ -10,8 +10,11 @@
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import model from './model.js'
 import CryptoJS from 'crypto-js'
+import noticeSuccess from './components/noticeSuccess.vue'
 import {jsSDK} from './wx.js'
+
   export default {
+	components: {noticeSuccess},
 	data() {
     	this.model = model(this.axios)
       return {

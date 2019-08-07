@@ -23,6 +23,7 @@ function onBridgeReady (params) {
     },
     function (res) {
 //    location.href = params.Url
+      let self = this;
 		if(res.err_msg == "get_brand_wcpay_request:ok" ){
 	      	self.$router.push('/noticeSuccess?action='+self.action)
 	      } 				      	
