@@ -75,7 +75,7 @@ export default {
   },
   methods: {
   	toExaminationDetail(ele){
-  		this.$router.push('/examinationDetail?bkhcode='+ele);
+  		this.$router.push('/examinationDetail?bhkcode='+ele);
     },
     tomainList(){
       this.$router.push('/');
@@ -92,8 +92,6 @@ export default {
         if(res.data.code == 0){
           let examinationLists = res.data.data;
           self.ExaminationList = examinationLists;
-          console.log(res.data);
-          console.log(self.ExaminationList);
         }else{
           $.toptip(res.data.msg, "error");
         }
