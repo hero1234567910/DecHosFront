@@ -90,7 +90,10 @@ export default {
       this.model.getMedicalReportList(data).then(function(res){
         $.hideLoading();
         if(res.data.code == 1){
-          self.ExaminationList = res.data.data;
+          let examinationLists = res.data.data;
+          self.ExaminationList = examinationLists;
+          console.log(res.data);
+          console.log(self.ExaminationList);
         }else{
           $.toptip(res.data.msg, "error");
         }
