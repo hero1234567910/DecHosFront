@@ -129,7 +129,7 @@ export default {
 		let da = this.$route.query;
 		this.model.getMedicalReportInfo(da).then(function(res){
 			$.hideLoading();
-			if(res.data.code == 1){
+			if(res.data.code == 0){
 				console.log(res.data.data);
 				self.ExaminationDetails = res.data.data.grouplist;
 				self.name = res.data.data.name;
