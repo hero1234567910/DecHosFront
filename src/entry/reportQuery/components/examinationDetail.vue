@@ -121,7 +121,7 @@ export default {
   	toItemDetail(e1,e2,e3){
 		global1.groupconclusion = e1;
 		global1.groupname = e2;
-  		this.$router.push('/examinationItemDetail'+ele);
+  		this.$router.push('/examinationItemDetail'+e3);
 	  },
 	getExaminatinoDetail(){
 		$.showLoading();

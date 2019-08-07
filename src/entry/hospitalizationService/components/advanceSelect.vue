@@ -21,7 +21,7 @@
 		  			<p class="weui-media-box__desc">预交金余额</p>
 		  		</div>
 		  		<div class="hero-list-item-right">
-		  			<h4 class="weui-media-box__title">{{info.yjjye}}</h4>
+		  			<h4 class="weui-media-box__title" style="margin-left: 37px;">{{info.yjjye}}</h4>
 		  		</div>
 		  	</div>
 		  	<div class="hero-list-item">
@@ -29,7 +29,7 @@
 		  			<p class="weui-media-box__desc">费用总金额</p>
 		  		</div>
 		  		<div class="hero-list-item-right">
-		  			<h4 class="weui-media-box__title">{{info.fyzje}}</h4>
+		  			<h4 class="weui-media-box__title" style="margin-left: 37px;">{{info.fyzje}}</h4>
 		  		</div>
 		  	</div>
 		  	<div class="hero-list-item" style="position: relative;">
@@ -87,7 +87,7 @@
 					  			<p class="weui-media-box__desc">缴费日期</p>
 					  		</div>
 					  		<div class="hero-list-item-right">
-					  			<h4 class="weui-media-box__title">{{item.jfrq}}</h4>
+					  			<h4 class="weui-media-box__title">{{item.jfrq | formateDate}}</h4>
 					  		</div>
 					  	</div>
 					  	<div class="hero-list-item">
@@ -266,7 +266,18 @@
   					$.toptip(res.data.msg,'error');
   				}
   			})
-  		}
+  		},
+		filters:{
+			formatDate: function(value) {
+      		var y = value.substr(0, 4);
+      		var M = value.substr(4, 2);
+     		var D = value.substr(6, 2);
+      		var Hms = value.substr(8, 8);
+      		var time = y + "-" + M + "-" + D + " " + Hms;
+      //console.log(time);
+      return time;
+    }
+		}
   	}
   }
   </script>
