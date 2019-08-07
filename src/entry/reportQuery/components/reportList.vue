@@ -62,7 +62,7 @@ export default {
   data() {
     this.model = model(this.axios);
     return {
-		ReportList:"",
+		ReportList:[],
 		zjh:localStorage.getItem('sec_patientIdcard'),
 		hzxm:localStorage.getItem('sec_patientName'),
 		isShow:false,
@@ -169,7 +169,8 @@ export default {
 		
 	},
 	reportFun(){
-   		let hzxm = localStorage.getItem('sec_patientName');
+	let self = this;
+   	let hzxm = localStorage.getItem('sec_patientName');
     let patid = this.patid;
     let jzlb = this.jzlb;
     

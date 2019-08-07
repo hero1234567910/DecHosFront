@@ -19,7 +19,7 @@
         />
       </div>
     </div>
-    <div class="re-row" v-for="item in LabReportList">
+    <div class="re-row" v-for="item in LabReportList" >
       <a href="javascript:;" @click="toDetail(item)">
         <div class="row-cen">
           <div class="re-img">
@@ -65,7 +65,7 @@ export default {
   data() {
     this.model = model(this.axios);
     return {
-		LabReportList:"",
+		LabReportList:[],
 		zjh:localStorage.getItem('sec_patientIdcard'),
 		hzxm:localStorage.getItem('sec_patientName'),
 		isShow:false,
@@ -131,6 +131,7 @@ export default {
 				if(res.data.code == '0'){
 					self.isShow = true;
 					self.mzData = res.data.data;
+          
 				}
 				if(res.data.msg == '未查询到门诊患者'){
 					$.alert("未查询到您的信息，清先建档", "提示", function() {
@@ -155,6 +156,7 @@ export default {
 			if(res.data.code == '0'){
 				self.isShow = true;
 				self.mzData = res.data.data;
+        
 			}else{
 				$.alert("未查询到您的住院信息", "提示", function() {
 				});
@@ -180,6 +182,7 @@ export default {
 			});    
     },
    	reportFun(){
+      let self = this;
    		let hzxm = localStorage.getItem("sec_patientName");
       let patid = this.patid;
       let jzlb = this.jzlb;
@@ -200,6 +203,7 @@ export default {
           let LabReportList = res.data.data;
           self.LabReportList = LabReportList;
           self.isShow = false;
+          //console.log(self.LabReportList);
         } else {
           $.toptip(res.data.msg, "error");
         }
