@@ -1,5 +1,5 @@
 <template>
-  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;">
+  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;overflow: auto;">
    <el-card class="box-card">
 		  <div slot="header" class="clearfix">
 		  	<div class="card-hero">
@@ -119,9 +119,9 @@ export default {
   },
   methods: {
   	toItemDetail(e1,e2,e3){
-		global1.groupconclusion = e1;
-		global1.groupname = e2;
-  		this.$router.push('/examinationItemDetail'+e3);
+		global1.groupconclusion = JSON.stringify(e1);
+		global1.groupname = JSON.stringify(e2);
+  		this.$router.push('/examinationItemDetail?e3='+JSON.stringify(e3));
 	  },
 	getExaminatinoDetail(){
 		$.showLoading();
@@ -212,6 +212,9 @@ export default {
 	}
 	.weui-media-box__title{
 		font-size: 13px;
+	}
+	.weui-panel:after{
+		position: fixed;
 	}
 </style>
  

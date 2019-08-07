@@ -109,9 +109,10 @@ export default {
 		  let self = this;
 		  let data = this.$route.query;
 		  let doctorName;
-		  self.ItemDetails = this.$route.query;  
-		  self.groupname = global1.groupname;
-		  self.groupconclusion = global1.groupconclusion;
+		  self.ItemDetails = JSON.parse(this.$route.query.e3);  
+		  self.groupname = JSON.parse(global1.groupname);
+		  self.groupconclusion = JSON.parse(global1.groupconclusion);
+		  console.log(self.ItemDetails);
 		  for(var i=0;i<self.ItemDetails.length;i++){
 			  doctorName = self.ItemDetails[i].checkdoctor;
 			  doctorName = +","+ doctorName;
