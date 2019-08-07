@@ -101,13 +101,13 @@ export default {
     },
     statusCheck(ele){
       switch(ele){
-        case "0":
+        case 0:
           return "未完成体检";
           break;
-        case "1":
+        case 1:
           return "已完成体检";
           break;
-        case "2":
+        case 2:
           return "已完成主检";
           break;
       }

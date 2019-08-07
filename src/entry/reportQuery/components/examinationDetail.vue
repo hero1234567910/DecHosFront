@@ -126,8 +126,11 @@ export default {
 	getExaminatinoDetail(){
 		$.showLoading();
 		let self = this;
-		let da = this.$route.query;
-		this.model.getMedicalReportInfo(da).then(function(res){
+		let da = self.$route.query.bhkcode;
+		let data = {
+			bhkcode:da
+		}
+		this.model.getMedicalReportInfo(data).then(function(res){
 			$.hideLoading();
 			if(res.data.code == 0){
 				console.log(res.data.data);

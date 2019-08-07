@@ -79,7 +79,7 @@
 					  			<p class="weui-media-box__desc">发票号</p>
 					  		</div>
 					  		<div class="hero-list-item-right">
-					  			<h4 class="weui-media-box__title">{{item.fph}}</h4>
+					  			<h4 class="weui-media-box__title" style="margin-left: 13px;">{{item.fph}}</h4>
 					  		</div>
 					  	</div>
 					  	<div class="hero-list-item">
@@ -309,7 +309,7 @@
 	.hero-list-item-right{
 		height: 20px;
 		line-height: 20px;
-		margin-left: 76px;
+		margin-left: 38px;
     	float: left;
 	}
 	.hero-list-item{
