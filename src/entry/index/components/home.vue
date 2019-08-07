@@ -258,28 +258,28 @@
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../outpatientPay.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/outpatientPay.html'
+				  window.location='../../2ysechos/outpatientPay.html'
 				}
   		},
   		toconsultation(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../consultation.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/consultation.html'
+				  window.location='../../2ysechos/consultation.html'
 				}
   		},
   		toHospitalizationService(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../hospitalizationService.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/hospitalizationService.html'
+				  window.location='../../2ysechos/hospitalizationService.html'
 				}
   		},
   		toSection(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../sections.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/sections.html'
+				  window.location='../../2ysechos/sections.html'
 				}
   		},
   		toInformation(str){
@@ -302,19 +302,19 @@
 				}
 				} else if (process.env.NODE_ENV == 'production') {
 				if(str == 'jzxz'){
-  					window.location='../../sechos/hosProfile.html?infoType=PatientNeedtoKnow'
+  					window.location='../../2ysechos/hosProfile.html?infoType=PatientNeedtoKnow'
   				}
   				if(str == 'rydy'){
-  					window.location='../../sechos/hosProfile.html?infoType=DirectAdmission'
+  					window.location='../../2ysechos/hosProfile.html?infoType=DirectAdmission'
   				}
   				if(str == 'zyxz'){
-  					window.location='../../sechos/hosProfile.html?infoType=Hospitalisation'
+  					window.location='../../2ysechos/hosProfile.html?infoType=Hospitalisation'
 				}
 				if(str == 'dzt'){
-  					window.location='../../sechos/hosProfile.html?infoType=HospitalGuide'
+  					window.location='../../2ysechos/hosProfile.html?infoType=HospitalGuide'
 				}
 				if(str == 'tjyy'){
-  					window.location='../../sechos/hosProfile.html?infoType=MedicalAppointment'
+  					window.location='../../2ysechos/hosProfile.html?infoType=MedicalAppointment'
 			    }
 				}
   		},
@@ -322,28 +322,28 @@
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../outpatientAdvance.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/outpatientAdvance.html'
+				  window.location='../../2ysechos/outpatientAdvance.html'
 				}
   		},
 		outHospitalService(){
 			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../outhospitalService.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/outhospitalService.html'
+				  window.location='../../2ysechos/outhospitalService.html'
 				}
 		},
 		toDepartment(){
 			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../introduceDepartment.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/introduceDepartment.html'
+				  window.location='../../2ysechos/introduceDepartment.html'
 				}
 		},
 		toProfessor(){
 			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../introduceProfessor.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/introduceProfessor.html'
+				  window.location='../../2ysechos/introduceProfessor.html'
 				}
 		}
 		

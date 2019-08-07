@@ -79,7 +79,7 @@
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../index.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/index.html'
+				  window.location='../../2ysechos/index.html'
 				}
   		},
   		toInformation(str){
@@ -92,10 +92,10 @@
 				}
 				} else if (process.env.NODE_ENV == 'production') {
 				if(str == 'cyyd'){
-  					window.location='../../sechos/hosProfile.html?infoType=OutHospital'
+  					window.location='../../2ysechos/hosProfile.html?infoType=OutHospital'
   				}
   				if(str == 'fzyy'){
-  					window.location='../../sechos/hosProfile.html?infoType=FollowAppointment'
+  					window.location='../../2ysechos/hosProfile.html?infoType=FollowAppointment'
   				}
 				}
   		},
@@ -116,7 +116,7 @@
 							if (process.env.NODE_ENV == 'dev') {
 							  window.location='../index.html'
 							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../sechos/index.html'
+							  window.location='../2ysechos/index.html'
 							}
 					  });
 				}
