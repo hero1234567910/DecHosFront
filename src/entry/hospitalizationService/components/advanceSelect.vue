@@ -20,7 +20,7 @@
 		  		<div class="hero-list-item-left">
 		  			<p class="weui-media-box__desc">预交金余额</p>
 		  		</div>
-		  		<div class="hero-list-item-right">
+		  		<div class="hero-list-item-right" style="margin-left: 76px;">
 		  			<h4 class="weui-media-box__title">{{info.yjjye}}</h4>
 		  		</div>
 		  	</div>
@@ -28,7 +28,7 @@
 		  		<div class="hero-list-item-left">
 		  			<p class="weui-media-box__desc">费用总金额</p>
 		  		</div>
-		  		<div class="hero-list-item-right">
+		  		<div class="hero-list-item-right" style="margin-left: 76px;">
 		  			<h4 class="weui-media-box__title">{{info.fyzje}}</h4>
 		  		</div>
 		  	</div>
