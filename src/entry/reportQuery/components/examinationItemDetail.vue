@@ -1,5 +1,5 @@
 <template>
-  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;">
+  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;overflow: auto;">
    <el-card class="box-card">
 		  <div slot="header" class="clearfix">
 		  	<div class="card-hero">
@@ -114,8 +114,7 @@ export default {
 		  self.groupconclusion = JSON.parse(global1.groupconclusion);
 		  console.log(self.ItemDetails);
 		  for(var i=0;i<self.ItemDetails.length;i++){
-			  doctorName = self.ItemDetails[i].checkdoctor;
-			  doctorName = +","+ doctorName;
+			  doctorName = self.ItemDetails[0].checkdoctor;
 		  }
 		  self.doctors = doctorName;
 	  },

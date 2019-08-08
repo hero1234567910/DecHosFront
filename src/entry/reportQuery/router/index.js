@@ -46,7 +46,9 @@ export default new Router({
    {
       path: '/examinationDetail',
       name: 'examinationDetail',
-      component: examinationDetail
+      component: examinationDetail,
+      keepAlive: true, //此组件需要被缓存
+      isBack:false, //用于判断上一个页面是哪个
    },
    {
       path: '/examinationItemDetail',

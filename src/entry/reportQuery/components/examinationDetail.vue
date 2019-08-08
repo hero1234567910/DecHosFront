@@ -115,9 +115,30 @@ export default {
 		};
   },
   mounted() {
-    this.getExaminatinoDetail();
+//  this.getExaminatinoDetail();
   },
   methods: {
+  	 beforeRouteEnter(to, from, next) {
+      // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
+      // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
+      // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
+      // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
+      if(from.name=='examinationItemDetail'){
+          to.meta.isBack=true;
+          //判断是从哪个路由过来的，
+          //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+      }
+      next();
+    },
+    activated() {
+		  if(!this.$route.meta.isBack){
+		    // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+					this.getExaminatinoDetail();
+		  }
+		  // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+		  this.$route.meta.isBack=false
+		 
+		},
   	toItemDetail(e1,e2,e3){
 		global1.groupconclusion = JSON.stringify(e1);
 		global1.groupname = JSON.stringify(e2);
