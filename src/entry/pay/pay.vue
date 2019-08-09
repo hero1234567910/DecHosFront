@@ -62,7 +62,7 @@ import {jsSDK} from './wx.js'
 						'package':self.getDAesString(pack),
 						'paySign':self.getDAesString(paySign)
 					}
-					jsSDK(data);
+					jsSDK(data,self);
 //				  WeixinJSBridge.invoke(
 //				      'getBrandWCPayRequest', {
 //				         "appId":self.getDAesString(appId),     //公众号名称，由商户传入     

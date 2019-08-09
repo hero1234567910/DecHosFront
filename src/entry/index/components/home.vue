@@ -4,9 +4,9 @@
  			<img src="../../../../static/img/图层-646-拷贝.png" class="hero-img" width="100%"/>
  		</div>
  		
- 		<div class="hero-search">
+ 		<!--<div class="hero-search">
 	 		<div class="weui-search-bar" id="searchBar">
-			  <form class="weui-search-bar__form">
+			  <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
 			    <div class="weui-search-bar__box">
 			      <i class="weui-icon-search"></i>
 			      <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="" required="">
@@ -19,22 +19,22 @@
 			  </form>
 			  <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
 			</div>
-		</div>
+		</div>-->
 		
 		<div class="hero-panel">
 			<div class="hero-panel2">
 				<div class="hero-panel2_header"><strong>门诊服务</strong></div>
 				<div style="margin-left: 5px;margin-right: 5px;width: calc(100% - 10px);">
 					<div class="weui-row">
-					  <div class="weui-col-33" @click="toOutpatientAd()"> <!--style="background-image:url(../../../../static/img/预约.png)	; background-size: 100% 100%;"-->
-					  		<img src="../../../../static/img/预约.png" style="width: 100%;"/>
+					  <div class="weui-col-50" style="position: relative;" @click="toOutpatientAd()"> <!--style="background-image:url(../../../../static/img/预约.png)	; background-size: 100% 100%;"-->
+					  		<img src="../../../../static/img/预约.png" style="width: 65%;position: absolute;left: 40px;"/>
 					  </div>
-					  <div class="weui-col-33" @click="toOutpatientPay()">
-					  	<img src="../../../../static/img/缴费.png" style="width: 100%;"/>
+					  <div class="weui-col-50" style="position: relative;" @click="toOutpatientPay()">
+					  	<img src="../../../../static/img/缴费.png" style="width: 65%;position: absolute;left: 20px;"/>
 					  </div>
-					  <div class="weui-col-33">
+					  <!--<div class="weui-col-33">
 					  	<img src="../../../../static/img/健康卡1.png" style="width: 100%;" />
-					  </div>
+					  </div>-->
 					</div>
 					<div style="margin-left: 20px;margin-right: 20px;margin-top: 10px;height: 60px;">
 						<div class="weui-row" style="height: 80px;">
@@ -77,7 +77,7 @@
 			<div class="hero-panel2_header" style="height: 30px;"><strong>在院服务</strong></div>
 			<div style="margin-left: 20px;margin-right: 20px;height: 70px;">
 				<div class="weui-row" style="height: 80px;">
-					<div class="weui-col-25">
+					<!--<div class="weui-col-25">
 						<a href="javascript:;" v-on:click="toSection()">
 							<div class="hero-col-img">
 								<img src="../../../../static/img/科室预约-.png" style="width: 100%;"/>
@@ -90,7 +90,7 @@
 							<img src="../../../../static/img/病房预约-.png" style="width: 100%;"/>
 						</div>
 						<div class="hero-col-dec">病房预约</div>
-					</div>
+					</div>-->
 					<div class="weui-col-25">
 						<a href="javascript:;" @click="toInformation('rydy')">
 						<div class="hero-col-img">
@@ -107,10 +107,26 @@
 						<div class="hero-col-dec">住院须知</div>
 						</a>
 					</div>
+					<div class="weui-col-25">
+						<a href="javascript:;" v-on:click="toDepartment()">
+							<div class="hero-col-img">
+								<img src="../../../../static/images/全科.png" style="width: 100%;"/>
+							</div>
+							<div class="hero-col-dec" style="min-width: 70px;">科室简介</div>
+						</a>
+					</div>
+					<div class="weui-col-25">
+						<a href="javascript:;" v-on:click="toProfessor()">
+						<div class="hero-col-img">
+							<img src="../../../../static/images/专家.png" style="width: 100%;"/>
+						</div>
+						<div class="hero-col-dec">专家信息</div>
+						</a>
+					</div>
 				</div>
 			</div>
 
-			<div style="margin-left: 20px;margin-right: 20px;height: 70px;margin-top:6px;">
+			<!--<div style="margin-left: 20px;margin-right: 20px;height: 70px;margin-top:6px;">
 				<div class="weui-row" style="height: 80px;">
 					<div class="weui-col-25">
 						<a href="javascript:;" v-on:click="toDepartment()">
@@ -135,7 +151,7 @@
 						
 					</div>
 				</div>
-			</div>
+			</div>-->
 		</div>
 		
 		<div style="height: 10px;width: 100%;position: relative;

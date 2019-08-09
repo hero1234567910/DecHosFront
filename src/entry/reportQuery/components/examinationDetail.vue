@@ -43,7 +43,7 @@
 						    </div>
 						    <div class="weui-cell__ft">
 						    	<div class="bd-img">
-							  		<img src="../../../../static/img/注意.png" v-show="!item.groupconclusion == '正常' " style="position: absolute;top: 4px;width: 63%;right: 10px;"/>
+							  		<img src="../../../../static/img/注意.png" v-if="checkShow(item.groupconclusion)" style="position: absolute;top: 4px;width: 63%;right: 10px;"/>
 							  	</div>
 						    </div>
 						  </div>
@@ -92,6 +92,12 @@
 		  </div>
 		</div>
 		
+		<div style="margin-top: 30px;margin-bottom: 10px;">
+				<div>
+					<a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toReport()">返回体检查询</a>
+				</div>
+		</div>
+		
   </div>
 </template>
 <script>
@@ -117,8 +123,7 @@ export default {
   mounted() {
 //  this.getExaminatinoDetail();
   },
-  methods: {
-  	 beforeRouteEnter(to, from, next) {
+  beforeRouteEnter(to, from, next) {
       // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
       // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
       // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
@@ -128,6 +133,7 @@ export default {
           //判断是从哪个路由过来的，
           //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
       }
+      console.log(to.meta.isBack);
       next();
     },
     activated() {
@@ -139,6 +145,14 @@ export default {
 		  this.$route.meta.isBack=false
 		 
 		},
+  methods: {
+  	checkShow(ele){
+  		console.log(ele == '未见异常。');
+  		return ele == '未见异常。';
+  	},
+  	 toReport(){
+  	 	this.$router.push('/examinationList');
+  	 },
   	toItemDetail(e1,e2,e3){
 		global1.groupconclusion = JSON.stringify(e1);
 		global1.groupname = JSON.stringify(e2);
@@ -179,6 +193,12 @@ export default {
 	}
 </style>
 <style scoped>
+	.weui-btn_primary{
+		background-color: #4CCBDB;
+	}
+	.weui-btn{
+		width: 230px;
+	}
 	.bd-img{
 		width: 30px;
 		height: 25px;
