@@ -4,7 +4,7 @@
  			<img src="../../../../static/img/图层-646-拷贝.png" class="hero-img" width="100%"/>
  		</div>
  		
- 		<!--<div class="hero-search">
+ 		<div class="hero-search">
 	 		<div class="weui-search-bar" id="searchBar">
 			  <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
 			    <div class="weui-search-bar__box">
@@ -19,7 +19,7 @@
 			  </form>
 			  <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
 			</div>
-		</div>-->
+		</div>
 		
 		<div class="hero-panel">
 			<div class="hero-panel2">
