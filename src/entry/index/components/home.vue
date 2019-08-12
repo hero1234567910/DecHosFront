@@ -5,19 +5,25 @@
  		</div>
  		
  		<div class="hero-search">
-	 		<div class="weui-search-bar" id="searchBar">
-			  <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
-			    <div class="weui-search-bar__box">
-			      <i class="weui-icon-search"></i>
-			      <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="" required="">
-			      <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-			    </div>
-			    <label class="weui-search-bar__label" id="searchText">
-			      <i class="weui-icon-search"></i>
-			      <span>搜索</span>
-			    </label>
-			  </form>
-			  <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+	 		
+			<div class="weui-search-bar" id="searchBar">
+			    <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
+			        <div class="weui-search-bar__box">
+			            <i class="weui-icon-search"></i>
+			            <input type="search" class="weui-search-bar__input" id="searchInput"  placeholder="搜索"
+			                   required="" v-model="souInput">
+			            <a @click="clear()" class="weui-icon-clear" id="searchClear"></a>
+			        </div>
+			        <label class="weui-search-bar__label" id="searchText">
+			            <i class="weui-icon-search"></i>
+			            <span>查询科室名称，便捷挂号</span>
+			        </label>
+			    </form>
+			    <a @click="cancel()" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+			</div>
+			
+			<div class="content" style="z-index: 100000000;position: absolute;background-color: white;width: 100%;">
+				<homeExtend :seller="seller" :souInput="souInput" v-show="homeShow" @tohomeShow='tohomeShow'></homeExtend>
 			</div>
 		</div>
 		
@@ -191,19 +197,82 @@
   </div>
 </template>
 
-
 <script>
+
+//	import {toSourceToday} from './home.js'
 	import model from './model.js'
+	import homeExtend from './homeExtend.vue'
   export default {
+  	components:{homeExtend},
   	data() {
     	this.model = model(this.axios)
       return {
+      	seller:[],
+      	souInput:'',
+      	homeShow:false
       }
+    },
+    created(){
+    	this.getDepartmentOnDuty()
     },
   	mounted(){
 //		this.getUserInfo();
+		// 输入值时执行
+		
   	},
   	methods:{
+  		getDepartmentOnDuty() {
+	      $.showLoading();
+	      let self = this;
+	      let data = {};
+	      this.model.getDepartmentOnDuty(data).then(function(res) {
+	        $.hideLoading();
+	        if (res.data.code == "0") {
+	        	console.log(res.data.data)
+	          let arr = res.data.data;
+	          for(var i=0;i<arr.length;i++){
+	          	var ch = arr[i].children;
+	          	if(ch.length > 0){
+	          		for(var j=0;j<ch.length;j++){
+	          			if(ch[j].czlx == 1){
+	          				ch[j].ksmc += '(专家)'
+	          			}
+	          			self.seller.push(ch[j]);
+	          		}
+	          	}
+	          }
+	        } else {
+	          $.toptip(res.data.msg, "error");
+	        }
+	      });
+	    },
+				
+			cancel(){
+				this.homeShow = false;
+			},
+			clear(){
+				this.homeShow = false;
+			},
+			tohomeShow(){
+				this.homeShow = true;
+			},
+			toSourceToday(ksdm,czlx){
+				console.log(ksdm,czlx);
+//				let self = this;
+//	      if (el == "1") {
+//	      	if (process.env.NODE_ENV == 'dev') {
+//					  window.location='../../outpatientAdvance/appointDocToday?ksdm=' + e2
+//					} else if (process.env.NODE_ENV == 'production') {
+//					  window.location='../../sechos/outpatientAdvance/appointDocToday?ksdm=' + e2
+//					}
+//	      } else {
+//	      	if (process.env.NODE_ENV == 'dev') {
+//					  window.location='../../outpatientAdvance/appointSourceToday?ksdm=' + e2
+//					} else if (process.env.NODE_ENV == 'production') {
+//					  window.location='../../sechos/outpatientAdvance/appointSourceToday?ksdm=' + e2
+//					}
+//	      }
+			},
   		getUserInfo(){
 			let self = this;
     		let data = this.GetQueryString('code');
@@ -365,6 +434,7 @@
 		
   	}
   }
+  
   </script>
 
 <style scoped>

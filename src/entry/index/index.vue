@@ -32,8 +32,9 @@
 
 <script>
 	
+ 
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
-import home from './components/home'
+import home from './components/home.vue'
 import mycenter from './components/mycenter'
 import userBinding from './components/userBinding'
 import model from './model.js'
