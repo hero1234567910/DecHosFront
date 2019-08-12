@@ -44,13 +44,13 @@
 	      	if (process.env.NODE_ENV == 'dev') {
 					  window.location='../../outpatientAdvance.html#/appointDocToday?ksdm=' + ele.ksdm
 					} else if (process.env.NODE_ENV == 'production') {
-					  window.location='../../sechos/outpatientAdvance.html#/appointDocToday?ksdm=' + ele.ksdm
+					  window.location='../../2ysechos/outpatientAdvance.html#/appointDocToday?ksdm=' + ele.ksdm
 					}
 	      } else {
 	      	if (process.env.NODE_ENV == 'dev') {
 					  window.location='../../outpatientAdvance.html#/appointSourceToday?ksdm=' + ele.ksdm
 					} else if (process.env.NODE_ENV == 'production') {
-					  window.location='../../sechos/outpatientAdvance.html#/appointSourceToday?ksdm=' + ele.ksdm
+					  window.location='../../2ysechos/outpatientAdvance.html#/appointSourceToday?ksdm=' + ele.ksdm
 					}
 	      }
 			}, 
