@@ -33,10 +33,10 @@
 				<div style="margin-left: 5px;margin-right: 5px;width: calc(100% - 10px);">
 					<div class="weui-row">
 					  <div class="weui-col-50" style="position: relative;" @click="toOutpatientAd()"> <!--style="background-image:url(../../../../static/img/预约.png)	; background-size: 100% 100%;"-->
-					  		<img src="../../../../static/img/预约.png" style="width: 65%;position: absolute;left: 40px;"/>
+					  		<img src="../../../../static/img/预约.png" style="width: 100%;position: absolute;"/>
 					  </div>
 					  <div class="weui-col-50" style="position: relative;" @click="toOutpatientPay()">
-					  	<img src="../../../../static/img/缴费.png" style="width: 65%;position: absolute;left: 20px;"/>
+					  	<img src="../../../../static/img/缴费.png" style="width: 100%;position: absolute;"/>
 					  </div>
 					  <!--<div class="weui-col-33">
 					  	<img src="../../../../static/img/健康卡1.png" style="width: 100%;" />
@@ -69,10 +69,12 @@
 								</a>
 							</div>
 							<div class="weui-col-25">
-								<div class="hero-col-img">
-									<img src="../../../../static/img/复诊提醒1.png" style="width: 100%;"/>
-								</div>
-								<div class="hero-col-dec">复诊提醒</div>
+								<a href="javascript:;" v-on:click="toProfessor()">
+									<div class="hero-col-img">
+										<img src="../../../../static/images/专家.png" style="width: 100%;"/>
+									</div>
+									<div class="hero-col-dec">专家信息</div>
+								</a>
 							</div>
 						</div>
 					</div>
@@ -122,11 +124,11 @@
 						</a>
 					</div>
 					<div class="weui-col-25">
-						<a href="javascript:;" v-on:click="toProfessor()">
+						<a href="javascript:;" v-on:click="toOneDay()">
 						<div class="hero-col-img">
-							<img src="../../../../static/images/专家.png" style="width: 100%;"/>
+							<img src="../../../../static/images/复诊.png" style="width: 100%;"/>
 						</div>
-						<div class="hero-col-dec">专家信息</div>
+						<div class="hero-col-dec">住院一日清</div>
 						</a>
 					</div>
 				</div>
@@ -138,20 +140,20 @@
 		
 		<div class="hero-panel3">
 			<div class="weui-flex">
-			  <div class="weui-flex__item">
+			  <div class="weui-flex__item" v-on:click="toHospitalizationService()">
 			  	<div class="hero-item-img">
 							<img src="../../../../static/img/住院中--.png" style="width: 100%;"/>
-							<a href="javascript:;" v-on:click="toHospitalizationService()">
+							<a href="javascript:;">
 								<div class="hero-mButton">
 									<img src="../../../../static/img/进入.png" style="width: 100%;"/>
 								</div>
 							</a>
 						</div>
 			  </div>
-			  <div class="weui-flex__item">
+			  <div class="weui-flex__item" v-on:click="outHospitalService()">
 			  	<div class="hero-item-img" style="margin-top: 20px;margin-left: 5px;">
 							<img src="../../../../static/img/图片1.png" style="width: 100%;"/>
-							<a href="javascript:;" v-on:click="outHospitalService()">
+							<a href="javascript:;">
 								<div class="hero-mButton" style="top: 56px;">
 									<img src="../../../../static/img/进入.png" style="width: 100%;"/>
 								</div>
@@ -243,7 +245,7 @@
     				
 //  				if(res.data.data.patientName == null || res.data.data.patientName == ''){
 //  					//说明没有绑定患者信息，去绑定
-//  					$.alert("您并未绑定患者信息，清先绑定", "提示", function() {
+//  					$.alert("您并未绑定患者信息，请先绑定", "提示", function() {
 //							 	$('#cen').addClass('.weui-bar__item--on');
 //							});
 //  				}
@@ -293,6 +295,13 @@
 			     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
 			     var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
 			     if(r!=null)return  decodeURI(r[2]); return null;
+			},
+			toOneDay(){
+				if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../oneDayLiq.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../2ysechos/oneDayLiq.html'
+				}
 			},
   		toOutpatientPay(){
   			if (process.env.NODE_ENV == 'dev') {
@@ -418,7 +427,7 @@
 		height: 20px;
 		line-height: 20px;
 		    width: 100%;
-    font-size: 6px;
+    font-size: 12px;
     color: #b2b2b2;
     text-align: center;
 	}
@@ -438,7 +447,7 @@
 		height: 100%;
 	}
 	.weui-row{
-		height: 70px;
+		height: 113px;
 	}
 	.hero-panel2_header{
 		width: 100%;
@@ -457,7 +466,7 @@
     box-shadow: 1px 2px 6px #888888;
 	}
 	.hero-panel{
-		height: 190px;
+		height: 233px;
 		width: 100%;
 		    position: relative;
     top: -90px;

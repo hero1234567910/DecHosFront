@@ -36,7 +36,7 @@ export default {
       let self = this;
       if (self.zjh == null || self.zjh == "") {
         $.confirm(
-          "您并未绑定身份证，清先绑定",
+          "您并未绑定身份证，请先绑定",
           "提示",
           function() {
             if (process.env.NODE_ENV == "dev") {
@@ -80,7 +80,7 @@ export default {
           }
         }
         if (res.data.msg == "未查询到门诊患者") {
-          $.alert("未查询到您的信息，清先建档", "提示", function() {
+          $.alert("未查询到您的信息，请先建档", "提示", function() {
             //点击确认后的回调函数
             self.$router.push("/userFiling?zjh=" + self.zjh);
           });

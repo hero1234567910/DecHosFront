@@ -60,6 +60,12 @@
 	  		</div>
   		</div>
   		
+  		<div style="margin-top: 30px;margin-bottom: 30px;">
+        <div>
+          <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toIndex()">返回主页</a>
+        </div>
+      </div>
+      
   		<el-dialog title="选择要结算的病历号" :visible.sync="isShow">
 				<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
 			 </el-dialog>
@@ -107,6 +113,13 @@
     	
     },
   	methods:{
+  		toIndex(){
+  			if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../index.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../2ysechos/index.html'
+				}
+  		},
   		toRecord(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../outPaymentRecords.html'
@@ -116,17 +129,17 @@
   		},
   		toSePay(){
   			if(this.patid == ''){
-						$.alert("清先选择病历号", "提示", function() {
+						$.alert("请先选择病历号", "提示", function() {
 							});
 							return;
 					}
 				if(this.pbxh == ''){
-						$.alert("清先选择预约记录", "提示", function() {
+						$.alert("请先选择预约记录", "提示", function() {
 							});
 							return;
 					}
 				if(this.cfxh == ''){
-						$.alert("清先确认处方信息", "提示", function() {
+						$.alert("请先确认处方信息", "提示", function() {
 							});
 							return;
 					}
@@ -134,12 +147,12 @@
   		},
   		selectCf(){
   			if(this.patid == ''){
-						$.alert("清先选择病历号", "提示", function() {
+						$.alert("请先选择病历号", "提示", function() {
 							});
 							return;
 					}
 				if(this.pbxh == ''){
-						$.alert("清先选择预约记录", "提示", function() {
+						$.alert("请先选择预约记录", "提示", function() {
 							});
 							return;
 					}
@@ -181,12 +194,12 @@
 			},
 			toghPay(){
 				if(this.patid == ''){
-						$.alert("清先选择病历号", "提示", function() {
+						$.alert("请先选择病历号", "提示", function() {
 							});
 							return;
 					}
 				if(this.pbxh == ''){
-						$.alert("清先选择预约记录", "提示", function() {
+						$.alert("请先选择预约记录", "提示", function() {
 							});
 							return;
 					}
@@ -210,7 +223,7 @@
 							self.isShow = true;
 						}
 						if(res.data.msg == '未查询到门诊患者'){
-							$.alert("未查询到您的信息，清先建档", "提示", function() {
+							$.alert("未查询到您的信息，请先建档", "提示", function() {
 							  //点击确认后的回调函数
 							  self.$router.push('/userFiling?zjh='+self.zjh)
 							});
@@ -221,7 +234,7 @@
   			//获取
 					let self = this;
 					if(this.patid == ''){
-						$.alert("清先选择病历号", "提示", function() {
+						$.alert("请先选择病历号", "提示", function() {
 							});
 							return;
 					}
