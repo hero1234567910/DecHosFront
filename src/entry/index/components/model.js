@@ -3,6 +3,13 @@ import evn from '../utils/evn.js'
 function model(http) {
 
   return {
+  	getTGInfo(data){
+  		return http.post(evn.SEC_HOSAPI+'/wx/sys/hosuser/getInforMation',data,{
+      	headers:{
+      		'Content-Type': 'application/json;charset=utf-8'
+      	}
+      });
+  	},
   	// 获取用户信息
     getUserInfo(data) {
       return http.post(evn.SEC_HOSAPI+'/wx/common/code2Token',data,{
