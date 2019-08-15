@@ -30,7 +30,7 @@ import outhospitalList from './components/outhospitalList'
 			getInfo(){
 				let self = this;
 				if(self.zjh == null || self.zjh == ''){
-					$.confirm("您并未绑定身份证，清先绑定","提示",function() {
+					$.confirm("您并未绑定身份证，请先绑定","提示",function() {
 							if (process.env.NODE_ENV == 'dev') {
 							  window.location='../index.html'
 							} else if (process.env.NODE_ENV == 'production') {

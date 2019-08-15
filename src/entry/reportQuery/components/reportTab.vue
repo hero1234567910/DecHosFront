@@ -39,7 +39,7 @@ export default {
   	init(){
 			let self = this;
 				if(self.zjh == null || self.zjh == ''){
-					$.alert("您并未绑定身份证，清先绑定","提示",function() {
+					$.alert("您并未绑定身份证，请先绑定","提示",function() {
 							if (process.env.NODE_ENV == 'dev') {
 							  window.location='../index.html'
 							} else if (process.env.NODE_ENV == 'production') {

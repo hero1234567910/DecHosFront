@@ -134,7 +134,7 @@ export default {
           
 				}
 				if(res.data.msg == '未查询到门诊患者'){
-					$.alert("未查询到您的信息，清先建档", "提示", function() {
+					$.alert("未查询到您的信息，请先建档", "提示", function() {
 					  //点击确认后的回调函数
 					  self.$router.push('/userFiling?zjh='+self.zjh)
 					});

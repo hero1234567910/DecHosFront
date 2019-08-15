@@ -43,7 +43,7 @@
 						    </div>
 						    <div class="weui-cell__ft">
 						    	<div class="bd-img">
-							  		<img src="../../../../static/img/注意.png" v-if="checkShow(item.groupconclusion)" style="position: absolute;top: 4px;width: 63%;right: 10px;"/>
+							  		<img src="../../../../static/img/注意.png" v-if="!checkShow(item.groupconclusion)" style="position: absolute;top: 4px;width: 63%;right: 10px;"/>
 							  	</div>
 						    </div>
 						  </div>
