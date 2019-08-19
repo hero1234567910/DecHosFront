@@ -83,11 +83,29 @@
 		</div>
 		
 		<div class="hero-Image">
-			<el-carousel :interval="4000" type="card" height="200px">
-		    <el-carousel-item v-for="item in 6" :key="item">
-		      <h3>{{ item }}</h3>
+			<div style="padding: 5px 10px;">
+				<div class="notice-left">
+					<img src="../../../../static/img/通知公告.png" style="width: 95%;vertical-align: middle;"/>
+				</div>
+				<div class="notice-middle" style="width: 60%;">
+					<div id="s" style="position:relative; white-space:nowrap; overflow:hidden; height:22px;"> 
+						<div id="noticeList" style="position:absolute; top:0; height:20px;"><span id="ms">医院简介</span></div> 
+					</div>
+				</div>
+				<div class="notice-right">
+						更多
+				</div>
+			</div>
+			<!--<el-carousel :interval="4000" arrow="always" height="110px">
+		    <el-carousel-item>
+		      <div :style="{backgroundImage: 'url(' + img + ')'}" class="hero-background">
+		      </div>
 		    </el-carousel-item>
-		  </el-carousel>
+		    <el-carousel-item>
+		      <div :style="{backgroundImage: 'url(' + img1 + ')'}" class="hero-background">
+		      </div>
+		    </el-carousel-item>
+		  </el-carousel>-->
 		</div>
 		
 		<div style="position: relative;top: -80px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
@@ -185,6 +203,7 @@
 
 	import model from './model.js'
 	import homeExtend from './homeExtend.vue'
+	import textScroll from './textScroll.js'
   export default {
   	components:{homeExtend},
   	data() {
@@ -192,16 +211,30 @@
       return {
       	seller:[],
       	souInput:'',
-      	homeShow:false
+      	homeShow:false,
+//    	img: require('../../../../static/images/QUS{5J8J(UI9V82QY4Q$@N8.jpg'),
+//    	img1: require('../../../../static/images/7B0Q1Z]]1YFW1HOBBB{OFMQ.jpg'),
       }
     },
     created(){
 //  	this.getDepartmentOnDuty()
     },
   	mounted(){
-		
+  		this.getTGInfo();
+			//横向滚动
+			$("#s").textScroll();
+			
   	},
   	methods:{
+  		getTGInfo(){
+  			this.model.getTGInfo(data).then(function(res){
+  				if(res.data.code == 0){
+  					$('#ms').text(res.data.data.trim());
+  				}else{
+  					$.toptip("获取通告信息失败", "error");
+  				}
+  			})
+  		},
   		getDepartmentOnDuty() {
 	      $.showLoading();
 	      let self = this;
@@ -411,9 +444,9 @@
 <style scoped>
 	.el-carousel__item h3 {
     color: #475669;
-    font-size: 14px;
+    font-size: 18px;
     opacity: 0.75;
-    line-height: 200px;
+    line-height: 300px;
     margin: 0;
   }
   
@@ -425,7 +458,9 @@
     background-color: #d3dce6;
   }
 	.hero-Image{
-		
+		height: 66px;
+    position: relative;
+    top: -80px;
 	}
 	.hero-mButton{
 		position: absolute;
@@ -541,11 +576,24 @@
 	 input::-webkit-input-placeholder {
         color: #f9f9f9;
      }*/
-    .weui-search-bar__form{
-    	border: 0px solid #E6E6EA;
-      border-radius: 10px;
-    }
-    .weui-search-bar__cancel-btn{
-    	color: rgba(255, 255, 255, 0.95)
-    }
+    .notice-left{
+			/*border: 1px solid #CCC;*/
+			float: left;
+			height: 30px;
+			width: 85px
+		}
+		
+		.notice-middle{
+			float: left;
+			height: 30px;
+			font-weight: 600
+		}
+		
+		.notice-right{
+			height: 30px;
+			float: right;
+			padding-left: 10px;
+			color: darkgray;
+			font-size: 14px;
+		}
 </style>
