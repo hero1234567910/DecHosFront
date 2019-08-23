@@ -9,11 +9,18 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
+    	meta:{
+      	keepAlive: true,
+      	isBack:false, //用于判断上一个页面是哪个
+     },
       path: "/",
       name: "outPaymentRecordsList",
       component: outPaymentRecordsList
     },
     {
+	    	meta:{
+	      	keepAlive: false
+	     },
         path: "/outPaymentRecordsDetail",
         name: "outPaymentRecordsDetail",
         component: outPaymentRecordsDetail

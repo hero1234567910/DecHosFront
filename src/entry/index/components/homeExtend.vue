@@ -13,23 +13,29 @@
   export default {
   	data() {
     	this.model = model(this.axios)
-      return {
-      	
-      }
+	      return {
+	      	
+	      }
     },
     props:['seller','souInput'],
     watch:{
-    	'seller':function(newVal){
-    		
-    	},
-    	'souInput':function(newVal){
-    		this.$emit('tohomeShow');
-    		console.log('3333');
-    		let self = this;
-		    $('#searchInput').bind('input propertychange', function() {
-		        self.sousuo(newVal)
-		    });
+//  	'seller':function(newVal){
+//  		
+//  	},
+//  	'souInput':function(newVal){
+//  		
+//  	},
+    	souInput:{
+    		handler(newName,oldName){
+    			this.$emit('tohomeShow');
+	    		let self = this;
+			    $('#searchInput').bind('keyup', function() {
+			        self.sousuo(newName)
+			    });
+    		},
+    		immediate:true
     	}
+    	
     },
     created(){
     	
@@ -39,34 +45,33 @@
   	},
   	methods:{
   		doFilterTutor(ele){
-				let self = this;
-	      if (ele.czlx == "1") {
-	      	if (process.env.NODE_ENV == 'dev') {
-					  window.location='../../outpatientAdvance.html#/appointDocToday?ksdm=' + ele.ksdm
-					} else if (process.env.NODE_ENV == 'production') {
-					  window.location='../../2ysechos/outpatientAdvance.html#/appointDocToday?ksdm=' + ele.ksdm
-					}
-	      } else {
-	      	if (process.env.NODE_ENV == 'dev') {
-					  window.location='../../outpatientAdvance.html#/appointSourceToday?ksdm=' + ele.ksdm
-					} else if (process.env.NODE_ENV == 'production') {
-					  window.location='../../2ysechos/outpatientAdvance.html#/appointSourceToday?ksdm=' + ele.ksdm
-					}
-	      }
-			}, 
-			sousuo(InputVal){
-				console.log(InputVal);
-				var text = InputVal
-        $('.weui-cell').each(function () {
-            var $self = $(this);
-            var flag = $self.text().search(text);
-            if (flag > -1) {
-                $self.css("display", "");
-            } else {
-                $self.css("display", "none");
-            }
-        });			
-			},
+			let self = this;
+		      if (ele.czlx == "1") {
+		      	if (process.env.NODE_ENV == 'dev') {
+						  window.location='../../outpatientAdvance.html#/appointDocToday?ksdm=' + ele.ksdm
+						} else if (process.env.NODE_ENV == 'production') {
+						  window.location='../../2ysechos/outpatientAdvance.html#/appointDocToday?ksdm=' + ele.ksdm
+						}
+		      } else {
+		      	if (process.env.NODE_ENV == 'dev') {
+						  window.location='../../outpatientAdvance.html#/appointSourceToday?ksdm=' + ele.ksdm
+						} else if (process.env.NODE_ENV == 'production') {
+						  window.location='../../2ysechos/outpatientAdvance.html#/appointSourceToday?ksdm=' + ele.ksdm
+						}
+		      }
+		}, 
+		sousuo(InputVal){
+			var text = InputVal
+	        $('.weui-cell').each(function () {
+	            var $self = $(this);
+	            var flag = $self.text().search(text);
+	            if (flag > -1) {
+	                $self.css("display", "");
+	            } else {
+	                $self.css("display", "none");
+	            }
+	        });			
+		},
   	}
   }
   

@@ -68,7 +68,8 @@
       	hzxm:localStorage.getItem('sec_patientName'),
       	patientId:'',
       	blh:'',
-      	flag:true
+      	flag:true,
+      	zyzt:''
   		}
   	},
   	 mounted(){
@@ -100,25 +101,35 @@
 				}
   		},
   		toEvaluate(){
-  			if(this.flag){
-  				this.$router.push('/evaluate');
+  			if(this.zyzt == 4){
+  				this.$router.push('/evaluate?patid='+this.patientId);
   			}else{
-  				$.alert("未查询到您的住院信息", "提示", function() {
+  				$.alert("您暂未出院", "提示", function() {
 						});
   			}
   			
   		},
   		//检查是否有绑定并查询患者住院信息
-			getInfo(){
+  		//检查是否有绑定并查询患者住院信息
+  		getInfo(){
 				let self = this;
-				if(self.zjh == null || self.zjh == ''){
-					$.alert("您并未绑定身份证，请先绑定","提示",function() {
+				this.zjh = localStorage.getItem('sec_patientIdcard');
+				this.hzxm = localStorage.getItem('sec_patientName');
+				if(this.zjh == 'null' || this.zjh == '' || this.zjh == null){
+					$.confirm("您并未绑定身份证，请先绑定","提示",function() {
 							if (process.env.NODE_ENV == 'dev') {
+							  window.location='../index.html#/userBinding'
+							} else if (process.env.NODE_ENV == 'production') {
+							  window.location='../2ysechos/index.html#/userBinding'
+							}
+						}, function() {
+					  	if (process.env.NODE_ENV == 'dev') {
 							  window.location='../index.html'
 							} else if (process.env.NODE_ENV == 'production') {
 							  window.location='../2ysechos/index.html'
 							}
 					  });
+					  return;
 				}
 				
 				let data={
@@ -130,14 +141,57 @@
 				
 				this.model.getInfo(data).then(function(res){
 					if(res.data.code == '0'){
-						
+						//住院缴费模块 就取病历号最大的
+						let arr = [];
+						let hosArray = res.data.data;
+						for(var i=0;i<hosArray.length;i++){
+								let blh = hosArray[i].blh;
+								arr.push(parseInt(blh));
+						}
+						arr.sort().reverse();
+						let val = arr[0];
+						for(var i=0;i<hosArray.length;i++){
+							if(val == hosArray[i].blh){
+								self.patientId = hosArray[i].patid;
+								self.blh = hosArray[i].blh;
+								self.zyzt = hosArray[i].zyzt;
+							}
+						}
 					}else{
 						$.alert("未查询到您的住院信息", "提示", function() {
-							self.flag = false;
 						});
 					}
 				})
-			}
+			},
+//			getInfo(){
+//				let self = this;
+//				if(self.zjh == null || self.zjh == ''){
+//					$.alert("您并未绑定身份证，请先绑定","提示",function() {
+//							if (process.env.NODE_ENV == 'dev') {
+//							  window.location='../index.html'
+//							} else if (process.env.NODE_ENV == 'production') {
+//							  window.location='../2ysechos/index.html'
+//							}
+//					  });
+//				}
+//				
+//				let data={
+//					hzxm:this.hzxm,
+//					zjh:this.zjh,
+//					action:'zy',
+//					openid:localStorage.getItem('sec_openId')
+//				}
+//				
+//				this.model.getInfo(data).then(function(res){
+//					if(res.data.code == '0'){
+//						
+//					}else{
+//						$.alert("未查询到您的住院信息", "提示", function() {
+//							self.flag = false;
+//						});
+//					}
+//				})
+//			}
   	}
   }
   </script>

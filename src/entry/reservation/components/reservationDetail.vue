@@ -183,7 +183,7 @@
 
         <div class="weui-row">
           <div class="weui-col-50">
-            <a
+            <a v-show="zfzt != 1 && yyzt == 0"
               href="javascript:;"
               class="weui-btn weui-btn_primary hero-button"
               @click="cancelAppoint(yyxh,yyzt,patid)"
@@ -193,11 +193,11 @@
             <!--<div class="hero-button-left">
 	  			
             </div>-->
-            <a
+            <a v-show="zfzt != 1 && yyzt == 0"
               href="javascript:;"
               class="weui-btn weui-btn_primary hero-button"
               @click="returnList()"
-            >返回列表</a>
+            >挂号结算</a>
           </div>
         </div>
       </div>
@@ -230,7 +230,8 @@ export default {
       lxdh: "",
       yyhx: "",
       zfzt: "",
-      patid:""
+      patid:"",
+      pbxh:""
     };
   },
   props:['patid'],
@@ -263,6 +264,7 @@ export default {
       self.lxdh = this.$route.query.lxdh;
       self.yyhx = this.$route.query.yyhx;
       self.patid = this.$route.query.patid;
+      self.pbxh = this.$route.query.pbxh;
       //console.log(data);
     },
     statusCheck(ele) {
@@ -285,7 +287,11 @@ export default {
       }
     },
     returnList() {
-      this.$router.push("/");
+      if (process.env.NODE_ENV == "dev") {
+        window.location = "../../outpatientPay.html#/ghPay?pbxh="+this.pbxh+"&patid="+this.patid;
+      } else if (process.env.NODE_ENV == "production") {
+        window.location = "../../2ysechos/outpatientPay.html#/ghPay?pbxh="+this.pbxh+"&patid="+this.patid;
+      }
     },
     cancelAppoint(yyxh,yyzt,patid) {
       //console.log(yyxh+" "+yyzt)

@@ -82,7 +82,7 @@ export default {
             self.guid = attachGuid;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src=' + evn.SEC_HOSAPI
+              '<img class="hos-img" src='
             );
             self.content = _str;
           } else {
@@ -108,7 +108,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src=' + evn.SEC_HOSAPI
+              '<img class="hos-img" src='
             );
             self.content = _str;
           } else {
@@ -134,7 +134,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src=' + evn.SEC_HOSAPI
+              '<img class="hos-img" src='
             );
             self.content = _str;
           } else {
@@ -160,7 +160,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+              '<img class="hos-img" src="'
             );
             self.content = _str;
           } else {
@@ -186,7 +186,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+              '<img class="hos-img" src="'
             );
             self.content = _str;
           } else {
@@ -212,7 +212,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+              '<img class="hos-img" src="'
             );
             self.content = _str;
           } else {
@@ -238,7 +238,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+              '<img class="hos-img" src="'
             );
 
             self.content = _str;
@@ -265,7 +265,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+              '<img class="hos-img" src="'
             );
             self.content = _str;
           } else {
@@ -291,7 +291,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+              '<img class="hos-img" src="'
             );
             self.content = _str;
           } else {
@@ -317,7 +317,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+              '<img class="hos-img" src="'
             );
             self.content = _str;
           } else {
@@ -343,7 +343,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+              '<img class="hos-img" src="'
             );
             self.content = _str;
           } else {
@@ -369,7 +369,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+              '<img class="hos-img" src="'
             );
             self.content = _str;
           } else {
@@ -395,7 +395,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+              '<img class="hos-img" src="'
             );
             self.content = _str;
           } else {
@@ -421,7 +421,7 @@ export default {
             self.createUserName = createUserName;
             var _str = res.data.data.content.replace(
               /<img src="/g,
-              '<img class="hos-img" src="' + evn.SEC_HOSAPI
+              '<img class="hos-img" src="'
             );
             self.content = _str;
           } else {

@@ -100,15 +100,16 @@
 	    </div>
 		</a>
     <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
+    
     <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
       <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
         <div class="weui-cells-wzl">
-          <a class="weui-cell weui-cell_access-wzl" href="javascript:;" v-on:click="toReport()">
+          <a class="weui-cell weui-cell_access-wzl" href="javascript:;" v-on:click="toWait()">
             <div class="weui-cell__hd">
               <img src="../../../../static/img/报告.png">
             </div>
             <div class="weui-cell__bd">
-              <p style="margin-bottom: -10px;">报告查询</p>
+              <p style="margin-bottom: -10px;">门诊候诊信息</p>
               <img style="width:45%" src="../../../../static/images/圆角矩形-2.png">
             </div>
             <div class="weui-cell__ft"></div>
@@ -116,8 +117,8 @@
         </div>
       </div>
     </div>
-    <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
-
+		<div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
+		
     <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
       <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
         <div class="weui-cells-wzl">
@@ -137,22 +138,41 @@
     <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
 
     <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
-      <!-- <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
+      <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
         <div class="weui-cells-wzl">
-          <a class="weui-cell weui-cell_access-wzl" href="javascript:;">
+          <a class="weui-cell weui-cell_access-wzl" href="javascript:;" v-on:click="toTJRecord()">
             <div class="weui-cell__hd">
-              <img src="../../../../static/img/复诊预约.png">
+              <img src="../../../../static/img/体检标.png">
             </div>
             <div class="weui-cell__bd">
-              <p style="margin-bottom: -10px;">复诊预约</p>
-              <img style="width:45%" src="../../../../static/images/圆角矩形-4.png">
+              <p style="margin-bottom: -10px;">体检报告查询</p>
+              <img style="width:45%" src="../../../../static/images/体检1.png">
             </div>
             <div class="weui-cell__ft"></div>
           </a>
         </div>
-      </div> -->
+      </div>
     </div>
+    <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
+    
+    <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
+      <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
+        <div class="weui-cells-wzl">
+          <a class="weui-cell weui-cell_access-wzl" href="javascript:;" v-on:click="toJCRecord()">
+            <div class="weui-cell__hd">
+              <img src="../../../../static/img/报告标.png">
+            </div>
+            <div class="weui-cell__bd">
+              <p style="margin-bottom: -10px;">检查报告查询</p>
+              <img style="width:45%" src="../../../../static/images/报告1.png">
+            </div>
+            <div class="weui-cell__ft"></div>
+          </a>
+        </div>
+      </div>
     </div>
+    <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
+  </div>
   </div>
 </template>
 
@@ -195,6 +215,23 @@ export default {
 //  	this.checkShow();
     },
   methods: {
+  	toWait(){
+  		this.$router.push('/waitPatient');
+  	},
+  	toTJRecord(){
+  		if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../reportQuery.html#/examinationList'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../2ysechos/reportQuery.html#/examinationList'
+				}
+  	},
+  	toJCRecord(){
+  		if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../reportQuery.html#/reportTab'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../2ysechos/reportQuery.html#/reportTab'
+				}
+  	},
   	getAesString(word, keyStr) { // 加密
 			  keyStr = keyStr ? keyStr : 'expsofthero12345';
 			  let key = CryptoJS.enc.Utf8.parse(keyStr);

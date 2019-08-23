@@ -22,30 +22,30 @@ import outhospitalList from './components/outhospitalList'
       }
     },
     mounted(){
-    	this.getInfo();
+//  	this.getInfo();
     },
 	methods:{
 		
-		//检查是否有绑定并查询患者门诊信息
-			getInfo(){
-				let self = this;
-				if(self.zjh == null || self.zjh == ''){
-					$.confirm("您并未绑定身份证，请先绑定","提示",function() {
-							if (process.env.NODE_ENV == 'dev') {
-							  window.location='../index.html'
-							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/index.html'
-							}
-						}, function() {
-					  	if (process.env.NODE_ENV == 'dev') {
-							  window.location='../index.html'
-							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/index.html'
-							}
-					  });
-				}
-				
-		},
+//		//检查是否有绑定并查询患者门诊信息
+//			getInfo(){
+//				let self = this;
+//				if(self.zjh == null || self.zjh == ''){
+//					$.confirm("您并未绑定身份证，请先绑定","提示",function() {
+//							if (process.env.NODE_ENV == 'dev') {
+//							  window.location='../index.html'
+//							} else if (process.env.NODE_ENV == 'production') {
+//							  window.location='../2ysechos/index.html'
+//							}
+//						}, function() {
+//					  	if (process.env.NODE_ENV == 'dev') {
+//							  window.location='../index.html'
+//							} else if (process.env.NODE_ENV == 'production') {
+//							  window.location='../2ysechos/index.html'
+//							}
+//					  });
+//				}
+//				
+//		},
 		
 		//获取url中的参数
 		 GetQueryString(name){

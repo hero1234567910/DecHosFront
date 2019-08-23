@@ -9,11 +9,11 @@
 	  			<p style="font-size: 20px;font-weight: 700;">出院评价</p>
 	  		</div>
 	  		
-	  		<div class="ad-button">
+	  		<!--<div class="ad-button">
 	  			 <el-button type="primary" @click="getInfo">选择病历</el-button>
-	  		</div>
+	  		</div>-->
   		</div>
-  	<div class="ad-content" v-show="showContent">
+  	<div class="ad-content">
   		<div class="content-text">
   			<p class="text-ev">主治医生满意度</p>
   			<el-rate
@@ -57,9 +57,9 @@
   		
   	</div>
   	
-  	<el-dialog title="选择病历号" :visible.sync="isShow">
+  	<!--<el-dialog title="选择病历号" :visible.sync="isShow">
 				<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
-			</el-dialog>
+			</el-dialog>-->
   </div>
 </template>
 
@@ -86,47 +86,47 @@
   		}
   	},
   	mounted(){
-    	this.getInfo()
+//  	this.getInfo()
     },
   	methods:{
-  		handleCall(res){
-  			this.isShow = false;
-  			if(res.zyzt != 4){
-  				this.showContent = false;
-  				$.alert("您暂未出院", "提示", function() {});
-  			}else{
-  				this.blh = res.blh;
-  				this.patid = res.patid;
-  				this.showContent = true;
-  			}
-			},
+//		handleCall(res){
+//			this.isShow = false;
+//			if(res.zyzt != 4){
+//				this.showContent = false;
+//				$.alert("您暂未出院", "提示", function() {});
+//			}else{
+//				this.blh = res.blh;
+//				this.patid = res.patid;
+//				this.showContent = true;
+//			}
+//			},
   		opendialog(){
   			
   		},
-  		//获取病历号
-  		getInfo(){
-				let self = this;
-				$.showLoading();
-				let data={
-					hzxm:this.hzxm,
-					zjh:this.zjh,
-					action:'zy',
-					openid:localStorage.getItem('sec_openId')
-				}
-				
-				this.model.getInfo(data).then(function(res){
-					$.hideLoading();
-					if(res.data.code == '0'){
-						self.mzData = res.data.data;
-						self.isShow = true;
-						self.val1 = 0;
-						self.val2 = 0;
-						self.val3 = 0;
-					}else{
-						$.toptip(res.data.msg,'error');
-					}
-				})
-			},
+//		//获取病历号
+//		getInfo(){
+//				let self = this;
+//				$.showLoading();
+//				let data={
+//					hzxm:this.hzxm,
+//					zjh:this.zjh,
+//					action:'zy',
+//					openid:localStorage.getItem('sec_openId')
+//				}
+//				
+//				this.model.getInfo(data).then(function(res){
+//					$.hideLoading();
+//					if(res.data.code == '0'){
+//						self.mzData = res.data.data;
+//						self.isShow = true;
+//						self.val1 = 0;
+//						self.val2 = 0;
+//						self.val3 = 0;
+//					}else{
+//						$.toptip(res.data.msg,'error');
+//					}
+//				})
+//			},
 			sub(){
 				let self = this;
 				if(this.val1 == 0 || this.val2 == 0 || this.val3 == 0){
@@ -140,7 +140,8 @@
 					evaluateNurse:this.val2,
 					evaluateFacilities:this.val3,
 					evaluateOpinion:this.textarea2,
-					patientRowGuid:localStorage.getItem('sec_patientGuid')
+					patientRowGuid:localStorage.getItem('sec_patientGuid'),
+					patid:this.$route.query.patid
 				}
 				
 				this.model.saveEvaluate(data).then(function(res){

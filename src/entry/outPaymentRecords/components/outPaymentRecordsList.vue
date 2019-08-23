@@ -12,7 +12,7 @@
           <span style="font-weight: 700;	">门诊缴费记录</span>
         </div>
 
-        <div class="re-header-select">
+        <!--<div class="re-header-select">
           <div class="select-left">
             <input type="text" class="select-input" data-toggle="date" id="ksrq1" placeholder="开始日期" />
           </div>
@@ -34,7 +34,7 @@
               v-on:click="selectMz()"
             />
           </div>
-        </div>
+        </div>-->
       </el-card>
     </div>
 
@@ -61,6 +61,7 @@
                   收费类型:
                   <span style="color:black;">{{item.sflx==1?'退费':'正常'}}</span>
                 </p>
+                <p style="color: #688795;font-size:14px;">就诊类型: {{item.jllx}}</p>
               </div>
             </div>
           </div>
@@ -99,11 +100,113 @@ export default {
       isShow: false
     };
   },
-  //props: ["patid"],
-  mounted() {
-    this.init();
-  },
+//  props: ["patid"],
+//  watch:{
+//  	'patid':function(newVal){
+//  		this.init();
+//  		this.payList();
+//  	},
+//  },
+  beforeRouteEnter(to, from, next) {
+      // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
+      // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
+      // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
+      // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
+      if(from.name=='outPaymentRecordsDetail'){
+          to.meta.isBack=true;
+          //判断是从哪个路由过来的，
+          //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+      }
+      console.log(to.meta.isBack);
+      next();
+    },
+    activated() {
+    	console.log(this.$route.meta.isBack);
+		  if(!this.$route.meta.isBack){
+		    // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+					this.getInfo();
+		  }
+		  // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+		  this.$route.meta.isBack=false
+		 
+		},
+		mounted() {
+	    this.init();
+	  },
   methods: {
+  	//检查是否有绑定并查询患者门诊信息
+			getInfo(){
+				let self = this;
+				this.zjh = localStorage.getItem('sec_patientIdcard');
+				this.hzxm = localStorage.getItem('sec_patientName');
+				if(this.zjh == 'null' || this.zjh == '' || this.zjh == null){
+					$.confirm("您并未绑定身份证，请先绑定","提示",function() {
+							if (process.env.NODE_ENV == 'dev') {
+							  window.location='../index.html#/userBinding'
+							} else if (process.env.NODE_ENV == 'production') {
+							  window.location='../2ysechos/index.html#/userBinding'
+							}
+						}, function() {
+					  	if (process.env.NODE_ENV == 'dev') {
+							  window.location='../index.html'
+							} else if (process.env.NODE_ENV == 'production') {
+							  window.location='../2ysechos/index.html'
+							}
+					  });
+					  return;
+				}
+				
+				let data={
+					hzxm:this.hzxm,
+					zjh:this.zjh,
+					action:'mz',
+					openid:localStorage.getItem('sec_openId')
+				}
+				
+				this.model.getInfo(data).then(function(res){
+					if(res.data.code == '0'){
+						//门诊模块 就取门诊自费并且病历号最大的
+						let arr = [];
+						let outArray = res.data.data;
+						for(var i=0;i<outArray.length;i++){
+								if(outArray[i].ybdm == '101'){
+									let blh = outArray[i].blh;
+									arr.push(parseInt(blh));
+								}
+						}
+						if(arr.length == 0){
+							$.alert("未查询到您的信息，请先建档", "提示", function() {
+						  //点击确认后的回调函数
+						  if (process.env.NODE_ENV == 'dev') {
+								  window.location='../../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								} else if (process.env.NODE_ENV == 'production') {
+								  window.location='../../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								}
+							});
+							return;
+						}
+						arr.sort().reverse();
+						let val = arr[0];
+						for(var i=0;i<outArray.length;i++){
+							if(val == outArray[i].blh){
+								self.patid = outArray[i].patid;
+								self.payList();
+							}
+						}
+					}
+					if(res.data.msg == '未查询到门诊患者'){
+						$.alert("未查询到您的信息，请先建档", "提示", function() {
+						  //点击确认后的回调函数
+//						  self.$router.push('/userFiling?zjh='+self.zjh)
+						  if (process.env.NODE_ENV == 'dev') {
+								  window.location='../../index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
+								} else if (process.env.NODE_ENV == 'production') {
+								  window.location='../../2ysechos/index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
+								}
+						});
+					}
+				})
+			},
     tomainList() {
       if (process.env.NODE_ENV == "dev") {
         window.location = "../../index.html";
@@ -156,15 +259,15 @@ export default {
       let hzxm = localStorage.getItem("sec_patientName");
       let patid = this.patid;
       //let patid = "349246";
-      let date1 = $("#ksrq1").val();
-      let ksrq = date1.replace(/\-/g, "");
-      let date2 = $("#jsrq1").val();
-      let jsrq = date2.replace(/\-/g, "");
+//    let date1 = $("#ksrq1").val();
+//    let ksrq = date1.replace(/\-/g, "");
+//    let date2 = $("#jsrq1").val();
+//    let jsrq = date2.replace(/\-/g, "");
       let data = {
         hzxm: hzxm,
-        patid: patid,
-        ksrq: ksrq,
-        jsrq: jsrq
+        patid: patid
+//      ksrq: ksrq,
+//      jsrq: jsrq
       };
       this.model.getOutpatientFeeSettlementInfo(data).then(function(res) {
         if (res.data.code == "0") {
@@ -198,7 +301,8 @@ export default {
   width: calc(100vw - 20px);
 }
  .el-card__body {
-    padding: 2px;
+    /*padding: 2px;*/
+   display: none;
 }
 </style>
 <style scoped>

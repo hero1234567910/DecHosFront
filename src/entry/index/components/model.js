@@ -3,8 +3,23 @@ import evn from '../utils/evn.js'
 function model(http) {
 
   return {
-  	getTGInfo(data){
-  		return http.post(evn.SEC_HOSAPI+'/wx/sys/hosuser/getInforMation',data,{
+  	getOutpatientWaitingInfo(data) {
+      return http.post(evn.SEC_HOSAPI+'/wx/common/getOutpatientWaitingInfo',data,{
+      	headers:{
+      		'Content-Type': 'application/json;charset=utf-8'
+      	}
+      });
+    },
+  	// 查询门诊患者信息
+    getInfo(data) {
+      return http.post(evn.SEC_HOSAPI+'/wx/common/checkPatient',data,{
+      	headers:{
+      		'Content-Type': 'application/json;charset=utf-8'
+      	}
+      });
+    },
+  	getTGInfo(){
+  		return http.get(evn.SEC_HOSAPI+'/wx/sys/informationinfo/getAnnouncements',{
       	headers:{
       		'Content-Type': 'application/json;charset=utf-8'
       	}
@@ -35,6 +50,13 @@ function model(http) {
     },
     getUserByToken(data){
     	return http.post(evn.SEC_HOSAPI+'/wx/common/getUserByToken',data,{
+      	headers:{
+      		'Content-Type': 'application/json;charset=utf-8'
+      	}
+      });
+    },
+    refreshToken(data){
+    	return http.post(evn.SEC_HOSAPI+'/wx/common/refreshToken',data,{
       	headers:{
       		'Content-Type': 'application/json;charset=utf-8'
       	}

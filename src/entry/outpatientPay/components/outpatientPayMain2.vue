@@ -10,7 +10,7 @@
 	  		</div>
   		</div>
   		<div style="">
-	  		<!--<div class="panel-hero">
+	  		<div class="panel-hero">
 	  			<el-card class="box-card">
 					  <div slot="header" class="clearfix">
 					    <span>挂号结算</span>
@@ -31,7 +31,7 @@
 					    4.可前往个人中心查看缴费记录<el-button style="float: right; padding: 3px 0" type="text" @click="toRecord()">立即前往</el-button>
 					  </div>
 					</el-card>
-	  		</div>-->
+	  		</div>
 	  		
 	  		<div class="panel-hero" style="margin-bottom: 30px;">
 	  			<el-card class="box-card">
@@ -41,21 +41,21 @@
 	  						<img src="../../../../static/img/药品.png" style="width: 140%;position: absolute;left: -9px;top: -6px;"/>
 	  					</div>
 					  </div>
-					  <!--<div class="text item">
+					  <div class="text item">
 					    {{content1}}<el-button style="float: right; padding: 3px 0" type="text" @click="selectBlh">选号</el-button>
 					  </div>
 					  <div class="text item">
 					    {{content2}}<el-button style="float: right; padding: 3px 0" type="text" @click="selectSe">选择记录</el-button>
-					  </div>-->
+					  </div>
 					  <div class="text item">
 					    {{content3}}<el-button style="float: right; padding: 3px 0" type="text" @click="selectCf">确认处方</el-button>
 					  </div>
 					  <div class="text item">
-					    	2：结算付款<el-button style="float: right; padding: 3px 0" type="text" @click="toSePay">点我结算</el-button>
+					    4.结算付款<el-button style="float: right; padding: 3px 0" type="text" @click="toSePay">点我结算</el-button>
 					  </div>
-					  <!--<div class="text item">
+					  <div class="text item">
 					    5.可前往个人中心查看缴费记录<el-button style="float: right; padding: 3px 0" type="text" @click="toRecord()">立即前往</el-button>
-					  </div>-->
+					  </div>
 					</el-card>
 	  		</div>
   		</div>
@@ -66,15 +66,15 @@
         </div>
       </div>
       
-  		<!--<el-dialog title="选择要结算的病历号" :visible.sync="isShow">
+  		<el-dialog title="选择要结算的病历号" :visible.sync="isShow">
 				<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
 			 </el-dialog>
 			 
 			 <el-dialog title="选择要结算的预约记录" :visible.sync="Show">
 				<Select v-bind:seData='seData' @seCall="seCall"></Select>
-			 </el-dialog>-->
+			 </el-dialog>
 			 
-			 <el-dialog title="请确认处方信息" :visible.sync="cfShow">
+			 <el-dialog title="选择要结算的预约记录" :visible.sync="cfShow">
 				<cfSelect v-bind:cfData='cfData' @cfCall="cfCall"></cfSelect>
 			 </el-dialog>
   		
@@ -103,88 +103,16 @@
 				cfData:[],
 				content1:'1.请先选择您要结算的病历号',
 				content2:'2.请选择预约记录',
-				content3:'1：确认待缴费处方信息',
+				content3:'3.确认代缴费处方信息',
 				pbxh:'',
 				cfShow:false,
 				cfxh:''
       }
     },
     mounted(){
-    	this.getInfo();
+    	
     },
   	methods:{
-  		//检查是否有绑定并查询患者门诊信息
-			getInfo(){
-				let self = this;
-				this.zjh = localStorage.getItem('sec_patientIdcard');
-				this.hzxm = localStorage.getItem('sec_patientName');
-				if(this.zjh == 'null' || this.zjh == '' || this.zjh == null){
-					$.confirm("您并未绑定身份证，请先绑定","提示",function() {
-							if (process.env.NODE_ENV == 'dev') {
-							  window.location='../index.html#/userBinding'
-							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/index.html#/userBinding'
-							}
-						}, function() {
-					  	if (process.env.NODE_ENV == 'dev') {
-							  window.location='../index.html'
-							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/index.html'
-							}
-					  });
-					  return;
-				}
-				
-				let data={
-					hzxm:this.hzxm,
-					zjh:this.zjh,
-					action:'mz',
-					openid:localStorage.getItem('sec_openId')
-				}
-				
-				this.model.getInfo(data).then(function(res){
-					if(res.data.code == '0'){
-						//门诊模块 就取门诊自费并且病历号最大的
-						let arr = [];
-						let outArray = res.data.data;
-						for(var i=0;i<outArray.length;i++){
-								if(outArray[i].ybdm == '101'){
-									let blh = outArray[i].blh;
-									arr.push(parseInt(blh));
-								}
-						}
-						if(arr.length == 0){
-							$.alert("未查询到您的信息，请先建档", "提示", function() {
-						  //点击确认后的回调函数
-						  if (process.env.NODE_ENV == 'dev') {
-								  window.location='../../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
-								} else if (process.env.NODE_ENV == 'production') {
-								  window.location='../../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
-								}
-							});
-							return;
-						}
-						arr.sort().reverse();
-						let val = arr[0];
-						for(var i=0;i<outArray.length;i++){
-							if(val == outArray[i].blh){
-								self.patid = outArray[i].patid;
-							}
-						}
-					}
-					if(res.data.msg == '未查询到门诊患者'){
-						$.alert("未查询到您的信息，请先建档", "提示", function() {
-						  //点击确认后的回调函数
-//						  self.$router.push('/userFiling?zjh='+self.zjh)
-						  if (process.env.NODE_ENV == 'dev') {
-								  window.location='../../index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
-								} else if (process.env.NODE_ENV == 'production') {
-								  window.location='../../2ysechos/index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
-								}
-						});
-					}
-				})
-			},
   		toIndex(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../index.html'
@@ -200,6 +128,16 @@
 				}
   		},
   		toSePay(){
+  			if(this.patid == ''){
+						$.alert("请先选择病历号", "提示", function() {
+							});
+							return;
+					}
+				if(this.pbxh == ''){
+						$.alert("请先选择预约记录", "提示", function() {
+							});
+							return;
+					}
 				if(this.cfxh == ''){
 						$.alert("请先确认处方信息", "提示", function() {
 							});
@@ -208,16 +146,16 @@
 				this.$router.push('/mzPay?cfxh='+this.cfxh+'&patid='+this.patid);
   		},
   		selectCf(){
-//			if(this.patid == ''){
-//						$.alert("请先选择病历号", "提示", function() {
-//							});
-//							return;
-//					}
-//				if(this.pbxh == ''){
-//						$.alert("请先选择预约记录", "提示", function() {
-//							});
-//							return;
-//					}
+  			if(this.patid == ''){
+						$.alert("请先选择病历号", "提示", function() {
+							});
+							return;
+					}
+				if(this.pbxh == ''){
+						$.alert("请先选择预约记录", "提示", function() {
+							});
+							return;
+					}
   			 $.showLoading();
 					let self = this;
 					let data={
