@@ -42,14 +42,14 @@
 		  	</div>
 		  </div>
 		</el-card>
-		<el-button-group>
+		<!--<el-button-group>
 		  <el-button type="primary" icon="el-icon-arrow-left"  @click="show = !show">查看明细</el-button>
 		  <el-button type="primary" @click="toIndex()">返回主列表<i class="el-icon-arrow-right el-icon--right"></i></el-button>
-		</el-button-group>
+		</el-button-group>-->
 		
 		<div style="display: flex; margin-top: 20px; height: 100px;">
       <transition name="el-fade-in-linear">
-        <div v-show="show" class="transition-box" style="width: calc(100vw - 30px);margin-left: auto;margin-right: auto;">
+        <div  class="transition-box" style="width: calc(100vw - 30px);margin-left: auto;margin-right: auto;">
         	<el-card class="box-card" v-for="(item, idx) in detail"  :key="idx">
 					  <div slot="header" class="clearfix">
 					    <div class="card-hero">
@@ -156,9 +156,9 @@
       </transition>
     </div>
     
-     <el-dialog title="选择要查看的病历号" :visible.sync="isShow">
+     <!--<el-dialog title="选择要查看的病历号" :visible.sync="isShow">
 			<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
-		 </el-dialog>
+		 </el-dialog>-->
     
   </div>
 </template>
@@ -185,7 +185,8 @@
   		}
   	},
   	mounted(){
-  		this.init();
+//		this.init();
+			this.getJzlsh();
   	},
   	methods:{
   		handleCall(res){
@@ -226,7 +227,7 @@
   			let self = this;
   			let data = {
   				hzxm:this.hzxm,
-  				patid:this.patid
+  				patid:this.$route.query.patid
   			}
   			this.model.getJzlsh(data).then(function(res){
   				if(res.data.code == 0){

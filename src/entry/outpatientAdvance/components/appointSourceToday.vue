@@ -113,11 +113,11 @@ export default {
               {
                 text: "去缴费",
                 onClick: function() {
-                  if (process.env.NODE_ENV == "dev") {
-                    window.location = "../../outpatientPay.html";
-                  } else if (process.env.NODE_ENV == "production") {
-                    window.location = "../../2ysechos/outpatientPay.html";
-                  }
+									if (process.env.NODE_ENV == "dev") {
+						        window.location = "../../outpatientPay.html#/ghPay?pbxh="+pbmxxh+"&patid="+self.patid;
+						      } else if (process.env.NODE_ENV == "production") {
+						        window.location = "../../2ysechos/outpatientPay.html#/ghPay?pbxh="+pbmxxh+"&patid="+self.patid;
+						      }
                 }
               },
               { text: "取消", className: "default", onClick: function() {} }

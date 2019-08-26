@@ -24,7 +24,7 @@
 			<div class="weui-cells">
 			  <div class="weui-cell">
 			    <div class="weui-cell__bd">
-			      <input class="weui-input" type="text" readonly="readonly" v-model="blh" @click="selectBlh()">
+			      <input class="weui-input" type="text" readonly="readonly" v-model="blh">
 			    </div>
 			  </div>
 			</div>
@@ -90,9 +90,9 @@
 			</div>
  		</div>
  		
- 		 <el-dialog title="选择要缴费的病历号" :visible.sync="isShow">
+ 		 <!--<el-dialog title="选择要缴费的病历号" :visible.sync="isShow">
 			<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
-		</el-dialog>
+		</el-dialog>-->
   </div>
 </template>
 

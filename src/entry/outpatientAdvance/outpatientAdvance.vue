@@ -39,12 +39,14 @@ import appointChoice from './components/appointChoice'
 			//检查是否有绑定并查询患者门诊信息
 			getInfo(){
 				let self = this;
-				if(self.zjh == null || self.zjh == ''){
+				this.zjh = localStorage.getItem('sec_patientIdcard');
+				this.hzxm = localStorage.getItem('sec_patientName');
+				if(this.zjh == 'null' || this.zjh == '' || this.zjh == null){
 					$.confirm("您并未绑定身份证，请先绑定","提示",function() {
 							if (process.env.NODE_ENV == 'dev') {
-							  window.location='../index.html'
+							  window.location='../index.html#/userBinding'
 							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/index.html'
+							  window.location='../2ysechos/index.html#/userBinding'
 							}
 						}, function() {
 					  	if (process.env.NODE_ENV == 'dev') {
@@ -53,6 +55,7 @@ import appointChoice from './components/appointChoice'
 							  window.location='../2ysechos/index.html'
 							}
 					  });
+					  return;
 				}
 				
 				let data={
@@ -64,12 +67,25 @@ import appointChoice from './components/appointChoice'
 				
 				this.model.getInfo(data).then(function(res){
 					if(res.data.code == '0'){
-						//预约模块 就取病历号最大的
+						//门诊模块 就取门诊自费并且病历号最大的
 						let arr = [];
 						let outArray = res.data.data;
 						for(var i=0;i<outArray.length;i++){
-								let blh = outArray[i].blh;
-								arr.push(parseInt(blh));
+								if(outArray[i].ybdm == '101'){
+									let blh = outArray[i].blh;
+									arr.push(parseInt(blh));
+								}
+						}
+						if(arr.length == 0){
+							$.alert("未查询到您的信息，请先建档", "提示", function() {
+						  //点击确认后的回调函数
+						  if (process.env.NODE_ENV == 'dev') {
+								  window.location='../../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								} else if (process.env.NODE_ENV == 'production') {
+								  window.location='../../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								}
+							});
+							return;
 						}
 						arr.sort().reverse();
 						let val = arr[0];
@@ -82,7 +98,12 @@ import appointChoice from './components/appointChoice'
 					if(res.data.msg == '未查询到门诊患者'){
 						$.alert("未查询到您的信息，请先建档", "提示", function() {
 						  //点击确认后的回调函数
-						  self.$router.push('/userFiling?zjh='+self.zjh)
+//						  self.$router.push('/userFiling?zjh='+self.zjh)
+						  if (process.env.NODE_ENV == 'dev') {
+								  window.location='../../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								} else if (process.env.NODE_ENV == 'production') {
+								  window.location='../../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								}
 						});
 					}
 				})

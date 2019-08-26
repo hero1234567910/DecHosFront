@@ -78,7 +78,11 @@ export default {
   		this.$router.push('/examinationDetail?bhkcode='+ele);
     },
     tomainList(){
-      this.$router.push('/');
+     	if (process.env.NODE_ENV == 'dev') {
+					  window.location='../../index.html';
+					} else if (process.env.NODE_ENV == 'production') {
+					  window.location='../../2ysechos/index.html';
+					}
     },
     examinationList(){
       $.showLoading();

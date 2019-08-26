@@ -13,7 +13,7 @@
  				<div class="header-select weui-col-50">
  					<el-input
  						 @keyup.enter.native="searchKey()"
-				    placeholder="请输入咨询人姓名" 
+				    placeholder="姓名|内容|标题" 
 				    suffix-icon="el-icon-search"
 				    v-model="search"
 				    >
@@ -94,7 +94,9 @@
 				let data = {
 					'page':'1',
 					'limit':'10',
-					'consultationName':this.search
+					'consultationName':this.search,
+					'consultationContentVague':this.search,
+					'consultationTitleVague':this.search
 				}
 				this.model.getList(data).then(function(res){
 					if(res.data.code == '0'){

@@ -10,24 +10,21 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
+    	meta: {
+          keepAlive: true, //此组件需要被缓存
+          isBack:false, //用于判断上一个页面是哪个
+      },
       path: "/",
       name: "reservationList",
       component: reservationList
     },
     {
+    	meta:{
+      	keepAlive: false
+     },
       path: "/reservationDetail",
       name: "reservationDetail",
       component: reservationDetail
-    },
-    {
-      path: "/mycenter",
-      name: "mycenter",
-      component: mycenter
-    },
-    {
-      path: "/userFiling",
-      name: "userFiling",
-      component: userFiling
     }
   ]
 });

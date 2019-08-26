@@ -5,13 +5,12 @@
  		</div>
  		
  		<div class="hero-search">
-	 		
 			<div class="weui-search-bar" id="searchBar">
 			    <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
 			        <div class="weui-search-bar__box">
 			            <i class="weui-icon-search"></i>
 			            <input type="search" class="weui-search-bar__input" id="searchInput"  placeholder="搜索"
-			                   required="" v-model="souInput">
+			                   required="" v-model="souInput" @click="getAllInfo">
 			            <a @click="clear()" class="weui-icon-clear" id="searchClear"></a>
 			        </div>
 			        <label class="weui-search-bar__label" id="searchText">
@@ -84,16 +83,16 @@
 		
 		<div class="hero-Image">
 			<div style="padding: 5px 10px;">
-				<div class="notice-left">
-					<img src="../../../../static/img/通知公告.png" style="width: 95%;vertical-align: middle;"/>
+				<div class="notice-left" style="position: relative;">
+					<img src="../../../../static/img/消息 88 通知 公告.svg" style="width: 48%;vertical-align: middle;position: absolute;top: -12px;left: 16px;"/>
 				</div>
-				<div class="notice-middle" style="width: 60%;">
+				<div class="notice-middle" style="width: 50%;">
 					<div id="s" style="position:relative; white-space:nowrap; overflow:hidden; height:22px;"> 
 						<div id="noticeList" style="position:absolute; top:0; height:20px;"><span id="ms">医院简介</span></div> 
 					</div>
 				</div>
-				<div class="notice-right">
-						更多
+				<div class="notice-right" @click="getMore">
+						查看详情
 				</div>
 			</div>
 			<!--<el-carousel :interval="4000" arrow="always" height="110px">
@@ -196,28 +195,37 @@
 				<img src="../../../../static/img/体检.png" style="width: 100%;"/>
 			</a>
 		</div>
+		
+		<el-dialog title="通告详情" :visible.sync="isShow">
+      <commonSelect v-bind:mzData="mzData" @handleCall="handleCall"></commonSelect>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-
+	import commonSelect from './commonSelect.vue'
 	import model from './model.js'
 	import homeExtend from './homeExtend.vue'
 	import textScroll from './textScroll.js'
+	import evn from '../utils/evn.js'
   export default {
-  	components:{homeExtend},
+  	components:{homeExtend,commonSelect},
   	data() {
     	this.model = model(this.axios)
       return {
       	seller:[],
       	souInput:'',
       	homeShow:false,
+      	isShow: false,
+      	mzData: {},
+      	InfoData:{},
+      	arr:[]
 //    	img: require('../../../../static/images/QUS{5J8J(UI9V82QY4Q$@N8.jpg'),
 //    	img1: require('../../../../static/images/7B0Q1Z]]1YFW1HOBBB{OFMQ.jpg'),
       }
     },
     created(){
-//  	this.getDepartmentOnDuty()
+    	this.getDepartmentOnDuty()
     },
   	mounted(){
   		this.getTGInfo();
@@ -226,10 +234,30 @@
 			
   	},
   	methods:{
+  		getAllInfo(){
+  			this.seller = this.arr;
+  			console.log(this.seller);
+  		},
+  		getMore(){
+  			this.InfoData.content.replace(
+          /<img src="/g,
+          '<img class="hos-img" src=' + evn.SEC_HOSAPI
+        );
+  			this.mzData = this.InfoData;
+  			
+				console.log(this.mzData);
+  			this.isShow = true;
+  		},
+  		handleCall(res) {
+	      this.isShow = false;
+	      
+	    },
   		getTGInfo(){
-  			this.model.getTGInfo(data).then(function(res){
+  			let self = this;
+  			this.model.getTGInfo().then(function(res){
   				if(res.data.code == 0){
-  					$('#ms').text(res.data.data.trim());
+  					self.InfoData = res.data.data;
+  					$('#ms').text(res.data.data.title);
   				}else{
   					$.toptip("获取通告信息失败", "error");
   				}
@@ -251,7 +279,7 @@
 	          			if(ch[j].czlx == 1){
 	          				ch[j].ksmc += '(专家)'
 	          			}
-	          			self.seller.push(ch[j]);
+	          			self.arr.push(ch[j]);
 	          		}
 	          	}
 	          }
@@ -440,7 +468,11 @@
   }
   
   </script>
-
+<style>
+	.el-dialog {
+	  width: calc(100vw - 20px);
+	}
+</style>
 <style scoped>
 	.el-carousel__item h3 {
     color: #475669;
@@ -460,7 +492,7 @@
 	.hero-Image{
 		height: 66px;
     position: relative;
-    top: -80px;
+    top: -68px;
 	}
 	.hero-mButton{
 		position: absolute;
@@ -592,7 +624,6 @@
 		.notice-right{
 			height: 30px;
 			float: right;
-			padding-left: 10px;
 			color: darkgray;
 			font-size: 14px;
 		}

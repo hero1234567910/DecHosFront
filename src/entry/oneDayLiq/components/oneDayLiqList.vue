@@ -10,6 +10,9 @@
             />
           </div>
           <span style="font-weight: 700;">住院患者一日清查询</span>
+          <!--<div class="ad-button">
+		  			 <el-button type="primary" @click="getInfo">选择病历</el-button>
+		  		</div>-->
         </div>
 
         <div class="re-header-select">
@@ -32,7 +35,7 @@
     </div>
 
     <div style="margin-top:38%;">
-      <div class="re-row" v-for="item in onDayLiqList">
+      <div class="re-row" v-for="item in onDayLiqList" v-show="item.fysj != undefined || item.fysj != null">
         <a href="javascript:;">
           <div class="row-cen">
             <div class="re-img">
@@ -62,6 +65,10 @@
         <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toIndex()">返回主页</a>
       </div>
     </div>
+    
+    <!--<el-dialog title="选择病历号" :visible.sync="isShow">
+				<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
+			</el-dialog>-->
   </div>
 </template>
 
@@ -70,24 +77,110 @@ import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
 import moment from "moment";
 import Jzlsh from '../jzlsh.vue'
+import commonSelect from './commonSelect.vue'
 
 export default {
+	 components:{commonSelect},
   data() {
     this.model = model(this.axios);
     return {
       onDayLiqList: [],
       zjh: localStorage.getItem("sec_patientIdcard"),
       hzxm: localStorage.getItem("sec_patientName"),
-      isShow: false,
       jzlsh: "",
-      allPrice: ""
+      allPrice: "",
+      isShow:false,
+				mzData:[],
+				patid:'',
+				blh:''
     };
   },
+  
   mounted() {
     this.init();
-    this.getInPatientInfoByPatid();
+    this.getInfo();
   },
   methods: {
+  	//获取病历号
+//		getInfo(){
+//				let self = this;
+//				$.showLoading();
+//				let data={
+//					hzxm:this.hzxm,
+//					zjh:this.zjh,
+//					action:'zy',
+//					openid:localStorage.getItem('sec_openId')
+//				}
+//				
+//				this.model.getInfo(data).then(function(res){
+//					$.hideLoading();
+//					if(res.data.code == '0'){
+//						self.mzData = res.data.data;
+//						self.isShow = true;
+//					}else{
+//						$.toptip(res.data.msg,'error');
+//					}
+//				})
+//			},
+			//检查是否有绑定并查询患者住院信息
+  		getInfo(){
+				let self = this;
+				this.zjh = localStorage.getItem('sec_patientIdcard');
+				this.hzxm = localStorage.getItem('sec_patientName');
+				if(this.zjh == 'null' || this.zjh == '' || this.zjh == null){
+					$.confirm("您并未绑定身份证，请先绑定","提示",function() {
+							if (process.env.NODE_ENV == 'dev') {
+							  window.location='../index.html#/userBinding'
+							} else if (process.env.NODE_ENV == 'production') {
+							  window.location='../2ysechos/index.html#/userBinding'
+							}
+						}, function() {
+					  	if (process.env.NODE_ENV == 'dev') {
+							  window.location='../index.html'
+							} else if (process.env.NODE_ENV == 'production') {
+							  window.location='../2ysechos/index.html'
+							}
+					  });
+					  return;
+				}
+				
+				let data={
+					hzxm:this.hzxm,
+					zjh:this.zjh,
+					action:'zy',
+					openid:localStorage.getItem('sec_openId')
+				}
+				
+				this.model.getInfo(data).then(function(res){
+					if(res.data.code == '0'){
+						//住院缴费模块 就取病历号最大的
+						let arr = [];
+						let hosArray = res.data.data;
+						for(var i=0;i<hosArray.length;i++){
+								let blh = hosArray[i].blh;
+								arr.push(parseInt(blh));
+						}
+						arr.sort().reverse();
+						let val = arr[0];
+						for(var i=0;i<hosArray.length;i++){
+							if(val == hosArray[i].blh){
+								self.patid = hosArray[i].patid;
+								self.blh = hosArray[i].blh;
+								self.getInPatientInfoByPatid();
+							}
+						}
+					}else{
+						$.alert("未查询到您的住院信息", "提示", function() {
+						});
+					}
+				})
+			},
+  	handleCall(res){
+  			this.isShow = false;
+				this.blh = res.blh;
+				this.patid = res.patid;
+				this.getInPatientInfoByPatid();
+			},
     init() {
       $("#cxrq").calendar({
         dateFormat: "yyyy-mm-dd"
@@ -119,7 +212,7 @@ export default {
           //console.log(i);
           //console.log(res.data.data[i - 1].zje);
           self.allPrice = res.data.data[i - 1].zje;
-          self.isShow = false;
+//        self.isShow = false;
         } else {
           $.toptip(res.data.msg, "error");
         }
@@ -130,15 +223,13 @@ export default {
       let self = this;
       let data={
         hzxm:self.hzxm,
-        patid:this.$route.query.patid,
+        patid:self.patid,
         zyzt:'0'
       }
       this.model.getInPatientInfoByPatid(data).then(function(res){
         if(res.data.code == "0"){
             Jzlsh.jzlsh = res.data.data[0].jzlsh;
-            //console.log(res.data.data[0].jzlsh)
             self.jzlsh = res.data.data[0].jzlsh;
-            //console.log(self.jzlsh);
         }else {
           $.toptip(res.data.msg, "error");
         }
@@ -184,6 +275,10 @@ export default {
 </style>
 
 <style scoped>
+	.el-button--primary{
+		background-color: #4CCBDB;
+		border-color: #4CCBDB;
+	}
 .weui-btn_primary {
   background-color: #4ccbdb;
 }
@@ -277,4 +372,10 @@ input::-webkit-input-placeholder {
   float: left;
   position: relative;
 }
+.ad-button{
+		float: right;
+		margin-right: 10px;
+		position: relative;
+    top: -7px;
+	}
 </style>
