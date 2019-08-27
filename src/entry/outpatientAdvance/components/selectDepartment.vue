@@ -101,7 +101,7 @@
 				    	if (process.env.NODE_ENV == 'dev') {
 						  window.location='../../reservation.html'
 						} else if (process.env.NODE_ENV == 'production') {
-						  window.location='../../sechos/reservation.html'
+						  window.location='../../2ysechos/reservation.html'
 						}
 				    } },
 				    { text: "取消", className: "default", onClick: function(){ } },

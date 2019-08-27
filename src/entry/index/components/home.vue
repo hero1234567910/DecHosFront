@@ -5,19 +5,25 @@
  		</div>
  		
  		<div class="hero-search">
-	 		<div class="weui-search-bar" id="searchBar">
-			  <form class="weui-search-bar__form">
-			    <div class="weui-search-bar__box">
-			      <i class="weui-icon-search"></i>
-			      <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="" required="">
-			      <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-			    </div>
-			    <label class="weui-search-bar__label" id="searchText">
-			      <i class="weui-icon-search"></i>
-			      <span>搜索</span>
-			    </label>
-			  </form>
-			  <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+	 		
+			<div class="weui-search-bar" id="searchBar">
+			    <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
+			        <div class="weui-search-bar__box">
+			            <i class="weui-icon-search"></i>
+			            <input type="search" class="weui-search-bar__input" id="searchInput"  placeholder="搜索"
+			                   required="" v-model="souInput">
+			            <a @click="clear()" class="weui-icon-clear" id="searchClear"></a>
+			        </div>
+			        <label class="weui-search-bar__label" id="searchText">
+			            <i class="weui-icon-search"></i>
+			            <span>查询科室名称，便捷挂号</span>
+			        </label>
+			    </form>
+			    <a @click="cancel()" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+			</div>
+			
+			<div class="content" style="z-index: 100000000;position: absolute;background-color: white;width: 100%;">
+				<homeExtend :seller="seller" :souInput="souInput" v-show="homeShow" @tohomeShow='tohomeShow'></homeExtend>
 			</div>
 		</div>
 		
@@ -26,15 +32,15 @@
 				<div class="hero-panel2_header"><strong>门诊服务</strong></div>
 				<div style="margin-left: 5px;margin-right: 5px;width: calc(100% - 10px);">
 					<div class="weui-row">
-					  <div class="weui-col-33" @click="toOutpatientAd()"> <!--style="background-image:url(../../../../static/img/预约.png)	; background-size: 100% 100%;"-->
-					  		<img src="../../../../static/img/预约.png" style="width: 100%;"/>
+					  <div class="weui-col-50" style="position: relative;" @click="toOutpatientAd()"> <!--style="background-image:url(../../../../static/img/预约.png)	; background-size: 100% 100%;"-->
+					  		<img src="../../../../static/img/预约.png" style="width: 100%;position: absolute;"/>
 					  </div>
-					  <div class="weui-col-33" @click="toOutpatientPay()">
-					  	<img src="../../../../static/img/缴费.png" style="width: 100%;"/>
+					  <div class="weui-col-50" style="position: relative;" @click="toOutpatientPay()">
+					  	<img src="../../../../static/img/缴费.png" style="width: 100%;position: absolute;"/>
 					  </div>
-					  <div class="weui-col-33">
+					  <!--<div class="weui-col-33">
 					  	<img src="../../../../static/img/健康卡1.png" style="width: 100%;" />
-					  </div>
+					  </div>-->
 					</div>
 					<div style="margin-left: 20px;margin-right: 20px;margin-top: 10px;height: 60px;">
 						<div class="weui-row" style="height: 80px;">
@@ -63,21 +69,32 @@
 								</a>
 							</div>
 							<div class="weui-col-25">
-								<div class="hero-col-img">
-									<img src="../../../../static/img/复诊提醒1.png" style="width: 100%;"/>
-								</div>
-								<div class="hero-col-dec">复诊提醒</div>
+								<a href="javascript:;" v-on:click="toProfessor()">
+									<div class="hero-col-img">
+										<img src="../../../../static/images/专家.png" style="width: 100%;"/>
+									</div>
+									<div class="hero-col-dec">专家信息</div>
+								</a>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		
+		<div class="hero-Image">
+			<el-carousel :interval="4000" type="card" height="200px">
+		    <el-carousel-item v-for="item in 6" :key="item">
+		      <h3>{{ item }}</h3>
+		    </el-carousel-item>
+		  </el-carousel>
+		</div>
+		
 		<div style="position: relative;top: -80px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
 			<div class="hero-panel2_header" style="height: 30px;"><strong>在院服务</strong></div>
 			<div style="margin-left: 20px;margin-right: 20px;height: 70px;">
 				<div class="weui-row" style="height: 80px;">
-					<div class="weui-col-25">
+					<!--<div class="weui-col-25">
 						<a href="javascript:;" v-on:click="toSection()">
 							<div class="hero-col-img">
 								<img src="../../../../static/img/科室预约-.png" style="width: 100%;"/>
@@ -90,7 +107,7 @@
 							<img src="../../../../static/img/病房预约-.png" style="width: 100%;"/>
 						</div>
 						<div class="hero-col-dec">病房预约</div>
-					</div>
+					</div>-->
 					<div class="weui-col-25">
 						<a href="javascript:;" @click="toInformation('rydy')">
 						<div class="hero-col-img">
@@ -107,11 +124,6 @@
 						<div class="hero-col-dec">住院须知</div>
 						</a>
 					</div>
-				</div>
-			</div>
-
-			<div style="margin-left: 20px;margin-right: 20px;height: 70px;margin-top:6px;">
-				<div class="weui-row" style="height: 80px;">
 					<div class="weui-col-25">
 						<a href="javascript:;" v-on:click="toDepartment()">
 							<div class="hero-col-img">
@@ -121,18 +133,12 @@
 						</a>
 					</div>
 					<div class="weui-col-25">
-						<a href="javascript:;" v-on:click="toProfessor()">
+						<a href="javascript:;" v-on:click="toOneDay()">
 						<div class="hero-col-img">
-							<img src="../../../../static/images/专家.png" style="width: 100%;"/>
+							<img src="../../../../static/images/复诊.png" style="width: 100%;"/>
 						</div>
-						<div class="hero-col-dec">专家信息</div>
+						<div class="hero-col-dec">住院一日清</div>
 						</a>
-					</div>
-					<div class="weui-col-25">
-						
-					</div>
-					<div class="weui-col-25">
-						
 					</div>
 				</div>
 			</div>
@@ -143,20 +149,20 @@
 		
 		<div class="hero-panel3">
 			<div class="weui-flex">
-			  <div class="weui-flex__item">
+			  <div class="weui-flex__item" v-on:click="toHospitalizationService()">
 			  	<div class="hero-item-img">
 							<img src="../../../../static/img/住院中--.png" style="width: 100%;"/>
-							<a href="javascript:;" v-on:click="toHospitalizationService()">
+							<a href="javascript:;">
 								<div class="hero-mButton">
 									<img src="../../../../static/img/进入.png" style="width: 100%;"/>
 								</div>
 							</a>
 						</div>
 			  </div>
-			  <div class="weui-flex__item">
+			  <div class="weui-flex__item" v-on:click="outHospitalService()">
 			  	<div class="hero-item-img" style="margin-top: 20px;margin-left: 5px;">
 							<img src="../../../../static/img/图片1.png" style="width: 100%;"/>
-							<a href="javascript:;" v-on:click="outHospitalService()">
+							<a href="javascript:;">
 								<div class="hero-mButton" style="top: 56px;">
 									<img src="../../../../static/img/进入.png" style="width: 100%;"/>
 								</div>
@@ -175,19 +181,62 @@
   </div>
 </template>
 
-
 <script>
+
 	import model from './model.js'
+	import homeExtend from './homeExtend.vue'
   export default {
+  	components:{homeExtend},
   	data() {
     	this.model = model(this.axios)
       return {
+      	seller:[],
+      	souInput:'',
+      	homeShow:false
       }
     },
+    created(){
+//  	this.getDepartmentOnDuty()
+    },
   	mounted(){
-//		this.getUserInfo();
+		
   	},
   	methods:{
+  		getDepartmentOnDuty() {
+	      $.showLoading();
+	      let self = this;
+	      let data = {};
+	      this.model.getDepartmentOnDuty(data).then(function(res) {
+	        $.hideLoading();
+	        if (res.data.code == "0") {
+	        	console.log(res.data.data)
+	          let arr = res.data.data;
+	          for(var i=0;i<arr.length;i++){
+	          	var ch = arr[i].children;
+	          	if(ch.length > 0){
+	          		for(var j=0;j<ch.length;j++){
+	          			if(ch[j].czlx == 1){
+	          				ch[j].ksmc += '(专家)'
+	          			}
+	          			self.seller.push(ch[j]);
+	          		}
+	          	}
+	          }
+	        } else {
+	          $.toptip(res.data.msg, "error");
+	        }
+	      });
+	    },
+				
+			cancel(){
+				this.homeShow = false;
+			},
+			clear(){
+				this.homeShow = false;
+			},
+			tohomeShow(){
+				this.homeShow = true;
+			},
   		getUserInfo(){
 			let self = this;
     		let data = this.GetQueryString('code');
@@ -203,7 +252,7 @@
     				
 //  				if(res.data.data.patientName == null || res.data.data.patientName == ''){
 //  					//说明没有绑定患者信息，去绑定
-//  					$.alert("您并未绑定患者信息，清先绑定", "提示", function() {
+//  					$.alert("您并未绑定患者信息，请先绑定", "提示", function() {
 //							 	$('#cen').addClass('.weui-bar__item--on');
 //							});
 //  				}
@@ -254,32 +303,39 @@
 			     var r = window.location.search.substr(1).match(reg);//search,查询？后面的参数，并匹配正则
 			     if(r!=null)return  decodeURI(r[2]); return null;
 			},
+			toOneDay(){
+				if (process.env.NODE_ENV == 'dev') {
+				  window.location='../../oneDayLiq.html'
+				} else if (process.env.NODE_ENV == 'production') {
+				  window.location='../../2ysechos/oneDayLiq.html'
+				}
+			},
   		toOutpatientPay(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../outpatientPay.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/outpatientPay.html'
+				  window.location='../../2ysechos/outpatientPay.html'
 				}
   		},
   		toconsultation(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../consultation.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/consultation.html'
+				  window.location='../../2ysechos/consultation.html'
 				}
   		},
   		toHospitalizationService(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../hospitalizationService.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/hospitalizationService.html'
+				  window.location='../../2ysechos/hospitalizationService.html'
 				}
   		},
   		toSection(){
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../sections.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/sections.html'
+				  window.location='../../2ysechos/sections.html'
 				}
   		},
   		toInformation(str){
@@ -302,19 +358,19 @@
 				}
 				} else if (process.env.NODE_ENV == 'production') {
 				if(str == 'jzxz'){
-  					window.location='../../sechos/hosProfile.html?infoType=PatientNeedtoKnow'
+  					window.location='../../2ysechos/hosProfile.html?infoType=PatientNeedtoKnow'
   				}
   				if(str == 'rydy'){
-  					window.location='../../sechos/hosProfile.html?infoType=DirectAdmission'
+  					window.location='../../2ysechos/hosProfile.html?infoType=DirectAdmission'
   				}
   				if(str == 'zyxz'){
-  					window.location='../../sechos/hosProfile.html?infoType=Hospitalisation'
+  					window.location='../../2ysechos/hosProfile.html?infoType=Hospitalisation'
 				}
 				if(str == 'dzt'){
-  					window.location='../../sechos/hosProfile.html?infoType=HospitalGuide'
+  					window.location='../../2ysechos/hosProfile.html?infoType=HospitalGuide'
 				}
 				if(str == 'tjyy'){
-  					window.location='../../sechos/hosProfile.html?infoType=MedicalAppointment'
+  					window.location='../../2ysechos/hosProfile.html?infoType=MedicalAppointment'
 			    }
 				}
   		},
@@ -322,36 +378,55 @@
   			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../outpatientAdvance.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/outpatientAdvance.html'
+				  window.location='../../2ysechos/outpatientAdvance.html'
 				}
   		},
 		outHospitalService(){
 			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../outhospitalService.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/outhospitalService.html'
+				  window.location='../../2ysechos/outhospitalService.html'
 				}
 		},
 		toDepartment(){
 			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../introduceDepartment.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/introduceDepartment.html'
+				  window.location='../../2ysechos/introduceDepartment.html'
 				}
 		},
 		toProfessor(){
 			if (process.env.NODE_ENV == 'dev') {
 				  window.location='../../introduceProfessor.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../../sechos/introduceProfessor.html'
+				  window.location='../../2ysechos/introduceProfessor.html'
 				}
 		}
 		
   	}
   }
+  
   </script>
 
 <style scoped>
+	.el-carousel__item h3 {
+    color: #475669;
+    font-size: 14px;
+    opacity: 0.75;
+    line-height: 200px;
+    margin: 0;
+  }
+  
+  .el-carousel__item:nth-child(2n) {
+    background-color: #99a9bf;
+  }
+  
+  .el-carousel__item:nth-child(2n+1) {
+    background-color: #d3dce6;
+  }
+	.hero-Image{
+		
+	}
 	.hero-mButton{
 		position: absolute;
     top: 77px;
@@ -377,7 +452,7 @@
 		height: 20px;
 		line-height: 20px;
 		    width: 100%;
-    font-size: 6px;
+    font-size: 12px;
     color: #b2b2b2;
     text-align: center;
 	}
@@ -397,7 +472,7 @@
 		height: 100%;
 	}
 	.weui-row{
-		height: 70px;
+		height: 113px;
 	}
 	.hero-panel2_header{
 		width: 100%;
@@ -416,7 +491,7 @@
     box-shadow: 1px 2px 6px #888888;
 	}
 	.hero-panel{
-		height: 190px;
+		height: 233px;
 		width: 100%;
 		    position: relative;
     top: -90px;

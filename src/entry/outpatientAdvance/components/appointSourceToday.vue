@@ -111,12 +111,12 @@ export default {
             text: "预约成功",
             buttons: [
               {
-                text: "预约信息",
+                text: "去缴费",
                 onClick: function() {
                   if (process.env.NODE_ENV == "dev") {
                     window.location = "../../outpatientPay.html";
                   } else if (process.env.NODE_ENV == "production") {
-                    window.location = "../../sechos/outpatientPay.html";
+                    window.location = "../../2ysechos/outpatientPay.html";
                   }
                 }
               },

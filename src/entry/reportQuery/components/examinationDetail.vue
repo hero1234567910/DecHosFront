@@ -1,5 +1,5 @@
 <template>
-  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;">
+  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;overflow: auto;">
    <el-card class="box-card">
 		  <div slot="header" class="clearfix">
 		  	<div class="card-hero">
@@ -43,7 +43,7 @@
 						    </div>
 						    <div class="weui-cell__ft">
 						    	<div class="bd-img">
-							  		<img src="../../../../static/img/注意.png" v-show="!item.groupconclusion == '正常' " style="position: absolute;top: 4px;width: 63%;right: 10px;"/>
+							  		<img src="../../../../static/img/注意.png" v-if="!checkShow(item.groupconclusion)" style="position: absolute;top: 4px;width: 63%;right: 10px;"/>
 							  	</div>
 						    </div>
 						  </div>
@@ -92,6 +92,12 @@
 		  </div>
 		</div>
 		
+		<div style="margin-top: 30px;margin-bottom: 10px;">
+				<div>
+					<a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toReport()">返回体检查询</a>
+				</div>
+		</div>
+		
   </div>
 </template>
 <script>
@@ -115,21 +121,54 @@ export default {
 		};
   },
   mounted() {
-    this.getExaminatinoDetail();
+//  this.getExaminatinoDetail();
   },
+  beforeRouteEnter(to, from, next) {
+      // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
+      // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
+      // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
+      // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
+      if(from.name=='examinationItemDetail'){
+          to.meta.isBack=true;
+          //判断是从哪个路由过来的，
+          //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+      }
+      console.log(to.meta.isBack);
+      next();
+    },
+    activated() {
+		  if(!this.$route.meta.isBack){
+		    // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+					this.getExaminatinoDetail();
+		  }
+		  // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+		  this.$route.meta.isBack=false
+		 
+		},
   methods: {
+  	checkShow(ele){
+  		console.log(ele == '未见异常。');
+  		return ele == '未见异常。';
+  	},
+  	 toReport(){
+  	 	this.$router.push('/examinationList');
+  	 },
   	toItemDetail(e1,e2,e3){
-		global1.groupconclusion = e1;
-		global1.groupname = e2;
-  		this.$router.push('/examinationItemDetail'+ele);
+		global1.groupconclusion = JSON.stringify(e1);
+		global1.groupname = JSON.stringify(e2);
+  		this.$router.push('/examinationItemDetail?e3='+JSON.stringify(e3));
 	  },
 	getExaminatinoDetail(){
 		$.showLoading();
 		let self = this;
-		let da = this.$route.query;
-		this.model.getMedicalReportInfo(da).then(function(res){
+		let da = self.$route.query.bhkcode;
+		let data = {
+			bhkcode:da
+		}
+		this.model.getMedicalReportInfo(data).then(function(res){
 			$.hideLoading();
-			if(res.data.code == 1){
+			if(res.data.code == 0){
+				console.log(res.data.data);
 				self.ExaminationDetails = res.data.data.grouplist;
 				self.name = res.data.data.name;
 				self.bhkcode = res.data.data.bhkcode;
@@ -154,6 +193,12 @@ export default {
 	}
 </style>
 <style scoped>
+	.weui-btn_primary{
+		background-color: #4CCBDB;
+	}
+	.weui-btn{
+		width: 230px;
+	}
 	.bd-img{
 		width: 30px;
 		height: 25px;
@@ -208,6 +253,9 @@ export default {
 	}
 	.weui-media-box__title{
 		font-size: 13px;
+	}
+	.weui-panel:after{
+		position: fixed;
 	}
 </style>
  

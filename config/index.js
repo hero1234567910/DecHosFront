@@ -12,7 +12,7 @@ module.exports = {
 
     // Paths
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
     // 下面是代理表，作用是用来，建一个虚拟api服务器用来代理本机的请求，只能用于开发模式
     proxyTable: {
         "/demo/api":"http://localhost:7070"
@@ -56,7 +56,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),  // 静态资源的根目录 也就是dist目录
     assetsSubDirectory: 'static',  // 静态资源根目录的子目录static，也就是dist目录下面的static
-    assetsPublicPath: '/dist/',   // 静态资源的公开路径，也就是真正的引用路径
+    assetsPublicPath: '',   // 静态资源的公开路径，也就是真正的引用路径
    	
     /**
      * Source Maps

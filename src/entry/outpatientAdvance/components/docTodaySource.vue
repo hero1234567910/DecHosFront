@@ -114,7 +114,7 @@ export default {
                   if (process.env.NODE_ENV == "dev") {
                     window.location = "../../outpatientPay.html";
                   } else if (process.env.NODE_ENV == "production") {
-                    window.location = "../../sechos/outpatientPay.html";
+                    window.location = "../../2ysechos/outpatientPay.html";
                   }
                 }
               },

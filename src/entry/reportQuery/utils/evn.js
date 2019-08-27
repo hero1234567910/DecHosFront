@@ -7,7 +7,7 @@ if (process.env.NODE_ENV == 'dev') {
   }
 } else if (process.env.NODE_ENV == 'production') {
   ENV_CONFIG = {
-		SEC_HOSAPI:"http://yl.nxjnjc.com"
+		SEC_HOSAPI:"https://p.zjgwsjk.com/2ysechos"
   }
 } else if (process.env.NODE_ENV == 'test') {
   ENV_CONFIG = {

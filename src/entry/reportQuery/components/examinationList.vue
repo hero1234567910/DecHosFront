@@ -75,7 +75,7 @@ export default {
   },
   methods: {
   	toExaminationDetail(ele){
-  		this.$router.push('/examinationDetail?bkhcode='+ele);
+  		this.$router.push('/examinationDetail?bhkcode='+ele);
     },
     tomainList(){
       this.$router.push('/');
@@ -89,8 +89,9 @@ export default {
       };
       this.model.getMedicalReportList(data).then(function(res){
         $.hideLoading();
-        if(res.data.code == 1){
-          self.ExaminationList = res.data.data;
+        if(res.data.code == 0){
+          let examinationLists = res.data.data;
+          self.ExaminationList = examinationLists;
         }else{
           $.toptip(res.data.msg, "error");
         }
@@ -98,13 +99,13 @@ export default {
     },
     statusCheck(ele){
       switch(ele){
-        case "0":
+        case 0:
           return "未完成体检";
           break;
-        case "1":
+        case 1:
           return "已完成体检";
           break;
-        case "2":
+        case 2:
           return "已完成主检";
           break;
       }

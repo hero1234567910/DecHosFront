@@ -1,17 +1,18 @@
-export function jsSDK (params) {
+export function jsSDK (params,ele) {
   if (typeof window.WeixinJSBridge === 'undefined') {
     if (document.addEventListener) {
-      document.addEventListener('WeixinJSBridgeReady', function () { onBridgeReady(params) }, false)
+      document.addEventListener('WeixinJSBridgeReady', function () { onBridgeReady(params,ele) }, false)
     } else if (document.attachEvent) {
-      document.attachEvent('WeixinJSBridgeReady', function () { onBridgeReady(params) })
-      document.attachEvent('onWeixinJSBridgeReady', function () { onBridgeReady(params) })
+      document.attachEvent('WeixinJSBridgeReady', function () { onBridgeReady(params,ele) })
+      document.attachEvent('onWeixinJSBridgeReady', function () { onBridgeReady(params,ele) })
     }
   } else {
-    onBridgeReady(params)
+    onBridgeReady(params,ele)
   }
 }
 
-function onBridgeReady (params) {
+function onBridgeReady (params,ele) {
+	let self = ele;
   window.WeixinJSBridge.invoke(
     'getBrandWCPayRequest', {
       'appId': params.appId, // 公众号名称，由商户传入
@@ -24,14 +25,14 @@ function onBridgeReady (params) {
     function (res) {
 //    location.href = params.Url
 		if(res.err_msg == "get_brand_wcpay_request:ok" ){
-	      	self.$router.push('/noticeSuccess?action='+self.action)
+	      	self.$router.push('/noticeSuccess')
 	      } 				      	
   		if(res.err_msg == "get_brand_wcpay_request:cancel" ){
 	      	$.toast("取消支付", "forbidden");
 	      	if (process.env.NODE_ENV == 'dev') {
 				  window.location='../index.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../sechos/index.html'
+				  window.location='../2ysechos/index.html'
 				}
 	      } 
 	      if(res.err_msg == "get_brand_wcpay_request:fail" ){
@@ -39,7 +40,7 @@ function onBridgeReady (params) {
 	      	if (process.env.NODE_ENV == 'dev') {
 				  window.location='../index.html'
 				} else if (process.env.NODE_ENV == 'production') {
-				  window.location='../sechos/index.html'
+				  window.location='../2ysechos/index.html'
 				}
 	      } 
     }

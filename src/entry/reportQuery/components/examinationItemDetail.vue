@@ -1,20 +1,33 @@
 <template>
-  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;">
+  <div class="weui-panel weui-panel_access" style="height: 100%;background-color: #EFF7FD;overflow: auto;">
    <el-card class="box-card">
 		  <div slot="header" class="clearfix">
 		  	<div class="card-hero">
 		  		<img src="../../../../static/img/项目大.png" style="position: absolute;top: -2px;width: 70%;"/>
 		  	</div>
 		    <span style="font-weight: 700;font-size: 16px;float: left;">{{groupname}}</span>
-		    <div class="card-hero-t">
-		  		<img src="../../../../static/img/无异常.png" v-show="groupconclusion=='正常'" style="position: absolute;top: 1px;width: 120%;"/>
-		  	</div>
+		    <!--<div class="card-hero-t">
+		  		<img src="../../../../static/img/无异常.png" v-show="groupconclusion=='未见异常'" style="position: absolute;top: 1px;width: 120%;"/>
+		  	</div>-->
 		  </div>
 		  
-		  <div>
-		  	<span style="color: #999999;">检查医生 : {{doctors}}</span>
-		  </div>
-		  
+		  <div class="weui-cell">
+			    <div class="weui-cell__bd">
+			      <p>检查医生 </p>
+			    </div>
+			    <div class="weui-cell__ft">
+			    	{{doctors}}
+			    </div>
+			</div>
+			
+		  <div class="weui-cell">
+			    <div class="weui-cell__bd">
+			      <p>异常</p>
+			    </div>
+			    <div class="weui-cell__ft">
+			    	{{groupconclusion}}
+			    </div>
+			</div>
 	 </el-card>
 	 
 	  <div class="weui-panel weui-panel_access" style="margin-top: 0px;">
@@ -52,7 +65,7 @@
 						      <p>{{item.itemname}}</p>
 						    </div>
 						    <div class="weui-cell__ft">
-						    	{{item.positive==0?'阳性':'阴性'}}  {{item.itemresult}}
+						    	{{item.positive==0?'阳性':'阴性'}}  {{item.itemresult}}{{item.itemunit}}
 						    </div>
 						</div>
 						
@@ -109,12 +122,12 @@ export default {
 		  let self = this;
 		  let data = this.$route.query;
 		  let doctorName;
-		  self.ItemDetails = this.$route.query;  
-		  self.groupname = global1.groupname;
-		  self.groupconclusion = global1.groupconclusion;
+		  self.ItemDetails = JSON.parse(this.$route.query.e3);  
+		  self.groupname = JSON.parse(global1.groupname);
+		  self.groupconclusion = JSON.parse(global1.groupconclusion);
+		  console.log(self.ItemDetails);
 		  for(var i=0;i<self.ItemDetails.length;i++){
-			  doctorName = self.ItemDetails[i].checkdoctor;
-			  doctorName = +","+ doctorName;
+			  doctorName = self.ItemDetails[0].checkdoctor;
 		  }
 		  self.doctors = doctorName;
 	  },

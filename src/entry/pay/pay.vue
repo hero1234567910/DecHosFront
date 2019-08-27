@@ -10,8 +10,11 @@
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import model from './model.js'
 import CryptoJS from 'crypto-js'
+import noticeSuccess from './components/noticeSuccess.vue'
 import {jsSDK} from './wx.js'
+
   export default {
+	components: {noticeSuccess},
 	data() {
     	this.model = model(this.axios)
       return {
@@ -59,7 +62,7 @@ import {jsSDK} from './wx.js'
 						'package':self.getDAesString(pack),
 						'paySign':self.getDAesString(paySign)
 					}
-					jsSDK(data);
+					jsSDK(data,self);
 //				  WeixinJSBridge.invoke(
 //				      'getBrandWCPayRequest', {
 //				         "appId":self.getDAesString(appId),     //公众号名称，由商户传入     
@@ -80,7 +83,7 @@ import {jsSDK} from './wx.js'
 //						      	if (process.env.NODE_ENV == 'dev') {
 //										  window.location='../index.html'
 //										} else if (process.env.NODE_ENV == 'production') {
-//										  window.location='../sechos/index.html'
+//										  window.location='../2ysechos/index.html'
 //										}
 //						      } 
 //						      if(res.err_msg == "get_brand_wcpay_request:fail" ){
@@ -88,7 +91,7 @@ import {jsSDK} from './wx.js'
 //						      	if (process.env.NODE_ENV == 'dev') {
 //										  window.location='../index.html'
 //										} else if (process.env.NODE_ENV == 'production') {
-//										  window.location='../sechos/index.html'
+//										  window.location='../2ysechos/index.html'
 //										}
 //						      } 
 				      	//

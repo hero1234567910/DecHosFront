@@ -14,31 +14,49 @@ Vue.use(Router);
 export default new Router({
   routes: [
   	{
+  		meta:{
+      	keepAlive: false
+     },
       path: '/',
       name: 'reportMainList',
       component: reportMainList
    },
    {
+   		meta:{
+      	keepAlive: false
+     },
       path: '/reportTab',
       name: 'reportTab',
       component: reportTab
    },
    {
+   		meta:{
+      	keepAlive: false
+     },
       path: '/reportDetail',
       name: 'reportDetail',
       component: reportDetail
    },
    {
+   		meta:{
+      	keepAlive: false
+     },
       path: '/labReportDetail',
       name: 'labReportDetail',
       component: labReportDetail
    },
    {
+   		meta:{
+      	keepAlive: false
+     },
       path: '/userFiling',
       name: 'userFiling',
       component: userFiling
    },
    {
+   		meta:{
+      	keepAlive: false
+     },
       path: '/examinationList',
       name: 'examinationList',
       component: examinationList
@@ -46,12 +64,19 @@ export default new Router({
    {
       path: '/examinationDetail',
       name: 'examinationDetail',
-      component: examinationDetail
+      component: examinationDetail,
+       meta: {
+              keepAlive: true, //此组件需要被缓存
+              isBack:false, //用于判断上一个页面是哪个
+          }
    },
    {
       path: '/examinationItemDetail',
       name: 'examinationItemDetail',
-      component: examinationItemDetail
+      component: examinationItemDetail,
+      meta:{
+      	keepAlive: false
+      }
    }
   ]
 })
