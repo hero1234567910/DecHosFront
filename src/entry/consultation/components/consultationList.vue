@@ -16,6 +16,7 @@
 				    placeholder="姓名|内容|标题" 
 				    suffix-icon="el-icon-search"
 				    v-model="search"
+						@blur="searchKey()"
 				    >
 				  </el-input>
  				</div>
