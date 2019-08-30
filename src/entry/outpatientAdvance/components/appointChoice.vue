@@ -61,7 +61,7 @@ export default {
     return {};
   },
   created() {
-    this.getServerDate();
+    
   },
   mounted() {
     var mySwiper = new Swiper(".swiper-container", {
@@ -76,10 +76,12 @@ export default {
         el: ".swiper-pagination"
       }
     });
-    this.checkTime();
+    //this.getServerDate();
+    //this.checkTime();
   },
   methods: {
     toDayOutPatient() {
+      let self = this;
       if (!this.checkTime()) {
         $.alert({
           title: "温馨提示",
@@ -93,12 +95,12 @@ export default {
           }
         });
       }else{
-        let self = this;
         self.$router.push("/outpatientMainToday");
       }
       
     },
     appointOutPatient() {
+      let self = this;
       if (!this.checkTime()) {
         $.alert({
           title: "温馨提示",
@@ -112,7 +114,6 @@ export default {
           }
         });
       }else{
-        let self = this;
         self.$router.push("/outpatientMain");
       }
       
@@ -134,7 +135,7 @@ export default {
       //console.log(time);
       //console.log(time.getHours());
       let serverHour = time.getHours();
-      console.log(serverHour);
+      //console.log(serverHour);
       if (serverHour > 16||serverHour<7) {
         return false;
       } else {
