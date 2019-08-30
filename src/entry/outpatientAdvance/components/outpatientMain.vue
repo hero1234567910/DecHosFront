@@ -102,7 +102,8 @@
   		},
   		init() {
 	      $("#ksrq").calendar({
-				  dateFormat:'yyyy-mm-dd'
+				  dateFormat:'yyyy-mm-dd',
+				  minDate:new Date()
 			  });
 	      $("#jsrq").calendar({
 				  dateFormat:'yyyy-mm-dd'
