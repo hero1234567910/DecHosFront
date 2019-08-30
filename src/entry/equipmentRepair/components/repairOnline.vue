@@ -4,19 +4,35 @@
       <img style="height:100%;height: 138px;" src="../../../../static/img-2/ylsbzxbx.png" />
     </div>
     <div class="weui-cells weui-cells_form" style="margin-top:0px;">
-      <div class="weui-cells__title-wzl">申修人姓名</div>
+      <div class="weui-cells__title-wzl">报修人姓名</div>
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="申修人姓名(必填)" />
+            <input class="weui-input" type="text" placeholder="报修人姓名(必填)" />
           </div>
         </div>
       </div>
-      <div class="weui-cells__title-wzl">申修人电话</div>
+      <div class="weui-cells__title-wzl">报修人电话</div>
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="申修人电话(必填)" />
+            <input class="weui-input" type="text" placeholder="报修人电话(必填)" />
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells__title-wzl">设备名称</div>
+      <div class="weui-cells" style="margin-top:0px;">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="设备名称(必填)" />
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells__title-wzl">设备位置</div>
+      <div class="weui-cells" style="margin-top:0px;">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" placeholder="设备位置(必填)" />
           </div>
         </div>
       </div>
