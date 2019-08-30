@@ -58,10 +58,12 @@ import model from "./model.js";
 export default {
   data() {
     this.model = model(this.axios);
-    return {};
+    return {
+      serverTime: ""
+    };
   },
   created() {
-    
+    this.getServerDate();
   },
   mounted() {
     var mySwiper = new Swiper(".swiper-container", {
@@ -76,7 +78,7 @@ export default {
         el: ".swiper-pagination"
       }
     });
-    //this.getServerDate();
+
     //this.checkTime();
   },
   methods: {
@@ -94,10 +96,9 @@ export default {
             }
           }
         });
-      }else{
+      } else {
         self.$router.push("/outpatientMainToday");
       }
-      
     },
     appointOutPatient() {
       let self = this;
@@ -113,10 +114,9 @@ export default {
             }
           }
         });
-      }else{
+      } else {
         self.$router.push("/outpatientMain");
       }
-      
     },
     getServerDate() {
       let xhr = null;
@@ -125,18 +125,18 @@ export default {
       } else {
         xhr = new ActiveObject("Microsoft");
       }
-      xhr.open("GET", "/", false);
+      xhr.open("GET", "/", false); //false不可变
       xhr.send(null);
       let date = xhr.getResponseHeader("Date");
-      return new Date(date);
+      this.serverTime = new Date(date).getHours();
+      console.log(this.serverTime);
     },
     checkTime() {
-      let time = this.getServerDate();
-      //console.log(time);
       //console.log(time.getHours());
-      let serverHour = time.getHours();
-      //console.log(serverHour);
-      if (serverHour > 16||serverHour<7) {
+      let serverHour = this.serverTime;
+
+      console.log(serverHour);
+      if (serverHour >= 16 || serverHour <= 7) {
         return false;
       } else {
         return true;
