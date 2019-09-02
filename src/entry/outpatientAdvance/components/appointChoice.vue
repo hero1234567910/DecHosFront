@@ -129,13 +129,13 @@ export default {
       xhr.send(null);
       let date = xhr.getResponseHeader("Date");
       this.serverTime = new Date(date).getHours();
-      console.log(this.serverTime);
+      //console.log(this.serverTime);
     },
     checkTime() {
       //console.log(time.getHours());
       let serverHour = this.serverTime;
 
-      console.log(serverHour);
+      //console.log(serverHour);
       if (serverHour >= 16 || serverHour <= 7) {
         return false;
       } else {
