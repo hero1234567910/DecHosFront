@@ -63,7 +63,7 @@ export default {
     };
   },
   created() {
-    this.getServerDate();
+   
   },
   mounted() {
     var mySwiper = new Swiper(".swiper-container", {
@@ -78,7 +78,7 @@ export default {
         el: ".swiper-pagination"
       }
     });
-
+    this.getServerDate();
     //this.checkTime();
   },
   methods: {
@@ -129,13 +129,11 @@ export default {
       xhr.send(null);
       let date = xhr.getResponseHeader("Date");
       this.serverTime = new Date(date).getHours();
-      $.toast(new Date(date), "text");
+      $.toast(new Date(date)+"||"+this.serverTime, "text");
     },
     checkTime() {
       //console.log(time.getHours());
       let serverHour = this.serverTime;
-
-      $.alert(serverHour);
       if (serverHour >= 16 || serverHour <= 7) {
         return false;
       } else {
