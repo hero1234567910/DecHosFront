@@ -134,14 +134,14 @@ export default {
           date = new Date(time);
           this.serverTime = new Date(time).getHours();
           //console.log(date);
-          $.alert(date + "||" + this.serverTime);
+          //$.alert(date + "||" + this.serverTime);
         }
       };    
     },
     checkTime() {
       //console.log(time.getHours());
       let serverHour = this.serverTime;
-      if (serverHour >= 16 || serverHour <= 7) {
+      if (serverHour >= 16) {
         return false;
       } else {
         return true;
