@@ -129,7 +129,7 @@ export default {
       xhr.send(null);
       let date = xhr.getResponseHeader("Date");
       this.serverTime = new Date(date).getHours();
-      $.toast(new Date(date)+"||"+this.serverTime, "text");
+      $.alert(new Date(date)+"||"+this.serverTime);
     },
     checkTime() {
       //console.log(time.getHours());
