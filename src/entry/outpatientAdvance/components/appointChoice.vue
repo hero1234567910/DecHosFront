@@ -123,12 +123,8 @@ export default {
       } else {
         xhr = new ActiveObject("Microsoft");
       }
-      //xhr.setRequestHeader("Content-type", "application/json;charset=utf-8");
-      // xhr.open("GET", "/", false); //false不可变
-      // xhr.send(null);
-      // let date = xhr.getResponseHeader("Date");
-      // this.serverTime = new Date(date).getHours();
       xhr.open("GET", "/", true);
+      xhr.setRequestHeader("Content-type", "application/json;charset=utf-8");
       xhr.send(null);
       let time, date;
       xhr.onreadystatechange = function() {
