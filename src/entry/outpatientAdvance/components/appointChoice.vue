@@ -129,13 +129,13 @@ export default {
       xhr.send(null);
       let date = xhr.getResponseHeader("Date");
       this.serverTime = new Date(date).getHours();
-      //console.log(this.serverTime);
+      $.toast(new Date(date), "text");
     },
     checkTime() {
       //console.log(time.getHours());
       let serverHour = this.serverTime;
 
-      //console.log(serverHour);
+      $.alert(serverHour);
       if (serverHour >= 16 || serverHour <= 7) {
         return false;
       } else {
