@@ -54,7 +54,7 @@
 			<div class="weui-cells">
 			  <div class="weui-cell">
 			    <div class="weui-cell__bd">
-			      <input class="weui-input" type="number" placeholder="请输入缴费金额" v-model="yjMoney">
+			      <input class="weui-input" type="number" placeholder="请选择下列缴费金额" v-model="yjMoney" readonly>
 			    </div>
 			  </div>
 			</div>
@@ -68,9 +68,6 @@
  		<div class="ad-select">
 			<div class="weui-row" style="height: 60px;width: calc(100vw - 20px);margin-left: auto;margin-right: auto;">
 				<div class="weui-col-25">
-					<a href="javascript:;" class="weui-btn weui-btn_primary">100</a>
-				</div>
-				<div class="weui-col-25">
 					<a href="javascript:;" class="weui-btn weui-btn_primary">500</a>
 				</div>
 				<div class="weui-col-25">
@@ -79,13 +76,15 @@
 				<div class="weui-col-25">
 					<a href="javascript:;" class="weui-btn weui-btn_primary">1500</a>
 				</div>
+				<div class="weui-col-25">
+					<a href="javascript:;" class="weui-btn weui-btn_primary">2000</a>
+				</div>
 			</div>
 			
 			<div class="ad-sub">
 				  <el-button type="primary" v-on:click="toList()">立即缴纳</el-button>
 				  <div class="ad-desc">
-				  	<p class="desc">1.请住院患者确认个人信息无误后再缴费</p>
-				  	<p class="desc">2.请选择正确的病历号</p>
+				  	<p class="desc">1.请住院患者确认信息无误后再缴费</p>
 				  </div>
 			</div>
  		</div>
