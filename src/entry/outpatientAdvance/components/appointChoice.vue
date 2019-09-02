@@ -62,9 +62,7 @@ export default {
       serverTime: ""
     };
   },
-  created() {
-   
-  },
+  created() {},
   mounted() {
     var mySwiper = new Swiper(".swiper-container", {
       autoplay: true,
@@ -125,11 +123,23 @@ export default {
       } else {
         xhr = new ActiveObject("Microsoft");
       }
-      xhr.open("GET", "/", false); //false不可变
+      //xhr.setRequestHeader("Content-type", "application/json;charset=utf-8");
+      // xhr.open("GET", "/", false); //false不可变
+      // xhr.send(null);
+      // let date = xhr.getResponseHeader("Date");
+      // this.serverTime = new Date(date).getHours();
+      xhr.open("GET", "/", true);
       xhr.send(null);
-      let date = xhr.getResponseHeader("Date");
-      this.serverTime = new Date(date).getHours();
-      $.alert(new Date(date)+"||"+this.serverTime);
+      let time, date;
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState == 2) {
+          time = xhr.getResponseHeader("Date");
+          date = new Date(time);
+          this.serverTime = new Date(time).getHours();
+          //console.log(date);
+          $.alert(date + "||" + this.serverTime);
+        }
+      };    
     },
     checkTime() {
       //console.log(time.getHours());
