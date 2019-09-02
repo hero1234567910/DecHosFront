@@ -54,7 +54,7 @@
 <script>
 import Swiper from "swiper";
 import model from "./model.js";
-
+import Hour from './Hour.vue'
 export default {
   data() {
     this.model = model(this.axios);
@@ -100,6 +100,7 @@ export default {
     },
     appointOutPatient() {
       let self = this;
+      //console.log(this.checkTime());
       if (!this.checkTime()) {
         $.alert({
           title: "温馨提示",
@@ -118,6 +119,7 @@ export default {
     },
     getServerDate() {
       let xhr = null;
+      let self = this;
       if (window.XMLHttpRequest) {
         xhr = new window.XMLHttpRequest();
       } else {
@@ -125,27 +127,28 @@ export default {
       }
       xhr.open("GET", "", true);
       xhr.setRequestHeader("Content-type", "application/json;charset=utf-8");
-      
+
       xhr.send(null);
       let time, date;
       xhr.onreadystatechange = function() {
         if (xhr.readyState == 2) {
           time = xhr.getResponseHeader("Date");
           date = new Date(time);
-          this.serverTime = new Date(time).getHours();
-          //console.log(date);
+          Hour.hour = new Date(time).getHours();
+          console.log(Hour.hour);
           //$.alert(date + "||" + this.serverTime);
         }
-      };    
+      };
     },
     checkTime() {
-      //console.log(time.getHours());
-      let serverHour = this.serverTime;
+      let serverHour = Hour.hour;
       if (serverHour >= 16) {
         return false;
       } else {
         return true;
       }
+      //console.log(time.getHours());
+      //console.log(self.serverTime);
     }
   }
 };
