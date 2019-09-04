@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import IndexView from './index.vue'
+import IndexView from './doctorService.vue'
 import axios from 'axios'
 import $ from 'jquery'
 import  FastClick  from  'fastclick'
@@ -10,7 +10,7 @@ import '../../../static/css/jquery-weui.min.css'
 import '../../../static/lib/weui.css'
 import '../../../static/css/local.css'
    
-   FastClick.attach(document.body);
+FastClick.attach(document.body);
 Vue.use(ElementUI);
 Vue.prototype.axios = axios
 new Vue({
