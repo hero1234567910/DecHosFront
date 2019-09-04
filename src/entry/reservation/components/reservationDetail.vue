@@ -193,7 +193,7 @@
             <!--<div class="hero-button-left">
 	  			
             </div>-->
-            <a v-show="zfzt != 1 && yyzt == 0"
+            <a v-show="buttonShow"
               href="javascript:;"
               class="weui-btn weui-btn_primary hero-button"
               @click="returnList()"
@@ -213,6 +213,7 @@ export default {
   data() {
     this.model = model(this.axios);
     return {
+      buttonShow:true,
       activeNames: [],
       ReDetails: [],
       ksmc: "",
@@ -234,9 +235,10 @@ export default {
       pbxh:""
     };
   },
-  props:['patid'],
+  //props:['patid'],
   mounted() {
     this.showDetail();
+    this.buttonInit();
   },
   filters: {
     dateForm: function(ele) {
@@ -245,6 +247,18 @@ export default {
   },
   methods: {
     handleChange(val) {},
+    buttonInit(){
+      let self = this;
+      if(localStorage.getItem('sec_yb')=='true'){
+        self.buttonShow = false;
+      }else if(self.zfzt == '1'){
+        self.buttonShow = false;
+      }else if(self.yyzt == '2'||self.yyzt == '3'){
+        self.buttonShow = false;
+      }else{
+        self.buttonShow = true;
+      }
+    },
     showDetail() {
       let self = this;
       let data = this.$route.query;

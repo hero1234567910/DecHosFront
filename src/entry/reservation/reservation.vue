@@ -21,8 +21,7 @@ export default {
     this.model = model(this.axios);
     return {
       zjh: localStorage.getItem("sec_patientIdcard"),
-      hzxm: localStorage.getItem("sec_patientName"),
-      patid: ""
+      hzxm: localStorage.getItem("sec_patientName")
     };
   },
   mounted() {

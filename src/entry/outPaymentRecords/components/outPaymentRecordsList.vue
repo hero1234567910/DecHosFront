@@ -54,7 +54,7 @@
             </div>
             <div class="re-main-wzl">
               <div class="re-content-wzl">
-                <p style="font-size: 16px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
+                <p style="font-size: 15px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
                 <p style="color: #688795;font-size:14px;">结算时间: {{item.jssj | formatDate}}</p>
                 <p style="color: #688795;font-size:14px;">支付金额: {{item.zje}} 元</p>
                 <p style="color: #999999;font-size:14px;">
@@ -171,7 +171,15 @@ export default {
 						for(var i=0;i<outArray.length;i++){
 								if(outArray[i].ybdm == '101'){
 									let blh = outArray[i].blh;
+									arr.splice(0);
 									arr.push(parseInt(blh));
+									break;
+								}
+                //门诊医保病人
+								if(outArray[i].ybdm == '701'){
+									let blh = outArray[i].blh;
+									arr.push(parseInt(blh));
+									localStorage.setItem('sec_yb',true);								
 								}
 						}
 						if(arr.length == 0){
@@ -273,6 +281,7 @@ export default {
         if (res.data.code == "0") {
           let paymentList = res.data.data;
           self.PaymentList = paymentList;
+          self.PaymentList.reverse();
           self.isShow = false;
         } else {
           $.toptip(res.data.msg, "error");
