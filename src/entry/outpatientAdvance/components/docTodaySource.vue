@@ -100,27 +100,46 @@ export default {
       let data = {
         patid: this.patid,
         pbxh: pbmxxh,
-        yyhx:0
+        yyhx: 0
       };
       this.model.getOutpatientAppointmentReg(data).then(function(res) {
         if (res.data.code == 0) {
-          $.modal({
-            title: "提示",
-            text: "预约成功",
-            buttons: [
-              {
-                text: "去缴费",
-                onClick: function() {
-									if (process.env.NODE_ENV == "dev") {
-						        window.location = "../../outpatientPay.html#/ghPay?pbxh="+pbmxxh+"&patid="+self.patid;
-						      } else if (process.env.NODE_ENV == "production") {
-						        window.location = "../../2ysechos/outpatientPay.html#/ghPay?pbxh="+pbmxxh+"&patid="+self.patid;
-						      }
-                }
-              },
-              { text: "取消", className: "default", onClick: function() {} }
-            ]
-          });
+          if (localStorage.getItem("sec_yb") == 'true') {
+            $.alert("请您使用医保到相应柜台完成缴费", "预约成功", function() {
+              //点击确认后的回调函数
+              if (process.env.NODE_ENV == "dev") {
+                window.location = "../../reservation.html";
+              } else if (process.env.NODE_ENV == "production") {
+                window.location = "../../2ysechos/reservation.html";
+              }
+            });
+          } else {
+            $.modal({
+              title: "提示",
+              text: "预约成功",
+              buttons: [
+                {
+                  text: "去缴费",
+                  onClick: function() {
+                    if (process.env.NODE_ENV == "dev") {
+                      window.location =
+                        "../../outpatientPay.html#/ghPay?pbxh=" +
+                        pbmxxh +
+                        "&patid=" +
+                        self.patid;
+                    } else if (process.env.NODE_ENV == "production") {
+                      window.location =
+                        "../../2ysechos/outpatientPay.html#/ghPay?pbxh=" +
+                        pbmxxh +
+                        "&patid=" +
+                        self.patid;
+                    }
+                  }
+                },
+                { text: "取消", className: "default", onClick: function() {} }
+              ]
+            });
+          }
         } else {
           $.toptip(res.data.msg, "error");
         }
@@ -156,8 +175,7 @@ export default {
 .weui-media-box__title {
   color: #4b5c7d;
 }
-.weui-media-box_appmsg .weui-media-box__bd {
-}
+
 .weui-media-box_appmsg .weui-media-box__hd {
   height: 70px;
 }

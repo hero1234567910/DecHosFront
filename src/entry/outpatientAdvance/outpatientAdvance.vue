@@ -73,7 +73,15 @@ import appointChoice from './components/appointChoice'
 						for(var i=0;i<outArray.length;i++){
 								if(outArray[i].ybdm == '101'){
 									let blh = outArray[i].blh;
+									arr.splice(0);
 									arr.push(parseInt(blh));
+									break;
+								}
+								//门诊医保病人
+								if(outArray[i].ybdm == '701'){
+									let blh = outArray[i].blh;
+									arr.push(parseInt(blh));
+									localStorage.setItem('sec_yb',true);								
 								}
 						}
 						if(arr.length == 0){
