@@ -30,9 +30,8 @@
 </template>
 <script>
 import model from "./model.js";
+import CryptoJS from 'crypto-js';
 export default {
-  components: {},
-  name: "Login",
   data() {
     this.model = model(this.axios);
 
@@ -51,7 +50,7 @@ export default {
   },
   mounted() {},
   created() {
-      this.getDocInfo();
+      //this.getDocInfo();
   },
   methods: {
     Login() {
@@ -70,11 +69,11 @@ export default {
           );
           window.localStorage.setItem(
             "m_user_userName",
-            JSON.stringify(res.data.data.userName)
+            res.data.data.userName
           );
           window.localStorage.setItem(
             "m_mobile",
-            JSON.stringify(res.data.mobile)
+            res.data.mobile
           );
           window.localStorage.setItem(
             "m_deptGuid",
@@ -158,6 +157,9 @@ export default {
               self.getAesString(res.data.data.refreshToken)
             );
             self.docName = res.data.data.userName;
+            //测试登录
+            self.$router.push("/doctorMenu");
+
           } else if (res.data.data == "42001") {
             //token过期 刷新
             let data = {
@@ -204,6 +206,9 @@ export default {
               self.getAesString(res.data.data.refreshToken)
             );
             self.docName = res.data.data.userName;
+            //免登录测试
+            self.$router.push("/doctorMenu");
+
           } else if (res.data.data == "42001") {
             //token过期 刷新
             let data = {

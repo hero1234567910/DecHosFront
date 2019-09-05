@@ -1,40 +1,40 @@
 <template>
   <div>
     <header class="demos-header">
-      <h1 class="demos-title">Grid</h1>
+      <img style="width:100%;" src="../../../../static/images/QUS{5J8J(UI9V82QY4Q$@N8.jpg" />
     </header>
     <div class="weui-grids">
-      <a href class="weui-grid js_grid">
+      <a href="javascript:;" class="weui-grid js_grid" @click="toMyRepair()">
         <div class="weui-grid__icon">
-          <img src="images/icon_nav_button.png" alt />
+          <img src="../../../../static/doctorImg/报修单@2x.png" alt />
         </div>
-        <p class="weui-grid__label">Button</p>
+        <p class="weui-grid__label">我的报修</p>
       </a>
-      <a href class="weui-grid js_grid">
-        <div class="weui-grid__icon">
-          <img src="images/icon_nav_cell.png" alt />
+      <a href="javascript:;" class="weui-grid js_grid">
+        <div class="weui-grid__icon" @click="toRepairOnline()">
+          <img src="../../../../static/doctorImg/报修2.png" alt />
         </div>
-        <p class="weui-grid__label">List</p>
+        <p class="weui-grid__label">在线报修</p>
       </a>
-      <a href class="weui-grid js_grid">
-        <div class="weui-grid__icon">
-          <img src="images/icon_nav_cell.png" alt />
+      <a href="javascript:;" class="weui-grid js_grid">
+        <div class="weui-grid__icon" @click="toRepairSatisfaction()">
+          <img src="../../../../static/doctorImg/报修.png" alt />
         </div>
-        <p class="weui-grid__label">List</p>
+        <p class="weui-grid__label">报修满意度评价</p>
       </a>
-      <a href class="weui-grid js_grid">
-        <div class="weui-grid__icon">
-          <img src="images/icon_nav_cell.png" alt />
-        </div>
-        <p class="weui-grid__label">List</p>
-      </a>
-      <a href class="weui-grid js_grid">
+      <a href="javascript:;" class="weui-grid js_grid">
         <div class="weui-grid__icon">
           <img src="images/icon_nav_cell.png" alt />
         </div>
         <p class="weui-grid__label">List</p>
       </a>
-      <a href class="weui-grid js_grid">
+      <a href="javascript:;" class="weui-grid js_grid">
+        <div class="weui-grid__icon">
+          <img src="images/icon_nav_cell.png" alt />
+        </div>
+        <p class="weui-grid__label">List</p>
+      </a>
+      <a href="javascript:;" class="weui-grid js_grid">
         <div class="weui-grid__icon">
           <img src="images/icon_nav_cell.png" alt />
         </div>
@@ -46,6 +46,7 @@
 
 <script>
 import model from "./model.js";
+import CryptoJS from 'crypto-js';
 export default {
   data() {
     this.model = model(this.axios);
@@ -55,7 +56,7 @@ export default {
   },
   mounted() {},
   created() {
-    this.getDocInfo();
+    //this.getDocInfo();
   },
   methods: {
     getAesString(word, keyStr) {
@@ -194,6 +195,15 @@ export default {
       var r = window.location.search.substr(1).match(reg); //search,查询？后面的参数，并匹配正则
       if (r != null) return decodeURI(r[2]);
       return null;
+    },
+    toMyRepair(){
+      this.$router.push('/myRepairList');
+    },
+    toRepairOnline(){
+      this.$router.push("/repairOnline");
+    },
+    toRepairSatisfaction(){
+      this.$router.push("/repairSatisfaction");
     }
   }
 };

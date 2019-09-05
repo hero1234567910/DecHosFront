@@ -13,6 +13,25 @@ import '../../../static/css/local.css'
 FastClick.attach(document.body);
 Vue.use(ElementUI);
 Vue.prototype.axios = axios
+
+// router.beforeEach((to, from, next) => {
+//   // to and from are both route objects. must call `next`.
+//   let user = localStorage.getItem('sec_acessToken');
+//   if(to.path == '/'){
+//       if(user){
+//           next({path:'/doctorMenu'})
+//       }else{
+//           next();
+//       }
+//   }else{
+//       if(!user){
+//           next({path:'/'})
+//       }else{
+//           next();
+//       }
+//   }
+// });
+
 new Vue({
   el: '#app',
   router,
