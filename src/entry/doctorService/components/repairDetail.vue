@@ -4,19 +4,35 @@
       <img style="height:100%;height: 138px;" src="../../../../static/img-2/bxxq.png" />
     </div>
     <div class="weui-cells weui-cells_form" style="margin-top:0px;">
-      <div class="weui-cells__title-wzl">申修人姓名</div>
+      <div class="weui-cells__title-wzl">报修人姓名</div>
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="申修人姓名(必填)" />
+            <input class="weui-input" type="text" id="repairName" name="repairName" readonly />
           </div>
         </div>
       </div>
-      <div class="weui-cells__title-wzl">申修人电话</div>
+      <div class="weui-cells__title-wzl">报修人电话</div>
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="申修人电话(必填)" />
+            <input class="weui-input" type="text" id="repairPhone" name="repairPhone" readonly/>
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells__title-wzl">设备名称</div>
+      <div class="weui-cells" style="margin-top:0px;">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="deviceName" name="deviceName" readonly/>
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells__title-wzl">设备位置</div>
+      <div class="weui-cells" style="margin-top:0px;">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="devicePlace" name="devicePlace" readonly/>
           </div>
         </div>
       </div>
@@ -24,7 +40,15 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="损坏部位(必填)" />
+            <input class="weui-input" type="text" id="damagedParts" name="damagedParts" readonly/>
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells__title-wzl">报修状态</div>
+      <div class="weui-cells" style="margin-top:0px;">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="repairStatus" name="repairStatus" readonly/>
           </div>
         </div>
       </div>
@@ -33,19 +57,13 @@
         <div class="weui-cell">
           <div class="weui-cell__bd">
             <textarea
-              id="repairContent"
+              id="reportContent"
+              name="reportContent"
               class="weui-textarea"
-              placeholder="报修内容(必填)"
               rows="3"
               maxlength="200"
-              @keyup="showCount()"
-              @keydown="showCount()"
-              @blur="showCount()"
-              @click="showCount()"
+              readonly
             ></textarea>
-            <div class="weui-textarea-counter">
-              <span>{{sCount}}</span>/200
-            </div>
           </div>
         </div>
       </div>
@@ -82,7 +100,8 @@
         <a
           href="javascript:;"
           class="weui-btn weui-btn_primary hero-button"
-          @click="cancel()"
+          @click="toSubmit()"
+          v-show="cancelButton"
         >取消报修</a>
       </div>
       <div class="weui-col-50">
@@ -97,23 +116,74 @@
 </template>
 
 <script>
+import model from "./model.js";
 export default {
+  
   data() {
+    this.model = model(this.axios);
     return {
-      sCount: 0
+      picGuid:'',
+      rowGuid:'',
+      cancelButton:true
     };
   },
-  mounted() {},
+  mounted() {
+    this.initRepairDetail();
+  },
   methods: {
-    showCount() {
-      this.sCount = $("#repairContent").val().length;
+    initRepairDetail(){
+      let self = this;
+      let data = this.$route.query;
+      $('#repairName').val(data.repairName);
+      $('#repairPhone').val(data.repairPhone);
+      $('#deviceName').val(data.deviceName);
+      $('#devicePlace').val(data.devicePlace);
+      $('#damagedParts').val(data.damagedParts);
+      if(data.repairStatus==0){
+        $('#repairStatus').val('报修中');
+        $('#repairStatus').css('color','blue')
+      }else if(data.repairStatus==1){
+        $('#repairStatus').val('报修取消');
+        $('#repairStatus').css('color','red')
+        self.cancelButton = false;
+      }else{
+        $('#repairStatus').val('报修完成');
+        $('#repairStatus').css('color','green')
+        self.cancelButton = false;
+      }
+      $('#reportContent').val(data.reportContent);
+      self.picGuid = data.picGuid;
+      self.rowGuid = data.rowGuid;
     },
     returnList() {
-      this.$router.push("/");
+      this.$router.push("/myRepairList");
     },
     cancel(){
-
-    }
+      let self = this;
+      let data = this.$route.query.rowGuid;
+      this.model.cancelRepair(data).then(function(res){
+        if(res.data.code == "0"){
+          $.toast("报修取消成功",function(){
+            self.$router.push("/myRepairList");
+          });
+        }else{
+          $.toptip(res.data.msg, "error");
+        }
+      })
+    },
+    toSubmit() {
+      let self = this;
+      $.confirm(
+        "您确定要取消吗？",
+        "提示",
+        function() {
+          self.cancel();
+        },
+        function() {
+          return;
+        }
+      );
+    },
   }
 };
 </script>
