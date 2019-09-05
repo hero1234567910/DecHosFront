@@ -73,7 +73,7 @@ export default {
           );
           window.localStorage.setItem(
             "m_mobile",
-            res.data.mobile
+            res.data.data.mobile
           );
           window.localStorage.setItem(
             "m_deptGuid",
@@ -126,115 +126,6 @@ export default {
         padding: CryptoJS.pad.Pkcs7
       });
       return CryptoJS.enc.Utf8.stringify(decrypt).toString();
-    },
-    getDocInfo() {
-      let self = this;
-      let code = this.GetQueryString("code");
-      let guid = localStorage.getItem("m_user_rowGuid");
-      let data = {
-          code:code,
-          rowGuid:guid
-      }
-      let to = localStorage.getItem("sec_acessToken");
-      let re = localStorage.getItem("sec_refreshToken");
-      if (
-        to == null ||
-        to == "" ||
-        to == "null" ||
-        this.getDAesString(to) == "null"
-      ) {
-        this.model.getDocInfo(data).then(function(res) {
-          if (res.data.code == "0") {
-            localStorage.setItem("sec_openId", res.data.data.openid);
-            localStorage.setItem("sec_docName", res.data.data.userName);
-            localStorage.setItem("sec_docGuid", res.data.data.rowGuid);
-            localStorage.setItem(
-              "sec_acessToken",
-              self.getAesString(res.data.data.accessToken)
-            );
-            localStorage.setItem(
-              "sec_refreshToken",
-              self.getAesString(res.data.data.refreshToken)
-            );
-            self.docName = res.data.data.userName;
-            //测试登录
-            self.$router.push("/doctorMenu");
-
-          } else if (res.data.data == "42001") {
-            //token过期 刷新
-            let data = {
-              refresh_token: self.getDAesString(
-                localStorage.getItem("sec_refreshToken")
-              )
-            };
-            self.model.refreshToken(data).then(function(res) {
-              if (res.data.code == 0) {
-                localStorage.setItem(
-                  "sec_acessToken",
-                  self.getAesString(res.data.data.access_token)
-                );
-                localStorage.setItem(
-                  "sec_refreshToken",
-                  self.getAesString(res.data.data.refresh_token)
-                );
-              } else {
-                $.toptip(res.data.msg, "error");
-              }
-            });
-          } else {
-            $.toptip(res.data.msg, "error");
-          }
-        });
-      } else {
-        let data = {
-          openid: localStorage.getItem("sec_openId"),
-          access_token: this.getDAesString(to),
-          refresh_token: this.getDAesString(re),
-          rowGuid:localStorage.getItem("m_user_rowGuid")
-        };
-        this.model.getDocByToken(data).then(function(res) {
-          if (res.data.code == "0") {
-            localStorage.setItem("sec_openId", res.data.data.openid);
-            localStorage.setItem("sec_docName", res.data.data.userName);
-            localStorage.setItem("sec_patientGuid", res.data.data.rowGuid);
-            localStorage.setItem(
-              "sec_acessToken",
-              self.getAesString(res.data.data.accessToken)
-            );
-            localStorage.setItem(
-              "sec_refreshToken",
-              self.getAesString(res.data.data.refreshToken)
-            );
-            self.docName = res.data.data.userName;
-            //免登录测试
-            self.$router.push("/doctorMenu");
-
-          } else if (res.data.data == "42001") {
-            //token过期 刷新
-            let data = {
-              refresh_token: self.getDAesString(
-                localStorage.getItem("sec_refreshToken")
-              )
-            };
-            self.model.refreshToken(data).then(function(res) {
-              if (res.data.code == 0) {
-                localStorage.setItem(
-                  "sec_acessToken",
-                  self.getAesString(res.data.data.access_token)
-                );
-                localStorage.setItem(
-                  "sec_refreshToken",
-                  self.getAesString(res.data.data.refresh_token)
-                );
-              } else {
-                $.toptip(res.data.msg, "error");
-              }
-            });
-          } else {
-            $.toptip(res.data.msg, "error");
-          }
-        });
-      }
     },
     GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");

@@ -8,7 +8,13 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="报修人姓名(必填)" />
+            <input
+              class="weui-input"
+              type="text"
+              id="repairName"
+              name="repairName"
+              placeholder="报修人姓名(必填)"
+            />
           </div>
         </div>
       </div>
@@ -16,7 +22,13 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="报修人电话(必填)" />
+            <input
+              class="weui-input"
+              type="text"
+              id="repairPhone"
+              name="repairPhone"
+              placeholder="报修人电话(必填)"
+            />
           </div>
         </div>
       </div>
@@ -24,7 +36,13 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="设备名称(必填)" />
+            <input
+              class="weui-input"
+              type="text"
+              id="deviceName"
+              name="deviceName"
+              placeholder="设备名称(必填)"
+            />
           </div>
         </div>
       </div>
@@ -32,7 +50,13 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="设备位置(必填)" />
+            <input
+              class="weui-input"
+              type="text"
+              id="devicePlace"
+              name="devicePlace"
+              placeholder="设备位置(必填)"
+            />
           </div>
         </div>
       </div>
@@ -40,7 +64,13 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" placeholder="损坏部位(必填)" />
+            <input
+              class="weui-input"
+              type="text"
+              id="damagedParts"
+              name="damagedParts"
+              placeholder="损坏部位(必填)"
+            />
           </div>
         </div>
       </div>
@@ -48,7 +78,9 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <textarea id="repairContent"
+            <textarea
+              id="reportContent"
+              name="reportContent"
               class="weui-textarea"
               placeholder="报修内容(必填)"
               rows="3"
@@ -70,8 +102,8 @@
           <div class="weui-cell__bd">
             <div class="weui-uploader">
               <div class="weui-uploader__hd">
-                <p class="weui-uploader__title">图片上传</p>
-                <div class="weui-uploader__info">0/2</div>
+                <p class="weui-uploader__title">图片上传(可选)</p>
+                <div class="weui-uploader__info">0/1</div>
               </div>
               <div class="weui-uploader__bd">
                 <ul class="weui-uploader__files" id="uploaderFiles">
@@ -101,18 +133,69 @@
 </template>
 
 <script>
+import model from "./model.js";
 export default {
   data() {
+    this.model = model(this.axios);
     return {
       sCount: 0
     };
   },
   mounted() {
+    this.initPage();
     this.upLoadInit();
   },
   methods: {
     showCount() {
-      this.sCount = $("#repairContent").val().length;
+      let self = this;
+      self.sCount = $("#reportContent").val().length;
+    },
+    initPage(){
+      let self = this;
+      $('#repairName').val(localStorage.getItem('m_user_userName'));
+      $('#repairPhone').val(localStorage.getItem('m_mobile'))
+    },
+    panNull(ele, str) {
+      if (ele == null || ele == "") {
+        $.alert(str, "警告");
+        return true;
+      } else {
+        return false;
+      }
+    },
+    save() {
+      if (
+        this.panNull($("#repairName").val(), "报修人姓名不能为空") ||
+        this.panNull($("#repairPhone").val(), "报修人电话不能为空") ||
+        this.panNull($("#deviceName").val(), "设备名称不能为空") ||
+        this.panNull($("#devicePlace").val(), "设备地址不能为空") ||
+        this.panNull($("#damagedParts").val(), "损坏部位内容不能为空") ||
+        this.panNull($("#reportContent").val(), "报修内容不能为空")
+      ) {
+        return;
+      }
+      this.addRepair();
+    },
+    addRepair() {
+      let self = this;
+      let data = {
+        repairName: $("#repairName").val(),
+        repairGuid: localStorage.getItem('m_user_rowGuid'),
+        repairPhone: $("#repairPhone").val(),
+        deviceName: $("#deviceName").val(),
+        devicePlace: $("#devicePlace").val(),
+        damagedParts: $("#damagedParts").val(),
+        reportContent: $("#reportContent").val()
+      };
+      this.model.addRepair(data).then(function(res) {
+        if (res.data.code == "0") {
+          $.toast("提交成功", "success", function() {
+            self.$router.push("/myRepairList");
+          });
+        } else {
+          $.toptip(res.data.msg, "error");
+        }
+      });
     },
     upLoadInit() {
       var allowTypes = ["image/jpg", "image/jpeg", "image/png", "image/gif"];
@@ -122,7 +205,7 @@ export default {
       // 图片最大宽度
       var maxWidth = 10000;
       // 最大上传图片数量
-      var maxCount = 2;
+      var maxCount = 1;
       $("#uploaderInput").on("change", function(event) {
         var files = event.target.files;
         //console.log(files);return false;
