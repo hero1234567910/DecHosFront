@@ -24,9 +24,9 @@
       </a>
       <a href="javascript:;" class="weui-grid js_grid">
         <div class="weui-grid__icon">
-          <img src="images/icon_nav_cell.png" alt />
+          <img src="../../../../static/doctorImg/考试.png" alt />
         </div>
-        <p class="weui-grid__label">List</p>
+        <p class="weui-grid__label">在线考试</p>
       </a>
       <a href="javascript:;" class="weui-grid js_grid">
         <div class="weui-grid__icon">
