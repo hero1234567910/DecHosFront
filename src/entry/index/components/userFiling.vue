@@ -102,7 +102,8 @@ export default {
   methods: {
   	initY(){
   		$('#my-input').calendar({
-  			dateFormat:'yyyy-mm-dd'
+  			dateFormat:'yyyy-mm-dd',
+        value:["1990-6-1"]
   		});
   	},
   	save(){
