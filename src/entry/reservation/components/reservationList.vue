@@ -159,42 +159,73 @@ export default {
 				this.model.getInfo(data).then(function(res){
 					if(res.data.code == '0'){
 						//门诊模块 就取门诊自费并且病历号最大的
-						let arr = [];
+						let blh = '';
 						let outArray = res.data.data;
 						for(var i=0;i<outArray.length;i++){
 								if(outArray[i].ybdm == '101'){
-									let blh = outArray[i].blh;
-                  arr.splice(0);
-									arr.push(parseInt(blh));
-                  break;
+									blh = outArray[i].blh;
+									self.patid = outArray[i].patid;
+									break;
 								}
-                //门诊医保病人
-                if(outArray[i].ybdm == '701'){
-									let blh = outArray[i].blh;
-									arr.push(parseInt(blh));
+								//门诊医保病人
+								if(outArray[i].ybdm == '701'){
+									blh = outArray[i].blh;
+									self.patid = outArray[i].patid;
 									localStorage.setItem('sec_yb',true);								
 								}
 						}
-						if(arr.length == 0){
+						if(blh == ''){
 							$.alert("未查询到您的信息，请先建档", "提示", function() {
 						  //点击确认后的回调函数
 						  if (process.env.NODE_ENV == 'dev') {
-								  window.location='../../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								  window.location='../../index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
 								} else if (process.env.NODE_ENV == 'production') {
-								  window.location='../../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								  window.location='../../2ysechos/index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
 								}
 							});
 							return;
 						}
-						arr.sort().reverse();
-						let val = arr[0];
-						for(var i=0;i<outArray.length;i++){
-							if(val == outArray[i].blh){
-								self.patid = outArray[i].patid;
-								self.appointList();
-							}
-						}
+						self.appointList();
 					}
+					
+//					if(res.data.code == '0'){
+//						//门诊模块 就取门诊自费并且病历号最大的
+//						let arr = [];
+//						let outArray = res.data.data;
+//						for(var i=0;i<outArray.length;i++){
+//								if(outArray[i].ybdm == '101'){
+//									let blh = outArray[i].blh;
+//                arr.splice(0);
+//									arr.push(parseInt(blh));
+//                break;
+//								}
+//              //门诊医保病人
+//              if(outArray[i].ybdm == '701'){
+//									let blh = outArray[i].blh;
+//									arr.push(parseInt(blh));
+//									localStorage.setItem('sec_yb',true);								
+//								}
+//						}
+//						if(arr.length == 0){
+//							$.alert("未查询到您的信息，请先建档", "提示", function() {
+//						  //点击确认后的回调函数
+//						  if (process.env.NODE_ENV == 'dev') {
+//								  window.location='../../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+//								} else if (process.env.NODE_ENV == 'production') {
+//								  window.location='../../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+//								}
+//							});
+//							return;
+//						}
+//						arr.sort().reverse();
+//						let val = arr[0];
+//						for(var i=0;i<outArray.length;i++){
+//							if(val == outArray[i].blh){
+//								self.patid = outArray[i].patid;
+//								self.appointList();
+//							}
+//						}
+//					}
 					if(res.data.msg == '未查询到门诊患者'){
 						$.alert("未查询到您的信息，请先建档", "提示", function() {
 						  //点击确认后的回调函数
