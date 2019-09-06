@@ -85,32 +85,28 @@ import appointChoice from './components/appointChoice'
 						}
 						if(blh == ''){
 							$.alert("未查询到您的信息，请先建档", "提示", function() {
+								self.$router.push('/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm);
 						  //点击确认后的回调函数
-						  if (process.env.NODE_ENV == 'dev') {
-								  window.location='../../index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
-								} else if (process.env.NODE_ENV == 'production') {
-								  window.location='../../2ysechos/index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
-								}
+//						  if (process.env.NODE_ENV == 'dev') {
+//								  window.location='../../userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
+//								} else if (process.env.NODE_ENV == 'production') {
+//								  window.location='../../2ysechos/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
+//								}
 							});
+								
 							return;
 						}
-//						arr.sort().reverse();
-//						let val = arr[0];
-//						for(var i=0;i<outArray.length;i++){
-//							if(val == outArray[i].blh){
-//								self.patid = outArray[i].patid;
-//							}
-//						}
 					}
 					if(res.data.msg == '未查询到门诊患者'){
 						$.alert("未查询到您的信息，请先建档", "提示", function() {
 						  //点击确认后的回调函数
 //						  self.$router.push('/userFiling?zjh='+self.zjh)
-						  if (process.env.NODE_ENV == 'dev') {
-								  window.location='../../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
-								} else if (process.env.NODE_ENV == 'production') {
-								  window.location='../../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
-								}
+//						  if (process.env.NODE_ENV == 'dev') {
+//								  window.location='../../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+//								} else if (process.env.NODE_ENV == 'production') {
+//								  window.location='../../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+//								}
+									self.$router.push('/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm);
 						});
 					}
 				})

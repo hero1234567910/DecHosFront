@@ -4,14 +4,14 @@
       <h6>温馨提示:请您确认个人信息无误后再保存信息</h6>
     </div>
     <div class="weui-cells-wzl weui-cells_form">
-      <div class="wzl-local">
+      <!--<div class="wzl-local">
       <div class="weui-cells__title wzl" style="font-size: 18px;margin-top:0.5em;margin-bottom: 0.2em;color: black;">您的姓名</div>
       <div class="weui-cell-wzl">
         <div class="weui-cell__bd">
           <input id="hzxm" class="weui-input-wzl" type="text" placeholder="请输入">
         </div>
       </div>
-      </div>
+      </div>-->
 
       <div class="wzl-local">
       <div class="weui-cells__title wzl" style="font-size: 18px;margin-top:0.5em;margin-bottom: 0.2em;color:black;">您的性别</div>
@@ -108,18 +108,19 @@ export default {
   	save(){
 		//获取提交参数
 		let self = this;
-		var hzxm = $('#hzxm').val();
+		var hzxm = this.$route.query.hzxm;
 		var sex = $("input[name='radio1']:checked").val();
     var birth1 = $('#my-input').val();
     var birth = birth1.replace(/\-/g, "");
 		var lxdh = $('#lxdh').val();
 		var lxdz = $('#lxdz').val();
-		var zjh = self.GetQueryString('zjh');
+		var zjh = this.$route.query.zjh;
 		var openid = localStorage.getItem('sec_openId');
-		
+		console.log(this.$route.query);
+		console.log(hzxm+"  "+zjh);
 		
 		if (
-			this.panNull(hzxm, "患者姓名不能为空") ||
+				this.panNull(hzxm, "患者姓名不能为空") ||
 		    this.panNull(zjh, "证件号不能为空") ||
 		    this.panNull(sex, "性别不能为空") ||
 		    this.panNull(birth, "出生日期不能为空") ||

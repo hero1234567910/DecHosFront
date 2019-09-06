@@ -25,6 +25,14 @@ export default new Router({
       path: "/reservationDetail",
       name: "reservationDetail",
       component: reservationDetail
-    }
+    },
+    {
+    	meta:{
+      	keepAlive: false
+     },
+      path: '/userFiling',
+      name: 'userFiling',
+      component: userFiling
+   },
   ]
 });
