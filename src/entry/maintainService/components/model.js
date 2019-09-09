@@ -75,7 +75,7 @@ function model(http) {
     },
     getMySatList(data) {
       return http.get(
-        evn.SEC_HOSAPI + '/wx/sys/sechosrepair/listMySatData?'+toQueryString(data),
+        evn.SEC_HOSAPI + '/wx/sys/sechosrepairsatisfaction/listMySatData?'+toQueryString(data),
         {
           headers: {
             "Content-Type": "application/json;charset=utf-8"

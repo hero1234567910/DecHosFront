@@ -6,7 +6,7 @@
       </div>
       <div class="weui-cells__title-wzl">满意度待评价列表</div>
     </div>
-    <div class="list-body" style="margin-top: 180px;" id="th">
+    <div class="list-body" id="th">
       <div
         class="weui-cells"
         style="margin-top:0px;"
@@ -18,20 +18,17 @@
           <div class="weui-cell__bd">
             <p>{{item.deviceName}}</p>
           </div>
-          <div class="weui-cell__ft">
-            {{item.createTime}}
-          </div>
+          <div class="weui-cell__ft">{{item.createTime}}</div>
         </a>
       </div>
-      <!-- <div v-if="isshow()" class="weui-loadmore" id="onloading">
+      <div v-if="isshow()" class="weui-loadmore" id="onloading">
         <i class="weui-loading"></i>
         <span class="weui-loadmore__tips">正在加载</span>
-      </div> -->
-    </div>
-
-    <div style="margin-top: 30px;">
-      <div>
-        <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
+      </div>
+      <div style="margin-top: 30px;">
+        <div>
+          <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
+        </div>
       </div>
     </div>
   </div>
@@ -51,7 +48,7 @@ export default {
   },
   mounted() {
     this.getMySatList();
-    //this.initList();
+    this.initList();
   },
   methods: {
     isshow() {
@@ -72,7 +69,7 @@ export default {
         page: "1",
         limit: "10",
         evaluationStatus: 0,
-        repairGuid:localStorage.getItem('m_user_rowGuid')
+        repairGuid: localStorage.getItem("m_user_rowGuid")
       };
       this.model.getMySatList(data).then(function(res) {
         $.hideLoading();
@@ -86,22 +83,23 @@ export default {
     initList() {
       let self = this;
       let loading = false;
-      console.log($('#th'));
-      $('#th').infinite();
-      $('#th').on("infinite", function() {
+      //console.log($('#th'));
+      $("#th").infinite(150);
+      $("#th").on("infinite", function() {
         // if (loading) return;
-        console.log(loading);
+        //console.log(loading);
         loading = true;
         setTimeout(function() {
           let data = {
             limit: "10",
             page: self.page,
-            repairStatus: 0
+            evaluationStatus: 0,
+            repairGuid: localStorage.getItem("m_user_rowGuid")
           };
 
-          this.model.getMySatList(data).then(function(res) {
+          self.model.getMySatList(data).then(function(res) {
             if (res.data.code == "0") {
-              console.log(res.data);
+              //console.log(res.data);
               if (res.data.data.length == 0) {
                 $("#th").destroyInfinite();
                 $("#onloading").css("display", "none");
@@ -111,7 +109,7 @@ export default {
               self.page++;
               for (var i = 0; i < res.data.data.length; i++) {
                 self.MySatList.push(res.data.data[i]);
-                console.log(self.MySatList);
+                //console.log(self.MySatList);
               }
             } else {
               $.toptip(res.data.msg, "error");
@@ -122,10 +120,7 @@ export default {
       });
     },
     toSatDetail(ele) {
-      this.$router.push(
-        "/repairSatisfaction?rowGuid="+
-        ele.rowGuid
-      );
+      this.$router.push("/repairSatisfaction?rowGuid=" + ele.rowGuid);
     },
     statusCheck(ele) {
       let def;
@@ -168,5 +163,12 @@ export default {
 .list-head {
   position: absolute;
   z-index: 100;
+}
+.list-body {
+  position: absolute;
+  height: calc(100vh - 181px);
+  top: 180px;
+  width: 100%;
+  overflow-y: auto;
 }
 </style>

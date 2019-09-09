@@ -46,9 +46,9 @@ export default {
   data() {
     this.model = model(this.axios);
     return {
-      val1: 0,
-      val2: 0,
-      val3: 0,
+      val1: '',
+      val2: '',
+      val3: '',
       textarea2: ""
     };
   },

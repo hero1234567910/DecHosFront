@@ -6,7 +6,7 @@
       </div>
       <div class="weui-cells__title-wzl">我的维修列表</div>
     </div>
-    <div class="list-body" style="margin-top: 180px;" id="th">
+    <div class="list-body" id="th">
       <div
         class="weui-cells"
         style="margin-top:0px;"
@@ -24,15 +24,14 @@
           </div>
         </a>
       </div>
-      <!-- <div v-if="isshow()" class="weui-loadmore" id="onloading">
+      <div v-if="isshow()" class="weui-loadmore" id="onloading">
         <i class="weui-loading"></i>
         <span class="weui-loadmore__tips">正在加载</span>
-      </div> -->
-    </div>
-
-    <div style="margin-top: 30px;">
-      <div>
-        <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
+      </div>
+      <div style="margin-top: 30px;">
+        <div>
+          <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
+        </div>
       </div>
     </div>
   </div>
@@ -52,7 +51,7 @@ export default {
   },
   mounted() {
     this.getMaintainList();
-    //this.initList();
+    this.initList();
   },
   methods: {
     isshow() {
@@ -87,9 +86,9 @@ export default {
       let self = this;
       let loading = false;
       //console.log($('#th'));
-      $('#th').infinite();
-      $('#th').on("infinite", function() {
-        // if (loading) return;
+      $("#th").infinite(150);
+      $("#th").on("infinite", function() {
+        if (loading) return;
         //console.log(loading);
         loading = true;
         setTimeout(function() {
@@ -99,7 +98,7 @@ export default {
             repairStatus: 2
           };
 
-          this.model.getMyList(data).then(function(res) {
+          self.model.getMyList(data).then(function(res) {
             if (res.data.code == "0") {
               console.log(res.data);
               if (res.data.data.length == 0) {
@@ -188,5 +187,12 @@ export default {
 .list-head {
   position: absolute;
   z-index: 100;
+}
+.list-body {
+  position: absolute;
+  height: calc(100vh - 181px);
+  top: 180px;
+  width: 100%;
+  overflow-y: auto;
 }
 </style>

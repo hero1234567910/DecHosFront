@@ -265,7 +265,7 @@ export default {
               let formData = new FormData();
 
               formData.append("images", base64);
-              console.log(img.src);
+              //console.log(img.src);
               //   $.ajax({
               //     url: "savetofile.php",
 
