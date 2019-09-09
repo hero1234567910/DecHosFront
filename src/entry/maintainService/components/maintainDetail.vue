@@ -16,7 +16,7 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="repairPhone" name="repairPhone" readonly/>
+            <input class="weui-input" type="text" id="repairPhone" name="repairPhone" readonly />
           </div>
         </div>
       </div>
@@ -24,7 +24,7 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="deviceName" name="deviceName" readonly/>
+            <input class="weui-input" type="text" id="deviceName" name="deviceName" readonly />
           </div>
         </div>
       </div>
@@ -32,7 +32,7 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="devicePlace" name="devicePlace" readonly/>
+            <input class="weui-input" type="text" id="devicePlace" name="devicePlace" readonly />
           </div>
         </div>
       </div>
@@ -40,7 +40,7 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="damagedParts" name="damagedParts" readonly/>
+            <input class="weui-input" type="text" id="damagedParts" name="damagedParts" readonly />
           </div>
         </div>
       </div>
@@ -48,7 +48,15 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="repairStatus" name="repairStatus" readonly/>
+            <input class="weui-input" type="text" id="repairStatus" name="repairStatus" readonly />
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells__title-wzl">维修完成时间</div>
+      <div class="weui-cells" style="margin-top:0px;">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="maintainTime" name="maintainTime" placeholder="无" readonly />
           </div>
         </div>
       </div>
@@ -101,8 +109,8 @@
           href="javascript:;"
           class="weui-btn weui-btn_primary hero-button"
           @click="toSubmit()"
-          v-show="cancelButton"
-        >取消报修</a>
+          v-show="successButton"
+        >维修完成</a>
       </div>
       <div class="weui-col-50">
         <a
@@ -118,72 +126,85 @@
 <script>
 import model from "./model.js";
 export default {
-  
   data() {
     this.model = model(this.axios);
     return {
-      picGuid:'',
-      rowGuid:'',
-      cancelButton:true
+      isShow: false,
+      picGuid: "",
+      rowGuid: "",
+      successButton: true
     };
   },
   mounted() {
     this.initRepairDetail();
   },
   methods: {
-    initRepairDetail(){
+    initRepairDetail() {
       let self = this;
       let data = this.$route.query;
-      $('#repairName').val(data.repairName);
-      $('#repairPhone').val(data.repairPhone);
-      $('#deviceName').val(data.deviceName);
-      $('#devicePlace').val(data.devicePlace);
-      $('#damagedParts').val(data.damagedParts);
-      if(data.repairStatus==0){
-        $('#repairStatus').val('报修中');
-        $('#repairStatus').css('color','blue')
-      }else if(data.repairStatus==1){
-        $('#repairStatus').val('报修取消');
-        $('#repairStatus').css('color','red')
-        self.cancelButton = false;
-      }else{
-        $('#repairStatus').val('报修完成');
-        $('#repairStatus').css('color','green')
-        self.cancelButton = false;
+      $("#repairName").val(data.repairName);
+      $("#repairPhone").val(data.repairPhone);
+      $("#deviceName").val(data.deviceName);
+      $("#devicePlace").val(data.devicePlace);
+      $("#damagedParts").val(data.damagedParts);
+      if (data.repairStatus == 0) {
+        $("#repairStatus").val("报修中");
+        $("#repairStatus").css("color", "blue");
+      } else if (data.repairStatus == 1) {
+        $("#repairStatus").val("报修取消");
+        $("#repairStatus").css("color", "red");
+        self.successButton = false;
+      } else {
+        $("#repairStatus").val("报修完成");
+        $("#repairStatus").css("color", "green");
+        self.successButton = false;
       }
-      $('#reportContent').val(data.reportContent);
+      $("#reportContent").val(data.reportContent);
+      $("#maintainTime").val(data.maintainTime);
       self.picGuid = data.picGuid;
       self.rowGuid = data.rowGuid;
     },
     returnList() {
-      this.$router.push("/myRepairList");
+      if(this.$route.query.maintainTime == null||''){
+        this.$router.push("/myMaintainList");
+      }else{
+        this.$router.push("/maintainRecordList");
+      }
+      
     },
-    cancel(){
+    success() {
+      $.showLoading();
       let self = this;
-      let data = this.$route.query.rowGuid;
-      this.model.cancelRepair(data).then(function(res){
-        if(res.data.code == "0"){
-          $.toast("报修取消成功",function(){
-            self.$router.push("/myRepairList");
+      let data = {
+        rowGuid: this.$route.query.rowGuid,
+        maintainGuid:localStorage.getItem('m_user_rowGuid'),
+        maintainName:localStorage.getItem('m_user_userName'),
+        repairStatus:2
+      };
+      this.model.successRepair(data).then(function(res) {
+        $.hideLoading();
+        if (res.data.code == "0") {
+          $.toast("维修成功", function() {
+            self.$router.push("/myMaintainList");
           });
-        }else{
+        } else {
           $.toptip(res.data.msg, "error");
         }
-      })
+      });
     },
     toSubmit() {
       let self = this;
       $.confirm(
-        "您确定要取消吗？",
+        "您确定维修完成了吗？",
         "提示",
         function() {
-          self.cancel();
+          self.success();
         },
         function() {
           return;
         }
       );
-    },
+    }
   }
 };
 </script>

@@ -9,14 +9,12 @@
 	
  
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
-import doctorLoginPage from "./components/doctorLoginPage.vue";
-import doctorMenu from "./components/doctorMenu.vue";
-import myRepairList from './components/myRepairList.vue'
-import repairOnline from './components/repairOnline.vue'
-import repairDetail from './components/repairDetail.vue'
-import repairSatisfaction from './components/repairSatisfaction.vue'
+import maintainLoginPage from "./components/maintainLoginPage.vue";
+import maintainMenu from "./components/maintainMenu.vue";
+import myMaintainList from './components/myMaintainList.vue'
+import maintainDetail from './components/maintainDetail.vue'
   export default {
-  components:{doctorLoginPage,doctorMenu,myRepairList,repairOnline,repairDetail,repairSatisfaction},
+  components:{},
 	data() {
       return {
       	

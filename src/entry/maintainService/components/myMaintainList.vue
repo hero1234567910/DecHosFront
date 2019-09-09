@@ -4,11 +4,17 @@
       <div class="image-style" style="height: 138px;">
         <img style="height:100%;height: 138px;" src="../../../../static/img-2/wdbx.png" />
       </div>
-      <div class="weui-cells__title-wzl">报修记录</div>
+      <div class="weui-cells__title-wzl">待维修列表</div>
     </div>
-    <div class="list-body" style="margin-top: 180px;">
-      <div class="weui-cells" style="margin-top:0px;" v-for="item in RepairList" :key="item.rowGuid">
-        <a class="weui-cell weui-cell_access" href="javascript:;" @click="toRepairDetail(item)">
+    <div class="list-body" style="margin-top: 180px;" id="th">
+      <div
+        class="weui-cells"
+        style="margin-top:0px;"
+        v-for="item in MaintainList"
+        :key="item.rowGuid"
+        id="top"
+      >
+        <a class="weui-cell weui-cell_access" href="javascript:;" @click="toMaintainDetail(item)">
           <div class="weui-cell__bd">
             <p>{{item.deviceName}}</p>
           </div>
@@ -18,7 +24,12 @@
           </div>
         </a>
       </div>
+      <!-- <div v-if="isshow()" class="weui-loadmore" id="onloading">
+        <i class="weui-loading"></i>
+        <span class="weui-loadmore__tips">正在加载</span>
+      </div> -->
     </div>
+
     <div style="margin-top: 30px;">
       <div>
         <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
@@ -34,33 +45,85 @@ export default {
     this.model = model(this.axios);
     return {
       isShow: false,
-      RepairList: []
+      MaintainList: [],
+      page: 2,
+      loading: false
     };
   },
   mounted() {
-    this.getListByGuid();
+    this.getMaintainList();
+    //this.initList();
   },
   methods: {
+    isshow() {
+      if (this.MaintainList.length >= 6) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     toindex() {
       let self = this;
-      self.$router.push("/doctorMenu");
+      self.$router.push("/maintainMenu");
     },
-    getListByGuid() {
+    getMaintainList() {
       $.showLoading();
       let self = this;
-      let data = localStorage.getItem("m_user_rowGuid");
-      this.model.getListByGuid(data).then(function(res) {
+      let data = {
+        page: "1",
+        limit: "10",
+        repairStatus: 0
+      };
+      this.model.getMaintainList(data).then(function(res) {
         $.hideLoading();
         if (res.data.code == "0") {
-          self.RepairList = res.data.data;
+          self.MaintainList = res.data.data;
         } else {
           $.toptip(res.data.msg, "error");
         }
       });
     },
-    toRepairDetail(ele) {
+    initList() {
+      let self = this;
+      let loading = false;
+      console.log($('#th'));
+      $('#th').infinite();
+      $('#th').on("infinite", function() {
+        // if (loading) return;
+        console.log(loading);
+        loading = true;
+        setTimeout(function() {
+          let data = {
+            limit: "10",
+            page: self.page,
+            repairStatus: 0
+          };
+
+          this.model.getMaintainList(data).then(function(res) {
+            if (res.data.code == "0") {
+              console.log(res.data);
+              if (res.data.data.length == 0) {
+                $("#th").destroyInfinite();
+                $("#onloading").css("display", "none");
+                self.page = 2;
+              }
+
+              self.page++;
+              for (var i = 0; i < res.data.data.length; i++) {
+                self.MaintainList.push(res.data.data[i]);
+                console.log(self.MaintainList);
+              }
+            } else {
+              $.toptip(res.data.msg, "error");
+            }
+          });
+          loading = false;
+        }, 1000); //模拟延迟
+      });
+    },
+    toMaintainDetail(ele) {
       this.$router.push(
-        "/repairDetail?repairName=" +
+        "/maintainDetail?repairName=" +
           ele.repairName +
           "&repairGuid=" +
           ele.repairGuid +
@@ -79,7 +142,7 @@ export default {
           "&picGuid=" +
           ele.picGuid +
           "&rowGuid=" +
-          ele.rowGuid
+          ele.rowGuid 
       );
     },
     statusCheck(ele) {
@@ -97,7 +160,7 @@ export default {
         default:
           break;
       }
-      return def;   
+      return def;
     }
   }
 };
