@@ -4,9 +4,9 @@
       <div class="image-style" style="height: 138px;">
         <img style="height:100%;height: 138px;" src="../../../../static/img-2/wdbx.png" />
       </div>
-      <div class="weui-cells__title-wzl">待维修列表</div>
+      <div class="weui-cells__title-wzl">我的维修列表</div>
     </div>
-    <div class="list-body" style="margin-top: 180px;height:calc(100vh - 181px)" id="th">
+    <div class="list-body" style="margin-top: 180px;" id="th">
       <div
         class="weui-cells"
         style="margin-top:0px;"
@@ -20,21 +20,21 @@
           </div>
           <div class="weui-cell__ft">
             <div id="repairStatus">{{statusCheck(item.repairStatus)}}</div>
-            {{item.createTime}}
+            {{item.maintainTime}}
           </div>
         </a>
       </div>
-      <div v-if="isshow()" class="weui-loadmore" id="onloading">
+      <!-- <div v-if="isshow()" class="weui-loadmore" id="onloading">
         <i class="weui-loading"></i>
         <span class="weui-loadmore__tips">正在加载</span>
-      </div>
+      </div> -->
     </div>
 
-    <!-- <div style="margin-top: 30px;">
+    <div style="margin-top: 30px;">
       <div>
         <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -52,7 +52,7 @@ export default {
   },
   mounted() {
     this.getMaintainList();
-    this.initList();
+    //this.initList();
   },
   methods: {
     isshow() {
@@ -72,9 +72,9 @@ export default {
       let data = {
         page: "1",
         limit: "10",
-        repairStatus: 0
+        repairStatus: 2
       };
-      this.model.getMaintainList(data).then(function(res) {
+      this.model.getMyList(data).then(function(res) {
         $.hideLoading();
         if (res.data.code == "0") {
           self.MaintainList = res.data.data;
@@ -86,43 +86,40 @@ export default {
     initList() {
       let self = this;
       let loading = false;
-      $('#th').infinite(150);
-      $('#th').on("infinite", function(){
-        console.log('a')
-      })
-      // $('#th').on("infinite", function() {
-      //   if (loading) return;
-      //   console.log('a')
-      //   console.log(loading);
-      //   loading = true;
-      //   setTimeout(function() {
-      //     let data = {
-      //       limit: "10",
-      //       page: self.page,
-      //       repairStatus: 0
-      //     };
+      //console.log($('#th'));
+      $('#th').infinite();
+      $('#th').on("infinite", function() {
+        // if (loading) return;
+        //console.log(loading);
+        loading = true;
+        setTimeout(function() {
+          let data = {
+            limit: "10",
+            page: self.page,
+            repairStatus: 2
+          };
 
-      //     this.model.getMaintainList(data).then(function(res) {
-      //       if (res.data.code == "0") {
-      //         console.log(res.data);
-      //         if (res.data.data.length == 0) {
-      //           $("#th").destroyInfinite();
-      //           $("#onloading").css("display", "none");
-      //           self.page = 2;
-      //         }
+          this.model.getMyList(data).then(function(res) {
+            if (res.data.code == "0") {
+              console.log(res.data);
+              if (res.data.data.length == 0) {
+                $("#th").destroyInfinite();
+                $("#onloading").css("display", "none");
+                self.page = 2;
+              }
 
-      //         self.page++;
-      //         for (var i = 0; i < res.data.data.length; i++) {
-      //           self.MaintainList.push(res.data.data[i]);
-      //           console.log(self.MaintainList);
-      //         }
-      //       } else {
-      //         $.toptip(res.data.msg, "error");
-      //       }
-      //     });
-      //     loading = false;
-      //   }, 1000); //模拟延迟
-      // });
+              self.page++;
+              for (var i = 0; i < res.data.data.length; i++) {
+                self.MaintainList.push(res.data.data[i]);
+                console.log(self.MaintainList);
+              }
+            } else {
+              $.toptip(res.data.msg, "error");
+            }
+          });
+          loading = false;
+        }, 1000); //模拟延迟
+      });
     },
     toMaintainDetail(ele) {
       this.$router.push(
@@ -145,7 +142,9 @@ export default {
           "&picGuid=" +
           ele.picGuid +
           "&rowGuid=" +
-          ele.rowGuid 
+          ele.rowGuid +
+          "&maintainTime=" +
+          ele.maintainTime
       );
     },
     statusCheck(ele) {

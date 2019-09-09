@@ -10,14 +10,14 @@
         </div>
         <p class="weui-grid__label">我的报修</p>
       </a>
-      <a href="javascript:;" class="weui-grid js_grid">
-        <div class="weui-grid__icon" @click="toRepairOnline()">
+      <a href="javascript:;" class="weui-grid js_grid" @click="toRepairOnline()">
+        <div class="weui-grid__icon" >
           <img src="../../../../static/doctorImg/报修2.png" alt />
         </div>
         <p class="weui-grid__label">在线报修</p>
       </a>
-      <a href="javascript:;" class="weui-grid js_grid">
-        <div class="weui-grid__icon" @click="toRepairSatisfaction()">
+      <a href="javascript:;" class="weui-grid js_grid" @click="toRepairSatisfaction()">
+        <div class="weui-grid__icon" >
           <img src="../../../../static/doctorImg/报修.png" alt />
         </div>
         <p class="weui-grid__label">报修满意度评价</p>
@@ -203,7 +203,7 @@ export default {
       this.$router.push("/repairOnline");
     },
     toRepairSatisfaction(){
-      this.$router.push("/repairSatisfaction");
+      this.$router.push("/repairSatisfactionList");
     }
   }
 };

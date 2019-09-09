@@ -30,7 +30,7 @@
 
         <div style="margin-top: 30px;">
           <div>
-            <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="sub()">提交评价</a>
+            <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="exit()">返回列表</a>
           </div>
         </div>
       </div>
@@ -52,21 +52,20 @@ export default {
       textarea2: ""
     };
   },
-  mounted() {},
+  mounted() {
+    this.initSatDetail();
+  },
   methods: {
-    sub() {
+    initSatDetail() {
       let self = this;
-      if (this.val1 == 0 || this.val2 == 0 || this.val3 == 0) {
-        $.alert("评分不能为空", "提示", function() {});
-        return;
-      }
-      //评价
-      let data = {
-        evaluateDoc: this.val1,
-        evaluateNurse: this.val2,
-        evaluateFacilities: this.val3,
-        evaluateOpinion: this.textarea2
-      };
+      let data = this.$route.query;
+      self.val1 = data.repairSpeed;
+      self.val2 = data.repairAttitude;
+      self.val3 = data.skillLevels;
+      self.textarea2 = data.repairAdvice
+    },
+    exit(){
+      this.$router.push("/maintainSatisfactionList");
     }
   }
 };

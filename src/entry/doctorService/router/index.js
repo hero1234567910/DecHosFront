@@ -6,6 +6,7 @@ import myRepairList from '../components/myRepairList.vue';
 import repairOnline from '../components/repairOnline.vue';
 import repairDetail from '../components/repairDetail.vue';
 import repairSatisfaction from '../components/repairSatisfaction.vue';
+import repairSatisfactionList from '../components/repairSatisfactionList.vue';
 
 Vue.use(Router);
 
@@ -40,6 +41,11 @@ export default new Router({
      path:'/repairSatisfaction',
      name:'repairSatisfaction',
      component:repairSatisfaction
+   },
+   {
+     path:'/repairSatisfactionList',
+     name:'repairSatisfactionList',
+     component:repairSatisfactionList
    }
   ]
 });

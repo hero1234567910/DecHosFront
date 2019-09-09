@@ -198,25 +198,25 @@ export default {
       });
     },
     upLoadInit() {
-      var allowTypes = ["image/jpg", "image/jpeg", "image/png", "image/gif"];
+      let allowTypes = ["image/jpg", "image/jpeg", "image/png", "image/gif"];
       // 允许上传的图片类型
       // 1024KB，也就是 1MB
-      var maxSize = 2048 * 2048;
+      let maxSize = 2048 * 2048;
       // 图片最大宽度
-      var maxWidth = 10000;
+      let maxWidth = 10000;
       // 最大上传图片数量
-      var maxCount = 1;
+      let maxCount = 1;
       $("#uploaderInput").on("change", function(event) {
-        var files = event.target.files;
+        let files = event.target.files;
         //console.log(files);return false;
         // 如果没有选中文件，直接返回
         if (files.length === 0) {
           return;
         }
 
-        for (var i = 0, len = files.length; i < len; i++) {
-          var file = files[i];
-          var reader = new FileReader();
+        for (let i = 0, len = files.length; i < len; i++) {
+          let file = files[i];
+          let reader = new FileReader();
 
           // 如果类型不在允许的类型范围内
           if (allowTypes.indexOf(file.type) === -1) {
@@ -237,32 +237,32 @@ export default {
           reader.readAsDataURL(file);
           reader.onload = function(e) {
             console.log(e);
-            var img = new Image();
+            let img = new Image();
             img.src = e.target.result;
             img.onload = function() {
               // 不要超出最大宽度
-              var w = Math.min(maxWidth, img.width);
+              let w = Math.min(maxWidth, img.width);
               // 高度按比例计算
-              var h = img.height * (w / img.width);
-              var canvas = document.createElement("canvas");
-              var ctx = canvas.getContext("2d");
+              let h = img.height * (w / img.width);
+              let canvas = document.createElement("canvas");
+              let ctx = canvas.getContext("2d");
               // 设置 canvas 的宽度和高度
               canvas.width = w;
               canvas.height = h;
               ctx.drawImage(img, 0, 0, w, h);
-              var base64 = canvas.toDataURL("image/jpeg", 0.8);
+              let base64 = canvas.toDataURL("image/jpeg", 0.8);
               //console.log(base64);
               // 插入到预览区
-              var $preview = $(
+              let $preview = $(
                 '<li class="weui-uploader__file weui-uploader__file_status" style="background-image:url(' +
                   img.src +
                   ')"></li>'
               );
               $("#uploaderFiles").append($preview);
-              var num = $(".weui-uploader__file").length;
+              let num = $(".weui-uploader__file").length;
               $(".weui-uploader__info").text(num + "/" + maxCount);
 
-              var formData = new FormData();
+              let formData = new FormData();
 
               formData.append("images", base64);
               console.log(img.src);

@@ -30,7 +30,7 @@
 
         <div style="margin-top: 30px;">
           <div>
-            <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="sub()">提交评价</a>
+            <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toSubmit()">提交评价</a>
           </div>
         </div>
       </div>
@@ -55,6 +55,7 @@ export default {
   mounted() {},
   methods: {
     sub() {
+      
       let self = this;
       if (this.val1 == 0 || this.val2 == 0 || this.val3 == 0) {
         $.alert("评分不能为空", "提示", function() {});
@@ -62,11 +63,36 @@ export default {
       }
       //评价
       let data = {
-        evaluateDoc: this.val1,
-        evaluateNurse: this.val2,
-        evaluateFacilities: this.val3,
-        evaluateOpinion: this.textarea2
+        rowGuid:this.$route.query.rowGuid,
+        repairSpeed: this.val1,
+        repairAttitude: this.val2,
+        skillLevels: this.val3,
+        repairAdvice: this.textarea2
       };
+      this.model.updateSat(data).then(function(res){
+        
+        if (res.data.code == "0") {
+          $.toast("评价成功", function() {
+            self.$router.push("/repairSatisfactionList");
+          });
+        } else {
+          $.toptip(res.data.msg, "error");
+        }
+      })
+
+    },
+    toSubmit() {
+      let self = this;
+      $.confirm(
+        "您确定评价完成了吗？",
+        "提示",
+        function() {
+          self.sub();
+        },
+        function() {
+          return;
+        }
+      );
     }
   }
 };
