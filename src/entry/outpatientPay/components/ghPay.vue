@@ -145,7 +145,8 @@
   				zje:this.info.zje,
   				yfje:this.info.yfje,
   				zfje:this.info.zfje,
-  				openid:this.openid
+  				openid:this.openid,
+  				yyxh:this.info.yyxh
   			}
 			this.model.placeOrder(data).then(function(res){
 				console.log(res.data);
@@ -177,7 +178,6 @@
   				iszfjs:1
   			}
   			this.model.RegisteredBudget(data).then(function(res){
-  				console.log(res)
   				if(res.data.code == 0){
   					self.info = res.data.data;
   				}else{
