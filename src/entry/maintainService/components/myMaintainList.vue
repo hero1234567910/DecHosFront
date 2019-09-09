@@ -6,7 +6,7 @@
       </div>
       <div class="weui-cells__title-wzl">待维修列表</div>
     </div>
-    <div class="list-body" style="margin-top: 180px;height:calc(100vh - 181px)" id="th">
+    <div class="list-body"  id="th">
       <div
         class="weui-cells"
         style="margin-top:0px;"
@@ -87,42 +87,38 @@ export default {
       let self = this;
       let loading = false;
       $('#th').infinite(150);
-      $('#th').on("infinite", function(){
-        console.log('a')
-      })
-      // $('#th').on("infinite", function() {
-      //   if (loading) return;
-      //   console.log('a')
-      //   console.log(loading);
-      //   loading = true;
-      //   setTimeout(function() {
-      //     let data = {
-      //       limit: "10",
-      //       page: self.page,
-      //       repairStatus: 0
-      //     };
+     $('#th').on("infinite", function() {
+       if (loading) return;
+       console.log(loading);
+       loading = true;
+       setTimeout(function() {
+         let data = {
+           limit: "10",
+           page: self.page,
+           repairStatus: 0
+         };
 
-      //     this.model.getMaintainList(data).then(function(res) {
-      //       if (res.data.code == "0") {
-      //         console.log(res.data);
-      //         if (res.data.data.length == 0) {
-      //           $("#th").destroyInfinite();
-      //           $("#onloading").css("display", "none");
-      //           self.page = 2;
-      //         }
+         self.model.getMaintainList(data).then(function(res) {
+           if (res.data.code == "0") {
+             console.log(res.data);
+             if (res.data.data.length == 0) {
+               $("#th").destroyInfinite();
+               $("#onloading").css("display", "none");
+               self.page = 2;
+             }
 
-      //         self.page++;
-      //         for (var i = 0; i < res.data.data.length; i++) {
-      //           self.MaintainList.push(res.data.data[i]);
-      //           console.log(self.MaintainList);
-      //         }
-      //       } else {
-      //         $.toptip(res.data.msg, "error");
-      //       }
-      //     });
-      //     loading = false;
-      //   }, 1000); //模拟延迟
-      // });
+             self.page++;
+             for (var i = 0; i < res.data.data.length; i++) {
+               self.MaintainList.push(res.data.data[i]);
+               console.log(self.MaintainList);
+             }
+           } else {
+             $.toptip(res.data.msg, "error");
+           }
+         });
+         loading = false;
+       }, 1000); //模拟延迟
+     });
     },
     toMaintainDetail(ele) {
       this.$router.push(
@@ -170,6 +166,13 @@ export default {
 </script>
 
 <style scoped>
+	.list-body{
+		position: absolute;
+    height: calc(100vh - 181px);
+    top: 180px;
+    width: 100%;
+    overflow-y: auto;
+	}
 .weui-cells__title-wzl {
   background-color: whitesmoke;
   margin-top: 0px;
