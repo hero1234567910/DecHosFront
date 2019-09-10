@@ -70,6 +70,13 @@ function model(http) {
         }
       });
     },
+    uploadPic(data){
+      return http.post(evn.SEC_HOSAPI + "/wx/sys/common/uploadFile", data, {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8"
+        }
+      });
+    }
   };
 }
 

@@ -150,10 +150,10 @@ export default {
       let self = this;
       self.sCount = $("#reportContent").val().length;
     },
-    initPage(){
+    initPage() {
       let self = this;
-      $('#repairName').val(localStorage.getItem('m_user_userName'));
-      $('#repairPhone').val(localStorage.getItem('m_mobile'))
+      $("#repairName").val(localStorage.getItem("m_user_userName"));
+      $("#repairPhone").val(localStorage.getItem("m_mobile"));
     },
     panNull(ele, str) {
       if (ele == null || ele == "") {
@@ -180,7 +180,7 @@ export default {
       let self = this;
       let data = {
         repairName: $("#repairName").val(),
-        repairGuid: localStorage.getItem('m_user_rowGuid'),
+        repairGuid: localStorage.getItem("m_user_rowGuid"),
         repairPhone: $("#repairPhone").val(),
         deviceName: $("#deviceName").val(),
         devicePlace: $("#devicePlace").val(),
@@ -206,6 +206,8 @@ export default {
       let maxWidth = 10000;
       // 最大上传图片数量
       let maxCount = 1;
+
+      let self = this;
       $("#uploaderInput").on("change", function(event) {
         let files = event.target.files;
         //console.log(files);return false;
@@ -236,7 +238,7 @@ export default {
           }
           reader.readAsDataURL(file);
           reader.onload = function(e) {
-            console.log(e);
+            //console.log(e);
             let img = new Image();
             img.src = e.target.result;
             img.onload = function() {
@@ -261,32 +263,20 @@ export default {
               $("#uploaderFiles").append($preview);
               let num = $(".weui-uploader__file").length;
               $(".weui-uploader__info").text(num + "/" + maxCount);
+              console.log(files);
+              console.log(files[0])
+              let data =  { uploadify: files[0]} ;
+              self.model.uploadPic(data).then(function(res) {
+                if (res.data.code == "0") {
+                  $.toast("上传图片成功");
+                } else {
+                  $.toptip(res.data.msg, "error");
+                }
+              });
+              // let formData = new FormData();
 
-              let formData = new FormData();
-
-              formData.append("images", base64);
+              // formData.append("images", base64);
               //console.log(img.src);
-              //   $.ajax({
-              //     url: "savetofile.php",
-
-              //     type: "POST",
-
-              //     data: formData,
-
-              //     contentType: false,
-
-              //     processData: false,
-
-              //     success: function(data) {
-              //       $preview.removeClass("weui-uploader__file_status");
-              //       $.toast("上传成功", function() {
-              //         //console.log('close');
-              //       });
-              //     },
-              //     error: function(xhr, type) {
-              //       alert("Ajax error!");
-              //     }
-              //   });
             };
           };
         }

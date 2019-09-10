@@ -100,7 +100,7 @@ export default {
 
           self.model.getMyList(data).then(function(res) {
             if (res.data.code == "0") {
-              console.log(res.data);
+              //console.log(res.data);
               if (res.data.data.length == 0) {
                 $("#th").destroyInfinite();
                 $("#onloading").css("display", "none");
@@ -110,7 +110,7 @@ export default {
               self.page++;
               for (var i = 0; i < res.data.data.length; i++) {
                 self.MaintainList.push(res.data.data[i]);
-                console.log(self.MaintainList);
+                //console.log(self.MaintainList);
               }
             } else {
               $.toptip(res.data.msg, "error");
