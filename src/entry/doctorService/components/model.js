@@ -76,6 +76,13 @@ function model(http) {
 //        "Content-Type": "multipart/form-data"
 //      }
       });
+    },
+    countSats(data){
+      return http.post(evn.SEC_HOSAPI + "/wx/sys/sechosrepairsatisfaction/countSats", data, {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8"
+        }
+      });
     }
   };
 }

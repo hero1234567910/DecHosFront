@@ -11,15 +11,17 @@
         <p class="weui-grid__label">我的报修</p>
       </a>
       <a href="javascript:;" class="weui-grid js_grid" @click="toRepairOnline()">
-        <div class="weui-grid__icon" >
+        <div class="weui-grid__icon">
           <img src="../../../../static/doctorImg/报修2.png" alt />
         </div>
         <p class="weui-grid__label">在线报修</p>
       </a>
       <a href="javascript:;" class="weui-grid js_grid" @click="toRepairSatisfaction()">
-        <div class="weui-grid__icon" >
-          <img src="../../../../static/doctorImg/报修.png" alt />
-        </div>
+        <el-badge :value="satCounts" class="item">
+          <div class="weui-grid__icon">
+            <img src="../../../../static/doctorImg/报修.png" alt />
+          </div>
+        </el-badge>
         <p class="weui-grid__label">报修满意度评价</p>
       </a>
       <a href="javascript:;" class="weui-grid js_grid">
@@ -46,15 +48,18 @@
 
 <script>
 import model from "./model.js";
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 export default {
   data() {
     this.model = model(this.axios);
     return {
-      docName: ""
+      docName: "",
+      satCounts: ""
     };
   },
-  mounted() {},
+  mounted() {
+    this.countSats();
+  },
   created() {
     //this.getDocInfo();
   },
@@ -196,15 +201,36 @@ export default {
       if (r != null) return decodeURI(r[2]);
       return null;
     },
-    toMyRepair(){
-      this.$router.push('/myRepairList');
+    toMyRepair() {
+      this.$router.push("/myRepairList");
     },
-    toRepairOnline(){
+    toRepairOnline() {
       this.$router.push("/repairOnline");
     },
-    toRepairSatisfaction(){
+    toRepairSatisfaction() {
       this.$router.push("/repairSatisfactionList");
+    },
+    countSats() {
+      let self = this;
+      let val = localStorage.getItem("m_user_rowGuid");
+      let data = val;
+      this.model.countSats(data).then(function(res) {
+        if (res.data.code == 0) {
+          self.satCounts = res.data.data;
+          //console.log(res.data.data);
+        } else {
+          $.toptip(res.data.msg, "error");
+        }
+      });
     }
   }
 };
 </script>
+
+<style scoped>
+.item {
+  margin-top: 5px;
+  margin-right: 40px;
+  margin-left: 37%;
+}
+</style>
