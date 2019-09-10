@@ -5,24 +5,26 @@
     </header>
     <div class="weui-grids">
       <a href="javascript:;" class="weui-grid js_grid" @click="toMyMaintainList()">
-        <div class="weui-grid__icon">
-          <img src="../../../../static/doctorImg/报修单@2x.png" alt />
-        </div>
+        <el-badge :value="repairCounts" class="item">
+          <div class="weui-grid__icon">
+            <img src="../../../../static/doctorImg/报修单@2x.png" alt />
+          </div>
+        </el-badge>
         <p class="weui-grid__label">待维修列表</p>
       </a>
       <a href="javascript:;" class="weui-grid js_grid" @click="toMaintainRecord()">
-        <div class="weui-grid__icon" >
+        <div class="weui-grid__icon">
           <img src="../../../../static/doctorImg/报修2.png" alt />
         </div>
         <p class="weui-grid__label">我的维修记录</p>
       </a>
       <a href="javascript:;" class="weui-grid js_grid" @click="toMaintainSatisfaction()">
-        <div class="weui-grid__icon" >
+        <div class="weui-grid__icon">
           <img src="../../../../static/doctorImg/报修.png" alt />
         </div>
         <p class="weui-grid__label">维修满意度反馈</p>
       </a>
-      <a href="javascript:;" class="weui-grid js_grid">
+      <!-- <a href="javascript:;" class="weui-grid js_grid">
         <div class="weui-grid__icon">
           <img src="images/icon_nav_cell.png" alt />
         </div>
@@ -33,22 +35,26 @@
           <img src="images/icon_nav_cell.png" alt />
         </div>
         <p class="weui-grid__label">List</p>
-      </a>
+      </a> -->
     </div>
   </div>
 </template>
 
 <script>
 import model from "./model.js";
-import CryptoJS from 'crypto-js';
+import CryptoJS from "crypto-js";
 export default {
   data() {
     this.model = model(this.axios);
     return {
-      docName: ""
+      docName: "",
+      repairCounts: "",
+      satCount: ""
     };
   },
-  mounted() {},
+  mounted() {
+    this.countRepairs();
+  },
   created() {
     //this.getDocInfo();
   },
@@ -190,15 +196,33 @@ export default {
       if (r != null) return decodeURI(r[2]);
       return null;
     },
-    toMyMaintainList(){
-      this.$router.push('/myMaintainList');
+    toMyMaintainList() {
+      this.$router.push("/myMaintainList");
     },
-    toMaintainRecord(){
+    toMaintainRecord() {
       this.$router.push("/maintainRecordList");
     },
-    toMaintainSatisfaction(){
+    toMaintainSatisfaction() {
       this.$router.push("/maintainSatisfactionList");
+    },
+    countRepairs() {
+      let self = this;
+      this.model.countRepairs().then(function(res) {
+        if (res.data.code == 0) {
+          self.repairCounts = res.data.data;
+        } else {
+          $.toptip(res.data.msg, "error");
+        }
+      });
     }
   }
 };
 </script>
+
+<style scoped>
+.item {
+  margin-top: 5px;
+  margin-right: 40px;
+  margin-left: 37%;
+}
+</style>
