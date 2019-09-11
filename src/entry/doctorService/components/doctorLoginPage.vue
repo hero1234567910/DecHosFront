@@ -62,6 +62,7 @@ export default {
       let data = userInfo;
       this.model.Login(data).then(function(res) {
         if (res.data.code == "0") {
+          //console.log(res.data.deptName);
           window.localStorage.setItem("m_token", res.data.data.token);
           window.localStorage.setItem(
             "m_user_rowGuid",
@@ -81,11 +82,15 @@ export default {
           );
           window.localStorage.setItem(
             "m_deptName",
-            JSON.stringify(res.data.deptName)
+            res.data.data.deptName
           );
           window.localStorage.setItem(
             "m_loginId",
-            JSON.stringify(res.data.loginId)
+            res.data.data.loginId
+          );
+          window.localStorage.setItem(
+            "m_sex",
+            res.data.data.sex
           );
           self.$message({
             message: "登录成功",

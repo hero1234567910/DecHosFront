@@ -7,6 +7,7 @@ import repairOnline from '../components/repairOnline.vue';
 import repairDetail from '../components/repairDetail.vue';
 import repairSatisfaction from '../components/repairSatisfaction.vue';
 import repairSatisfactionList from '../components/repairSatisfactionList.vue';
+import personCenter from '../components/personCenter.vue';
 
 Vue.use(Router);
 
@@ -53,6 +54,11 @@ export default new Router({
      path:'/repairSatisfactionList',
      name:'repairSatisfactionList',
      component:repairSatisfactionList
+   },
+   {
+     path:'/personCenter',
+     name:'personCenter',
+     component:personCenter
    }
   ]
 });

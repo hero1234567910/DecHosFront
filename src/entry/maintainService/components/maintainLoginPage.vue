@@ -81,11 +81,15 @@ export default {
           );
           window.localStorage.setItem(
             "m_deptName",
-            JSON.stringify(res.data.deptName)
+            res.data.data.deptName
           );
           window.localStorage.setItem(
             "m_loginId",
-            JSON.stringify(res.data.loginId)
+            res.data.data.loginId
+          );
+          window.localStorage.setItem(
+            "m_sex",
+            res.data.data.sex
           );
           self.$message({
             message: "登录成功",

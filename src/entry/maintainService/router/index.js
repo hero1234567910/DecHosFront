@@ -7,6 +7,7 @@ import maintainDetail from "../components/maintainDetail.vue";
 import maintainRecordList from "../components/maintainRecordList.vue";
 import maintainSatisfactionList from "../components/maintainSatisfactionList.vue";
 import repairSatisfaction from "../components/repairSatisfaction.vue";
+import personCenter from '../components/personCenter.vue';
 
 Vue.use(Router);
 
@@ -65,6 +66,11 @@ export default new Router({
       //   keepAlive: true, //此组件需要被缓存
       //   isBack: false //用于判断上一个页面是哪个
       // }
-    }
+    },
+    {
+     path:'/personCenter',
+     name:'personCenter',
+     component:personCenter
+   }
   ]
 });
