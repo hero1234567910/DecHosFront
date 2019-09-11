@@ -16,7 +16,7 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="repairPhone" name="repairPhone" readonly/>
+            <input class="weui-input" type="text" id="repairPhone" name="repairPhone" readonly />
           </div>
         </div>
       </div>
@@ -24,7 +24,7 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="deviceName" name="deviceName" readonly/>
+            <input class="weui-input" type="text" id="deviceName" name="deviceName" readonly />
           </div>
         </div>
       </div>
@@ -32,7 +32,7 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="devicePlace" name="devicePlace" readonly/>
+            <input class="weui-input" type="text" id="devicePlace" name="devicePlace" readonly />
           </div>
         </div>
       </div>
@@ -40,7 +40,7 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="damagedParts" name="damagedParts" readonly/>
+            <input class="weui-input" type="text" id="damagedParts" name="damagedParts" readonly />
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <input class="weui-input" type="text" id="repairStatus" name="repairStatus" readonly/>
+            <input class="weui-input" type="text" id="repairStatus" name="repairStatus" readonly />
           </div>
         </div>
       </div>
@@ -118,58 +118,57 @@
 <script>
 import model from "./model.js";
 export default {
-  
   data() {
     this.model = model(this.axios);
     return {
-      picGuid:'',
-      rowGuid:'',
-      cancelButton:true
+      picGuid: "",
+      rowGuid: "",
+      cancelButton: true
     };
   },
   mounted() {
     this.initRepairDetail();
   },
   methods: {
-    initRepairDetail(){
+    initRepairDetail() {
       let self = this;
       let data = this.$route.query;
-      $('#repairName').val(data.repairName);
-      $('#repairPhone').val(data.repairPhone);
-      $('#deviceName').val(data.deviceName);
-      $('#devicePlace').val(data.devicePlace);
-      $('#damagedParts').val(data.damagedParts);
-      if(data.repairStatus==0){
-        $('#repairStatus').val('报修中');
-        $('#repairStatus').css('color','blue')
-      }else if(data.repairStatus==1){
-        $('#repairStatus').val('报修取消');
-        $('#repairStatus').css('color','red')
+      $("#repairName").val(data.repairName);
+      $("#repairPhone").val(data.repairPhone);
+      $("#deviceName").val(data.deviceName);
+      $("#devicePlace").val(data.devicePlace);
+      $("#damagedParts").val(data.damagedParts);
+      if (data.repairStatus == 0) {
+        $("#repairStatus").val("报修中");
+        $("#repairStatus").css("color", "blue");
+      } else if (data.repairStatus == 1) {
+        $("#repairStatus").val("报修取消");
+        $("#repairStatus").css("color", "red");
         self.cancelButton = false;
-      }else{
-        $('#repairStatus').val('报修完成');
-        $('#repairStatus').css('color','green')
+      } else if (data.repairStatus == 2) {
+        $("#repairStatus").val("报修完成");
+        $("#repairStatus").css("color", "green");
         self.cancelButton = false;
       }
-      $('#reportContent').val(data.reportContent);
+      $("#reportContent").val(data.reportContent);
       self.picGuid = data.picGuid;
       self.rowGuid = data.rowGuid;
     },
     returnList() {
       this.$router.push("/myRepairList");
     },
-    cancel(){
+    cancel() {
       let self = this;
       let data = this.$route.query.rowGuid;
-      this.model.cancelRepair(data).then(function(res){
-        if(res.data.code == "0"){
-          $.toast("报修取消成功",function(){
+      this.model.cancelRepair(data).then(function(res) {
+        if (res.data.code == "0") {
+          $.toast("报修取消成功", function() {
             self.$router.push("/myRepairList");
           });
-        }else{
+        } else {
           $.toptip(res.data.msg, "error");
         }
-      })
+      });
     },
     toSubmit() {
       let self = this;
@@ -183,7 +182,7 @@ export default {
           return;
         }
       );
-    },
+    }
   }
 };
 </script>

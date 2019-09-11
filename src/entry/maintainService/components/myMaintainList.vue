@@ -19,7 +19,7 @@
             <p>{{item.deviceName}}</p>
           </div>
           <div class="weui-cell__ft">
-            <div id="repairStatus">{{statusCheck(item.repairStatus)}}</div>
+            <div>{{statusCheck(item.repairStatus)}}</div>
             {{item.createTime}}
           </div>
         </a>
@@ -120,7 +120,7 @@ export default {
 
           self.model.getMaintainList(data).then(function(res) {
             if (res.data.code == "0") {
-              console.log(res.data);
+              //console.log(res.data);
               if (res.data.data.length == 0) {
                 $("#th").destroyInfinite();
                 $("#onloading").css("display", "none");
@@ -141,6 +141,7 @@ export default {
       });
     },
     toMaintainDetail(ele) {
+      //console.log(ele);
       this.$router.push(
         "/maintainDetail?repairName=" +
           ele.repairName +

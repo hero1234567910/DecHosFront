@@ -19,7 +19,7 @@
             <p>{{item.deviceName}}</p>
           </div>
           <div class="weui-cell__ft">
-            <div id="repairStatus">{{statusCheck(item.repairStatus)}}</div>
+            <div>{{statusCheck(item.repairStatus)}}</div>
             {{item.maintainTime}}
           </div>
         </a>

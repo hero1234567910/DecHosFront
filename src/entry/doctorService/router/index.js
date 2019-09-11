@@ -25,7 +25,11 @@ export default new Router({
     {
       path: '/myRepairList',
       name: 'myRepairList',
-      component: myRepairList
+      component: myRepairList,
+      meta: {
+        keepAlive: true, //此组件需要被缓存
+        isBack: false 
+      },
    },
    {
      path:'/repairOnline',
@@ -35,7 +39,10 @@ export default new Router({
    {
      path:'/repairDetail',
      name:'repairDetail',
-     component:repairDetail
+     component:repairDetail,
+     meta: {
+        keepAlive: false
+      },
    },
    {
      path:'/repairSatisfaction',

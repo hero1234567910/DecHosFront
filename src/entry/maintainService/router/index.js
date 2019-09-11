@@ -38,10 +38,7 @@ export default new Router({
       path: "/maintainDetail",
       name: "maintainDetail",
       component: maintainDetail,
-      meta: {
-        keepAlive: true, //此组件需要被缓存
-        isBack: false //用于判断上一个页面是哪个
-      }
+      
     },
     {
       meta: {
@@ -64,10 +61,10 @@ export default new Router({
       path: "/repairSatisfaction",
       name: "repairSatisfaction",
       component: repairSatisfaction,
-      meta: {
-        keepAlive: true, //此组件需要被缓存
-        isBack: false //用于判断上一个页面是哪个
-      }
+      // meta: {
+      //   keepAlive: true, //此组件需要被缓存
+      //   isBack: false //用于判断上一个页面是哪个
+      // }
     }
   ]
 });

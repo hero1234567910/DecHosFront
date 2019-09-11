@@ -1,6 +1,11 @@
 <template>
   <div style="height: 100%;background-color: #FFFFFF;">
-  	<router-view :key="$route.fullPath"></router-view>
+  	<keep-alive>
+		    <router-view v-if="$route.meta.keepAlive">
+		        <!-- 这里是会被缓存的视图组件，比如 page1,page2 -->
+		    </router-view>
+		</keep-alive>
+ 		<router-view  v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 

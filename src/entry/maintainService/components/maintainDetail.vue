@@ -154,7 +154,7 @@ export default {
         $("#repairStatus").val("报修取消");
         $("#repairStatus").css("color", "red");
         self.successButton = false;
-      } else {
+      } else if(data.repairStatus == 2){
         $("#repairStatus").val("报修完成");
         $("#repairStatus").css("color", "green");
         self.successButton = false;
