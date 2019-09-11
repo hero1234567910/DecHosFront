@@ -6,8 +6,14 @@
       </div>
       <div class="weui-cells__title-wzl">报修记录</div>
     </div>
-    <div class="list-body" style="margin-top: 180px;">
-      <div class="weui-cells" style="margin-top:0px;" v-for="item in RepairList" :key="item.rowGuid">
+    <div class="list-body" id="th">
+      <div
+        class="weui-cells"
+        style="margin-top:0px;"
+        v-for="item in RepairList"
+        :key="item.rowGuid"
+        id="top"
+      >
         <a class="weui-cell weui-cell_access" href="javascript:;" @click="toRepairDetail(item)">
           <div class="weui-cell__bd">
             <p>{{item.deviceName}}</p>
@@ -18,10 +24,14 @@
           </div>
         </a>
       </div>
-    </div>
-    <div style="margin-top: 30px;">
-      <div>
-        <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
+      <div v-if="isshow()" class="weui-loadmore" id="onloading">
+        <i class="weui-loading"></i>
+        <span class="weui-loadmore__tips">正在加载</span>
+      </div>
+      <div style="margin-top: 30px;">
+        <div>
+          <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
+        </div>
       </div>
     </div>
   </div>
@@ -34,11 +44,14 @@ export default {
     this.model = model(this.axios);
     return {
       isShow: false,
-      RepairList: []
+      RepairList: [],
+      page: 2,
+      loading: false
     };
   },
   mounted() {
     this.getListByGuid();
+    this.initList();
   },
   beforeRouteEnter(to, from, next) {
     // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
@@ -62,6 +75,13 @@ export default {
     this.$route.meta.isBack = false;
   },
   methods: {
+    isshow() {
+      if (this.RepairList.length >= 6) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     toindex() {
       let self = this;
       self.$router.push("/doctorMenu");
@@ -69,14 +89,56 @@ export default {
     getListByGuid() {
       $.showLoading();
       let self = this;
-      let data = localStorage.getItem("m_user_rowGuid");
-      this.model.getListByGuid(data).then(function(res) {
+      let data = {
+        page: "1",
+        limit: "10",
+        repairGuid:localStorage.getItem("m_user_rowGuid")
+      }
+      
+      this.model.listRepairData(data).then(function(res) {
         $.hideLoading();
         if (res.data.code == "0") {
           self.RepairList = res.data.data;
         } else {
           $.toptip(res.data.msg, "error");
         }
+      });
+    },
+    initList() {
+      let self = this;
+      let loading = false;
+      $("#th").infinite(150);
+      $("#th").on("infinite", function() {
+        if (loading) return;
+        //console.log(loading);
+        loading = true;
+        setTimeout(function() {
+          let data = {
+            limit: "10",
+            page: self.page,
+            repairGuid:localStorage.getItem("m_user_rowGuid")
+          };
+
+          self.model.listRepairData(data).then(function(res) {
+            if (res.data.code == "0") {
+              //console.log(res.data);
+              if (res.data.data.length == 0) {
+                $("#th").destroyInfinite();
+                $("#onloading").css("display", "none");
+                self.page = 2;
+              }
+
+              self.page++;
+              for (var i = 0; i < res.data.data.length; i++) {
+                self.RepairList.push(res.data.data[i]);
+                //console.log(self.MaintainList);
+              }
+            } else {
+              $.toptip(res.data.msg, "error");
+            }
+          });
+          loading = false;
+        }, 1000); //模拟延迟
       });
     },
     toRepairDetail(ele) {
@@ -118,7 +180,7 @@ export default {
         default:
           break;
       }
-      return def;   
+      return def;
     }
   }
 };
@@ -144,5 +206,12 @@ export default {
 .list-head {
   position: absolute;
   z-index: 100;
+}
+.list-body {
+  position: absolute;
+  height: calc(100vh - 181px);
+  top: 180px;
+  width: 100%;
+  overflow-y: auto;
 }
 </style>

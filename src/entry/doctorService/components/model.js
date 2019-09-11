@@ -83,7 +83,17 @@ function model(http) {
           "Content-Type": "application/json;charset=utf-8"
         }
       });
-    }
+    },
+    listRepairData(data) {
+      return http.get(
+        evn.SEC_HOSAPI + '/wx/sys/sechosrepair/listData?'+toQueryString(data),
+        {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          }
+        }
+      );
+    },
   };
 }
 
