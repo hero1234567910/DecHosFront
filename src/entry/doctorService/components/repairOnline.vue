@@ -205,8 +205,8 @@ export default {
     upLoadInit() {
       let allowTypes = ["image/jpg", "image/jpeg", "image/png", "image/gif"];
       // 允许上传的图片类型
-      // 1024KB，也就是 1MB
-      let maxSize = 2048 * 2048;
+      // 最大约为9.5M
+      let maxSize = 10000000;
       // 图片最大宽度
       let maxWidth = 10000;
       // 最大上传图片数量
