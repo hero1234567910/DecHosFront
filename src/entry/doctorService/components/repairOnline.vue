@@ -134,6 +134,7 @@
 
 <script>
 import model from "./model.js";
+import evn from "../utils/evn.js";
 export default {
   data() {
     this.model = model(this.axios);
@@ -264,17 +265,19 @@ export default {
               let num = $(".weui-uploader__file").length;
               $(".weui-uploader__info").text(num + "/" + maxCount);
               console.log(file)
-              self.model.uploadPic(files[0]).then(function(res) {
-                if (res.data.code == "0") {
-                  $.toast("上传图片成功");
-                } else {
-                  $.toptip(res.data.msg, "error");
+              console.log(files[0])
+               var formData = new FormData();
+               formData.append('file',file);
+              $.ajax({
+								type: 'POST',
+                url: evn.SEC_HOSAPI + "/wx/sys/common/upload",
+                data: formData,
+                processData: false, 
+                contentType: false,   
+                success: function (arg) {
+                    console.log(arg)
                 }
-              });
-              // let formData = new FormData();
-
-              // formData.append("images", base64);
-              //console.log(img.src);
+							});
             };
           };
         }

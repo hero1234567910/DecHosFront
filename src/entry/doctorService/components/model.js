@@ -71,11 +71,7 @@ function model(http) {
       });
     },
     uploadPic(data){
-      return http.post(evn.SEC_HOSAPI + "/wx/sys/common/upload", data, {
-//      headers: {
-//        "Content-Type": "multipart/form-data"
-//      }
-      });
+      return http.post(evn.SEC_HOSAPI + "/wx/sys/common/upload", data);
     },
     countSats(data){
       return http.post(evn.SEC_HOSAPI + "/wx/sys/sechosrepairsatisfaction/countSats", data, {
