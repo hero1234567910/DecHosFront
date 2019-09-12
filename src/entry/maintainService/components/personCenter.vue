@@ -66,12 +66,13 @@ export default {
   mounted() {},
   methods: {
     toExit() {
+      let self = this;
       $.confirm({
         title: "提示",
         text: "确认退出吗!",
         onOK: function() {
           localStorage.clear();
-          this.$router.push("/");
+          self.$router.push("/");
         },
         onCancel: function() {}
       });

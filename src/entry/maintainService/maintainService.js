@@ -16,10 +16,10 @@ Vue.prototype.axios = axios
 
 // router.beforeEach((to, from, next) => {
 //   // to and from are both route objects. must call `next`.
-//   let user = localStorage.getItem('sec_acessToken');
+//   let user = localStorage.getItem('m_token');
 //   if(to.path == '/'){
 //       if(user){
-//           next({path:'/doctorMenu'})
+//           next({path:'/maintainMenu'})
 //       }else{
 //           next();
 //       }
