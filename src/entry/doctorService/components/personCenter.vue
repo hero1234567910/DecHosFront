@@ -35,7 +35,12 @@
 
     <div style="margin-top: 30px;">
       <div>
-        <a href="javascript:;" class="weui-btn weui-btn_primary" style="width:230px;" v-on:click="toindex()">返回主页</a>
+        <a
+          href="javascript:;"
+          class="weui-btn weui-btn_primary"
+          style="width:230px;"
+          v-on:click="toindex()"
+        >返回主页</a>
       </div>
     </div>
   </div>
@@ -75,18 +80,16 @@ export default {
     },
     headimgCheck() {
       let self = this;
-      if (
-        localStorage.getItem("m_sex") == "男" ||
-        localStorage.getItem("m_sex") == undefined
-      ) {
+      if (localStorage.getItem("m_sex") == "男") {
+        self.headimg = "../../../../static/doctorImg/医生.png";
+      }else if (localStorage.getItem("m_sex") == "女") {
+        self.headimg = "../../../../static/doctorImg/女医生.png";
+      }else{
         self.headimg = "../../../../static/doctorImg/医生.png";
       }
-      if (localStorage.getItem("m_sex") == "女") {
-        self.headimg = "../../../../static/doctorImg/女医生.png";
-      }
     },
-    toindex(){
-        this.$router.push("/doctorMenu");
+    toindex() {
+      this.$router.push("/doctorMenu");
     }
   }
 };
@@ -240,5 +243,4 @@ a.weui-media-box {
 .weui-btn_primary {
   background-color: #4ccbdb;
 }
-
 </style>
