@@ -105,19 +105,18 @@
                 <p class="weui-uploader__title">图片上传(可选)</p>
                 <div class="weui-uploader__info">0/1</div>
               </div>
-              <div class="weui-uploader__bd">
+              <div id="uploaderInput" class="weui-uploader__bd">
                 <ul class="weui-uploader__files" id="uploaderFiles">
                   <!-- <li class="weui-uploader__file"></li> -->
                 </ul>
-                <div class="weui-uploader__input-box">
-                  <input
-                    id="uploaderInput"
-                    class="weui-uploader__input"
-                    type="file"
-                    accept="image/*"
-                    multiple
-                  />
+                <div id="uploaderBox" class="weui-uploader__input-box">
+                  <input class="weui-uploader__input" type="file" accept="image/*" multiple />
                 </div>
+                <a
+                  href="javascript:;"
+                  class="weui-btn weui-btn_mini weui-btn_primary"
+                  v-on:click="deletePic()"
+                >删除</a>
               </div>
             </div>
           </div>
@@ -126,7 +125,12 @@
     </div>
     <div style="margin-top: 30px;">
       <div>
-        <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="save()">提交</a>
+        <a
+          href="javascript:;"
+          class="weui-btn weui-btn_primary"
+          style="background-color: #4ccbdb;width: 230px;"
+          v-on:click="save()"
+        >提交</a>
       </div>
     </div>
   </div>
@@ -268,6 +272,12 @@ export default {
               $("#uploaderFiles").append($preview);
               let num = $(".weui-uploader__file").length;
               $(".weui-uploader__info").text(num + "/" + maxCount);
+              $("#uploaderBox").css("display", "none");
+              //document.getElementById('uploaderBox').setAttribute('display','none');
+              // $("#uploaderInput").append(
+              //   '<a href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" v-on:click="deletePic()">删除</a>'
+              // );
+              //document.getElementById('deleteBt').setAttribute('v-on:click','delete()')
               //console.log(file)
               //console.log(files[0]);
               var formData = new FormData();
@@ -283,7 +293,7 @@ export default {
                   //console.log(res);
                   $.hideLoading();
                   let data = JSON.parse(res);
-                  //console.log(data);
+                  console.log(data);
                   Guid.guid = data.attachRowguid;
                   $.toptip("图片上传成功", "success");
                   //console.log(data.attachRowguid);
@@ -293,6 +303,35 @@ export default {
           };
         }
       });
+    },
+    deletePic() {
+      let self = this;
+      let data = Guid.guid;
+      console.log(data);
+      if (data == null || data == undefined || data == "") {
+        $.toptip('暂无图片可删除', 'warning');
+      } else {
+        //console.log(data);
+        let guids = new Array();
+        guids.push(data);
+        JSON.stringify(guids)
+        this.model.deletePic(guids).then(function(res) {
+          if (res.data.code == "0") {
+            $.toast("图片删除成功", "success", function() {
+              $("#uploaderBox").css("display", "flex");
+              Guid.guid = '';
+             // console.log($(".weui-uploader__file").length);
+              //console.log(document.getElementsByClassName("weui-uploader__file"))
+              $(".weui-uploader__file").removeClass('weui-uploader__file_status');
+              $(".weui-uploader__file").removeClass('weui-uploader__file');
+              //$(".weui-uploader__file").css("display", "none");
+              $(".weui-uploader__info").text(0 + "/" + 1);
+            });
+          } else {
+            $.toptip(res.data.msg, "error");
+          }
+        });
+      }
     }
   }
 };
@@ -309,12 +348,12 @@ export default {
   padding-top: 10px;
   padding-bottom: 10px;
 }
-.weui-btn_primary {
+/* .weui-btn_primary {
   background-color: #4ccbdb;
 }
 .weui-btn {
   width: 230px;
-}
+} */
 .content_Down_photo img {
   width: 70px;
   height: 70px;
