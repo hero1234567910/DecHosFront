@@ -114,7 +114,7 @@
                 </div>
                 <a
                   href="javascript:;"
-                  class="weui-btn weui-btn_mini weui-btn_primary"
+                  class="weui-btn weui-btn_mini weui-btn_warn"
                   v-on:click="deletePic()"
                 >删除</a>
               </div>
