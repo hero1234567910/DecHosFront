@@ -135,11 +135,13 @@
 <script>
 import model from "./model.js";
 import evn from "../utils/evn.js";
+import Guid from "./Guid.vue";
 export default {
   data() {
     this.model = model(this.axios);
     return {
-      sCount: 0
+      sCount: 0,
+      guid: ""
     };
   },
   mounted() {
@@ -186,8 +188,10 @@ export default {
         deviceName: $("#deviceName").val(),
         devicePlace: $("#devicePlace").val(),
         damagedParts: $("#damagedParts").val(),
-        reportContent: $("#reportContent").val()
+        reportContent: $("#reportContent").val(),
+        uploadImgGuid: Guid.guid
       };
+      //console.log(Guid.guid);
       this.model.addRepair(data).then(function(res) {
         if (res.data.code == "0") {
           $.toast("提交成功", "success", function() {
@@ -264,20 +268,27 @@ export default {
               $("#uploaderFiles").append($preview);
               let num = $(".weui-uploader__file").length;
               $(".weui-uploader__info").text(num + "/" + maxCount);
-              console.log(file)
-              console.log(files[0])
-               var formData = new FormData();
-               formData.append('file',file);
+              //console.log(file)
+              //console.log(files[0]);
+              var formData = new FormData();
+              formData.append("file", file);
+              $.showLoading();
               $.ajax({
-								type: 'POST',
+                type: "POST",
                 url: evn.SEC_HOSAPI + "/wx/sys/common/upload",
                 data: formData,
-                processData: false, 
-                contentType: false,   
-                success: function (arg) {
-                    console.log(arg)
+                processData: false,
+                contentType: false,
+                success: function(res) {
+                  //console.log(res);
+                  $.hideLoading();
+                  let data = JSON.parse(res);
+                  //console.log(data);
+                  Guid.guid = data.attachRowguid;
+                  $.toptip("图片上传成功", "success");
+                  //console.log(data.attachRowguid);
                 }
-							});
+              });
             };
           };
         }

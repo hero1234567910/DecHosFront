@@ -90,6 +90,13 @@ function model(http) {
         }
       );
     },
+    getAttachList(data){
+      return http.post(evn.SEC_HOSAPI + "/wx/sys/frameAttach/getAttachList", data, {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8"
+        }
+      });
+    }
   };
 }
 

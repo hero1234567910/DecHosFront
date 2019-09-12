@@ -9,7 +9,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import '../../../static/css/jquery-weui.min.css'
 import '../../../static/lib/weui.css'
 import '../../../static/css/local.css'
-   
+import vuePicturePreview from 'vue-picture-preview'
+
+Vue.use(vuePicturePreview)   
 FastClick.attach(document.body);
 Vue.use(ElementUI);
 Vue.prototype.axios = axios

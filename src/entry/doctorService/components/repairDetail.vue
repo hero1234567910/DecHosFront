@@ -78,9 +78,9 @@
               </div>
               <div class="weui-uploader__bd">
                 <ul class="weui-uploader__files" id="uploaderFiles">
-                  <!-- <li class="weui-uploader__file"></li> -->
+                  <img class="weui-uploader__file" id="pic" v-preview="imgUrl" :src="imgUrl" :alt="imgName"/> 
                 </ul>
-                <div class="weui-uploader__input-box">
+                <!-- <div class="weui-uploader__input-box">
                   <input
                     id="uploaderInput"
                     class="weui-uploader__input"
@@ -88,7 +88,7 @@
                     accept="image/*"
                     multiple
                   />
-                </div>
+                </div>-->
               </div>
             </div>
           </div>
@@ -117,13 +117,16 @@
 
 <script>
 import model from "./model.js";
+
 export default {
   data() {
     this.model = model(this.axios);
     return {
       picGuid: "",
       rowGuid: "",
-      cancelButton: true
+      cancelButton: true,
+      imgUrl: "",
+      imgName:''
     };
   },
   mounted() {
@@ -153,6 +156,7 @@ export default {
       $("#reportContent").val(data.reportContent);
       self.picGuid = data.picGuid;
       self.rowGuid = data.rowGuid;
+      this.initPic(self.picGuid);
     },
     returnList() {
       this.$router.push("/myRepairList");
@@ -182,6 +186,40 @@ export default {
           return;
         }
       );
+    },
+    initPic(ele) {
+      let self = this;
+      let data = {
+        guid: ele
+      };
+      let netlocal = "https://p.zjgwsjk.com/2ysechosback/file/";
+      this.model.getAttachList(data).then(function(res) {
+        if (res.data.code == "0") {
+          if (res.data.data.length == 0) {
+            self.imgName = '404.png';
+            self.imgUrl = '../../../../static/doctorImg/404.png'
+          } else {
+            self.imgName = res.data.data[0].attachName;
+            self.picGuid = res.data.data[0].contentUrl;
+            console.log(self.picGuid);
+            self.imgUrl = netlocal+self.picGuid;
+            
+          }
+        } else {
+          $.toptip(res.data.msg, "error");
+        }
+      });
+    },
+    showImg() {
+      //console.log(document.getElementById('pic').style.backgroundImage);
+      let str = document.getElementById("pic").src;
+      console.log(str);
+      // str = str.substring(5);
+      // //console.log(str.substring(0,str.length-2));
+      // str = str.substring(0, str.length - 2);
+      // //console.log(str);
+      // let view = $('<img v-preview="' + str + '" :src="' + str + '">');
+      // $("#pic").append(view);
     }
   }
 };

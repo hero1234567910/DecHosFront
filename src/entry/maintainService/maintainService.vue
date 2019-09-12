@@ -6,6 +6,7 @@
 		    </router-view>
 		</keep-alive>
  		<router-view  v-if="!$route.meta.keepAlive"></router-view>
+    <lg-preview></lg-preview>
   </div>
 </template>
 
