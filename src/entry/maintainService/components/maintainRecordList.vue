@@ -2,7 +2,7 @@
   <div style="overflow: auto;overflow-x: hidden;height:100%;">
     <div class="list-head">
       <div class="image-style" style="height: 138px;">
-        <img style="height:100%;height: 138px;" src="../../../../static/doctorImg/wxjl.png" />
+        <img style="height:100%;height: 138px;width: 100%;" src="../../../../static/doctorImg/wxjl.png" />
       </div>
       <div class="weui-cells__title-wzl">我的维修列表</div>
     </div>

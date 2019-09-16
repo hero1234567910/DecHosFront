@@ -1,7 +1,7 @@
 <template>
   <div style="overflow: auto;height:100%;overflow-x: hidden;">
     <div class="image-style" style="height: 138px;">
-      <img style="height:100%;height: 138px;" src="../../../../static/img-2/ylsbzxbx.png" />
+      <img style="height:100%;height: 138px;width: 100%;" src="../../../../static/img-2/ylsbzxbx.png" />
     </div>
     <div class="weui-cells weui-cells_form" style="margin-top:0px;">
       <div class="weui-cells__title-wzl">报修人姓名</div>

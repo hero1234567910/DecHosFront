@@ -1,7 +1,7 @@
 <template>
   <div style="overflow: auto;height:100%;overflow-x: hidden;">
     <div class="image-style" style="height: 138px;">
-      <img style="height:100%;height: 138px;" src="../../../../static/img-2/BXMYDPJ.png" />
+      <img style="height:100%;height: 138px;width: 100%;" src="../../../../static/img-2/BXMYDPJ.png" />
     </div>
     <div class="ad-content">
       <div class="content-text">
