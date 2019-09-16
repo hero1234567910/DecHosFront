@@ -76,9 +76,15 @@
                 <!-- <p class="weui-uploader__title">图片上传</p> -->
                 <!-- <div class="weui-uploader__info">0/2</div> -->
               </div>
-              <div class="weui-uploader__bd">
+              <div class="weui-uploader__bd" v-loading="loading">
                 <ul class="weui-uploader__files" id="uploaderFiles">
-                  <img class="weui-uploader__file" id="pic" v-preview="imgUrl" :src="imgUrl" :alt="imgName"/> 
+                  <img
+                    class="weui-uploader__file"
+                    id="pic"
+                    v-preview="imgUrl"
+                    :src="imgUrl"
+                    :alt="imgName"
+                  />
                 </ul>
                 <!-- <div class="weui-uploader__input-box">
                   <input
@@ -117,7 +123,7 @@
 
 <script>
 import model from "./model.js";
-
+import Guid from "./Guid.vue";
 export default {
   data() {
     this.model = model(this.axios);
@@ -126,9 +132,36 @@ export default {
       rowGuid: "",
       cancelButton: true,
       imgUrl: "",
-      imgName:''
+      imgName: "",
+      loading: true
     };
   },
+  // directives: {
+  //   localpic: function(el, binding, vnode) {
+  //     //console.log(Guid.loading);
+  //     let src = el.src;
+  //     let newImg = new Image();
+  //     newImg.src = src;
+  //     console.log(newImg);
+  //     console.log(newImg.complete);
+      
+  //     if (newImg.complete) {
+  //       console.log(Guid.loading);
+  //       Guid.loading = false;
+  //     }
+  //     if(newImg.onload) {
+  //       console.log(Guid.loading);
+  //       Guid.loading = true;
+  //     };
+
+  //     // newImg.onload = function() {
+  //     //   self.loading = true;
+  //     // };
+  //     // newImg.complete = function() {
+  //     //   self.loading = false;
+  //     // };
+  //   }
+  // },
   mounted() {
     this.initRepairDetail();
   },
@@ -196,30 +229,28 @@ export default {
       this.model.getAttachList(data).then(function(res) {
         if (res.data.code == "0") {
           if (res.data.data.length == 0) {
-            self.imgName = '404.png';
-            self.imgUrl = '../../../../static/doctorImg/404.png'
+            self.imgName = "404.png";
+            self.imgUrl = "../../../../static/doctorImg/404.png";
+            //console.log(document.getElementById("pic").complete)
+            if(document.getElementById("pic").complete){
+              self.loading = false;
+              //console.log(self.loading);
+            }
           } else {
             self.imgName = res.data.data[0].attachName;
             self.picGuid = res.data.data[0].contentUrl;
-            console.log(self.picGuid);
-            self.imgUrl = netlocal+self.picGuid;
-            
+            //console.log(self.picGuid);
+            self.imgUrl = netlocal + self.picGuid;
+            //console.log(document.getElementById("pic").complete)
+            if(document.getElementById("pic").complete){
+              self.loading = false;
+              //console.log(self.loading);
+            }
           }
         } else {
           $.toptip(res.data.msg, "error");
         }
       });
-    },
-    showImg() {
-      //console.log(document.getElementById('pic').style.backgroundImage);
-      let str = document.getElementById("pic").src;
-      console.log(str);
-      // str = str.substring(5);
-      // //console.log(str.substring(0,str.length-2));
-      // str = str.substring(0, str.length - 2);
-      // //console.log(str);
-      // let view = $('<img v-preview="' + str + '" :src="' + str + '">');
-      // $("#pic").append(view);
     }
   }
 };

@@ -84,7 +84,7 @@
                 <!-- <p class="weui-uploader__title">图片上传</p> -->
                 <!-- <div class="weui-uploader__info">0/2</div> -->
               </div>
-              <div class="weui-uploader__bd">
+              <div class="weui-uploader__bd" v-loading="loading">
                 <ul class="weui-uploader__files" id="uploaderFiles">
                    <img class="weui-uploader__file" id="pic" v-preview="imgUrl" :src="imgUrl" :alt="imgName"/> 
                 </ul>
@@ -134,7 +134,8 @@ export default {
       rowGuid: "",
       successButton: true,
       imgUrl: "",
-      imgName:''
+      imgName:'',
+      loading: true
     };
   },
   mounted() {
@@ -219,11 +220,19 @@ export default {
           if (res.data.data.length == 0) {
             self.imgName = '404.png';
             self.imgUrl = '../../../../static/doctorImg/404.png'
+            if(document.getElementById("pic").complete){
+              self.loading = false;
+              //console.log(self.loading);
+            }
           } else {
             self.imgName = res.data.data[0].attachName;
             self.picGuid = res.data.data[0].contentUrl;
-            console.log(self.picGuid);
+            //console.log(self.picGuid);
             self.imgUrl = netlocal+self.picGuid;
+            if(document.getElementById("pic").complete){
+              self.loading = false;
+              //console.log(self.loading);
+            }
             
           }
         } else {

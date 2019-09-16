@@ -63,7 +63,7 @@ export default {
       //判断是从哪个路由过来的，
       //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
     }
-    console.log(to.meta.isBack);
+    //console.log(to.meta.isBack);
     next();
   },
   activated() {
