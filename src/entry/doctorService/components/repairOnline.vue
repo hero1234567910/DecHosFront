@@ -112,11 +112,11 @@
                 <div id="uploaderBox" class="weui-uploader__input-box">
                   <input class="weui-uploader__input" type="file" accept="image/*" multiple />
                 </div>
-                <a
+                <!-- <a
                   href="javascript:;"
                   class="weui-btn weui-btn_mini weui-btn_warn"
                   v-on:click="deletePic()"
-                >删除</a>
+                >删除</a>-->
               </div>
             </div>
           </div>
@@ -137,6 +137,7 @@
 </template>
 
 <script>
+import Vue from "vue";
 import model from "./model.js";
 import evn from "../utils/evn.js";
 import Guid from "./Guid.vue";
@@ -280,9 +281,56 @@ export default {
               //document.getElementById('deleteBt').setAttribute('v-on:click','delete()')
               //console.log(file)
               //console.log(files[0]);
+              $.showLoading();
+              let deleteComponent = Vue.extend({
+                template:
+                  '<a id="deleteID" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" v-on:click="deletePic()">删除</a>',
+                methods: {
+                  deletePic() {
+                    // let self = this;
+                    let data = Guid.guid;
+                    //console.log(data);
+                    if (data == null || data == undefined || data == "") {
+                      $.toptip("暂无图片可删除", "warning");
+                    } else {
+                      //console.log(data);
+                      let guids = new Array();
+                      guids.push(data);
+                      JSON.stringify(guids);
+                      //console.log(self.model);
+                      self.model.deleteMyPic(guids).then(function(res) {
+                        if (res.data.code == "0") {
+                          $.toast("图片删除成功", "success", function() {
+                            $("#uploaderBox").css("display", "flex");
+                            Guid.guid = "";
+                            // console.log($(".weui-uploader__file").length);
+                            //console.log(document.getElementsByClassName("weui-uploader__file"))
+                            $(".weui-uploader__file").removeClass(
+                              "weui-uploader__file_status"
+                            );
+                            $(".weui-uploader__file").removeClass(
+                              "weui-uploader__file"
+                            );
+                            $('#deleteID').remove();
+                            //$(".weui-uploader__file").css("display", "none");
+                            $(".weui-uploader__info").text(0 + "/" + 1);
+                          });
+                        } else {
+                          $.toptip(res.data.msg, "error");
+                        }
+                      });
+                    }
+                  }
+                }
+              });
+              let component = new deleteComponent().$mount();
+              document
+                .getElementById("uploaderInput")
+                .appendChild(component.$el);
+
               var formData = new FormData();
               formData.append("file", file);
-              $.showLoading();
+              
               $.ajax({
                 type: "POST",
                 url: evn.SEC_HOSAPI + "/wx/sys/common/upload",
@@ -293,7 +341,6 @@ export default {
                   //console.log(res);
                   $.hideLoading();
                   let data = JSON.parse(res);
-                  console.log(data);
                   Guid.guid = data.attachRowguid;
                   $.toptip("图片上传成功", "success");
                   //console.log(data.attachRowguid);
@@ -303,36 +350,38 @@ export default {
           };
         }
       });
-    },
-    deletePic() {
-      let self = this;
-      let data = Guid.guid;
-      console.log(data);
-      if (data == null || data == undefined || data == "") {
-        $.toptip('暂无图片可删除', 'warning');
-      } else {
-        //console.log(data);
-        let guids = new Array();
-        guids.push(data);
-        JSON.stringify(guids)
-        this.model.deletePic(guids).then(function(res) {
-          if (res.data.code == "0") {
-            $.toast("图片删除成功", "success", function() {
-              $("#uploaderBox").css("display", "flex");
-              Guid.guid = '';
-             // console.log($(".weui-uploader__file").length);
-              //console.log(document.getElementsByClassName("weui-uploader__file"))
-              $(".weui-uploader__file").removeClass('weui-uploader__file_status');
-              $(".weui-uploader__file").removeClass('weui-uploader__file');
-              //$(".weui-uploader__file").css("display", "none");
-              $(".weui-uploader__info").text(0 + "/" + 1);
-            });
-          } else {
-            $.toptip(res.data.msg, "error");
-          }
-        });
-      }
     }
+    // deletePic() {
+    //   let self = this;
+    //   let data = Guid.guid;
+    //   console.log(data);
+    //   if (data == null || data == undefined || data == "") {
+    //     $.toptip("暂无图片可删除", "warning");
+    //   } else {
+    //     //console.log(data);
+    //     let guids = new Array();
+    //     guids.push(data);
+    //     JSON.stringify(guids);
+    //     this.model.deletePic(guids).then(function(res) {
+    //       if (res.data.code == "0") {
+    //         $.toast("图片删除成功", "success", function() {
+    //           $("#uploaderBox").css("display", "flex");
+    //           Guid.guid = "";
+    //           // console.log($(".weui-uploader__file").length);
+    //           //console.log(document.getElementsByClassName("weui-uploader__file"))
+    //           $(".weui-uploader__file").removeClass(
+    //             "weui-uploader__file_status"
+    //           );
+    //           $(".weui-uploader__file").removeClass("weui-uploader__file");
+    //           //$(".weui-uploader__file").css("display", "none");
+    //           $(".weui-uploader__info").text(0 + "/" + 1);
+    //         });
+    //       } else {
+    //         $.toptip(res.data.msg, "error");
+    //       }
+    //     });
+    //   }
+    // }
   }
 };
 </script>

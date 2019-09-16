@@ -97,7 +97,7 @@ function model(http) {
         }
       });
     },
-    deletePic(data){
+    deleteMyPic(data){
       return http.post(evn.SEC_HOSAPI + "/wx/sys/frameAttach/delete", data, {
         headers: {
           "Content-Type": "application/json;charset=utf-8"
