@@ -129,7 +129,7 @@
           href="javascript:;"
           class="weui-btn weui-btn_primary"
           style="background-color: #4ccbdb;width: 230px;"
-          v-on:click="save()"
+          v-on:click="toSubmit()"
         >提交</a>
       </div>
     </div>
@@ -157,6 +157,19 @@ export default {
     showCount() {
       let self = this;
       self.sCount = $("#reportContent").val().length;
+    },
+    toSubmit() {
+      let self = this;
+      $.confirm(
+        "您确定提交吗？",
+        "提示",
+        function() {
+          self.save();
+        },
+        function() {
+          return;
+        }
+      );
     },
     initPage() {
       let self = this;
