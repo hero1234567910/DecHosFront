@@ -294,7 +294,7 @@ export default {
               //document.getElementById('deleteBt').setAttribute('v-on:click','delete()')
               //console.log(file)
               //console.log(files[0]);
-              $.showLoading();
+              $.showLoading("稍等,图片正在上传");
               let deleteComponent = Vue.extend({
                 template:
                   '<a id="deleteID" href="javascript:;" class="weui-btn weui-btn_mini weui-btn_primary" v-on:click="deletePic()">删除</a>',
