@@ -96,6 +96,7 @@
   			blh:'',
   			zjh:localStorage.getItem('sec_patientIdcard'),
 				hzxm:localStorage.getItem('sec_patientName'),
+				patientGuid:localStorage.getItem('sec_patientGuid'),
 				patid:'',
 				isShow:false,
 				mzData:[],
@@ -237,6 +238,7 @@
   			 $.showLoading();
 					let self = this;
 					let data={
+						pationRowGuid:this.patientGuid,
 						patid:this.patid,
 						hzxm:this.hzxm,
 						ksrq:'20190101',
