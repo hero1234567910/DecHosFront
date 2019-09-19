@@ -54,7 +54,12 @@ export default {
   },
   methods: {
 		selectClick(row) {
-        this.$emit('cfCall',this.cfData[0].cfxh);
+			let cfxh = '';
+	    let arr = this.cfData;
+	    for (var i=0;i<arr.length;i++) {
+	     cfxh = cfxh+','+arr[i].cfxh;
+	    }
+      this.$emit('cfCall',cfxh.substr(1));
     },		
   }
 };
