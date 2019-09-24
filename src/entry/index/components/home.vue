@@ -310,6 +310,8 @@
     				localStorage.setItem('sec_birth',res.data.data.patientBirth);
     				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
     				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
+    				localStorage.setItem('sec_cardno',res.data.data.bxh);
+    				localStorage.setItem('sec_lxdh',res.data.data.lxdh);
     				
 //  				if(res.data.data.patientName == null || res.data.data.patientName == ''){
 //  					//说明没有绑定患者信息，去绑定

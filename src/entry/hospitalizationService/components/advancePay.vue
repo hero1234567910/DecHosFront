@@ -214,25 +214,44 @@
   				$.alert("病历号不能为空", "警告");
   				return;
   			}
-  			
-  			
-			let data = {
-				'action':'yj',
-				'hzxm':this.hzxm,
-				'openid':localStorage.getItem('sec_openId'),
-				'yjMoney':this.yjMoney,
-				'patientGuid':localStorage.getItem('sec_patientGuid'),
-				'patientName':this.hzxm,
-				patid:this.patid
-			}
-			
-			this.model.placeOrder(data).then(function(res){
+  			let self = this;
+  			//调取预结算接口
+  			let dat = {
+  				hzxm:this.hzxm,
+  				patid:this.patid
+  			}
+  			this.model.beforePay(dat).then(function(res){
 					if(res.data.code == 0){
-						if (process.env.NODE_ENV == 'dev') {
-							  window.location='../pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
-							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
+						//调用下单接口
+						let data = {
+							sjh:res.data.sjh,
+							hisddh:res.data.hisddh,
+							yjlsh:res.data.yjlsh,
+							'action':'yj',
+							'openid':localStorage.getItem('sec_openId'),
+							'yjMoney':self.yjMoney,
+							'patientGuid':localStorage.getItem('sec_patientGuid'),
+							'patientName':self.hzxm,
+							patid:self.patid,
+							cardno:localStorage.getItem('sec_cardno'),
+							sex:localStorage.getItem('sec_sex'),
+							lxdh:localStorage.getItem('sec_lxdh'),
+							zjhm:self.zjh,
+							blh:self.blh
+						}
+						self.model.placeOrderByWN(data).then(function(res){
+							if(res.data.code == 0){
+								if (process.env.NODE_ENV == 'dev') {
+									  window.location='../pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
+									} else if (process.env.NODE_ENV == 'production') {
+//									  window.location='../2ysechos/pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
+											window.location=res.data.qrCode;
+									}
+							}else{
+								$.toptip(res.data.msg,'error');
 							}
+						})
+						
 					}else{
 						$.toptip(res.data.msg,'error');
 					}

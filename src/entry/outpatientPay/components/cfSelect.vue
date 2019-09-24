@@ -56,10 +56,15 @@ export default {
 		selectClick(row) {
 			let cfxh = '';
 	    let arr = this.cfData;
+	    let ghxh = arr[0].Jzlsh;
 	    for (var i=0;i<arr.length;i++) {
 	     cfxh = cfxh+','+arr[i].cfxh;
 	    }
-      this.$emit('cfCall',cfxh.substr(1));
+	    var o = {
+	    	ghxh:ghxh,
+	    	cfxh:cfxh.substr(1)
+	    };
+      this.$emit('cfCall',o);
     },		
   }
 };

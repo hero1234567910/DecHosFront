@@ -105,7 +105,8 @@
 				patid:'',
 				cfxh:'',
 				info:{},
-				patientGuid:localStorage.getItem('sec_patientGuid')
+				patientGuid:localStorage.getItem('sec_patientGuid'),
+				ghxh:''
   		}
   	},
   	mounted(){
@@ -124,7 +125,7 @@
 			},
   		toPay(){
   			let self = this;
-  			
+  			let da = this.$route.query;
   			let data = {
   				action:'mz',
   				mzMoney:this.info.yfje,
@@ -135,14 +136,20 @@
   				zje:this.info.zje,
   				yfje:this.info.yfje,
   				zfje:this.info.zfje,
-  				openid:this.openid
+  				openid:this.openid,
+  				ghxh:da.ghxh,
+  				cardno:localStorage.getItem('sec_cardno'),
+  				sex:localStorage.getItem('sec_sex'),
+  				lxdh:localStorage.getItem('sec_lxdh'),
+  				zjhm:this.zjh
   			}
-			this.model.placeOrder(data).then(function(res){
+			this.model.placeOrderByWN(data).then(function(res){
 				if(res.data.code == 0){
 					if (process.env.NODE_ENV == 'dev') {
 						  window.location='../pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
 						} else if (process.env.NODE_ENV == 'production') {
-						  window.location='../2ysechos/pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
+//						  window.location='../2ysechos/pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
+								window.location=res.data.qrCode;
 						}
 				}else{
 					$.toptip(res.data.msg,'error');
