@@ -127,7 +127,7 @@ export default {
       let date = new Date();
       let date2 = new Date();
       date.setDate(date.getDate());
-      date2.setDate(date2.getDate() + 1);
+      date2.setDate(date2.getDate());
       //console.log(date);
       //console.log(date2);
       $("#ksrq").calendar({
