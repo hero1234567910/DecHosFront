@@ -280,6 +280,7 @@ export default {
       self.patid = this.$route.query.patid;
       self.pbxh = this.$route.query.pbxh;
       self.zfzt = this.$route.query.zfzt;
+      console.log(self.zfzt)
       //console.log(data);
     },
     statusCheck(ele) {
