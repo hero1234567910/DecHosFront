@@ -108,7 +108,9 @@ export default {
           self.outpatientList = res.data.data;
           //console.log(self.outpatientList);
         } else {
-          $.toptip(res.data.msg, "error");
+        	if(res.data.msg == 'DRGH0003|没有查询到有效的排班数据'){
+        		$.toptip("现在不是挂号时间段", "error");
+        	}
         }
       });
     }

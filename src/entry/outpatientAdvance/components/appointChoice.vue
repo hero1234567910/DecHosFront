@@ -76,27 +76,28 @@ export default {
         el: ".swiper-pagination"
       }
     });
-    this.getServerDate();
+//    this.getServerDate();
     //this.checkTime();
   },
   methods: {
     toDayOutPatient() {
       let self = this;
-      if (!this.checkTime()) {
-        $.alert({
-          title: "温馨提示",
-          text: "现在不是挂号时间段",
-          onOK: function() {
-            if (process.env.NODE_ENV == "dev") {
-              window.location = "../index.html";
-            } else if (process.env.NODE_ENV == "production") {
-              window.location = "../2ysechos/index.html";
-            }
-          }
-        });
-      } else {
-        self.$router.push("/outpatientMainToday");
-      }
+      self.$router.push("/outpatientMainToday");
+//    if (!this.checkTime()) {
+//      $.alert({
+//        title: "温馨提示",
+//        text: "现在不是挂号时间段",
+//        onOK: function() {
+//          if (process.env.NODE_ENV == "dev") {
+//            window.location = "../index.html";
+//          } else if (process.env.NODE_ENV == "production") {
+//            window.location = "../2ysechos/index.html";
+//          }
+//        }
+//      });
+//    } else {
+//      
+//    }
     },
     appointOutPatient() {
       let self = this;
