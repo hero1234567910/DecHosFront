@@ -76,7 +76,7 @@ export default {
         el: ".swiper-pagination"
       }
     });
-    this.getServerDate();
+    //this.getServerDate();
     //this.checkTime();
   },
   methods: {
