@@ -15,6 +15,19 @@
       <el-form-item prop="password">
         <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
       </el-form-item>
+      <!--<el-form-item
+        prop="seccode"
+        class="inputbar"
+      >
+        <el-input
+          class="log-input"
+          prefix-icon="icon-login_auth"
+          @keydown.enter.native="Login"
+          v-model="loginForm.seccode"
+          placeholder="验证码">
+        </el-input>
+        <span class="checkCode" @click="createCode">{{ checkCode}}</span>
+      </el-form-item>-->
       <!-- <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox> -->
       <el-form-item style="width:100%;">
         <el-button type="primary" style="width:46%;" @click.native.prevent="Reset">重 置</el-button>
@@ -25,7 +38,19 @@
           :loading="logining"
         >登 录</el-button>
       </el-form-item>
+      
+      <slide-verify :l="42"
+            :r="10"
+            :w="310"
+            :h="155"
+            @success="onSuccess"
+            @fail="onFail"
+            @refresh="onRefresh"
+            :slider-text="text"></slide-verify>
+      
     </el-form>
+    
+    
   </div>
 </template>
 <script>
@@ -45,7 +70,10 @@ export default {
         loginId: [{ required: true, message: "请输入登录名", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       },
-      checked: true
+      checked: true,
+      checkCode:'',
+      msg: '',
+      text: '向右滑',
     };
   },
   mounted() {},
@@ -53,6 +81,15 @@ export default {
       //this.getDocInfo();
   },
   methods: {
+  	onSuccess(){
+        this.msg = 'login success'
+    },
+    onFail(){
+        this.msg = ''
+    },
+    onRefresh(){
+        this.msg = ''
+    },
     Login() {
       let self = this;
       let userInfo = {
