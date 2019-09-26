@@ -30,7 +30,7 @@
 		  <el-button type="primary" icon="el-icon-arrow-left"  @click="show = !show">查看明细</el-button>
 		  <el-button type="primary" @click="toIndex()">返回主列表<i class="el-icon-arrow-right el-icon--right"></i></el-button>
 		</el-button-group>-->
-		
+
 		<div style="display: flex; margin-top: 20px; height: 100px;">
       <transition name="el-fade-in-linear">
         <div class="transition-box" style="width: calc(100vw - 30px);margin-left: auto;margin-right: auto;">
@@ -133,7 +133,7 @@
 
   		toPay(){
   			let self = this;
-  			
+
   			let data = {
   				action:'gh',
   				ghMoney:this.info.yfje,
@@ -146,15 +146,20 @@
   				yfje:this.info.yfje,
   				zfje:this.info.zfje,
   				openid:this.openid,
-  				yyxh:this.info.yyxh
+  				yyxh:this.info.yyxh,
+  				cardno:localStorage.getItem('sec_cardno'),
+  				sex:localStorage.getItem('sec_sex'),
+  				lxdh:localStorage.getItem('sec_lxdh'),
+  				zjhm:this.zjh
   			}
-			this.model.placeOrder(data).then(function(res){
+			this.model.placeOrderByWN(data).then(function(res){
 				console.log(res.data);
 				if(res.data.code == 0){
 					if (process.env.NODE_ENV == 'dev') {
 						  window.location='../pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
 						} else if (process.env.NODE_ENV == 'production') {
-						  window.location='../2ysechos/pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
+//						  window.location='../2ysechos/pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
+                window.location.href=res.data.data.msg.qrCode;
 						}
 				}else{
 					$.toptip(res.data.msg,'error');
@@ -167,8 +172,8 @@
   			console.log(da);
   			this.patid = da.patid;
   			this.pbxh = da.pbxh;
-  			
-  			
+
+
   			let data = {
   				patid:this.patid,
   				bxh:this.zjh,
@@ -188,8 +193,8 @@
   		toIndex(){
   			this.$router.push('/');
   		},
-  		
-  		
+
+
   	}
   }
   </script>

@@ -3,6 +3,13 @@ import evn from '../utils/evn.js'
 function model(http) {
 
   return {
+  	beforePay(data) {
+      return http.post(evn.SEC_HOSAPI+'/wx/common/beforePay',data,{
+      	headers:{
+      		'Content-Type': 'application/json;charset=utf-8'
+      	}
+      });
+    },
      getInfo(data) {
       return http.post(evn.SEC_HOSAPI+'/wx/common/checkPatient',data,{
       	headers:{
@@ -39,8 +46,8 @@ function model(http) {
       	}
       });
     },
-     placeOrder(data) {
-      return http.post(evn.SEC_HOSAPI+'/wx/common/placeOrder',data,{
+     placeOrderByWN(data) {
+      return http.post(evn.SEC_HOSAPI+'/wx/common/placeOrderByWN',data,{
       	headers:{
       		'Content-Type': 'application/json;charset=utf-8'
       	}

@@ -9,7 +9,7 @@
           <mycenter :patientName="patientName"></mycenter>
         </div>
       </div>
-		
+
 		  <div class="weui-tabbar">
 		    <a href="#tab1" class="weui-tabbar__item weui-bar__item--on" id="ind">
 		      <!--<span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>-->
@@ -31,8 +31,8 @@
 
 
 <script>
-	
- 
+
+
 import weui from 'jquery-weui/dist/js/jquery-weui.min'
 import home from './home.vue'
 import mycenter from './mycenter'
@@ -95,6 +95,8 @@ import CryptoJS from 'crypto-js'
 	    				localStorage.setItem('sec_birth',res.data.data.patientBirth);
 	    				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
 	    				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
+              localStorage.setItem('sec_cardno',res.data.data.patientIdcard);
+              localStorage.setItem('sec_lxdh',res.data.data.patientMobile);
 	    				localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.accessToken));
 	    				localStorage.setItem('sec_refreshToken',self.getAesString(res.data.data.refreshToken));
 	    				self.patientName = res.data.data.patientName;
@@ -130,6 +132,8 @@ import CryptoJS from 'crypto-js'
 	    				localStorage.setItem('sec_birth',res.data.data.patientBirth);
 	    				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
 	    				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
+              localStorage.setItem('sec_cardno',res.data.data.patientIdcard);
+              localStorage.setItem('sec_lxdh',res.data.data.patientMobile);
 	    				localStorage.setItem('sec_acessToken',self.getAesString(res.data.data.accessToken));
 	    				localStorage.setItem('sec_refreshToken',self.getAesString(res.data.data.refreshToken));
 	    				self.patientName = res.data.data.patientName;

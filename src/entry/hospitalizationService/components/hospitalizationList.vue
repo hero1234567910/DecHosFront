@@ -67,7 +67,8 @@
       	hzxm:localStorage.getItem('sec_patientName'),
       	patientId:'',
       	blh:'',
-      	zyzt:''
+      	zyzt:'',
+      	flag:false
   		}
   	},
   	 mounted(){
@@ -75,7 +76,7 @@
     },
   	methods:{
   		toSelect(){
-  			if(this.zyzt == 4){
+  			if(this.flag == false || this.zyzt == 4){
   				$.alert("未查询到您的在院信息", "提示", function() {
 						});
 						return;
@@ -91,7 +92,7 @@
 				}
   		},
   		toPay(){
-  			if(this.zyzt == 4){
+  			if(this.flag == false || this.zyzt == 4){
   				$.alert("未查询到您的在院信息", "提示", function() {
 						});
 						return;
@@ -149,8 +150,10 @@
 								self.zyzt = hosArray[i].zyzt;
 							}
 						}
+						self.flag = true
 					}else{
 						$.alert("未查询到您的住院信息", "提示", function() {
+							self.flag = false
 						});
 					}
 				})

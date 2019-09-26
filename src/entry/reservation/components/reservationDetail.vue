@@ -40,7 +40,7 @@
               <p class="weui-media-box__desc">支付状态</p>
             </div>
             <div class="hero-list-item-right">
-              <h4 class="weui-media-box__title">{{zfzt=="1"?"已支付":"未支付"}}</h4>
+              <h4 class="weui-media-box__title">{{zfzt==1?'已支付':'未支付'}}</h4>
             </div>
           </div>
           <div class="hero-list-item" style="position: relative;">
@@ -183,7 +183,7 @@
 
         <div class="weui-row">
           <div class="weui-col-50">
-            <a v-show="zfzt != 1 && yyzt == 0"
+            <a v-show="zfzt != 1"
               href="javascript:;"
               class="weui-btn weui-btn_primary hero-button"
               @click="cancelAppoint(yyxh,yyzt,patid)"
@@ -251,9 +251,9 @@ export default {
       let self = this;
       if(localStorage.getItem('sec_yb')=='true'){
         self.buttonShow = false;
-      }else if(self.zfzt == '1'){
+      }else if(self.zfzt == 1){
         self.buttonShow = false;
-      }else if(self.yyzt == '2'||self.yyzt == '3'){
+      }else if(self.yyzt == 2||self.yyzt == 3){
         self.buttonShow = false;
       }else{
         self.buttonShow = true;
@@ -279,6 +279,8 @@ export default {
       self.yyhx = this.$route.query.yyhx;
       self.patid = this.$route.query.patid;
       self.pbxh = this.$route.query.pbxh;
+      self.zfzt = this.$route.query.zfzt;
+      console.log(self.zfzt)
       //console.log(data);
     },
     statusCheck(ele) {

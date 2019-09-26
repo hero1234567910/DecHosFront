@@ -39,8 +39,8 @@ function model(http) {
       	}
       });
    },
-   placeOrder(data){
-   	return http.post(evn.SEC_HOSAPI+'/wx/common/placeOrder',data,{
+   placeOrderByWN(data){
+   	return http.post(evn.SEC_HOSAPI+'/wx/common/placeOrderByWN',data,{
       	headers:{
       		contentType:'application/json;charset=utf-8'
       	}

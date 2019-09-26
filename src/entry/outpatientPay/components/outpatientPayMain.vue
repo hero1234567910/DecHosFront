@@ -107,7 +107,8 @@
 				content3:'1：确认待缴费处方信息',
 				pbxh:'',
 				cfShow:false,
-				cfxh:''
+				cfxh:'',
+				ghxh:''
       }
     },
     mounted(){
@@ -222,7 +223,7 @@
 							});
 							return;
 					}
-				this.$router.push('/mzPay?cfxh='+this.cfxh+'&patid='+this.patid);
+				this.$router.push('/mzPay?cfxh='+this.cfxh+'&patid='+this.patid+'&ghxh='+this.ghxh);
   		},
   		selectCf(){
 //			if(this.patid == ''){
@@ -257,8 +258,9 @@
 					})
   		},
   		cfCall(res){
-  			this.content3 = '已确认处方 '+ res;
-  			this.cfxh = res;
+  			this.content3 = '已确认处方 '+ res.cfxh;
+  			this.cfxh = res.cfxh;
+  			this.ghxh = res.ghxh;
 				this.cfShow = false;
   		},
   		seCall(res){
