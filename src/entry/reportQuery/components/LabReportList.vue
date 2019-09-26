@@ -76,7 +76,8 @@ export default {
 		isShow:false,
 		mzData:[],
 		patid:'',
-		jzlb:''
+		jzlb:'',
+		jzlsh:''
 		};
   },
   created() {
@@ -270,7 +271,7 @@ export default {
 								self.patid = hosArray[i].patid;
 								self.blh = hosArray[i].blh;
 //								self.zyzt = hosArray[i].zyzt;
-								self.reportFun();
+								self.getInPatientInfoByPatid();
 							}
 						}
 					}else{
@@ -280,6 +281,23 @@ export default {
 					}
 				})
 	},
+	getInPatientInfoByPatid(){
+      //console.log(this.$route.query.patid);
+      let self = this;
+      let data={
+        hzxm:self.hzxm,
+        patid:self.patid,
+        zyzt:'0'
+      }
+      this.model.getInPatientInfoByPatid(data).then(function(res){
+        if(res.data.code == "0"){
+            self.patid = res.data.data[0].jzlsh;
+            self.reportFun()
+        }else {
+          $.toptip(res.data.msg, "error");
+        }
+      });
+    },
     LabReport() {
 			let self = this;
 			 $.modal({

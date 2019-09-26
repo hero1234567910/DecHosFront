@@ -14,7 +14,7 @@
     left: 5px;"/>
   		</div>
   	</div>
-  	
+
   	<div class="page-panel">
  			<div class="page-content">
  				<p style="position: absolute;bottom: 0px;left: 18px;">当前病历号</p>
@@ -29,7 +29,7 @@
 			  </div>
 			</div>
  		</div>
-  	
+
   	<div class="page-panel">
  			<div class="page-content">
  				<p style="position: absolute;bottom: 0px;left: 18px;">预交金余额</p>
@@ -44,7 +44,7 @@
 			  </div>
 			</div>
  		</div>
- 		
+
  		<div class="page-panel">
  			<div class="page-content">
  				<p style="position: absolute;bottom: 0px;left: 18px;">缴纳金额</p>
@@ -59,7 +59,7 @@
 			  </div>
 			</div>
  		</div>
- 		
+
  		<div class="page-panel">
  			<div class="page-content">
  				<p style="position: absolute;bottom: 0px;left: 18px;">快捷选择金额</p>
@@ -68,7 +68,7 @@
  		<div class="ad-select">
 			<div class="weui-row" style="height: 60px;width: calc(100vw - 20px);margin-left: auto;margin-right: auto;">
 				<div class="weui-col-25">
-					<a href="javascript:;" class="weui-btn weui-btn_primary">500</a>
+					<a href="javascript:;" class="weui-btn weui-btn_primary">0.1</a>
 				</div>
 				<div class="weui-col-25">
 					<a href="javascript:;" class="weui-btn weui-btn_primary">1000</a>
@@ -80,7 +80,7 @@
 					<a href="javascript:;" class="weui-btn weui-btn_primary">2000</a>
 				</div>
 			</div>
-			
+
 			<div class="ad-sub">
 				  <el-button type="primary" v-on:click="toList()">立即缴纳</el-button>
 				  <div class="ad-desc">
@@ -88,7 +88,7 @@
 				  </div>
 			</div>
  		</div>
- 		
+
  		 <!--<el-dialog title="选择要缴费的病历号" :visible.sync="isShow">
 			<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
 		</el-dialog>-->
@@ -107,7 +107,7 @@
   		return{
   			money:0,
 			blh:'',
-			hzxm:localStorage.getItem('sec_patientName'),  
+			hzxm:localStorage.getItem('sec_patientName'),
   			zjh:localStorage.getItem('sec_patientIdcard'),
 				hzxm:localStorage.getItem('sec_patientName'),
 				patid:'',
@@ -123,7 +123,7 @@
   	},
   	methods:{
   		chooseMoney(){
-  			
+
   		},
   		handleCall(res){
   			this.blh = res.blh;
@@ -144,7 +144,7 @@
 						action:'zy',
 						openid:localStorage.getItem('sec_openId')
 					}
-					
+
 					this.model.selectPatient(data).then(function(res){
 						 $.hideLoading();
 						if(res.data.code == '0'){
@@ -170,7 +170,7 @@
   				}else{
   					$.toptip(res.data.msg,'error');
   				}
-  				
+
   			})
   		},
   		getSummary(){
@@ -214,7 +214,6 @@
   				$.alert("病历号不能为空", "警告");
   				return;
   			}
-  			let self = this;
   			//调取预结算接口
   			let dat = {
   				hzxm:this.hzxm,
@@ -224,9 +223,8 @@
 					if(res.data.code == 0){
 						//调用下单接口
 						let data = {
-							sjh:res.data.sjh,
-							hisddh:res.data.hisddh,
-							yjlsh:res.data.yjlsh,
+							sjh:res.data.data.hisddh,
+							yjlsh:res.data.data.yjlsh,
 							'action':'yj',
 							'openid':localStorage.getItem('sec_openId'),
 							'yjMoney':self.yjMoney,
@@ -237,7 +235,8 @@
 							sex:localStorage.getItem('sec_sex'),
 							lxdh:localStorage.getItem('sec_lxdh'),
 							zjhm:self.zjh,
-							blh:self.blh
+							blh:self.blh,
+							jzlsh:self.jzlsh
 						}
 						self.model.placeOrderByWN(data).then(function(res){
 							if(res.data.code == 0){
@@ -245,13 +244,13 @@
 									  window.location='../pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
 									} else if (process.env.NODE_ENV == 'production') {
 //									  window.location='../2ysechos/pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
-											window.location=res.data.qrCode;
+                      window.location.href=res.data.data.msg.qrCode;
 									}
 							}else{
 								$.toptip(res.data.msg,'error');
 							}
 						})
-						
+
 					}else{
 						$.toptip(res.data.msg,'error');
 					}

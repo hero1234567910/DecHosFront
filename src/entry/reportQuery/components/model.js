@@ -61,6 +61,13 @@ function model(http) {
     		}
     	})
     },
+    getInPatientInfoByPatid(data) {
+      return http.post(evn.SEC_HOSAPI+'/wx/common/getInPatientInfoByPatid',data,{
+      	headers:{
+      		contentType:'application/json;charset=utf-8'
+      	}
+      });
+    }
   };
 }
 

@@ -3,7 +3,7 @@
  		<div class="hero-banner">
  			<img src="../../../../static/img/图层-646-拷贝.png" class="hero-img" width="100%"/>
  		</div>
- 		
+
  		<div class="hero-search">
 			<div class="weui-search-bar" id="searchBar">
 			    <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
@@ -20,12 +20,12 @@
 			    </form>
 			    <a @click="cancel()" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
 			</div>
-			
+
 			<div class="content" style="z-index: 100000000;position: absolute;background-color: white;width: 100%;">
 				<homeExtend :seller="seller" :souInput="souInput" v-show="homeShow" @tohomeShow='tohomeShow'></homeExtend>
 			</div>
 		</div>
-		
+
 		<div class="hero-panel">
 			<div class="hero-panel2">
 				<div class="hero-panel2_header"><strong>门诊服务</strong></div>
@@ -80,15 +80,15 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="hero-Image">
 			<div style="padding: 5px 10px;">
 				<div class="notice-left" style="position: relative;">
 					<img src="../../../../static/img/消息 88 通知 公告.svg" style="width: 48%;vertical-align: middle;position: absolute;top: -12px;left: 16px;"/>
 				</div>
 				<div class="notice-middle" style="width: 50%;">
-					<div id="s" style="position:relative; white-space:nowrap; overflow:hidden; height:22px;"> 
-						<div id="noticeList" style="position:absolute; top:0; height:20px;"><span id="ms">医院简介</span></div> 
+					<div id="s" style="position:relative; white-space:nowrap; overflow:hidden; height:22px;">
+						<div id="noticeList" style="position:absolute; top:0; height:20px;"><span id="ms">医院简介</span></div>
 					</div>
 				</div>
 				<div class="notice-right" @click="getMore">
@@ -106,7 +106,7 @@
 		    </el-carousel-item>
 		  </el-carousel>-->
 		</div>
-		
+
 		<div style="position: relative;top: -80px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
 			<div class="hero-panel2_header" style="height: 30px;"><strong>在院服务</strong></div>
 			<div style="margin-left: 20px;margin-right: 20px;height: 70px;">
@@ -160,10 +160,10 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<div style="height: 10px;width: 100%;position: relative;
     top: -70px;;background-color: #e5e5e5;"></div>
-		
+
 		<div class="hero-panel3">
 			<div class="weui-flex">
 			  <div class="weui-flex__item" v-on:click="toHospitalizationService()">
@@ -188,14 +188,14 @@
 			  </div>
 			</div>
 		</div>
-		
+
 		<div style="height: 10px;width: 100%;position: relative;top: -83px;background-color: #e5e5e5;"></div>
 		<div style="width: 100%;height: 100px;position: relative;top: -83px;">
 			<a href="javascript:;" v-on:click="toInformation('tjyy')">
 				<img src="../../../../static/img/体检.png" style="width: 100%;"/>
 			</a>
 		</div>
-		
+
 		<el-dialog title="通告详情" :visible.sync="isShow">
       <commonSelect v-bind:mzData="mzData" @handleCall="handleCall"></commonSelect>
     </el-dialog>
@@ -231,7 +231,7 @@
   		this.getTGInfo();
 			//横向滚动
 			$("#s").textScroll();
-			
+
   	},
   	methods:{
   		getAllInfo(){
@@ -244,13 +244,13 @@
           '<img class="hos-img" src=' + evn.SEC_HOSAPI
         );
   			this.mzData = this.InfoData;
-  			
+
 				console.log(this.mzData);
   			this.isShow = true;
   		},
   		handleCall(res) {
 	      this.isShow = false;
-	      
+
 	    },
   		getTGInfo(){
   			let self = this;
@@ -288,7 +288,7 @@
 	        }
 	      });
 	    },
-				
+
 			cancel(){
 				this.homeShow = false;
 			},
@@ -310,9 +310,9 @@
     				localStorage.setItem('sec_birth',res.data.data.patientBirth);
     				localStorage.setItem('sec_patientIdcard',res.data.data.patientIdcard);
     				localStorage.setItem('sec_patientGuid',res.data.data.rowGuid);
-    				localStorage.setItem('sec_cardno',res.data.data.bxh);
+    				localStorage.setItem('sec_cardno',res.data.data.patientIdcard);
     				localStorage.setItem('sec_lxdh',res.data.data.lxdh);
-    				
+
 //  				if(res.data.data.patientName == null || res.data.data.patientName == ''){
 //  					//说明没有绑定患者信息，去绑定
 //  					$.alert("您并未绑定患者信息，请先绑定", "提示", function() {
@@ -336,7 +336,7 @@
 //								}
 //							}
 //  				}
-//  				
+//
 //  				if(res.data.data.patientStatus == 2){
 //  					let arr = [];
 //  						let hosArray = res.data.data.hospitalizedList;
@@ -357,7 +357,7 @@
     			}else{
     				$.toptip(res.data.msg, 'error');
     			}
-    			
+
     		})
 		},
 		//获取url中的参数
@@ -465,10 +465,10 @@
 				  window.location='../../2ysechos/introduceProfessor.html'
 				}
 		}
-		
+
   	}
   }
-  
+
   </script>
 <style>
 	.el-dialog {
@@ -483,11 +483,11 @@
     line-height: 300px;
     margin: 0;
   }
-  
+
   .el-carousel__item:nth-child(2n) {
     background-color: #99a9bf;
   }
-  
+
   .el-carousel__item:nth-child(2n+1) {
     background-color: #d3dce6;
   }
@@ -576,7 +576,7 @@
 	.hero-search{
 		position: relative;
     width: 100%;
-    top: -95px;	
+    top: -95px;
 	}
 	.weui-search-bar:before{
 		border-top: 0px solid #D7D6DC;
@@ -616,13 +616,13 @@
 			height: 30px;
 			width: 85px
 		}
-		
+
 		.notice-middle{
 			float: left;
 			height: 30px;
 			font-weight: 600
 		}
-		
+
 		.notice-right{
 			height: 30px;
 			float: right;

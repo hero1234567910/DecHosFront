@@ -279,6 +279,7 @@ export default {
       self.yyhx = this.$route.query.yyhx;
       self.patid = this.$route.query.patid;
       self.pbxh = this.$route.query.pbxh;
+      self.zfzt = this.$route.query.zfzt;
       //console.log(data);
     },
     statusCheck(ele) {
