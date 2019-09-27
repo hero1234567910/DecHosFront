@@ -2,7 +2,10 @@
   <div style="overflow: auto;overflow-x: hidden;height:100%;">
     <div class="list-head">
       <div class="image-style" style="height: 138px;">
-        <img style="height:100%;height: 138px;width: 100%;" src="../../../../static/doctorImg/wdwx.png" />
+        <img
+          style="height:100%;height: 138px;width: 100%;"
+          src="../../../../static/doctorImg/wdwx.png"
+        />
       </div>
       <div class="weui-cells__title-wzl">待维修列表</div>
     </div>
@@ -53,19 +56,19 @@ export default {
     this.getMaintainList();
     this.initList();
   },
-  beforeRouteEnter(to, from, next) {
-    // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
-    // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
-    // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
-    // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
-    if (from.name == "maintainDetail") {
-      to.meta.isBack = true;
-      //判断是从哪个路由过来的，
-      //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
-    }
-    //console.log(to.meta.isBack);
-    next();
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
+  //   // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
+  //   // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
+  //   // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
+  //   if (from.name == "maintainDetail") {
+  //     to.meta.isBack = true;
+  //     //判断是从哪个路由过来的，
+  //     //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+  //   }
+  //   //console.log(to.meta.isBack);
+  //   next();
+  // },
   activated() {
     if (!this.$route.meta.isBack) {
       // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
@@ -92,7 +95,8 @@ export default {
       let data = {
         page: "1",
         limit: "10",
-        repairStatus: 0
+        repairStatus: 3,
+        maintainGuid: localStorage.getItem('m_user_rowGuid')
       };
       this.model.getMaintainList(data).then(function(res) {
         $.hideLoading();
@@ -115,7 +119,8 @@ export default {
           let data = {
             limit: "10",
             page: self.page,
-            repairStatus: 0
+            repairStatus: 3,
+            maintainGuid: localStorage.getItem('m_user_rowGuid')
           };
 
           self.model.getMaintainList(data).then(function(res) {
@@ -176,6 +181,9 @@ export default {
           break;
         case 2:
           def = "报修完成";
+          break;
+        case 3:
+          def = "已指派";
           break;
         default:
           break;

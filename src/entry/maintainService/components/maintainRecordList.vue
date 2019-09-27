@@ -71,7 +71,8 @@ export default {
       let data = {
         page: "1",
         limit: "10",
-        repairStatus: 2
+        repairStatus: 2,
+        maintainGuid: localStorage.getItem('m_user_rowGuid')
       };
       this.model.getMyList(data).then(function(res) {
         $.hideLoading();
@@ -95,7 +96,8 @@ export default {
           let data = {
             limit: "10",
             page: self.page,
-            repairStatus: 2
+            repairStatus: 2,
+            maintainGuid: localStorage.getItem('m_user_rowGuid')
           };
 
           self.model.getMyList(data).then(function(res) {
@@ -158,6 +160,9 @@ export default {
         case 2:
           def = "报修完成";
           break;
+        case 3:
+          def = "已指派";
+          break;  
         default:
           break;
       }

@@ -35,7 +35,7 @@
           <img src="images/icon_nav_cell.png" alt />
         </div>
         <p class="weui-grid__label">List</p>
-      </a> -->
+      </a>-->
     </div>
   </div>
 </template>
@@ -205,12 +205,13 @@ export default {
     toMaintainSatisfaction() {
       this.$router.push("/maintainSatisfactionList");
     },
-     toPersonCenter(){
+    toPersonCenter() {
       this.$router.push("/personCenter");
     },
     countRepairs() {
       let self = this;
-      this.model.countRepairs().then(function(res) {
+      let data = localStorage.getItem("m_user_rowGuid")
+      this.model.countRepairs(data).then(function(res) {
         if (res.data.code == 0) {
           self.repairCounts = res.data.data;
         } else {

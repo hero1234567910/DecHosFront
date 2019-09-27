@@ -53,19 +53,19 @@ export default {
     this.getListByGuid();
     this.initList();
   },
-  beforeRouteEnter(to, from, next) {
-    // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
-    // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
-    // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
-    // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
-    if (from.name == "repairDetail") {
-      to.meta.isBack = true;
-      //判断是从哪个路由过来的，
-      //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
-    }
-    //console.log(to.meta.isBack);
-    next();
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
+  //   // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
+  //   // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
+  //   // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
+  //   if (from.name == "repairDetail") {
+  //     to.meta.isBack = true;
+  //     //判断是从哪个路由过来的，
+  //     //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+  //   }
+  //   //console.log(to.meta.isBack);
+  //   next();
+  // },
   activated() {
     if (!this.$route.meta.isBack) {
       // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
@@ -92,9 +92,9 @@ export default {
       let data = {
         page: "1",
         limit: "10",
-        repairGuid:localStorage.getItem("m_user_rowGuid")
-      }
-      
+        repairGuid: localStorage.getItem("m_user_rowGuid")
+      };
+
       this.model.listRepairData(data).then(function(res) {
         $.hideLoading();
         if (res.data.code == "0") {
@@ -116,7 +116,7 @@ export default {
           let data = {
             limit: "10",
             page: self.page,
-            repairGuid:localStorage.getItem("m_user_rowGuid")
+            repairGuid: localStorage.getItem("m_user_rowGuid")
           };
 
           self.model.listRepairData(data).then(function(res) {
@@ -162,7 +162,9 @@ export default {
           "&picGuid=" +
           ele.picGuid +
           "&rowGuid=" +
-          ele.rowGuid
+          ele.rowGuid +
+          "&maintainName=" +
+          ele.maintainName
       );
     },
     statusCheck(ele) {
@@ -176,6 +178,9 @@ export default {
           break;
         case 2:
           def = "报修完成";
+          break;
+        case 3:
+          def = "已指派";
           break;
         default:
           break;

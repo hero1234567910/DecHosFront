@@ -60,7 +60,7 @@
           </div>
         </div>
       </div>
-      <div class="weui-cells__title-wzl">损坏部位</div>
+      <div class="weui-cells__title-wzl">问题简述</div>
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
@@ -69,7 +69,7 @@
               type="text"
               id="damagedParts"
               name="damagedParts"
-              placeholder="损坏部位(必填)"
+              placeholder="问题简述(必填)"
             />
           </div>
         </div>
