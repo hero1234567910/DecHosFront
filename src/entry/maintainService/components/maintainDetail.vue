@@ -150,6 +150,7 @@ export default {
       $("#deviceName").val(data.deviceName);
       $("#devicePlace").val(data.devicePlace);
       $("#damagedParts").val(data.damagedParts);
+      
       if (data.repairStatus == 0) {
         $("#repairStatus").val("报修中");
         $("#repairStatus").css("color", "orange");

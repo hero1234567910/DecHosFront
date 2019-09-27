@@ -162,7 +162,9 @@ export default {
           "&picGuid=" +
           ele.picGuid +
           "&rowGuid=" +
-          ele.rowGuid
+          ele.rowGuid +
+          "&maintainName=" +
+          ele.maintainName
       );
     },
     statusCheck(ele) {

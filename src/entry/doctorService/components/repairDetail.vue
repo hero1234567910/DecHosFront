@@ -36,11 +36,19 @@
           </div>
         </div>
       </div>
-      <div class="weui-cells__title-wzl">损坏部位</div>
+      <div class="weui-cells__title-wzl">问题简述</div>
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
             <input class="weui-input" type="text" id="damagedParts" name="damagedParts" readonly />
+          </div>
+        </div>
+      </div>
+      <div class="weui-cells__title-wzl">维修人员</div>
+      <div class="weui-cells" style="margin-top:0px;">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <input class="weui-input" type="text" id="maintainName" name="maintainName" placeholder="无" readonly />
           </div>
         </div>
       </div>
@@ -174,6 +182,11 @@ export default {
       $("#deviceName").val(data.deviceName);
       $("#devicePlace").val(data.devicePlace);
       $("#damagedParts").val(data.damagedParts);
+      if(data.maintainName=='null'){
+        $("#maintainName").val('无')
+      }else{
+        $("#maintainName").val(data.maintainName);
+      }
       if (data.repairStatus == 0) {
         $("#repairStatus").val("报修中");
         $("#repairStatus").css("color", "orange");
