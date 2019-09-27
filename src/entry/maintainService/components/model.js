@@ -91,8 +91,8 @@ function model(http) {
         }
       );
     },
-    countRepairs() {
-      return http.get(evn.SEC_HOSAPI + "/wx/sys/sechosrepair/countRepairs", {
+    countRepairs(data) {
+      return http.post(evn.SEC_HOSAPI + "/wx/sys/sechosrepair/countRepairs", data,{
         headers: {
           "Content-Type": "application/json;charset=utf-8"
         }
