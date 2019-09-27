@@ -10,10 +10,8 @@ import '../../../static/css/jquery-weui.min.css'
 import '../../../static/lib/weui.css'
 import '../../../static/css/local.css'
 import vuePicturePreview from 'vue-picture-preview'
-import SlideVerify from 'vue-monoplasty-slide-verify';
 
 Vue.use(vuePicturePreview)   
-Vue.use(SlideVerify);
 FastClick.attach(document.body);
 Vue.use(ElementUI);
 Vue.prototype.axios = axios

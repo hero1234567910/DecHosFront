@@ -2,6 +2,14 @@ import evn from "../utils/evn.js";
 
 function model(http) {
   return {
+  	//滑块验证
+  	getId(data){
+  		return http.get(evn.SEC_HOSAPI + "/sys/getGeetest/getId", {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8"
+        }
+      });
+  	},
 	//用户登陆
     Login(data) {
       return http.post(evn.SEC_HOSAPI + "/sys/login", data, {
