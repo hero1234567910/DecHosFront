@@ -56,19 +56,19 @@ export default {
     this.getMaintainList();
     this.initList();
   },
-  beforeRouteEnter(to, from, next) {
-    // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
-    // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
-    // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
-    // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
-    if (from.name == "maintainDetail") {
-      to.meta.isBack = true;
-      //判断是从哪个路由过来的，
-      //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
-    }
-    //console.log(to.meta.isBack);
-    next();
-  },
+  // beforeRouteEnter(to, from, next) {
+  //   // 路由导航钩子，此时还不能获取组件实例 `this`，所以无法在data中定义变量（利用vm除外）
+  //   // 参考 https://router.vuejs.org/zh-cn/advanced/navigation-guards.html
+  //   // 所以，利用路由元信息中的meta字段设置变量，方便在各个位置获取。这就是为什么在meta中定义isBack
+  //   // 参考 https://router.vuejs.org/zh-cn/advanced/meta.html
+  //   if (from.name == "maintainDetail") {
+  //     to.meta.isBack = true;
+  //     //判断是从哪个路由过来的，
+  //     //如果是page2过来的，表明当前页面不需要刷新获取新数据，直接用之前缓存的数据即可
+  //   }
+  //   //console.log(to.meta.isBack);
+  //   next();
+  // },
   activated() {
     if (!this.$route.meta.isBack) {
       // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据

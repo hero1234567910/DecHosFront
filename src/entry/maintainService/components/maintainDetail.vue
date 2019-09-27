@@ -36,7 +36,7 @@
           </div>
         </div>
       </div>
-      <div class="weui-cells__title-wzl">损坏部位</div>
+      <div class="weui-cells__title-wzl">问题简述</div>
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
