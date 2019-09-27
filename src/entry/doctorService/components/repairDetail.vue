@@ -176,7 +176,7 @@ export default {
       $("#damagedParts").val(data.damagedParts);
       if (data.repairStatus == 0) {
         $("#repairStatus").val("报修中");
-        $("#repairStatus").css("color", "blue");
+        $("#repairStatus").css("color", "orange");
       } else if (data.repairStatus == 1) {
         $("#repairStatus").val("报修取消");
         $("#repairStatus").css("color", "red");
@@ -184,6 +184,10 @@ export default {
       } else if (data.repairStatus == 2) {
         $("#repairStatus").val("报修完成");
         $("#repairStatus").css("color", "green");
+        self.cancelButton = false;
+      } else if (data.repairStatus == 3) {
+        $("#repairStatus").val("已指派");
+        $("#repairStatus").css("color", "blue");
         self.cancelButton = false;
       }
       $("#reportContent").val(data.reportContent);

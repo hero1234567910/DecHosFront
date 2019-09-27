@@ -92,9 +92,9 @@ export default {
       let data = {
         page: "1",
         limit: "10",
-        repairGuid:localStorage.getItem("m_user_rowGuid")
-      }
-      
+        repairGuid: localStorage.getItem("m_user_rowGuid")
+      };
+
       this.model.listRepairData(data).then(function(res) {
         $.hideLoading();
         if (res.data.code == "0") {
@@ -116,7 +116,7 @@ export default {
           let data = {
             limit: "10",
             page: self.page,
-            repairGuid:localStorage.getItem("m_user_rowGuid")
+            repairGuid: localStorage.getItem("m_user_rowGuid")
           };
 
           self.model.listRepairData(data).then(function(res) {
@@ -176,6 +176,9 @@ export default {
           break;
         case 2:
           def = "报修完成";
+          break;
+        case 3:
+          def = "已指派";
           break;
         default:
           break;

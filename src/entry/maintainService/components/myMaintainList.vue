@@ -2,7 +2,10 @@
   <div style="overflow: auto;overflow-x: hidden;height:100%;">
     <div class="list-head">
       <div class="image-style" style="height: 138px;">
-        <img style="height:100%;height: 138px;width: 100%;" src="../../../../static/doctorImg/wdwx.png" />
+        <img
+          style="height:100%;height: 138px;width: 100%;"
+          src="../../../../static/doctorImg/wdwx.png"
+        />
       </div>
       <div class="weui-cells__title-wzl">待维修列表</div>
     </div>
@@ -92,7 +95,8 @@ export default {
       let data = {
         page: "1",
         limit: "10",
-        repairStatus: 0
+        repairStatus: 3,
+        maintainGuid: localStorage.getItem('m_user_rowGuid')
       };
       this.model.getMaintainList(data).then(function(res) {
         $.hideLoading();
@@ -115,7 +119,8 @@ export default {
           let data = {
             limit: "10",
             page: self.page,
-            repairStatus: 0
+            repairStatus: 3,
+            maintainGuid: localStorage.getItem('m_user_rowGuid')
           };
 
           self.model.getMaintainList(data).then(function(res) {
@@ -176,6 +181,9 @@ export default {
           break;
         case 2:
           def = "报修完成";
+          break;
+        case 3:
+          def = "已指派";
           break;
         default:
           break;
