@@ -247,7 +247,7 @@ export default {
         if (res.data.code == "0") {
           if (res.data.data.length == 0) {
             self.imgName = "404.png";
-            self.imgUrl = "../../../../static/doctorImg/404.png";
+            self.imgUrl = require("../../../../static/doctorImg/404.png");
             //console.log(document.getElementById("pic").complete)
             if(document.getElementById("pic").complete){
               self.loading = false;
