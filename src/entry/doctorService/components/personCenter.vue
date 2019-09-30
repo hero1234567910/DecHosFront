@@ -82,11 +82,11 @@ export default {
     headimgCheck() {
       let self = this;
       if (localStorage.getItem("m_sex") == "男") {
-        self.headimg = "../../../../static/doctorImg/医生.png";
+        self.headimg = require("../../../../static/doctorImg/mdoctor.png");
       }else if (localStorage.getItem("m_sex") == "女") {
-        self.headimg = "../../../../static/doctorImg/女医生.png";
+        self.headimg = require("../../../../static/doctorImg/fdoctor.png");
       }else{
-        self.headimg = "../../../../static/doctorImg/医生.png";
+        self.headimg = require("../../../../static/doctorImg/mdoctor.png");
       }
     },
     toindex() {
