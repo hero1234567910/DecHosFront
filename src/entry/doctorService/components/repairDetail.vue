@@ -242,7 +242,7 @@ export default {
       let data = {
         guid: ele
       };
-      let netlocal = "https://p.zjgwsjk.com/2ysechosback/uploadFile/";
+      let netlocal = "https://p.zjgwsjk.com/2ysechosback/file/";
       this.model.getAttachList(data).then(function(res) {
         if (res.data.code == "0") {
           if (res.data.data.length == 0) {
