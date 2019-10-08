@@ -96,7 +96,7 @@
           </div>
         </div>
       </div>
-      <div class="weui-cells__title-wzl">破损照片</div>
+      <div class="weui-cells__title-wzl">设备照片</div>
       <div class="weui-cells" style="margin-top:0px;">
         <div class="weui-cell">
           <div class="weui-cell__bd">
