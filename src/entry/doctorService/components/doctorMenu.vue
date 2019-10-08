@@ -94,13 +94,13 @@ export default {
     getDocInfo() {
       let self = this;
       let code = this.GetQueryString("code");
-      let guid = localStorage.getItem("m_user_rowGuid");
+      let guid = sessionStorage.getItem("m_user_rowGuid");
       let data = {
         code: code,
         rowGuid: guid
       };
-      let to = localStorage.getItem("sec_acessToken");
-      let re = localStorage.getItem("sec_refreshToken");
+      let to = sessionStorage.getItem("sec_acessToken");
+      let re = sessionStorage.getItem("sec_refreshToken");
       if (
         to == null ||
         to == "" ||
@@ -109,14 +109,14 @@ export default {
       ) {
         this.model.getDocInfo(data).then(function(res) {
           if (res.data.code == "0") {
-            localStorage.setItem("sec_openId", res.data.data.openid);
-            localStorage.setItem("sec_docName", res.data.data.userName);
-            localStorage.setItem("sec_docGuid", res.data.data.rowGuid);
-            localStorage.setItem(
+            sessionStorage.setItem("sec_openId", res.data.data.openid);
+            sessionStorage.setItem("sec_docName", res.data.data.userName);
+            sessionStorage.setItem("sec_docGuid", res.data.data.rowGuid);
+            sessionStorage.setItem(
               "sec_acessToken",
               self.getAesString(res.data.data.accessToken)
             );
-            localStorage.setItem(
+            sessionStorage.setItem(
               "sec_refreshToken",
               self.getAesString(res.data.data.refreshToken)
             );
@@ -125,16 +125,16 @@ export default {
             //token过期 刷新
             let data = {
               refresh_token: self.getDAesString(
-                localStorage.getItem("sec_refreshToken")
+                sessionStorage.getItem("sec_refreshToken")
               )
             };
             self.model.refreshToken(data).then(function(res) {
               if (res.data.code == 0) {
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "sec_acessToken",
                   self.getAesString(res.data.data.access_token)
                 );
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "sec_refreshToken",
                   self.getAesString(res.data.data.refresh_token)
                 );
@@ -148,21 +148,21 @@ export default {
         });
       } else {
         let data = {
-          openid: localStorage.getItem("sec_openId"),
+          openid: sessionStorage.getItem("sec_openId"),
           access_token: this.getDAesString(to),
           refresh_token: this.getDAesString(re),
-          rowGuid: localStorage.getItem("m_user_rowGuid")
+          rowGuid: sessionStorage.getItem("m_user_rowGuid")
         };
         this.model.getDocByToken(data).then(function(res) {
           if (res.data.code == "0") {
-            localStorage.setItem("sec_openId", res.data.data.openid);
-            localStorage.setItem("sec_docName", res.data.data.userName);
-            localStorage.setItem("sec_patientGuid", res.data.data.rowGuid);
-            localStorage.setItem(
+            sessionStorage.setItem("sec_openId", res.data.data.openid);
+            sessionStorage.setItem("sec_docName", res.data.data.userName);
+            sessionStorage.setItem("sec_patientGuid", res.data.data.rowGuid);
+            sessionStorage.setItem(
               "sec_acessToken",
               self.getAesString(res.data.data.accessToken)
             );
-            localStorage.setItem(
+            sessionStorage.setItem(
               "sec_refreshToken",
               self.getAesString(res.data.data.refreshToken)
             );
@@ -171,16 +171,16 @@ export default {
             //token过期 刷新
             let data = {
               refresh_token: self.getDAesString(
-                localStorage.getItem("sec_refreshToken")
+                sessionStorage.getItem("sec_refreshToken")
               )
             };
             self.model.refreshToken(data).then(function(res) {
               if (res.data.code == 0) {
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "sec_acessToken",
                   self.getAesString(res.data.data.access_token)
                 );
-                localStorage.setItem(
+                sessionStorage.setItem(
                   "sec_refreshToken",
                   self.getAesString(res.data.data.refresh_token)
                 );
@@ -215,7 +215,7 @@ export default {
     },
     countSats() {
       let self = this;
-      let val = localStorage.getItem("m_user_rowGuid");
+      let val = sessionStorage.getItem("m_user_rowGuid");
       let data = val;
       this.model.countSats(data).then(function(res) {
         if (res.data.code == 0) {

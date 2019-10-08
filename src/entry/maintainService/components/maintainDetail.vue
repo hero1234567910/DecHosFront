@@ -185,8 +185,8 @@ export default {
       let self = this;
       let data = {
         rowGuid: this.$route.query.rowGuid,
-        maintainGuid:localStorage.getItem('m_user_rowGuid'),
-        maintainName:localStorage.getItem('m_user_userName'),
+        maintainGuid:sessionStorage.getItem('m_user_rowGuid'),
+        maintainName:sessionStorage.getItem('m_user_userName'),
         repairStatus:2
       };
       this.model.successRepair(data).then(function(res) {

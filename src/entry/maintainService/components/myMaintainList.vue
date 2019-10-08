@@ -96,7 +96,7 @@ export default {
         page: "1",
         limit: "10",
         repairStatus: 3,
-        maintainGuid: localStorage.getItem('m_user_rowGuid')
+        maintainGuid: sessionStorage.getItem('m_user_rowGuid')
       };
       this.model.getMaintainList(data).then(function(res) {
         $.hideLoading();
@@ -120,7 +120,7 @@ export default {
             limit: "10",
             page: self.page,
             repairStatus: 3,
-            maintainGuid: localStorage.getItem('m_user_rowGuid')
+            maintainGuid: sessionStorage.getItem('m_user_rowGuid')
           };
 
           self.model.getMaintainList(data).then(function(res) {

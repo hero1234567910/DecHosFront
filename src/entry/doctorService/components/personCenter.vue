@@ -56,8 +56,8 @@ export default {
     this.model = model(this.axios);
     return {
       show: true,
-      Name: localStorage.getItem("m_user_userName"),
-      Deptname: localStorage.getItem("m_deptName"),
+      Name: sessionStorage.getItem("m_user_userName"),
+      Deptname: sessionStorage.getItem("m_deptName"),
       headimg: ""
     };
   },
@@ -73,7 +73,7 @@ export default {
         title: "提示",
         text: "确认退出吗!",
         onOK: function() {
-          localStorage.clear();
+          sessionStorage.clear();
           self.$router.push("/");
         },
         onCancel: function() {}
@@ -81,9 +81,9 @@ export default {
     },
     headimgCheck() {
       let self = this;
-      if (localStorage.getItem("m_sex") == "男") {
+      if (sessionStorage.getItem("m_sex") == "男") {
         self.headimg = require("../../../../static/doctorImg/mdoctor.png");
-      }else if (localStorage.getItem("m_sex") == "女") {
+      }else if (sessionStorage.getItem("m_sex") == "女") {
         self.headimg = require("../../../../static/doctorImg/fdoctor.png");
       }else{
         self.headimg = require("../../../../static/doctorImg/mdoctor.png");

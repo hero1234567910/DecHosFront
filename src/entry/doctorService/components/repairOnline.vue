@@ -173,8 +173,8 @@ export default {
     },
     initPage() {
       let self = this;
-      $("#repairName").val(localStorage.getItem("m_user_userName"));
-      $("#repairPhone").val(localStorage.getItem("m_mobile"));
+      $("#repairName").val(sessionStorage.getItem("m_user_userName"));
+      $("#repairPhone").val(sessionStorage.getItem("m_mobile"));
     },
     panNull(ele, str) {
       if (ele == null || ele == "") {
@@ -201,7 +201,7 @@ export default {
       let self = this;
       let data = {
         repairName: $("#repairName").val(),
-        repairGuid: localStorage.getItem("m_user_rowGuid"),
+        repairGuid: sessionStorage.getItem("m_user_rowGuid"),
         repairPhone: $("#repairPhone").val(),
         deviceName: $("#deviceName").val(),
         devicePlace: $("#devicePlace").val(),

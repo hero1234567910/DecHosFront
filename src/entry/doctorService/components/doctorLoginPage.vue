@@ -62,7 +62,7 @@ export default {
   },
   mounted() {},
   created() {
-        this.getId();
+    this.getId();
   },
   methods: {
 		getId() {
@@ -107,32 +107,32 @@ export default {
 		      this.model.Login(data).then(function(res) {
 		        if (res.data.code == "0") {
 		          //console.log(res.data.deptName);
-		          window.localStorage.setItem("m_token", res.data.data.token);
-		          window.localStorage.setItem(
+		          window.sessionStorage.setItem("m_token", res.data.data.token);
+		          window.sessionStorage.setItem(
 		            "m_user_rowGuid",
 		            res.data.data.userRowGuid
 		          );
-		          window.localStorage.setItem(
+		          window.sessionStorage.setItem(
 		            "m_user_userName",
 		            res.data.data.userName
 		          );
-		          window.localStorage.setItem(
+		          window.sessionStorage.setItem(
 		            "m_mobile",
 		            res.data.data.mobile
 		          );
-		          window.localStorage.setItem(
+		          window.sessionStorage.setItem(
 		            "m_deptGuid",
 		            JSON.stringify(res.data.deptGuid)
 		          );
-		          window.localStorage.setItem(
+		          window.sessionStorage.setItem(
 		            "m_deptName",
 		            res.data.data.deptName
 		          );
-		          window.localStorage.setItem(
+		          window.sessionStorage.setItem(
 		            "m_loginId",
 		            res.data.data.loginId
 		          );
-		          window.localStorage.setItem(
+		          window.sessionStorage.setItem(
 		            "m_sex",
 		            res.data.data.sex
 		          );

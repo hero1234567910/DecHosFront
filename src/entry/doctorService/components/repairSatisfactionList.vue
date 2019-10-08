@@ -69,7 +69,7 @@ export default {
         page: "1",
         limit: "10",
         evaluationStatus: 0,
-        repairGuid: localStorage.getItem("m_user_rowGuid")
+        repairGuid: sessionStorage.getItem("m_user_rowGuid")
       };
       this.model.getMySatList(data).then(function(res) {
         $.hideLoading();
@@ -94,7 +94,7 @@ export default {
             limit: "10",
             page: self.page,
             evaluationStatus: 0,
-            repairGuid: localStorage.getItem("m_user_rowGuid")
+            repairGuid: sessionStorage.getItem("m_user_rowGuid")
           };
 
           self.model.getMySatList(data).then(function(res) {

@@ -92,7 +92,7 @@ export default {
       let data = {
         page: "1",
         limit: "10",
-        repairGuid: localStorage.getItem("m_user_rowGuid")
+        repairGuid: sessionStorage.getItem("m_user_rowGuid")
       };
 
       this.model.listRepairData(data).then(function(res) {
@@ -116,7 +116,7 @@ export default {
           let data = {
             limit: "10",
             page: self.page,
-            repairGuid: localStorage.getItem("m_user_rowGuid")
+            repairGuid: sessionStorage.getItem("m_user_rowGuid")
           };
 
           self.model.listRepairData(data).then(function(res) {

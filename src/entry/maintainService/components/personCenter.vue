@@ -56,8 +56,8 @@ export default {
     this.model = model(this.axios);
     return {
       show: true,
-      Name: localStorage.getItem("m_user_userName"),
-      Deptname: localStorage.getItem("m_deptName"),
+      Name: sessionStorage.getItem("m_user_userName"),
+      Deptname: sessionStorage.getItem("m_deptName"),
       headimg: ""
     };
   },
@@ -71,7 +71,7 @@ export default {
         title: "提示",
         text: "确认退出吗!",
         onOK: function() {
-          localStorage.clear();
+          sessionStorage.clear();
           self.$router.push("/");
         },
         onCancel: function() {}
