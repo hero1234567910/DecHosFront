@@ -327,6 +327,7 @@ export default {
                             $('#deleteID').remove();
                             //$(".weui-uploader__file").css("display", "none");
                             $(".weui-uploader__info").text(0 + "/" + 1);
+                            document.getElementsByTagName('ul')[0].removeChild(document.getElementsByTagName('ul')[0].getElementsByTagName('li')[0]);
                           });
                         } else {
                           $.toptip(res.data.msg, "error");
