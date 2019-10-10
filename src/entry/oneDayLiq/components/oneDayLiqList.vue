@@ -12,7 +12,7 @@
           <span style="font-weight: 700;">住院患者一日清查询</span>
           <!--<div class="ad-button">
 		  			 <el-button type="primary" @click="getInfo">选择病历</el-button>
-		  		</div>-->
+          </div>-->
         </div>
 
         <div class="re-header-select">
@@ -31,11 +31,31 @@
             />
           </div>
         </div>
+        <el-collapse>
+          <el-collapse-item class="family-search" title="家属代查" name="3">
+            <div style="margin-left:25px;">
+              <el-input v-model="input_hzxm" placeholder="患者姓名"></el-input>
+              <el-input v-model="input_blh" placeholder="病历号"></el-input>
+              <div class="select-fin-2">
+                <img
+                  src="../../../../static/img/搜索.png"
+                  width="100%"
+                  style="vertical-align: middle;"
+                  v-on:click="famSearch()"
+                />
+              </div>
+            </div>
+          </el-collapse-item>
+        </el-collapse>
       </el-card>
     </div>
 
-    <div style="margin-top:38%;">
-      <div class="re-row" v-for="item in onDayLiqList" v-show="item.fysj != undefined || item.fysj != null">
+    <div style="margin-top:63%;">
+      <div
+        class="re-row"
+        v-for="item in onDayLiqList"
+        v-show="item.fysj != undefined || item.fysj != null"
+      >
         <a href="javascript:;">
           <div class="row-cen">
             <div class="re-img">
@@ -65,10 +85,10 @@
         <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toIndex()">返回主页</a>
       </div>
     </div>
-    
+
     <!--<el-dialog title="选择病历号" :visible.sync="isShow">
 				<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
-			</el-dialog>-->
+    </el-dialog>-->
   </div>
 </template>
 
@@ -76,11 +96,12 @@
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
 import moment from "moment";
-import Jzlsh from '../jzlsh.vue'
-import commonSelect from './commonSelect.vue'
+import Jzlsh from "../jzlsh.vue";
+import Patid from "../jzlsh.vue";
+import commonSelect from "./commonSelect.vue";
 
 export default {
-	 components:{commonSelect},
+  components: { commonSelect },
   data() {
     this.model = model(this.axios);
     return {
@@ -89,98 +110,105 @@ export default {
       hzxm: localStorage.getItem("sec_patientName"),
       jzlsh: "",
       allPrice: "",
-      isShow:false,
-				mzData:[],
-				patid:'',
-				blh:''
+      isShow: false,
+      mzData: [],
+      patid: "",
+      blh: "",
+      input_hzxm: "",
+      input_blh: "",
+      cxrq: ""
     };
   },
-  
+
   mounted() {
     this.init();
     this.getInfo();
   },
   methods: {
-  	//获取病历号
-//		getInfo(){
-//				let self = this;
-//				$.showLoading();
-//				let data={
-//					hzxm:this.hzxm,
-//					zjh:this.zjh,
-//					action:'zy',
-//					openid:localStorage.getItem('sec_openId')
-//				}
-//				
-//				this.model.getInfo(data).then(function(res){
-//					$.hideLoading();
-//					if(res.data.code == '0'){
-//						self.mzData = res.data.data;
-//						self.isShow = true;
-//					}else{
-//						$.toptip(res.data.msg,'error');
-//					}
-//				})
-//			},
-			//检查是否有绑定并查询患者住院信息
-  		getInfo(){
-				let self = this;
-				this.zjh = localStorage.getItem('sec_patientIdcard');
-				this.hzxm = localStorage.getItem('sec_patientName');
-				if(this.zjh == 'null' || this.zjh == '' || this.zjh == null){
-					$.confirm("您并未绑定身份证，请先绑定","提示",function() {
-							if (process.env.NODE_ENV == 'dev') {
-							  window.location='../index.html#/userBinding'
-							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/index.html#/userBinding'
-							}
-						}, function() {
-					  	if (process.env.NODE_ENV == 'dev') {
-							  window.location='../index.html'
-							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/index.html'
-							}
-					  });
-					  return;
-				}
-				
-				let data={
-					hzxm:this.hzxm,
-					zjh:this.zjh,
-					action:'zy',
-					openid:localStorage.getItem('sec_openId')
-				}
-				
-				this.model.getInfo(data).then(function(res){
-					if(res.data.code == '0'){
-						//住院缴费模块 就取病历号最大的
-						let arr = [];
-						let hosArray = res.data.data;
-						for(var i=0;i<hosArray.length;i++){
-								let blh = hosArray[i].blh;
-								arr.push(parseInt(blh));
-						}
-						arr.sort().reverse();
-						let val = arr[0];
-						for(var i=0;i<hosArray.length;i++){
-							if(val == hosArray[i].blh){
-								self.patid = hosArray[i].patid;
-								self.blh = hosArray[i].blh;
-								self.getInPatientInfoByPatid();
-							}
-						}
-					}else{
-						$.alert("未查询到您的住院信息", "提示", function() {
-						});
-					}
-				})
-			},
-  	handleCall(res){
-  			this.isShow = false;
-				this.blh = res.blh;
-				this.patid = res.patid;
-				this.getInPatientInfoByPatid();
-			},
+    //获取病历号
+    //		getInfo(){
+    //				let self = this;
+    //				$.showLoading();
+    //				let data={
+    //					hzxm:this.hzxm,
+    //					zjh:this.zjh,
+    //					action:'zy',
+    //					openid:localStorage.getItem('sec_openId')
+    //				}
+    //
+    //				this.model.getInfo(data).then(function(res){
+    //					$.hideLoading();
+    //					if(res.data.code == '0'){
+    //						self.mzData = res.data.data;
+    //						self.isShow = true;
+    //					}else{
+    //						$.toptip(res.data.msg,'error');
+    //					}
+    //				})
+    //			},
+    //检查是否有绑定并查询患者住院信息
+    getInfo() {
+      let self = this;
+      this.zjh = localStorage.getItem("sec_patientIdcard");
+      this.hzxm = localStorage.getItem("sec_patientName");
+      if (this.zjh == "null" || this.zjh == "" || this.zjh == null) {
+        $.confirm(
+          "您并未绑定身份证，请先绑定",
+          "提示",
+          function() {
+            if (process.env.NODE_ENV == "dev") {
+              window.location = "../index.html#/userBinding";
+            } else if (process.env.NODE_ENV == "production") {
+              window.location = "../2ysechos/index.html#/userBinding";
+            }
+          },
+          function() {
+            if (process.env.NODE_ENV == "dev") {
+              window.location = "../index.html";
+            } else if (process.env.NODE_ENV == "production") {
+              window.location = "../2ysechos/index.html";
+            }
+          }
+        );
+        return;
+      }
+
+      let data = {
+        hzxm: this.hzxm,
+        zjh: this.zjh,
+        action: "zy",
+        openid: localStorage.getItem("sec_openId")
+      };
+
+      this.model.getInfo(data).then(function(res) {
+        if (res.data.code == "0") {
+          //住院缴费模块 就取病历号最大的
+          let arr = [];
+          let hosArray = res.data.data;
+          for (var i = 0; i < hosArray.length; i++) {
+            let blh = hosArray[i].blh;
+            arr.push(parseInt(blh));
+          }
+          arr.sort().reverse();
+          let val = arr[0];
+          for (var i = 0; i < hosArray.length; i++) {
+            if (val == hosArray[i].blh) {
+              self.patid = hosArray[i].patid;
+              self.blh = hosArray[i].blh;
+              self.getInPatientInfoByPatid();
+            }
+          }
+        } else {
+          $.alert("未查询到您的住院信息", "提示", function() {});
+        }
+      });
+    },
+    handleCall(res) {
+      this.isShow = false;
+      this.blh = res.blh;
+      this.patid = res.patid;
+      this.getInPatientInfoByPatid();
+    },
     init() {
       $("#cxrq").calendar({
         dateFormat: "yyyy-mm-dd"
@@ -212,28 +240,97 @@ export default {
           //console.log(i);
           //console.log(res.data.data[i - 1].zje);
           self.allPrice = res.data.data[i - 1].zje;
-//        self.isShow = false;
+          //        self.isShow = false;
         } else {
           $.toptip(res.data.msg, "error");
         }
       });
     },
-    getInPatientInfoByPatid(){
+    getInPatientInfoByPatid() {
       //console.log(this.$route.query.patid);
       let self = this;
-      let data={
-        hzxm:self.hzxm,
-        patid:self.patid,
-        zyzt:'0'
-      }
-      this.model.getInPatientInfoByPatid(data).then(function(res){
-        if(res.data.code == "0"){
-            Jzlsh.jzlsh = res.data.data[0].jzlsh;
-            self.jzlsh = res.data.data[0].jzlsh;
-        }else {
+      let data = {
+        hzxm: self.hzxm,
+        patid: self.patid,
+        zyzt: "0"
+      };
+      this.model.getInPatientInfoByPatid(data).then(function(res) {
+        if (res.data.code == "0") {
+          Jzlsh.jzlsh = res.data.data[0].jzlsh;
+          self.jzlsh = res.data.data[0].jzlsh;
+        } else {
           $.toptip(res.data.msg, "error");
         }
       });
+    },
+    //通过病历号获取patid
+    getInPatientInfoByBlh() {
+      let self = this;
+      let data = {
+        hzxm: self.input_hzxm,
+        blh: self.input_blh
+      };
+      this.model.getInPatientInfoByBlh(data).then(function(res) {
+        if (res.data.code == "0") {
+          self.patid = res.data.data[0].patid;
+          self.getInPatientInfoByPatid_2();
+        } else {
+          $.toptip(res.data.msg, "error");
+        }
+      });
+    },
+    getInPatientInfoByPatid_2() {
+      
+      let self = this;
+      let data = {
+        hzxm: self.input_hzxm,
+        patid: self.patid,
+        zyzt: "0"
+      };
+      this.model.getInPatientInfoByPatid(data).then(function(res) {
+        if (res.data.code == "0") {
+          Jzlsh.jzlsh = res.data.data[0].jzlsh;
+          self.jzlsh = res.data.data[0].jzlsh;
+          self.getInpatientOneDayLiquidation2();
+        } else {
+          $.toptip(res.data.msg, "error");
+        }
+      });
+    },
+
+    getInpatientOneDayLiquidation2() {
+      $.showLoading();
+      let self = this;
+      let data = {
+        hzxm: self.input_hzxm,
+        jzlsh: self.jzlsh,
+        cxrq: self.cxrq,
+        aslhz: "1"
+      };
+      //console.log(1)
+      this.model.getInpatientOneDayLiquidation(data).then(function(res) {
+        $.hideLoading();
+        if (res.data.code == "0") {
+          
+          self.onDayLiqList = res.data.data;
+          let i = res.data.data.length;
+          //console.log(i);
+          //console.log(res.data.data[i - 1].zje);
+          self.allPrice = res.data.data[i - 1].zje;
+          //        self.isShow = false;
+        } else {
+          $.toptip(res.data.msg, "error");
+        }
+      });
+    },
+    famSearch() {
+      let self = this;
+      let date1 = $("#cxrq").val();
+      self.cxrq = date1.replace(/\-/g, "");
+      if (cxrq == "") {
+        $.alert("请输入日期", "提示", function() {});
+      }
+      this.getInPatientInfoByBlh();
     }
   },
   filters: {
@@ -272,13 +369,27 @@ export default {
 .el-card__body {
   padding: 2px;
 }
+.el-collapse-item__header {
+  font-size: 14px;
+  font-weight: 600;
+  margin-left: 26px;
+}
+.el-input {
+  position: relative;
+  font-size: 17px;
+  display: inline-block;
+  width: 33%;
+}
+.el-collapse-item__content {
+  padding-bottom: 3px;
+}
 </style>
 
 <style scoped>
-	.el-button--primary{
-		background-color: #4CCBDB;
-		border-color: #4CCBDB;
-	}
+.el-button--primary {
+  background-color: #4ccbdb;
+  border-color: #4ccbdb;
+}
 .weui-btn_primary {
   background-color: #4ccbdb;
 }
@@ -372,10 +483,17 @@ input::-webkit-input-placeholder {
   float: left;
   position: relative;
 }
-.ad-button{
-		float: right;
-		margin-right: 10px;
-		position: relative;
-    top: -7px;
-	}
+.ad-button {
+  float: right;
+  margin-right: 10px;
+  position: relative;
+  top: -7px;
+}
+.select-fin-2 {
+  width: 50px;
+  height: 100%;
+  float: right;
+  line-height: 41px;
+  margin-right: 39px;
+}
 </style>
