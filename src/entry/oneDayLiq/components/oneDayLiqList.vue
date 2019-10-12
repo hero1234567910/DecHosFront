@@ -226,6 +226,11 @@ export default {
       let self = this;
       let date1 = $("#cxrq").val();
       let cxrq = date1.replace(/\-/g, "");
+      if (cxrq == "") {
+        $.alert("请输入日期", "提示", function() {});
+        $.hideLoading();
+        return;
+      }
       let data = {
         hzxm: self.hzxm,
         jzlsh: self.jzlsh,
@@ -299,7 +304,7 @@ export default {
     },
 
     getInpatientOneDayLiquidation2() {
-      $.showLoading();
+      
       let self = this;
       let data = {
         hzxm: self.input_hzxm,
@@ -324,11 +329,22 @@ export default {
       });
     },
     famSearch() {
+      $.showLoading();
       let self = this;
       let date1 = $("#cxrq").val();
       self.cxrq = date1.replace(/\-/g, "");
       if (cxrq == "") {
         $.alert("请输入日期", "提示", function() {});
+        $.hideLoading();
+        return;
+      }else if(self.input_hzxm==''){
+        $.alert("请输入患者姓名", "提示", function() {});
+        $.hideLoading();
+        return;
+      }else if(self.input_blh==''){
+        $.alert("请输入病历号", "提示", function() {});
+        $.hideLoading();
+        return;
       }
       this.getInPatientInfoByBlh();
     }
