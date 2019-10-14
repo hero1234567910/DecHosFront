@@ -68,7 +68,7 @@
  		<div class="ad-select">
 			<div class="weui-row" style="height: 60px;width: calc(100vw - 20px);margin-left: auto;margin-right: auto;">
 				<div class="weui-col-25">
-					<a href="javascript:;" class="weui-btn weui-btn_primary">0.1</a>
+					<a href="javascript:;" class="weui-btn weui-btn_primary">500</a>
 				</div>
 				<div class="weui-col-25">
 					<a href="javascript:;" class="weui-btn weui-btn_primary">1000</a>
