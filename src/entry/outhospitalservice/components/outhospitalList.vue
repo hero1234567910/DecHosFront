@@ -23,7 +23,7 @@
 	 					<img src="../../../../static/images/复诊.png" style="vertical-align: middle;width: 80%;"/>
 	 				</div>
 	 				<div class="hospital-title">
-	 						<p style="color: #000000;font-size: 17px;position: absolute;top: 23px;">复诊预约</p>
+	 						<p style="color: #000000;font-size: 17px;position: absolute;top: 23px;">复诊预约流程</p>
 	 						<img src="../../../../static/images/圆角矩形-3.png"  style="position: absolute;top: 56px;width: 51%;"/>
 	 				</div>
 	 				<div class="hospital-arrow">

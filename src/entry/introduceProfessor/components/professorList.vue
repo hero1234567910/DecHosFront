@@ -28,8 +28,8 @@
           <div class="weui-media-box__bd">
             <h4 class="weui-media-box__title" style="float: left;">{{item.zjxm}}</h4>
 
-            <h4 class="weui-media-box__title" style="clear: both;">职位: 主治医师</h4>
-            <h4 class="weui-media-box__title">挂号时间: {{item.mzsj==''?'未定':item.mzsj}}</h4>
+            <h4 class="weui-media-box__title" style="clear: both;">职称: 主治医师</h4>
+            <h4 class="weui-media-box__title">{{item.zw}}</h4>
           </div>
         </a>
       </div>
