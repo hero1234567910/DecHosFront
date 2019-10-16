@@ -56,7 +56,8 @@ export default {
 		selectClick(row) {
 			let cfxh = '';
 	    let arr = this.cfData;
-	    let ghxh = arr[0].Jzlsh;
+	    console.log(arr[0])
+	    let ghxh = arr[0].jzlsh;
 	    for (var i=0;i<arr.length;i++) {
 	     cfxh = cfxh+','+arr[i].cfxh;
 	    }

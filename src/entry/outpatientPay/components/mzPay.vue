@@ -143,19 +143,20 @@
   				lxdh:localStorage.getItem('sec_lxdh'),
   				zjhm:this.zjh
   			}
-			this.model.placeOrderByWN(data).then(function(res){
-        console.log(res.data.data)
-				if(res.data.code == 0){
-					if (process.env.NODE_ENV == 'dev') {
-						  window.location='../pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
-						} else if (process.env.NODE_ENV == 'production') {
-//						  window.location='../2ysechos/pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
-								window.location.href=res.data.data.msg.qrCode;
-						}
-				}else{
-					$.toptip(res.data.msg,'error');
-				}
-			})
+  			console.log(data)
+//			this.model.placeOrderByWN(data).then(function(res){
+//      console.log(res.data.data)
+//				if(res.data.code == 0){
+//					if (process.env.NODE_ENV == 'dev') {
+//						  window.location='../pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
+//						} else if (process.env.NODE_ENV == 'production') {
+////						  window.location='../2ysechos/pay.html?appId='+self.getAesString(res.data.data.appId)+'&timeStamp='+self.getAesString(res.data.data.timeStamp)+'&nonceStr='+self.getAesString(res.data.data.nonceStr)+'&pack='+self.getAesString(res.data.data.package)+'&paySign='+self.getAesString(res.data.data.paySign)+'&action=gh';
+//								window.location.href=res.data.data.msg.qrCode;
+//						}
+//				}else{
+//					$.toptip(res.data.msg,'error');
+//				}
+//			})
   		},
   		init(){
   			let self = this;

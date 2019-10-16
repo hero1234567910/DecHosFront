@@ -261,6 +261,7 @@
   			this.content3 = '已确认处方 '+ res.cfxh;
   			this.cfxh = res.cfxh;
   			this.ghxh = res.ghxh;
+  			console.log(this.ghxh)
 				this.cfShow = false;
   		},
   		seCall(res){
