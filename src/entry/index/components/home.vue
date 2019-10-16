@@ -141,20 +141,20 @@
 						<div class="hero-col-dec">住院须知</div>
 						</a>
 					</div>
-					<div class="weui-col-25">
+					<!-- <div class="weui-col-25">
 						<a href="javascript:;" v-on:click="toDepartment()">
 							<div class="hero-col-img">
 								<img src="../../../../static/images/全科.png" style="width: 100%;"/>
 							</div>
 							<div class="hero-col-dec" style="min-width: 70px;">科室简介</div>
 						</a>
-					</div>
+					</div> -->
 					<div class="weui-col-25">
 						<a href="javascript:;" v-on:click="toOneDay()">
 						<div class="hero-col-img">
 							<img src="../../../../static/images/复诊.png" style="width: 100%;"/>
 						</div>
-						<div class="hero-col-dec">住院一日清</div>
+						<div class="hero-col-dec" style="color:red;">住院一日清</div>
 						</a>
 					</div>
 				</div>

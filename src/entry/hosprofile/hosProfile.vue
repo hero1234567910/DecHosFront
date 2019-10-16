@@ -424,6 +424,7 @@ export default {
               '<img class="hos-img" src="'
             );
             self.content = _str;
+            //console.log(_str);
           } else {
             $.alert(res.data.msg);
           }
