@@ -136,7 +136,7 @@
 
   			let data = {
   				action:'gh',
-  				ghMoney:this.info.yfje,
+  				ghMoney:this.info.zje,
   				patientGuid:this.patientGuid,
   				patid:this.patid,
   				patientName:this.hzxm,
