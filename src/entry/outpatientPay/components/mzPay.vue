@@ -128,7 +128,7 @@
   			let da = this.$route.query;
   			let data = {
   				action:'mz',
-  				mzMoney:this.info.zje,
+  				mzMoney:this.info.yfje,
   				patientGuid:this.patientGuid,
   				patid:this.patid,
   				patientName:this.hzxm,
