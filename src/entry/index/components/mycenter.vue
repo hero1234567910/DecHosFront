@@ -12,7 +12,7 @@
             </div>
           </div>
           <div class="weui-msg__text-area" style="margin-top: 22px;">
-            <p class="weui-msg__desc" style="margin-left: 19%;color:#000000;margin-top: 13%;">
+            <p class="weui-msg__desc" style="margin-left: 24%;color:#000000;margin-top: 13%;">
               您还没有绑定身份证信息
             </p>
           </div>
