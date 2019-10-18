@@ -18,10 +18,10 @@
 		  	</div>
 		  	<div class="hero-list-item">
 		  		<div class="hero-list-item-left">
-		  			<p class="weui-media-box__desc" style="font-size: 17px;">总金额</p>
+		  			<p class="weui-media-box__desc" style="font-size: 17px;">应付金额</p>
 		  		</div>
 		  		<div class="hero-list-item-right">
-		  			<h4 class="weui-media-box__title">¥{{info.zje}}</h4>
+		  			<h4 class="weui-media-box__title">¥{{info.yfje}}</h4>
 		  		</div>
 		  	</div>
 		  </div>
@@ -52,10 +52,10 @@
 					  	</div>
 					  	<div class="hero-list-item">
 					  		<div class="hero-list-item-left">
-					  			<p class="weui-media-box__desc">应付金额</p>
+					  			<p class="weui-media-box__desc">总金额</p>
 					  		</div>
 					  		<div class="hero-list-item-right">
-					  			<h4 class="weui-media-box__title">¥{{info.yfje}}</h4>
+					  			<h4 class="weui-media-box__title">¥{{info.zje}}</h4>
 					  		</div>
 					  	</div>
 					  	<div class="hero-list-item">
