@@ -51,7 +51,7 @@
       </div>
       <div style="margin-top: 30px;margin-bottom: 30px;">
       <div>
-        <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回报告查询页面</a>
+        <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回主页</a>
       </div>
     </div>
     </div>
