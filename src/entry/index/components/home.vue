@@ -48,7 +48,7 @@
 									<div class="hero-col-img">
 										<img src="../../../../static/img/导诊台.png" style="width: 100%;"/>
 									</div>
-									<div class="hero-col-dec" style="min-width: 70px;">导诊台确认</div>
+									<div class="hero-col-dec" style="min-width: 70px;">导诊台信息</div>
 								</a>
 							</div>
 							<div class="weui-col-25">

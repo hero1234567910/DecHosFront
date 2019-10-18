@@ -13,7 +13,7 @@
           </div>
           <div class="weui-msg__text-area" style="margin-top: 22px;">
             <p class="weui-msg__desc" style="margin-left: 19%;color:#000000;margin-top: 13%;">
-              您还没有绑定或申请电子就诊卡
+              您还没有绑定身份证信息
             </p>
           </div>
           <a href="javascript:;" class="weui-btn weui-btn_plain-primary" v-on:click="toSwitch()">立即办理</a>
@@ -65,7 +65,7 @@
                   <h4
                     class="weui-media-box__title"
                     style="width: 50%;font-weight:400;margin-top:0px;font-size:10px;margin-bottom: 0px;text-align: center;color: cornflowerblue;text-decoration:underline"
-                  >切换/添加就诊人</h4>
+                  >切换就诊人</h4>
                 </div>
                 <div class="weui-media-box__hd1" style="display: none;">
                   <img
