@@ -24,12 +24,6 @@
         </el-badge>
         <p class="weui-grid__label">报修满意度评价</p>
       </a>
-      <a href="javascript:;" class="weui-grid js_grid" @click="toExamOnline()">
-        <div class="weui-grid__icon">
-          <img src="../../../../static/doctorImg/考试.png" alt />
-        </div>
-        <p class="weui-grid__label">在线考试</p>
-      </a>
       <a href="javascript:;" class="weui-grid js_grid" @click="toPersonCenter()">
         <div class="weui-grid__icon">
           <img src="../../../../static/doctorImg/个人中心 选中.png" alt />
@@ -225,9 +219,6 @@ export default {
           $.toptip(res.data.msg, "error");
         }
       });
-    },
-    toExamOnline(){
-      window.location='http://10.20.200.62:8081/Manager2/LoginNew.html';
     }
   }
 };
