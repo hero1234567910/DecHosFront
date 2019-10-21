@@ -65,7 +65,7 @@
                   <h4
                     class="weui-media-box__title"
                     style="width: 50%;font-weight:400;margin-top:0px;font-size:10px;margin-bottom: 0px;text-align: center;color: cornflowerblue;text-decoration:underline"
-                  >切换就诊人</h4>
+                  >点击切换就诊人</h4>
                 </div>
                 <div class="weui-media-box__hd1" style="display: none;">
                   <img
