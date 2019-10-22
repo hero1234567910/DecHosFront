@@ -106,6 +106,7 @@ export default {
       let self = this;
       localStorage.removeItem("sec_yb");
       let data = this.GetQueryString("code");
+      var code = this.GetQueryString("code");
       let to = localStorage.getItem("sec_acessToken");
       let re = localStorage.getItem("sec_refreshToken");
       if (
@@ -142,7 +143,8 @@ export default {
             let data = {
               refresh_token: self.getDAesString(
                 localStorage.getItem("sec_refreshToken")
-              )
+              ),
+              code:code
             };
             self.model.refreshToken(data).then(function(res) {
               if (res.data.code == 0) {
