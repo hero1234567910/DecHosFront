@@ -1,6 +1,6 @@
 <template>
   <div>
-    <swiper-ban></swiper-ban>
+    <swiperBan></swiperBan>
 
     <div class="weui-grids" style="margin-top: -2px;">
       <a href="javascript:;" class="weui-grid js_grid" @click="toInformation('rydy')">
@@ -56,7 +56,8 @@ export default {
       isShow: false,
       mzData: {},
       InfoData: {},
-      arr: []
+      arr: [],
+      
       //    	img: require('../../../../static/images/QUS{5J8J(UI9V82QY4Q$@N8.jpg'),
       //    	img1: require('../../../../static/images/7B0Q1Z]]1YFW1HOBBB{OFMQ.jpg'),
     };
@@ -65,11 +66,7 @@ export default {
     
   },
   mounted() {
-    // new Swiper(".swiper-container", {
-    //   delay: 2000,
-    //   autoplay: true,
-	//   loop:true
-    // });
+    
   },
   methods: {
     getAllInfo() {

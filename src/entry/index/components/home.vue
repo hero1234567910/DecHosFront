@@ -1,6 +1,6 @@
 <template>
   <div>
-    <swiper-ban></swiper-ban>
+    <swiperBan></swiperBan>
 
     <div class="hero-search" style="margin-top: -120px;">
       <div class="weui-search-bar" id="searchBar">
