@@ -198,7 +198,8 @@ export default {
             let data = {
               refresh_token: self.getDAesString(
                 localStorage.getItem("sec_refreshToken")
-              )
+              ),
+              code:code
             };
             self.model.refreshToken(data).then(function(res) {
               if (res.data.code == 0) {
