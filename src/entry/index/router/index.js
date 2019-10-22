@@ -6,6 +6,7 @@ import mycenter from '../components/mycenter.vue'
 import main from '../components/main.vue'
 import userFiling from '../components/userFiling.vue'
 import waitPatient from '../components/waitPatient.vue'
+import inhos from '../components/inhos.vue'
 
 Vue.use(Router);
 
@@ -31,5 +32,10 @@ export default new Router({
       name: 'waitPatient',
       component: waitPatient
     },
+    {
+      path:'/inhos',
+      name:'inhos',
+      component:inhos
+    }
   ]
 })

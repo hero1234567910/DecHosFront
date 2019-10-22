@@ -2,94 +2,38 @@
   <div>
     <swiper-ban></swiper-ban>
 
-    <div class="hero-search" style="margin-top: -120px;">
-      <div class="weui-search-bar" id="searchBar">
-        <form class="weui-search-bar__form" onkeydown="if(event.keyCode==13) return false;">
-          <div class="weui-search-bar__box">
-            <i class="weui-icon-search"></i>
-            <input
-              type="search"
-              class="weui-search-bar__input"
-              id="searchInput"
-              placeholder="搜索"
-              required
-              v-model="souInput"
-              @click="getAllInfo"
-            />
-            <a @click="clear()" class="weui-icon-clear" id="searchClear"></a>
-          </div>
-          <label class="weui-search-bar__label" id="searchText">
-            <i class="weui-icon-search"></i>
-            <span>查询科室名称，便捷挂号</span>
-          </label>
-        </form>
-        <a
-          @click="cancel()"
-          class="weui-search-bar__cancel-btn"
-          id="searchCancel"
-          style="
-    	  z-index: 20;"
-        >取消</a>
-      </div>
-
-      <div
-        class="content"
-        style="z-index: 100000000;position: absolute;background-color: white;width: 100%;"
-      >
-        <homeExtend
-          :seller="seller"
-          :souInput="souInput"
-          v-show="homeShow"
-          @tohomeShow="tohomeShow"
-        ></homeExtend>
-      </div>
-    </div>
-    <div class="weui-grids" style="margin-top: 73px;">
-      <a href="javascript:;" class="weui-grid js_grid" @click="toOutpatientAd()">
+    <div class="weui-grids" style="margin-top: -2px;">
+      <a href="javascript:;" class="weui-grid js_grid" @click="toInformation('rydy')">
         <div class="weui-grid__icon">
-          <img src="../../../../static/img/门诊预约.png" alt />
+          <img src="../../../../static/img/入院导引.png" alt />
         </div>
-        <p class="weui-grid__label">门诊预约</p>
+        <p class="weui-grid__label">入院导引</p>
       </a>
-      <a href="javascript:;" class="weui-grid js_grid" @click="toOutpatientPay()">
+      <a href="javascript:;" class="weui-grid js_grid" @click="toInformation('zyxz')">
         <div class="weui-grid__icon">
-          <img src="../../../../static/img/门诊收费.png" alt />
+          <img src="../../../../static/img/住院须知.png" alt />
         </div>
-        <p class="weui-grid__label">门诊缴费</p>
+        <p class="weui-grid__label">住院须知</p>
       </a>
-      <a href="javascript:;" class="weui-grid js_grid" @click="toconsultation()">
+      <a href="javascript:;" class="weui-grid js_grid" @click="toOneDay()">
         <div class="weui-grid__icon">
-          <img src="../../../../static/img/咨询图标.png" alt />
+          <img src="../../../../static/images/复诊.png" alt />
         </div>
-        <p class="weui-grid__label">门诊咨询</p>
+        <p class="weui-grid__label">住院一日清</p>
       </a>
-      <a href="javascript:;" class="weui-grid js_grid" @click="toInformation('jzxz')">
+      <a href="javascript:;" class="weui-grid js_grid" @click="toHospitalizationService()">
         <div class="weui-grid__icon">
-          <img src="../../../../static/img/图层-579.png" alt />
+          <img src="../../../../static/images/缴预交金.png" alt />
         </div>
-        <p class="weui-grid__label">就诊须知</p>
+        <p class="weui-grid__label">预交金服务</p>
       </a>
-      <a href="javascript:;" class="weui-grid js_grid" @click="toProfessor()">
+      <a href="javascript:;" class="weui-grid js_grid" @click="outHospitalService()">
         <div class="weui-grid__icon">
-          <img src="../../../../static/images/专家.png" alt />
+          <img src="../../../../static/images/出院 (1).png" alt />
         </div>
-        <p class="weui-grid__label">专家信息</p>
+        <p class="weui-grid__label">出院服务</p>
       </a>
-      <a href="javascript:;" class="weui-grid js_grid" @click="getMore">
-        <div class="weui-grid__icon">
-          <img src="../../../../static/img/通知.png" alt />
-        </div>
-        <p class="weui-grid__label">通知公告</p>
-      </a>
-      <a href="javascript:;" class="weui-grid js_grid" @click="toInformation('tjyy')">
-        <div class="weui-grid__icon">
-          <img src="../../../../static/images/体检.png" alt />
-        </div>
-        <p class="weui-grid__label">体检相关查询</p>
-      </a>
-      <el-dialog title="通告详情" :visible.sync="isShow">
-        <commonSelect v-bind:mzData="mzData" @handleCall="handleCall"></commonSelect>
-      </el-dialog>
+      
     </div>
   </div>
 </template>
@@ -102,7 +46,7 @@ import textScroll from "./textScroll.js";
 import evn from "../utils/evn.js";
 import swiperBan from './swiperBan.vue'
 export default {
-  components: { homeExtend, commonSelect ,swiperBan},
+  components: { homeExtend, commonSelect,swiperBan },
   data() {
     this.model = model(this.axios);
     return {
@@ -118,12 +62,9 @@ export default {
     };
   },
   created() {
-    this.getDepartmentOnDuty();
+    
   },
   mounted() {
-    this.getTGInfo();
-    //横向滚动
-    $("#s").textScroll();
     // new Swiper(".swiper-container", {
     //   delay: 2000,
     //   autoplay: true,
@@ -133,7 +74,7 @@ export default {
   methods: {
     getAllInfo() {
       this.seller = this.arr;
-      //console.log(this.seller);
+      console.log(this.seller);
     },
     getMore() {
       this.InfoData.content.replace(
@@ -166,7 +107,7 @@ export default {
       this.model.getDepartmentOnDuty(data).then(function(res) {
         $.hideLoading();
         if (res.data.code == "0") {
-          //console.log(res.data.data);
+          console.log(res.data.data);
           let arr = res.data.data;
           for (var i = 0; i < arr.length; i++) {
             var ch = arr[i].children;
@@ -215,47 +156,7 @@ export default {
           localStorage.setItem("sec_cardno", res.data.data.patientIdcard);
           localStorage.setItem("sec_lxdh", res.data.data.lxdh);
 
-          //  				if(res.data.data.patientName == null || res.data.data.patientName == ''){
-          //  					//说明没有绑定患者信息，去绑定
-          //  					$.alert("您并未绑定患者信息，请先绑定", "提示", function() {
-          //							 	$('#cen').addClass('.weui-bar__item--on');
-          //							});
-          //  				}
-          //  				if(res.data.data.patientStatus == 1){
-          //  					let arr = [];
-          //							let outArray = res.data.data.outpatients;
-          //							for(var i=0;i<outArray.length;i++){
-          //									let blh = outArray[i].medicalNumberMZ;
-          //									arr.push(parseInt(blh));
-          //							}
-          //							arr.sort().reverse();
-          //							let val = arr[0];
-          //							for(var i=0;i<outArray.length;i++){
-          //								if(val == outArray[i].medicalNumberMZ){
-          //									self.patientId = outArray[i].patidMZ;
-          //									localStorage.setItem('sec_patientIdmz',self.patientId);
-          //									localStorage.setItem('patientStatus',1);
-          //								}
-          //							}
-          //  				}
-          //
-          //  				if(res.data.data.patientStatus == 2){
-          //  					let arr = [];
-          //  						let hosArray = res.data.data.hospitalizedList;
-          //  						for(var i=0;i<hosArray.length;i++){
-          //									let blh = hosArray[i].medicalNumber;
-          //									arr.push(parseInt(blh));
-          //  						}
-          //  						arr.sort().reverse();
-          //  						let val = arr[0];
-          //  						for(var i=0;i<hosArray.length;i++){
-          //  							if(val == hosArray[i].medicalNumberMZ){
-          //  								self.patientId = hosArray[i].patid;
-          //									localStorage.setItem('sec_patientIdzy',self.patientId);
-          //									localStorage.setItem('patientStatus',2);
-          //  							}
-          //  						}
-          //  				}
+          
         } else {
           $.toptip(res.data.msg, "error");
         }
@@ -305,7 +206,7 @@ export default {
     },
     toInformation(str) {
       if (process.env.NODE_ENV == "dev") {
-        console.log(str);
+        //console.log(str);
         if (str == "jzxz") {
           window.location = "../../hosProfile.html?infoType=PatientNeedtoKnow";
         }
