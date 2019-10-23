@@ -32,7 +32,7 @@
 	 			</div>
 	 		</div>
  		</a>
- 		<!-- <a href="javascript:void(0)" v-on:click="toOrder()">
+ 		<a href="javascript:void(0)" v-on:click="toOrder()">
 	 		<div class="hospital-panel">
 	 			<div class="hospital-inner">
 	 				<div class="hospital-img">
@@ -47,7 +47,7 @@
 	 				</div>
 	 			</div>
 	 		</div>
- 		</a> -->
+ 		</a>
  		<div style="margin-top: 30px;">
 				<div>
 					<a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
