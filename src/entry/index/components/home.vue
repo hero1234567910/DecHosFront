@@ -85,7 +85,7 @@
         <div class="weui-grid__icon">
           <img src="../../../../static/images/体检.png" alt />
         </div>
-        <p class="weui-grid__label">体检相关查询</p>
+        <p class="weui-grid__label">体检报告查询</p>
       </a>
       <el-dialog title="通告详情" :visible.sync="isShow">
         <commonSelect v-bind:mzData="mzData" @handleCall="handleCall"></commonSelect>
