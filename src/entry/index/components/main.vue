@@ -31,7 +31,7 @@
           <div class="weui-tabbar__icon">
             <img src="../../../../static/img/医疗.png" alt />
           </div>
-          <p class="weui-tabbar__label">门诊服务</p>
+          <p class="weui-tabbar__label">门诊与体检服务</p>
         </a>
         <a href="#tab3" class="weui-tabbar__item" id="inh">
           <!--<span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>-->
