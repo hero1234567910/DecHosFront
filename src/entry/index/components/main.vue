@@ -168,7 +168,8 @@ export default {
         let data = {
           openid: localStorage.getItem("sec_openId"),
           access_token: this.getDAesString(to),
-          refresh_token: this.getDAesString(re)
+          refresh_token: this.getDAesString(re),
+          code:code
         };
         this.model.getUserByToken(data).then(function(res) {
           if (res.data.code == "0") {
