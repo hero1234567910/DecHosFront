@@ -165,12 +165,17 @@ export default {
           }
         });
       } else {
-        let data = {
+      	let data = {
           openid: localStorage.getItem("sec_openId"),
           access_token: this.getDAesString(to),
           refresh_token: this.getDAesString(re),
-          code:code
         };
+      	if(code == null || code == undefined || code == ''){
+      		
+      	}else{
+      		data.code = code
+      	}
+        
         this.model.getUserByToken(data).then(function(res) {
           if (res.data.code == "0") {
             localStorage.setItem("sec_openId", res.data.data.openid);
