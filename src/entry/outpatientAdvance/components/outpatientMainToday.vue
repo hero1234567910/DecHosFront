@@ -108,11 +108,21 @@ export default {
           self.outpatientList = res.data.data;
           //console.log(self.outpatientList);
         } else {
-        	if(res.data.msg == 'DRGH0003|没有查询到有效的排班数据'){
-        		$.toptip("现在不是挂号时间段", "error");
-        	}
+          if (res.data.msg == "没有查询到有效的排班数据") {
+            $.toptip("温馨提示，现在不是当天门诊挂号时间段", "error");
+            setTimeout(function() {
+              self.tomainList();
+            }, 2000);
+          }
         }
       });
+    },
+    tomainList() {
+      if (process.env.NODE_ENV == "dev") {
+        window.location = "../../index.html";
+      } else if (process.env.NODE_ENV == "production") {
+        window.location = "../../2ysechos/index.html";
+      }
     }
   }
 };

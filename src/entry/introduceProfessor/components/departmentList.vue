@@ -18,7 +18,7 @@
       <div class="weui-cells"  style="margin-top: 4.176471em;">
         <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="pfk()">
           <div class="weui-cell__hd">
-            <img src="../../../../static/images/皮肤科.png" />
+            <img src="../../../../static/images/皮肤科1.png" />
           </div>
           <div class="weui-cell__bd">
             <p>皮肤科</p>

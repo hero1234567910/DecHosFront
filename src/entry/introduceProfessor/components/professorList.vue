@@ -23,7 +23,7 @@
           v-on:click="dialogShow(item)"
         >
           <div class="weui-media-box__hd">
-            <img class="weui-media-box__thumb" src="../../../../static/img/400398144.png" />
+            <img class="weui-media-box__thumb" :src="item.imageurl" style="border-radius: 50%;"/>
           </div>
           <div class="weui-media-box__bd">
             <h4 class="weui-media-box__title" style="float: left;">{{item.zjxm}}</h4>
@@ -34,10 +34,10 @@
         </a>
       </div>
       <div style="margin-top: 10px;margin-bottom: 10px;">
-      <div>
-        <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回列表</a>
+        <div>
+          <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回列表</a>
+        </div>
       </div>
-    </div>
     </div>
 
     <el-dialog
@@ -58,8 +58,6 @@
       <p style="text-indent: 2em;">{{ysms}}</p>
       <span slot="footer" class="dialog-footer"></span>
     </el-dialog>
-
-    
   </div>
 </template>
 
@@ -78,7 +76,7 @@ import Yk from "../staticvalue/yk.vue";
 import Erk from "../staticvalue/erk.vue";
 import Sjwk from "../staticvalue/sjwk.vue";
 import Xxgnk from "../staticvalue/xxgnk.vue";
-import Xlzxk from '../staticvalue/xlzxk.vue';
+import Xlzxk from "../staticvalue/xlzxk.vue";
 export default {
   data() {
     return {
@@ -94,7 +92,6 @@ export default {
     this.showList();
   },
   methods: {
-
     tomainList() {
       if (process.env.NODE_ENV == "dev") {
         window.location = "../../introduceProfessor.html";
@@ -121,45 +118,87 @@ export default {
       self.ksmc = this.$route.query.ksmc;
       if (self.ksmc == "nfmk") {
         self.InfoList = Nfmk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "pfk") {
         self.InfoList = Pfk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "xhnk") {
         self.InfoList = Xhnk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "pwk") {
         self.InfoList = Pwk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "fck") {
         self.InfoList = Fck.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "gk") {
         self.InfoList = Gk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "xnk") {
         self.InfoList = Xnk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "hxnk") {
         self.InfoList = Hxnk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "erbhk") {
         self.InfoList = Erbhk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "yk") {
         self.InfoList = Yk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "erk") {
         self.InfoList = Erk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "sjwk") {
         self.InfoList = Sjwk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "xxgnk") {
         self.InfoList = Xxgnk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
       if (self.ksmc == "xlzxk") {
         self.InfoList = Xlzxk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
       }
     }
   }
@@ -271,7 +310,7 @@ export default {
 .weui-panel {
   margin-top: 10px;
 }
-.weui-panel:after{
+.weui-panel:after {
   position: fixed;
 }
 .weui-btn_primary {

@@ -180,9 +180,9 @@ export default {
             }
           }
         } else {
-          if (res.data.msg == "DRGH0003|没有查询到有效的排班数据") {
+          if (res.data.msg == "没有查询到有效的排班数据") {
           } else {
-            $.toptip(res.data.msg, "error");
+            // $.toptip(res.data.msg, "error");
           }
         }
       });
