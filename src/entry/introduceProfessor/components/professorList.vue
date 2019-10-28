@@ -28,7 +28,7 @@
           <div class="weui-media-box__bd">
             <h4 class="weui-media-box__title" style="float: left;">{{item.zjxm}}</h4>
 
-            <h4 class="weui-media-box__title" style="clear: both;">职称: 主治医师</h4>
+            <h4 class="weui-media-box__title" style="clear: both;">职称: {{item.zc}}</h4>
             <h4 class="weui-media-box__title">{{item.zw}}</h4>
           </div>
         </a>
@@ -78,6 +78,7 @@ import Yk from "../staticvalue/yk.vue";
 import Erk from "../staticvalue/erk.vue";
 import Sjwk from "../staticvalue/sjwk.vue";
 import Xxgnk from "../staticvalue/xxgnk.vue";
+import Xlzxk from '../staticvalue/xlzxk.vue';
 export default {
   data() {
     return {
@@ -156,6 +157,9 @@ export default {
       }
       if (self.ksmc == "xxgnk") {
         self.InfoList = Xxgnk.jsonnfmk;
+      }
+      if (self.ksmc == "xlzxk") {
+        self.InfoList = Xlzxk.jsonnfmk;
       }
     }
   }

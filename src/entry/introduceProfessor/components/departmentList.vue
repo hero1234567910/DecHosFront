@@ -146,6 +146,16 @@
           <div class="weui-cell__ft"></div>
         </a>
 
+        <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="xlzxk()">
+          <div class="weui-cell__hd">
+            <img src="../../../../static/images/心理.png" />
+          </div>
+          <div class="weui-cell__bd">
+            <p>心理咨询科</p>
+          </div>
+          <div class="weui-cell__ft"></div>
+        </a>
+
       <div style="margin-top: 10px;margin-bottom: 10px;">
       <div>
         <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回主页面</a>
@@ -212,6 +222,9 @@ export default {
       },
       xnk(){
         this.$router.push('/professorList?ksmc='+'xnk');
+      },
+      xlzxk(){
+         this.$router.push('/professorList?ksmc='+'xlzxk');
       }
 
   }
