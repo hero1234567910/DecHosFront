@@ -48,12 +48,12 @@
                     class="weui-media-box__title"
                     style="font-weight:600;margin-top:10px;width:50%"
                   >{{patientName}}</h4>
-                  <h4 class="weui-media-box__title"  style="font-size:15px;margin-top:4px">病历号: {{blh}}</h4>
+                  <h4 class="weui-media-box__title"  style="font-size:15px;margin-top:4px">门诊病历号:{{blh}}</h4>
                   <!-- <h4 class="weui-media-box__title" style="font-size:15px;margin-top:8px">{{sex}} / {{birth}}</h4> -->
                   <h4
                     class="weui-media-box__title"
                     style="font-size:15px;margin-top:8px"
-                  >证件号：{{patientIdCard}}</h4>
+                  >证件号:{{patientIdCard}}</h4>
                 </div>
                 <div class="weui-media-box__hd1">
                   <img class="weui-media-box__thumb1" src="../../../../static/images/医院-2.png" />
