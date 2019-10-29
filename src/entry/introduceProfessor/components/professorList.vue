@@ -46,6 +46,7 @@
       width="85%"
       :before-close="handleClose"
       :close-on-click-modal="false"
+      
     >
       <span style="font-size:18px;font-weight:600;">
         {{zjxm}}
@@ -107,11 +108,12 @@ export default {
       self.dialogVisible = true;
     },
     handleClose(done) {
-      this.$confirm("确认离开？")
-        .then(_ => {
-          done();
-        })
-        .catch(_ => {});
+      // this.$confirm("确认离开？")
+      //   .then(_ => {
+      //     done();
+      //   })
+      //   .catch(_ => {});
+      this.dialogVisible = false;
     },
     showList() {
       let self = this;

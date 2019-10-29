@@ -44,7 +44,7 @@
         ></homeExtend>
       </div>
     </div>
-    <div class="weui-grids" style="margin-top: 73px;">
+    <div class="weui-grids" style="margin-top: 74px;">
       <a href="javascript:;" class="weui-grid js_grid" @click="toOutpatientAd()">
         <div class="weui-grid__icon">
           <img src="../../../../static/img/门诊预约.png" alt />
@@ -57,12 +57,12 @@
         </div>
         <p class="weui-grid__label">门诊缴费</p>
       </a>
-      <a href="javascript:;" class="weui-grid js_grid" @click="toconsultation()">
+      <!-- <a href="javascript:;" class="weui-grid js_grid" @click="toconsultation()">
         <div class="weui-grid__icon">
           <img src="../../../../static/img/咨询图标.png" alt />
         </div>
         <p class="weui-grid__label">门诊咨询</p>
-      </a>
+      </a> -->
       <a href="javascript:;" class="weui-grid js_grid" @click="toInformation('jzxz')">
         <div class="weui-grid__icon">
           <img src="../../../../static/img/图层-579.png" alt />
