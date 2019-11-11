@@ -136,16 +136,6 @@
           <div class="weui-cell__ft"></div>
         </a>
 
-        <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="xxgnk()">
-          <div class="weui-cell__hd">
-            <img src="../../../../static/images/心血管.png" />
-          </div>
-          <div class="weui-cell__bd">
-            <p>心血管内科</p>
-          </div>
-          <div class="weui-cell__ft"></div>
-        </a>
-
         <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="xlzxk()">
           <div class="weui-cell__hd">
             <img src="../../../../static/images/心理.png" />
