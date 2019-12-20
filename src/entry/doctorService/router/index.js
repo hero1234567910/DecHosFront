@@ -8,6 +8,7 @@ import repairDetail from '../components/repairDetail.vue';
 import repairSatisfaction from '../components/repairSatisfaction.vue';
 import repairSatisfactionList from '../components/repairSatisfactionList.vue';
 import personCenter from '../components/personCenter.vue';
+import txl from '../components/txl.vue';
 
 Vue.use(Router);
 
@@ -59,6 +60,11 @@ export default new Router({
      path:'/personCenter',
      name:'personCenter',
      component:personCenter
+   },
+   {
+     path:'/txl',
+     name:'txl',
+     component:txl
    }
   ]
 });

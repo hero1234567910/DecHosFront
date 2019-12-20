@@ -30,6 +30,12 @@
         </div>
         <p class="weui-grid__label">个人中心</p>
       </a>
+      <a href="javascript:;" class="weui-grid js_grid" @click="toTX()">
+        <div class="weui-grid__icon">
+          <img src="../../../../static/img/通讯录.png" alt />
+        </div>
+        <p class="weui-grid__label">院内通讯录</p>
+      </a>
       <!-- <a href="javascript:;" class="weui-grid js_grid">
         <div class="weui-grid__icon">
           <img src="images/icon_nav_cell.png" alt />
@@ -203,6 +209,9 @@ export default {
     },
     toRepairSatisfaction() {
       this.$router.push("/repairSatisfactionList");
+    },
+    toTX(){
+    	this.$router.push("/txl")
     },
     toPersonCenter(){
       this.$router.push("/personCenter");
