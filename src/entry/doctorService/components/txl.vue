@@ -41,10 +41,9 @@
         <div class="weui-cell__bd">
           <div class="weui-cell">
             <div class="weui-cell__bd">
-              <p>{{item.userName}}</p>
+              <p>{{item.deptName}}</p>
             </div>
-            <div class="weui-cell__ft" v-if="item.duty == null || item.duty == ''"></div>
-            <div class="weui-cell__ft" v-if="item.duty != null">{{item.duty}}</div>
+            <div class="weui-cell__ft">{{item.userName}}</div>
           </div>
         </div>
         <div class="weui-cell__ft" v-show="item.mobile != null">
@@ -98,7 +97,6 @@ export default {
     Search(){
     	let self = this;
     	let searchVal = $('#searchInput').val();
-    	console.log('aaaa')
       self.getList(searchVal);
     }
   }
@@ -113,6 +111,8 @@ export default {
 	.weui-btn{
 		width: 100% !important;
 		margin-bottom: 5px !important;
+		padding-left: 5px !important;
+    padding-right: 5px !important;
 	}
 .weui-cells__title-wzl {
   background-color: whitesmoke;
