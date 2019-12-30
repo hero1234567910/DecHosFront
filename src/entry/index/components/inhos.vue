@@ -33,6 +33,12 @@
         </div>
         <p class="weui-grid__label">出院服务</p>
       </a>
+      <a href="javascript:;" class="weui-grid js_grid" @click="toOrder()">
+        <div class="weui-grid__icon">
+          <img src="../../../../static/img/食堂点餐.png" alt />
+        </div>
+        <p class="weui-grid__label">食堂点餐</p>
+      </a>
       
     </div>
   </div>
@@ -69,6 +75,9 @@ export default {
     
   },
   methods: {
+  	toOrder(){
+  			window.location='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx99b778c0c909880a&redirect_uri=http%3a%2f%2fey.nxjnjc.com%2fWXOrderSystem%2findex.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+  		},
     getAllInfo() {
       this.seller = this.arr;
       console.log(this.seller);

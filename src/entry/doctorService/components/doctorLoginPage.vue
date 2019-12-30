@@ -62,6 +62,15 @@ export default {
   },
   mounted() {},
   created() {
+  	let self = this
+  	if(localStorage.getItem('m_doctorLoginFlag') == 'true'){
+  		self.$message({
+        message: "登录成功",
+        type: "success"
+      });
+      self.$router.push("/doctorMenu");
+  	}
+  	
     this.getId();
   },
   methods: {
@@ -136,6 +145,7 @@ export default {
 		            "m_sex",
 		            res.data.data.sex
 		          );
+		          localStorage.setItem('m_doctorLoginFlag','true')
 		          self.$message({
 		            message: "登录成功",
 		            type: "success"

@@ -12,7 +12,7 @@ function model(http) {
   	},
     //用户登陆
     Login(data) {
-      return http.post(evn.SEC_HOSAPI + "/sys/login", data, {
+      return http.post(evn.SEC_HOSAPI + "/wx/sys/sechosrepair/login", data, {
         headers: {
           "Content-Type": "application/json;charset=utf-8"
         }

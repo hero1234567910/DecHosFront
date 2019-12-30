@@ -11,8 +11,16 @@ function model(http) {
       });
   	},
 	//用户登陆
+//  Login(data) {
+//    return http.post(evn.SEC_HOSAPI + "/sys/login", data, {
+//      headers: {
+//        "Content-Type": "application/json;charset=utf-8"
+//      }
+//    });
+//  },
+		//用户登陆
     Login(data) {
-      return http.post(evn.SEC_HOSAPI + "/sys/login", data, {
+      return http.post(evn.SEC_HOSAPI + "/wx/sys/sechosrepair/login", data, {
         headers: {
           "Content-Type": "application/json;charset=utf-8"
         }
@@ -107,6 +115,13 @@ function model(http) {
     },
     deleteMyPic(data){
       return http.post(evn.SEC_HOSAPI + "/wx/sys/frameAttach/delete", data, {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8"
+        }
+      });
+    },
+    getOaUserList(data){
+      return http.get(evn.SEC_HOSAPI + "/sys/user/getOAUser?"+data, {
         headers: {
           "Content-Type": "application/json;charset=utf-8"
         }
