@@ -332,6 +332,7 @@ export default {
       });
     },
     appointList() {
+      $.showLoading();
       let self = this;
       let hzxm = localStorage.getItem("sec_patientName");
       let patid = this.patid;
@@ -340,8 +341,10 @@ export default {
         hzxm: hzxm,
         patid: patid
       };
+
       this.model.getPatientAppointInfo(data).then(function(res) {
         if (res.data.code == "0") {
+          $.hideLoading();
           let appointList = res.data.data;
           self.AppointList = appointList;
           self.AppointList.reverse();
