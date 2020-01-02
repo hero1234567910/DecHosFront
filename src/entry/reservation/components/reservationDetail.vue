@@ -269,7 +269,8 @@ export default {
       self.ghrq = this.$route.query.ghrq;
       self.mzlx = this.$route.query.mzlx;
       self.zje = this.$route.query.zje;
-      if (this.$route.query.jzdz == undefined) {
+      self.jzdz = this.$route.query.jzdz;
+      if (self.jzdz == "undefined") {
         self.jzdz = "本院";
       } else {
         self.jzdz = this.$route.query.jzdz;
