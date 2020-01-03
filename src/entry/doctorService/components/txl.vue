@@ -26,7 +26,7 @@
 					      <span>搜索</span>
 					    </label>
 					  </form>
-					  <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="getList('')">取消</a>
+					  <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="getList('','1','30')">取消</a>
 					</div>
 	    	</div>
 	    	<div style="float: right;width: 20%;">
@@ -123,6 +123,9 @@ export default {
 			  					self.page++;
 			  					for(var i=0;i<res.data.data.length;i++){
 			  						self.users.push(res.data.data[i])
+			  						self.$nextTick(function(){
+											$('.weui-cell_swiped').swipeout()
+										})
 			  					}
 			  				}else{
 			  					$.toptip(res.data.msg, 'error');
@@ -133,7 +136,7 @@ export default {
 				});
   		},
   	isshow(){
-				if(this.users.length >= 11){
+				if(this.users.length >= 30){
 					return true;
 				}else{
 					return false;
@@ -161,7 +164,7 @@ export default {
     Search(){
     	let self = this;
     	let searchVal = $('#searchInput').val();
-      self.getList(searchVal,'1','11');
+      self.getList(searchVal,'1','30');
     }
   }
 };
