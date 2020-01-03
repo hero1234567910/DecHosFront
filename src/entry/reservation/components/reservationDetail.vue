@@ -7,7 +7,7 @@
             <img src="../../../../static/img/400398144.png" style="width: 100%;" />
           </div>
           <div class="hero-panel-title">
-            <strong>{{ksmc}}</strong>
+            <strong>{{ ksmc }}</strong>
           </div>
         </div>
         <div class="weui-panel__bd">
@@ -16,7 +16,7 @@
               <p class="weui-media-box__desc">就诊科室</p>
             </div>
             <div class="hero-list-item-right">
-              <h4 class="weui-media-box__title">{{ksmc}}</h4>
+              <h4 class="weui-media-box__title">{{ ksmc }}</h4>
             </div>
           </div>
           <div class="hero-list-item">
@@ -24,7 +24,7 @@
               <p class="weui-media-box__desc">就诊时间</p>
             </div>
             <div class="hero-list-item-right">
-              <h4 class="weui-media-box__title">{{ghrq |dateForm}}</h4>
+              <h4 class="weui-media-box__title">{{ ghrq | dateForm }}</h4>
             </div>
           </div>
           <div class="hero-list-item">
@@ -32,7 +32,7 @@
               <p class="weui-media-box__desc">门诊类型</p>
             </div>
             <div class="hero-list-item-right">
-              <h4 class="weui-media-box__title">{{mzlx}}</h4>
+              <h4 class="weui-media-box__title">{{ mzlx }}</h4>
             </div>
           </div>
           <div class="hero-list-item">
@@ -40,7 +40,7 @@
               <p class="weui-media-box__desc">支付状态</p>
             </div>
             <div class="hero-list-item-right">
-              <h4 class="weui-media-box__title">{{zfzt==1?'已支付':'未支付'}}</h4>
+              <h4 class="weui-media-box__title">{{ zfzt == 1 ? "已支付" : "未支付" }}</h4>
             </div>
           </div>
           <div class="hero-list-item" style="position: relative;">
@@ -48,7 +48,7 @@
               <p class="weui-media-box__desc">挂号费用</p>
             </div>
             <div class="hero-list-item-right">
-              <h4 class="weui-media-box__title">{{zje}} 元</h4>
+              <h4 class="weui-media-box__title">{{ zje }} 元</h4>
             </div>
           </div>
 
@@ -59,7 +59,7 @@
                   <p class="weui-media-box__desc">就诊地址</p>
                 </div>
                 <div class="hero-list-item-right">
-                  <h4 class="weui-media-box__title">{{jzdz}}</h4>
+                  <h4 class="weui-media-box__title">{{ jzdz }}</h4>
                 </div>
               </div>
               <div class="hero-list-item">
@@ -67,7 +67,7 @@
                   <p class="weui-media-box__desc">预约来源</p>
                 </div>
                 <div class="hero-list-item-right">
-                  <h4 class="weui-media-box__title">{{memo}}</h4>
+                  <h4 class="weui-media-box__title">{{ memo }}</h4>
                 </div>
               </div>
               <div class="hero-list-item">
@@ -75,7 +75,7 @@
                   <p class="weui-media-box__desc">预约状态</p>
                 </div>
                 <div class="hero-list-item-right">
-                  <h4 class="weui-media-box__title">{{statusCheck(yyzt)}}</h4>
+                  <h4 class="weui-media-box__title">{{ statusCheck(yyzt) }}</h4>
                 </div>
               </div>
               <div class="hero-list-item">
@@ -83,7 +83,7 @@
                   <p class="weui-media-box__desc">预约号序</p>
                 </div>
                 <div class="hero-list-item-right">
-                  <h4 class="weui-media-box__title">{{yyhx}} 号</h4>
+                  <h4 class="weui-media-box__title">{{ yyhx }} 号</h4>
                 </div>
               </div>
             </el-collapse-item>
@@ -95,7 +95,7 @@
         <div class="weui-panel__bd">
           <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
             <div class="weui-media-box__bd">
-              <p class="weui-media-box__desc" style="color: red;">{{yysd}}</p>
+              <p class="weui-media-box__desc" style="color: red;">{{ yysd }}</p>
             </div>
           </a>
         </div>
@@ -183,17 +183,19 @@
 
         <div class="weui-row">
           <div class="weui-col-50">
-            <a v-show="zfzt != 1"
+            <a
+              v-show="zfzt != 1"
               href="javascript:;"
               class="weui-btn weui-btn_primary hero-button"
-              @click="cancelAppoint(yyxh,yyzt,patid)"
+              @click="cancelAppoint(yyxh, yyzt, patid)"
             >取消挂号预约</a>
           </div>
           <div class="weui-col-50">
             <!--<div class="hero-button-left">
 	  			
             </div>-->
-            <a v-show="buttonShow"
+            <a
+              v-show="buttonShow"
               href="javascript:;"
               class="weui-btn weui-btn_primary hero-button"
               @click="returnList()"
@@ -213,7 +215,7 @@ export default {
   data() {
     this.model = model(this.axios);
     return {
-      buttonShow:true,
+      buttonShow: true,
       activeNames: [],
       ReDetails: [],
       ksmc: "",
@@ -231,8 +233,8 @@ export default {
       lxdh: "",
       yyhx: "",
       zfzt: "",
-      patid:"",
-      pbxh:""
+      patid: "",
+      pbxh: ""
     };
   },
   //props:['patid'],
@@ -247,15 +249,15 @@ export default {
   },
   methods: {
     handleChange(val) {},
-    buttonInit(){
+    buttonInit() {
       let self = this;
-      if(localStorage.getItem('sec_yb')=='true'){
+      if (localStorage.getItem("sec_yb") == "true") {
         self.buttonShow = false;
-      }else if(self.zfzt == 1){
+      } else if (self.zfzt == 1) {
         self.buttonShow = false;
-      }else if(self.yyzt == 2||self.yyzt == 3){
+      } else if (self.yyzt == 2 || self.yyzt == 3) {
         self.buttonShow = false;
-      }else{
+      } else {
         self.buttonShow = true;
       }
     },
@@ -268,6 +270,11 @@ export default {
       self.mzlx = this.$route.query.mzlx;
       self.zje = this.$route.query.zje;
       self.jzdz = this.$route.query.jzdz;
+      if (self.jzdz == "undefined") {
+        self.jzdz = "本院";
+      } else {
+        self.jzdz = this.$route.query.jzdz;
+      }
       self.memo = this.$route.query.memo;
       self.yyzt = this.$route.query.yyzt;
       self.yyxh = this.$route.query.yyxh;
@@ -280,7 +287,7 @@ export default {
       self.patid = this.$route.query.patid;
       self.pbxh = this.$route.query.pbxh;
       self.zfzt = this.$route.query.zfzt;
-      console.log(self.zfzt)
+      //console.log(self.zfzt);
       //console.log(data);
     },
     statusCheck(ele) {
@@ -304,22 +311,30 @@ export default {
     },
     returnList() {
       if (process.env.NODE_ENV == "dev") {
-        window.location = "../../outpatientPay.html#/ghPay?pbxh="+this.pbxh+"&patid="+this.patid;
+        window.location =
+          "../../outpatientPay.html#/ghPay?pbxh=" +
+          this.pbxh +
+          "&patid=" +
+          this.patid;
       } else if (process.env.NODE_ENV == "production") {
-        window.location = "../../2ysechos/outpatientPay.html#/ghPay?pbxh="+this.pbxh+"&patid="+this.patid;
+        window.location =
+          "../../2ysechos/outpatientPay.html#/ghPay?pbxh=" +
+          this.pbxh +
+          "&patid=" +
+          this.patid;
       }
     },
-    cancelAppoint(yyxh,yyzt,patid) {
+    cancelAppoint(yyxh, yyzt, patid) {
       //console.log(yyxh+" "+yyzt)
       let self = this;
-      if (yyzt == "2"||yyzt=="3"||yyzt=="8") {
+      if (yyzt == "2" || yyzt == "3" || yyzt == "8") {
         $.alert("预约已取消", "温馨提示");
       } else {
         $.confirm(
           "您确定要取消吗？",
           "提示",
           function() {
-            self.sub(yyxh,patid);
+            self.sub(yyxh, patid);
           },
           function() {
             return;
@@ -327,16 +342,16 @@ export default {
         );
       }
     },
-    sub(yyxh,patid){
-        let self = this;
-        let hzxm = localStorage.getItem("sec_patientName");
-        let data = {
-            yyxh:yyxh,
-            patid:patid
-        };
-        this.model.cancelSubmit(data).then(function(res){
-            if(res.data.code == '0'){
-            $.modal({
+    sub(yyxh, patid) {
+      let self = this;
+      let hzxm = localStorage.getItem("sec_patientName");
+      let data = {
+        yyxh: yyxh,
+        patid: patid
+      };
+      this.model.cancelSubmit(data).then(function(res) {
+        if (res.data.code == "0") {
+          $.modal({
             title: "提示",
             text: "取消成功",
             buttons: [
@@ -355,7 +370,7 @@ export default {
         } else {
           $.toptip(res.data.msg, "error");
         }
-        });
+      });
     }
   }
 };
