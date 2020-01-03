@@ -1,5 +1,5 @@
 <template>
-  <div style="overflow: auto;height:100%;overflow-x: hidden;background-color: #ecf5ff;">
+  <div style="overflow: auto;height:100%;overflow-x: hidden;background-color: #ecf5ff;" id="th">
   	<el-card class="box-card">
 	    <div slot="header" class="clearfix">
 	      <div class="card-hero">
@@ -18,7 +18,7 @@
 					  <form class="weui-search-bar__form">
 					    <div class="weui-search-bar__box">
 					      <i class="weui-icon-search"></i>
-					      <input type="search" class="weui-search-bar__input" id="searchInput" @keyup.enter="Search()" placeholder="搜索姓名">
+					      <input type="search" v-model="search" class="weui-search-bar__input" id="searchInput" @keyup.enter="Search()" placeholder="搜索姓名">
 					      <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
 					    </div>
 					    <label class="weui-search-bar__label" id="searchText">
@@ -56,7 +56,14 @@
         </div>
       </div>
       
+      <div v-if="isshow()" class="weui-loadmore" id="onloading">
+			  <i class="weui-loading"></i>
+			  <span class="weui-loadmore__tips">正在加载</span>
+			</div>
+      
 		</div>
+		
+		
   </div>
 </template>
 
@@ -66,20 +73,77 @@ export default {
   data() {
     this.model = model(this.axios);
     return {
-     users:[]
+     users:[],
+     search:'',
+     loading:false,
+  	 page:2
     };
   },
   created(){
   },
   mounted() {
-  	this.getList('')
+  	this.getList('','1','30'),
+  	this.init()
   },
   methods: {
-    getList(searchaVal){
+  	init(){
+  			let self = this;
+  			var loading = false;  //状态标记
+				$('#th').infinite();
+  			$('#th').on("infinite", function() {
+				 	 if(loading) return;
+					  loading = true;
+					  setTimeout(function() {
+					  	var params = new URLSearchParams();
+							params.append('page', self.page);
+								params.append('limit', '30');
+								params.append('userName',self.search);
+					  	
+//					  	if(self.search != ''){
+//					  		
+//					  		params.append('page', self.page);
+//								params.append('limit', '20');
+//								params.append('userName',self.search);
+//					  		
+//					  	}else{
+//					  		
+//					  		params.append('page', self.page);
+//								params.append('limit', '20');
+//								params.append('userName','');
+//					  	}
+					  	console.log(self.page)
+					  	self.model.getOaUserList(params).then(function(res){
+			  				if(res.data.code == '0'){
+			  					if(res.data.data.length == 0){
+			  						$('#th').destroyInfinite();
+			  						$('#onloading').css('display','none');
+			  						self.page = 2;
+			  					}
+			  					
+			  					self.page++;
+			  					for(var i=0;i<res.data.data.length;i++){
+			  						self.users.push(res.data.data[i])
+			  					}
+			  				}else{
+			  					$.toptip(res.data.msg, 'error');
+			  				}
+			  			})
+					    loading = false;
+					  }, 1500);   //模拟延迟
+				});
+  		},
+  	isshow(){
+				if(this.users.length >= 11){
+					return true;
+				}else{
+					return false;
+				}
+  		},
+    getList(searchaVal,page,limit){
     	let self = this;
     	var params = new URLSearchParams();
 			params.append('page', '1');
-			params.append('limit', '100');
+			params.append('limit', limit);
 			params.append('userName',searchaVal);
 			$.showLoading();
     	this.model.getOaUserList(params).then(function(res){
@@ -97,7 +161,7 @@ export default {
     Search(){
     	let self = this;
     	let searchVal = $('#searchInput').val();
-      self.getList(searchVal);
+      self.getList(searchVal,'1','11');
     }
   }
 };
