@@ -160,13 +160,16 @@ export default {
       });
     },
     getDepartmentOnDuty() {
+    	let self = this;
+    	if(sessionStorage.getItem('hero-dtmz') != null && sessionStorage.getItem('hero-dtmz')!= ''){
+    		this.arr = JSON.format(sessionStorage.getItem('hero-dtmz'))
+    	}
+    	
       $.showLoading();
-      let self = this;
       let data = {};
       this.model.getDepartmentOnDuty(data).then(function(res) {
         $.hideLoading();
         if (res.data.code == "0") {
-          //console.log(res.data.data);
           let arr = res.data.data;
           for (var i = 0; i < arr.length; i++) {
             var ch = arr[i].children;
@@ -179,6 +182,7 @@ export default {
               }
             }
           }
+          sessionStorage.setItem('hero-dtmz',JSON.stringify(self.arr))
         } else {
           if (res.data.msg == "没有查询到有效的排班数据") {
           } else {
