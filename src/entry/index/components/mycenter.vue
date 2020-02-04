@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="height: 100%;">
     <div class="hero-banner">
       <img src="../../../../static/images/bj1.png" class="hero-img" width="100%" />
     </div>
@@ -115,7 +115,25 @@
           </div>
         </div>
       </a>
-      <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
+      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;" ></div>
+
+      <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);" v-if="showFlag">
+        <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
+          <div class="weui-cells-wzl">
+            <a class="weui-cell weui-cell_access-wzl" href="javascript:;" v-on:click="patientManage()">
+              <div class="weui-cell__hd">
+                <img src="../../../../static/img/就诊人管理.png" />
+              </div>
+              <div class="weui-cell__bd">
+                <p style="margin-bottom: -10px;">就诊人管理</p>
+                <img style="width:45%" src="../../../../static/images/圆角矩形-2.png" />
+              </div>
+              <div class="weui-cell__ft"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;" v-if="showFlag"></div>
 
       <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
         <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
@@ -133,7 +151,7 @@
           </div>
         </div>
       </div>
-      <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
+      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;"></div>
 
       <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
         <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
@@ -155,7 +173,7 @@
           </div>
         </div>
       </div>
-      <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
+      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;"></div>
 
       <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
         <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
@@ -173,7 +191,7 @@
           </div>
         </div>
       </div>
-      <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
+      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;"></div>
 
       <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
         <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
@@ -191,7 +209,7 @@
           </div>
         </div>
       </div>
-      <div style="height: 4px;width: 100%;margin-top: 10px;background-color: #eff7fd;"></div>
+      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;"></div>
     </div>
   </div>
 </template>
@@ -212,7 +230,8 @@ export default {
       patientIdCard: "",
       zjh: "",
       hzxm: "",
-      blh: ""
+      blh: "",
+      showFlag:localStorage.getItem('sec_patientIdcard')!=null
     };
   },
   props: ["patientName"],
@@ -236,6 +255,7 @@ export default {
   },
   mounted() {
     //  	this.checkShow();
+    console.log(this.showFlag);
     
   },
   updated(){
@@ -338,6 +358,13 @@ export default {
         window.location = "../../outPaymentRecords.html";
       } else if (process.env.NODE_ENV == "production") {
         window.location = "../../2ysechos/outPaymentRecords.html";
+      }
+    },
+    patientManage(){
+      if (process.env.NODE_ENV == "dev") {
+        window.location = "../../patientManage.html";
+      } else if (process.env.NODE_ENV == "production") {
+        window.location = "../../2ysechos/patientManage.html";
       }
     },
     getblh() {
@@ -520,5 +547,9 @@ a.weui-media-box {
   color: #05c8f3;
   border: 1px solid #05c8f3;
   font-size: small;
+}
+.weui-cell{
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 </style>
