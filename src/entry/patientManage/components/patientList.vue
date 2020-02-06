@@ -17,17 +17,17 @@
         <el-card class="box-card2" shadow="always" body-style="{height:'20px'}">
           <div slot="header" class="clearfix">
             <span style="font-size:24px;">{{item.patientName}}</span>
-            <el-tag v-if="item.age >= 18" style="font-size: 16px;">成人</el-tag>
+            <el-tag v-if="item.age >= 18" style="font-size: 20px;">成人</el-tag>
             <el-tag type="success" v-if="item.age < 18" style="font-size: 16px;">儿童</el-tag>
-            <el-button style="float: right;" type="success" v-if="item.patientName==hzxm">已选中</el-button>
+            <el-button style="float: right;" type="success" v-if="item.IDCard==zjh">已选中</el-button>
             <el-button
               style="float: right;"
               type="primary"
-              v-if="item.patientName!=hzxm"
+              v-if="item.IDCard!=zjh"
               v-on:click="patientSwitch(item)"
             >可选</el-button>
           </div>
-          <div style="float:right;margin-top: 5px;  margin-bottom: 5px; margin-right: 5%;">
+          <div style="float:right;margin-top: 5px;  margin-bottom: 5px; margin-right: 6%;">
             <el-button type="info" plain v-on:click="patientDetail(item)">详情</el-button>
           </div>
         </el-card>
@@ -61,7 +61,7 @@
       <div
         style="position: fixed;
                   margin-bottom: 20px;
-                  margin-left: 23%;
+                  margin-left: 18%;
                   bottom: 0;"
       >
         <div>
@@ -103,11 +103,13 @@ export default {
     };
   },
   created() {
-    this.pageInit();
+    
     // let patientList2 = this.patientList;
     // localStorage.setItem("patientList", JSON.stringify(patientList2));
   },
-  mounted() {},
+  mounted() {
+    this.pageInit();
+  },
   methods: {
     pageInit() {
       let self = this;
@@ -119,6 +121,7 @@ export default {
           { patientName: self.hzxm, age: age, sex: sex, IDCard: self.zjh }
         ];
         localStorage.setItem("patientList", JSON.stringify(patientList));
+        self.patientList2 = patientList
       } else {
         self.patientList2 = JSON.parse(localStorage.getItem("patientList"));
       }
@@ -190,6 +193,7 @@ export default {
           }
           localStorage.setItem("sec_sex", flag);
           self.hzxm = item.patientName;
+          self.zjh = item.IDCard
           //localStorage.setItem()
           self.$forceUpdate();
           self.loading = false;

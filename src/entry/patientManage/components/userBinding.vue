@@ -201,6 +201,7 @@ export default {
         $.toptip(a, "error");
         return;
       }
+      
       let openid = localStorage.getItem("sec_openId");
       let data = {
         hzxm: hzxm,

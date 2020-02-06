@@ -255,7 +255,8 @@ export default {
   },
   mounted() {
     //  	this.checkShow();
-    console.log(this.showFlag);
+    // console.log(this.showFlag);
+    // console.log(localStorage.getItem("sec_patientIdcard"));
     
   },
   updated(){
