@@ -70,6 +70,14 @@ function model(http) {
 	    		}
 			})
 		},
+		//对接纳里健康
+		toAsk(data){
+			return http.post(evn.SEC_HOSAPI+'/sys/patient/toAsk',data,{
+				headers:{
+	    			contentType:'application/json;charset=utf-8'
+	    		}
+			})
+		},
   }
 
 }

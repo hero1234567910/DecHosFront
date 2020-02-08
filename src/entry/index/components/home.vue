@@ -45,6 +45,12 @@
       </div>
     </div>
     <div class="weui-grids" style="margin-top: 74px;">
+    	<a href="javascript:;" class="weui-grid js_grid" @click="toAsk()">
+        <div class="weui-grid__icon">
+          <img src="../../../../static/images/体检.png" alt />
+        </div>
+        <p class="weui-grid__label">发热门诊在线咨询</p>
+      </a>
       <a href="javascript:;" class="weui-grid js_grid" @click="toOutpatientAd()">
         <div class="weui-grid__icon">
           <img src="../../../../static/img/门诊预约.png" alt />
@@ -131,6 +137,28 @@ export default {
     // });
   },
   methods: {
+  	toAsk(){
+  		let self = this
+//		let cs = localStorage.getItem("sec_patientName");
+      let patientIdCard = localStorage.getItem("sec_patientIdcard");
+      if(patientIdCard == null || patientIdCard == ''){
+      	$.toptip("清先绑定患者信息", "error");
+      	return;
+      }
+      let patienGuid = localStorage.getItem("sec_patientGuid");
+      let data = {
+      	'patienGuid':patienGuid
+      }
+      this.model.toAsk(data).then(function(res){
+      	if(res.data.code == 0){
+      		let url = res.data.data;
+      		console.log(url);
+      	}else{
+      		$.toptip(res.data.msg, "error");
+      	}
+      })
+      
+  	},
     getAllInfo() {
       this.seller = this.arr;
       //console.log(this.seller);
