@@ -240,9 +240,9 @@ export default {
               }
 
               if (process.env.NODE_ENV == "dev") {
-                window.location = "../../patientList.html";
+                window.location = "../../patientManage.html";
               } else if (process.env.NODE_ENV == "production") {
-                window.location = "../../2ysechos/patientList.html";
+                window.location = "../../2ysechos/patientManage.html";
               }
             });
           });
