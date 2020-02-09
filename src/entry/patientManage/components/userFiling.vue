@@ -92,6 +92,7 @@
         >
           <div class="weui-cell__bd">
             <input
+              v-model="lxdh"
               id="lxdh"
               class="weui-input-wzl"
               style="border-bottom-color:#d5ebf9"
@@ -134,7 +135,9 @@ export default {
   name: "patientAdd.vue",
   data() {
     this.model = model(this.axios);
-    return {};
+    return {
+      lxdh: ""
+    };
   },
   mounted() {
     this.initY();
@@ -160,7 +163,9 @@ export default {
       var openid = localStorage.getItem("sec_openId");
       console.log(this.$route.query);
       console.log(hzxm + "  " + zjh);
-
+      if (this.phoneCheck(self.lxdh)) {
+        return;
+      }
       if (
         this.panNull(hzxm, "患者姓名不能为空") ||
         this.panNull(zjh, "证件号不能为空") ||
@@ -176,8 +181,8 @@ export default {
         hzxm: hzxm,
         sex: sex,
         birth: birth,
-        lxdh: lxdh,
-        lxdz: lxdz,
+        lxdh: lxdh.trim(),
+        lxdz: lxdz.trim(),
         zjh: zjh,
         openid: openid
       };
@@ -201,6 +206,18 @@ export default {
         return true;
       } else {
         return false;
+      }
+    },
+    phoneCheck(ele) {
+      var re = /^1[3|4|5|7|8][0-9]{9}$/;
+      let str = ele;
+      if (re.test(str)) {
+        console.log(true, ele);
+        return false;
+      } else {
+        console.log(false, ele);
+        $.alert("抱歉手机号不合法", "警告");
+        return true;
       }
     },
     //获取url中的参数(获取锚点的url)
