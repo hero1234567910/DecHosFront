@@ -47,7 +47,7 @@
     <div class="weui-grids" style="margin-top: 74px;">
     	<a href="javascript:;" class="weui-grid js_grid" @click="toAsk()">
         <div class="weui-grid__icon">
-          <img src="../../../../static/images/体检.png" alt />
+          <img src="../../../../static/img/咨询图标.png" alt />
         </div>
         <p class="weui-grid__label">发热门诊在线咨询</p>
       </a>
@@ -139,10 +139,12 @@ export default {
   methods: {
   	toAsk(){
   		let self = this
-//		let cs = localStorage.getItem("sec_patientName");
       let patientIdCard = localStorage.getItem("sec_patientIdcard");
-      if(patientIdCard == null || patientIdCard == ''){
-      	$.toptip("清先绑定患者信息", "error");
+      console.log(patientIdCard)
+      if(patientIdCard == null || patientIdCard == '' || patientIdCard == undefined){
+      	$.alert("您并未绑定患者信息，请先绑定", "提示", function() {
+        		self.$router.push('/userBinding')
+        });
       	return;
       }
       let patienGuid = localStorage.getItem("sec_patientGuid");
@@ -151,10 +153,16 @@ export default {
       }
       this.model.toAsk(data).then(function(res){
       	if(res.data.code == 0){
-      		let url = res.data.data;
-      		console.log(url);
+      		let resdata = res.data.data;
+      		location.href = resdata.wxUrl;
       	}else{
-      		$.toptip(res.data.msg, "error");
+      		if(res.data.data == 'zwbd'){
+      			$.alert("您并未绑定患者信息，请先绑定", "提示", function() {
+            		self.$router.push('/userBinding')
+            });
+      		}else{
+      			$.toptip(res.data.msg, "error");
+      		}
       	}
       })
       
