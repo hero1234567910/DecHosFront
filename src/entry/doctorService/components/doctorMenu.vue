@@ -36,25 +36,32 @@
         </div>
         <p class="weui-grid__label">院内通讯录</p>
       </a>
-      <!-- <a href="javascript:;" class="weui-grid js_grid">
+      <a href="javascript:;" class="weui-grid js_grid" @click="showImg()">
         <div class="weui-grid__icon">
           <img src="images/icon_nav_cell.png" alt />
         </div>
-        <p class="weui-grid__label">List</p>
-      </a> -->
+        <p class="weui-grid__label">我的推广</p>
+      </a>
     </div>
+    
+    <el-dialog title="二维码详情" :visible.sync="isShow" width="240px" :before-close="handleClose">
+        <div id="qrCode" ref="qrCodeDiv"></div>
+     </el-dialog>
+    
   </div>
 </template>
 
 <script>
 import model from "./model.js";
 import CryptoJS from "crypto-js";
+import QRCode from 'qrcodejs2';
 export default {
   data() {
     this.model = model(this.axios);
     return {
       docName: "",
-      satCounts: ""
+      satCounts: "",
+      isShow:false
     };
   },
   mounted() {
@@ -64,6 +71,31 @@ export default {
     //this.getDocInfo();
   },
   methods: {
+  	//展示二维码
+  	showImg(){
+  		this.isShow = true;
+  		this.$nextTick(function(){
+  			let rg = sessionStorage.getItem('m_user_rowGuid');
+  			let un = sessionStorage.getItem('m_user_userName');
+  			let loginId = sessionStorage.getItem('m_loginId');
+  			
+  			console.log(loginId)
+  			
+  			new QRCode(this.$refs.qrCodeDiv, {
+          text: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx24cc308d188d08e2&redirect_uri=https%3a%2f%2fp.zjgwsjk.com%2f2ysechos%2findex.html?rg='+rg+'&un='+un+'&loginId='+loginId+'%23%2f&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect',
+          width: 200,
+          height: 200,
+          colorDark: "#333333", //二维码颜色
+          colorLight: "#ffffff", //二维码背景色
+          correctLevel: QRCode.CorrectLevel.L//容错率，L/M/H
+        })
+  		})
+  	},
+  	handleClose(done){
+  		$('#qrCode').html('');
+  		done();
+  	},
+  	
     getAesString(word, keyStr) {
       // 加密
       keyStr = keyStr ? keyStr : "expsofthero12345";

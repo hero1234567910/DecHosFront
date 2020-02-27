@@ -124,6 +124,17 @@ export default {
     };
   },
   created() {
+  	//获取rg参数,增加推广次数
+  	let rowGuid = this.GetQueryString('rg');
+  	let userName = this.GetQueryString('un');
+  	let loginId = this.GetQueryString('loginId');
+  	if(rowGuid){
+  		console.log(rowGuid+"   >>>>>>>>>>>>>")
+  		this.addUserCount(rowGuid,userName,loginId);	
+  	}
+  	
+  	
+  	
     this.getDepartmentOnDuty();
   },
   mounted() {
@@ -137,6 +148,23 @@ export default {
     // });
   },
   methods: {
+  	addUserCount(rowGuid,userName,loginId){
+  		let data = {
+  			'promotersGuid':rowGuid,
+  			'promoters':userName,
+  			'popuPersonGuid':localStorage.getItem('sec_patientGuid'),
+  			'loginId':loginId
+  		}
+  		
+  		
+  		this.model.addUserCount(data).then(function(res){
+      	if(res.data.code == 0){
+      		
+      	}else{
+      		$.toptip(res.data.msg, "error");
+      	}
+      })
+  	},
   	toAsk(){
   		let self = this
       let patientIdCard = localStorage.getItem("sec_patientIdcard");

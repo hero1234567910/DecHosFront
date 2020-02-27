@@ -78,6 +78,14 @@ function model(http) {
 	    		}
 			})
 		},
+		//增加推广次数
+		addUserCount(data){
+			return http.post(evn.SEC_HOSAPI+'/sys/user/addUserCount',data,{
+				headers:{
+	    			contentType:'application/json;charset=utf-8'
+	    		}
+			})
+		},
   }
 
 }
