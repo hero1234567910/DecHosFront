@@ -25,7 +25,14 @@ function model(http) {
       		'Content-Type': 'application/json;charset=utf-8'
       	}
       });
-    }
+    },
+//  code2TokenDoctor(data){
+//  	return http.post(evn.SEC_HOSAPI+'/wx/common/code2TokenDoctor',data,{
+//    	headers:{
+//    		'Content-Type': 'application/json;charset=utf-8'
+//    	}
+//    });
+//  }
   }
 
 }

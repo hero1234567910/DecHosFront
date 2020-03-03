@@ -126,7 +126,23 @@ function model(http) {
           "Content-Type": "application/json;charset=utf-8"
         }
       });
-    }
+    },
+    getUserPic(data){
+    	return http.get(evn.SEC_HOSAPI + "/wx/common/getDoctorPic",data, {
+        headers: {
+          "Content-Type": "application/json;charset=utf-8"
+        }
+      });
+    },
+//  getImg(data){
+//  	return http.get("https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+data, {
+//      headers: {
+//        "Content-Type": "application/x-www-form-urlencoded",
+//        "Access-Control-Allow-Origin":"*"
+//      }
+//    });
+//  }
+    
   };
 }
 

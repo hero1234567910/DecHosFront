@@ -45,7 +45,9 @@
     </div>
     
     <el-dialog title="二维码详情" :visible.sync="isShow" width="240px" :before-close="handleClose">
-        <div id="qrCode" ref="qrCodeDiv"></div>
+        <div id="qrCode" ref="qrCodeDiv">
+        	<img :src="icon"/> 
+        </div>
      </el-dialog>
     
   </div>
@@ -61,11 +63,12 @@ export default {
     return {
       docName: "",
       satCounts: "",
-      isShow:false
+      isShow:false,
+      icon:''
     };
   },
   mounted() {
-    this.countSats();
+//  this.countSats();
   },
   created() {
     //this.getDocInfo();
@@ -73,23 +76,44 @@ export default {
   methods: {
   	//展示二维码
   	showImg(){
-  		this.isShow = true;
   		this.$nextTick(function(){
   			let rg = sessionStorage.getItem('m_user_rowGuid');
   			let un = sessionStorage.getItem('m_user_userName');
   			let loginId = sessionStorage.getItem('m_loginId');
+  			let self = this;
+  			let data = {
+  				"popuPersonGuid":rg
+  			}
   			
-  			console.log(loginId)
+				this.model.getUserPic(data).then((res)=>{
+					console.log(res.data.data)
+					if(res.data.code == 0){
+						self.$nextTick(function(){
+							self.icon = res.data.data;
+							self.isShow = true;
+						})
+						
+					}else{
+						$.toptip(res.data.msg, "error");
+					}
+					
+					
+					
+				})
+				
+				
+//				self.model.getImg('gQET7zwAAAAAAAAAAS5odHRwOi8vd2VpeGluLnFxLmNvbS9xLzAySjgzQndlZ3RjVDExeGg5NHh1Y3cAAgRRfFxeAwQAjScA').then((r)=>{
+//							console.log(r)
+//				})
   			
-  			new QRCode(this.$refs.qrCodeDiv, {
-          text: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx24cc308d188d08e2&redirect_uri=https%3a%2f%2fp.zjgwsjk.com%2f2ysechos%2findex.html?rg='+rg+'&un='+un+'&loginId='+loginId+'%23%2f&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect',
-          width: 200,
-          height: 200,
-          colorDark: "#333333", //二维码颜色
-          colorLight: "#ffffff", //二维码背景色
-          correctLevel: QRCode.CorrectLevel.L//容错率，L/M/H
+//			new QRCode(this.$refs.qrCodeDiv, {
+//        text: 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx24cc308d188d08e2&redirect_uri=https%3a%2f%2fp.zjgwsjk.com%2f2ysechos%2findex.html?rg='+rg+'&un='+un+'&loginId='+loginId+'%23%2f&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect',
+//        width: 200,
+//        height: 200,
+//        colorDark: "#333333", //二维码颜色
+//        colorLight: "#ffffff", //二维码背景色
+//        correctLevel: QRCode.CorrectLevel.L//容错率，L/M/H
         })
-  		})
   	},
   	handleClose(done){
   		$('#qrCode').html('');

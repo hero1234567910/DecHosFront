@@ -21,16 +21,38 @@ import myRepairList from './components/myRepairList.vue'
 import repairOnline from './components/repairOnline.vue'
 import repairDetail from './components/repairDetail.vue'
 import repairSatisfaction from './components/repairSatisfaction.vue'
+import model from "./model.js"
   export default {
   components:{doctorLoginPage,doctorMenu,myRepairList,repairOnline,repairDetail,repairSatisfaction},
 	data() {
+		this.model = model(this.axios);
       return {
       	
       }
     },
-   
+   mounted() {
+//	   	let code = this.GetQueryString('code')
+//	   	//换取code
+//	   	this.codeToToken(code);
+	   	
+  	},
 	methods:{
-		
+		GetQueryString(name) {
+      var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg); //search,查询？后面的参数，并匹配正则
+      if (r != null) return decodeURI(r[2]);
+      return null;
+   }
+// codeToToken(code){
+// 		this.model.code2TokenDoctor(code).then(function(res){
+// 			console.log(res)
+// 			sessionStorage.setItem('doctor_token',res.data.data);
+// 			
+// 		})
+// }
+   
+   
+   
 	}
 		
   }
