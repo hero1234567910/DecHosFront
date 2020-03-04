@@ -48,6 +48,12 @@
         </div>
         <p class="weui-grid__label">推广记录</p>
       </a>
+      <a href="javascript:;" class="weui-grid js_grid" v-if="adminShowFlag" @click="toadmin()">
+        <div class="weui-grid__icon">
+          <img src="../../../../static/images/管理员.png" alt />
+        </div>
+        <p class="weui-grid__label">管理员查看推广</p>
+      </a>
     </div>
     
     <el-dialog title="二维码详情" :visible.sync="isShow" width="240px" :before-close="handleClose">
@@ -70,16 +76,26 @@ export default {
       docName: "",
       satCounts: "",
       isShow:false,
-      icon:''
+      icon:'',
+      adminShowFlag: false
     };
   },
   mounted() {
 //  this.countSats();
   },
   created() {
-    //this.getDocInfo();
+    this.adminShow();
   },
   methods: {
+    adminShow(){
+      const self = this
+      if(sessionStorage.getItem("m_loginId") == "sysadmin"){
+        self.adminShowFlag = true
+      }
+    },
+    toadmin(){
+      this.$router.push("/adminPromotion");
+    },
   	//展示二维码
   	showImg(){
   		this.$nextTick(function(){

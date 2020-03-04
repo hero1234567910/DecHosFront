@@ -194,6 +194,18 @@ function model(http) {
           }
         }
       );
+    },
+    getPopuListByAdmin(data) {
+      return http.get(
+        evn.SEC_HOSAPI +
+          "/wx/sys/sechosconsultation/getPopuListByAdmin?" +
+          data,
+        {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          }
+        }
+      );
     }
   };
 }
