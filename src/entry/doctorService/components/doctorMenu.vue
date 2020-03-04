@@ -38,9 +38,15 @@
       </a>
       <a href="javascript:;" class="weui-grid js_grid" @click="showImg()">
         <div class="weui-grid__icon">
-          <img src="images/icon_nav_cell.png" alt />
+          <img src="../../../../static/images/二维码.png" alt />
         </div>
-        <p class="weui-grid__label">我的推广</p>
+        <p class="weui-grid__label">推广二维码</p>
+      </a>
+      <a href="javascript:;" class="weui-grid js_grid" @click="promotionRecord()">
+        <div class="weui-grid__icon">
+          <img src="../../../../static/images/推广记录.png" alt />
+        </div>
+        <p class="weui-grid__label">推广记录</p>
       </a>
     </div>
     
@@ -284,6 +290,9 @@ export default {
           $.toptip(res.data.msg, "error");
         }
       });
+    },
+    promotionRecord(){
+      this.$router.push("/promotionRecord")
     }
   }
 };

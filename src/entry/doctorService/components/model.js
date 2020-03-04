@@ -2,23 +2,23 @@ import evn from "../utils/evn.js";
 
 function model(http) {
   return {
-  	//滑块验证
-  	getId(data){
-  		return http.get(evn.SEC_HOSAPI + "/sys/getGeetest/getId", {
+    //滑块验证
+    getId(data) {
+      return http.get(evn.SEC_HOSAPI + "/sys/getGeetest/getId", {
         headers: {
           "Content-Type": "application/json;charset=utf-8"
         }
       });
-  	},
-	//用户登陆
-//  Login(data) {
-//    return http.post(evn.SEC_HOSAPI + "/sys/login", data, {
-//      headers: {
-//        "Content-Type": "application/json;charset=utf-8"
-//      }
-//    });
-//  },
-		//用户登陆
+    },
+    //用户登陆
+    //  Login(data) {
+    //    return http.post(evn.SEC_HOSAPI + "/sys/login", data, {
+    //      headers: {
+    //        "Content-Type": "application/json;charset=utf-8"
+    //      }
+    //    });
+    //  },
+    //用户登陆
     Login(data) {
       return http.post(evn.SEC_HOSAPI + "/wx/sys/sechosrepair/login", data, {
         headers: {
@@ -48,21 +48,29 @@ function model(http) {
         }
       });
     },
-    getListByGuid(data){
-      return http.post(evn.SEC_HOSAPI + "/wx/sys/sechosrepair/getListByGuid", data, {
-        headers: {
-          "Content-Type": "application/json;charset=utf-8"
+    getListByGuid(data) {
+      return http.post(
+        evn.SEC_HOSAPI + "/wx/sys/sechosrepair/getListByGuid",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          }
         }
-      });
+      );
     },
-    cancelRepair(data){
-      return http.post(evn.SEC_HOSAPI + "/wx/sys/sechosrepair/cancelRepair", data, {
-        headers: {
-          "Content-Type": "application/json;charset=utf-8"
+    cancelRepair(data) {
+      return http.post(
+        evn.SEC_HOSAPI + "/wx/sys/sechosrepair/cancelRepair",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          }
         }
-      });
+      );
     },
-    addRepair(data){
+    addRepair(data) {
       return http.post(evn.SEC_HOSAPI + "/wx/sys/sechosrepair/add", data, {
         headers: {
           "Content-Type": "application/json;charset=utf-8"
@@ -71,7 +79,9 @@ function model(http) {
     },
     getMySatList(data) {
       return http.get(
-        evn.SEC_HOSAPI + '/wx/sys/sechosrepairsatisfaction/listData?'+toQueryString(data),
+        evn.SEC_HOSAPI +
+          "/wx/sys/sechosrepairsatisfaction/listData?" +
+          toQueryString(data),
         {
           headers: {
             "Content-Type": "application/json;charset=utf-8"
@@ -79,26 +89,34 @@ function model(http) {
         }
       );
     },
-    updateSat(data){
-      return http.post(evn.SEC_HOSAPI + "/wx/sys/sechosrepairsatisfaction/update", data, {
-        headers: {
-          "Content-Type": "application/json;charset=utf-8"
+    updateSat(data) {
+      return http.post(
+        evn.SEC_HOSAPI + "/wx/sys/sechosrepairsatisfaction/update",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          }
         }
-      });
+      );
     },
-    uploadPic(data){
+    uploadPic(data) {
       return http.post(evn.SEC_HOSAPI + "/wx/sys/common/upload", data);
     },
-    countSats(data){
-      return http.post(evn.SEC_HOSAPI + "/wx/sys/sechosrepairsatisfaction/countSats", data, {
-        headers: {
-          "Content-Type": "application/json;charset=utf-8"
+    countSats(data) {
+      return http.post(
+        evn.SEC_HOSAPI + "/wx/sys/sechosrepairsatisfaction/countSats",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          }
         }
-      });
+      );
     },
     listRepairData(data) {
       return http.get(
-        evn.SEC_HOSAPI + '/wx/sys/sechosrepair/listData?'+toQueryString(data),
+        evn.SEC_HOSAPI + "/wx/sys/sechosrepair/listData?" + toQueryString(data),
         {
           headers: {
             "Content-Type": "application/json;charset=utf-8"
@@ -106,46 +124,79 @@ function model(http) {
         }
       );
     },
-    getAttachList(data){
-      return http.post(evn.SEC_HOSAPI + "/wx/sys/frameAttach/getAttachList", data, {
-        headers: {
-          "Content-Type": "application/json;charset=utf-8"
+    getAttachList(data) {
+      return http.post(
+        evn.SEC_HOSAPI + "/wx/sys/frameAttach/getAttachList",
+        data,
+        {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          }
         }
-      });
+      );
     },
-    deleteMyPic(data){
+    deleteMyPic(data) {
       return http.post(evn.SEC_HOSAPI + "/wx/sys/frameAttach/delete", data, {
         headers: {
           "Content-Type": "application/json;charset=utf-8"
         }
       });
     },
-    getOaUserList(data){
-      return http.get(evn.SEC_HOSAPI + "/sys/user/getOAUser?"+data, {
+    getOaUserList(data) {
+      return http.get(evn.SEC_HOSAPI + "/sys/user/getOAUser?" + data, {
         headers: {
           "Content-Type": "application/json;charset=utf-8"
         }
       });
     },
-    getUserPic(data){
-    	return http.get(evn.SEC_HOSAPI + "/wx/common/getDoctorPic",data, {
+    getUserPic(data) {
+      return http.get(evn.SEC_HOSAPI + "/wx/common/getDoctorPic", data, {
         headers: {
           "Content-Type": "application/json;charset=utf-8"
         }
       });
     },
-//  getImg(data){
-//  	return http.get("https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+data, {
-//      headers: {
-//        "Content-Type": "application/x-www-form-urlencoded",
-//        "Access-Control-Allow-Origin":"*"
-//      }
-//    });
-//  }
-    
+    //  getImg(data){
+    //  	return http.get("https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+data, {
+    //      headers: {
+    //        "Content-Type": "application/x-www-form-urlencoded",
+    //        "Access-Control-Allow-Origin":"*"
+    //      }
+    //    });
+    //  }
+    /**
+     * 获取推广次数
+     * @param {*} data 
+     */
+    getMyPopuCount(data) {
+      return http.post(
+        evn.SEC_HOSAPI +
+          "/wx/sys/sechosconsultation/getMyPopuCount?" +
+          data,
+        {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          }
+        }
+      );
+    },
+    /**
+     * 获取推广列表
+     */
+    getPatientListByOpenId(data) {
+      return http.post(
+        evn.SEC_HOSAPI +
+          "/wx/sys/sechosconsultation/getPatientListByOpenId?" +
+          data,
+        {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          }
+        }
+      );
+    }
   };
 }
-
 
 //url转换工具
 function cleanArray(actual) {
