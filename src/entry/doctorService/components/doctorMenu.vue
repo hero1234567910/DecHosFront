@@ -52,7 +52,7 @@
     
     <el-dialog title="二维码详情" :visible.sync="isShow" width="240px" :before-close="handleClose">
         <div id="qrCode" ref="qrCodeDiv">
-        	<img :src="icon"/> 
+        	<img :src="icon" width="100%"/> 
         </div>
      </el-dialog>
     
