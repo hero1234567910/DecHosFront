@@ -83,15 +83,10 @@ export default {
   	//展示二维码
   	showImg(){
   		this.$nextTick(function(){
-  			let rg = sessionStorage.getItem('m_user_rowGuid');
-  			let un = sessionStorage.getItem('m_user_userName');
-  			let loginId = sessionStorage.getItem('m_loginId');
+  			let rg = localStorage.getItem('m_user_rowGuid');
   			let self = this;
-  			let data = {
-  				"popuPersonGuid":rg
-  			}
-  			
-				this.model.getUserPic(data).then((res)=>{
+  			console.log(rg)
+				this.model.getUserPic(rg).then((res)=>{
 					console.log(res.data.data)
 					if(res.data.code == 0){
 						self.$nextTick(function(){
@@ -102,8 +97,6 @@ export default {
 					}else{
 						$.toptip(res.data.msg, "error");
 					}
-					
-					
 					
 				})
 				

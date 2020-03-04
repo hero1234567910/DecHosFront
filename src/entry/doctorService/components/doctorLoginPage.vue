@@ -121,6 +121,7 @@ export default {
 		            "m_user_rowGuid",
 		            res.data.data.userRowGuid
 		          );
+//		          
 		          window.sessionStorage.setItem(
 		            "m_user_userName",
 		            res.data.data.userName
@@ -146,6 +147,11 @@ export default {
 		            res.data.data.sex
 		          );
 		          localStorage.setItem('m_doctorLoginFlag','true')
+		          localStorage.setItem('m_user_rowGuid',res.data.data.userRowGuid)
+		          localStorage.setItem('m_user_userName',res.data.data.userName)
+		          localStorage.setItem('m_user_userName',res.data.data.userName)
+		          
+		          
 		          self.$message({
 		            message: "登录成功",
 		            type: "success"

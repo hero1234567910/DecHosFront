@@ -150,7 +150,7 @@ function model(http) {
       });
     },
     getUserPic(data) {
-      return http.get(evn.SEC_HOSAPI + "/wx/common/getDoctorPic", data, {
+      return http.get(evn.SEC_HOSAPI + "/wx/common/getDoctorPic?popuPersonGuid="+data, {
         headers: {
           "Content-Type": "application/json;charset=utf-8"
         }

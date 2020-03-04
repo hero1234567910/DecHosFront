@@ -74,6 +74,7 @@ export default {
         text: "确认退出吗!",
         onOK: function() {
           sessionStorage.clear();
+          localStorage.clear();
           self.$router.push("/");
         },
         onCancel: function() {}
