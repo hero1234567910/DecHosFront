@@ -149,7 +149,7 @@ export default {
 		          localStorage.setItem('m_doctorLoginFlag','true')
 		          localStorage.setItem('m_user_rowGuid',res.data.data.userRowGuid)
 		          localStorage.setItem('m_user_userName',res.data.data.userName)
-		          localStorage.setItem('m_user_userName',res.data.data.userName)
+		          localStorage.setItem('m_loginId',res.data.data.loginId)
 		          
 		          
 		          self.$message({

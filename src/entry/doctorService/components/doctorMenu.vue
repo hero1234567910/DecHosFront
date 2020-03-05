@@ -89,7 +89,7 @@ export default {
   methods: {
     adminShow(){
       const self = this
-      if(sessionStorage.getItem("m_loginId") == "sysadmin"){
+      if(localStorage.getItem("m_loginId") == "sysadmin"){
         self.adminShowFlag = true
       }
     },

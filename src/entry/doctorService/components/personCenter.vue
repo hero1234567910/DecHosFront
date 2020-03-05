@@ -56,8 +56,8 @@ export default {
     this.model = model(this.axios);
     return {
       show: true,
-      Name: sessionStorage.getItem("m_user_userName"),
-      Deptname: sessionStorage.getItem("m_deptName"),
+      Name: localStorage.getItem("m_user_userName"),
+      Deptname: localStorage.getItem("m_deptName"),
       headimg: ""
     };
   },

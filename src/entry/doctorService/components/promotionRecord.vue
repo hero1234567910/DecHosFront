@@ -94,7 +94,7 @@ export default {
     this.model = model(this.axios);
     return {
       users: [],
-      promotersGuid: sessionStorage.getItem("m_user_rowGuid"),
+      promotersGuid: localStorage.getItem("m_user_rowGuid"),
       loading: false,
       page: 1,
       count: "",
