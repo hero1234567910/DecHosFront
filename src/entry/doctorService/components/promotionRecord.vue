@@ -51,15 +51,13 @@
     <div class="weui-cells" style="background-color: #f8fcff;margin-top: 10px;">
       <div
         class="weui-cell weui-cell_swiped"
-        id="item.rowId"
         v-for="item in users"
-        :key="item.rowId"
       >
-        <div class="weui-cell__bd">
+        <div class="weui-cell__bd" v-if="item != null && item.patientName != null">
           <div class="weui-cell">
             <div class="weui-cell__bd">{{item.patientName}}</div>
             <div class="weui-cell__ft">
-              <p>{{item.patientMobile}}</p>
+              <!--<p>{{item.patientMobile}}</p>-->
             </div>
           </div>
         </div>

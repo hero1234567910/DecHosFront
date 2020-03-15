@@ -62,14 +62,14 @@ export default {
   },
   mounted() {},
   created() {
-  	let self = this
-  	if(localStorage.getItem('m_doctorLoginFlag') == 'true'){
-  		self.$message({
-        message: "登录成功",
-        type: "success"
-      });
-      self.$router.push("/doctorMenu");
-  	}
+//	let self = this
+//	if(localStorage.getItem('m_doctorLoginFlag') == 'true'){
+//		self.$message({
+//      message: "登录成功",
+//      type: "success"
+//    });
+//    self.$router.push("/doctorMenu");
+//	}
   	
     this.getId();
   },
