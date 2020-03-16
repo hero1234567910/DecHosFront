@@ -169,9 +169,9 @@ export default {
     },
     getMyPopuCount() {
       let self = this;
-      const params = new URLSearchParams();
-      params.append("promotersGuid", self.promotersGuid);
-      this.model.getMyPopuCount(params).then(function(res) {
+      // const params = new URLSearchParams();
+      // params.append("promotersGuid", self.promotersGuid);
+      this.model.getCountByGuid(self.promotersGuid).then(function(res) {
         if (res.data.code == 0) {
           console.log(res.data);
           self.count = res.data.data;

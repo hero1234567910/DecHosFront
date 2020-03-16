@@ -206,7 +206,19 @@ function model(http) {
           }
         }
       );
-    }
+    },
+    getCountByGuid(data) {
+      return http.post(
+        evn.SEC_HOSAPI +
+          "/wx/sys/sechosconsultation/getCountByGuid?rowGuid=" +
+          data,
+        {
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          }
+        }
+      );
+    },
   };
 }
 
