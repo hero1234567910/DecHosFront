@@ -261,8 +261,13 @@ export default {
       };
       this.model.getInPatientInfoByPatid(data).then(function(res) {
         if (res.data.code == "0") {
-          Jzlsh.jzlsh = res.data.data[0].jzlsh;
-          self.jzlsh = res.data.data[0].jzlsh;
+         const temp = [];
+          for (let i = 0; i < res.data.data.length; i++) {
+            temp.push(parseInt(res.data.data[i].jzlsh));
+          }
+          temp.reverse();
+          Jzlsh.jzlsh = temp[0];
+          self.jzlsh = temp[0];
         } else {
           $.toptip(res.data.msg, "error");
         }
@@ -285,7 +290,6 @@ export default {
       });
     },
     getInPatientInfoByPatid_2() {
-      
       let self = this;
       let data = {
         hzxm: self.input_hzxm,
@@ -294,8 +298,13 @@ export default {
       };
       this.model.getInPatientInfoByPatid(data).then(function(res) {
         if (res.data.code == "0") {
-          Jzlsh.jzlsh = res.data.data[0].jzlsh;
-          self.jzlsh = res.data.data[0].jzlsh;
+          const temp = [];
+          for (let i = 0; i < res.data.data.length; i++) {
+            temp.push(parseInt(res.data.data[i].jzlsh));
+          }
+          temp.reverse();
+          Jzlsh.jzlsh = temp[0];
+          self.jzlsh = temp[0];
           self.getInpatientOneDayLiquidation2();
         } else {
           $.toptip(res.data.msg, "error");
@@ -304,7 +313,6 @@ export default {
     },
 
     getInpatientOneDayLiquidation2() {
-      
       let self = this;
       let data = {
         hzxm: self.input_hzxm,
@@ -316,7 +324,6 @@ export default {
       this.model.getInpatientOneDayLiquidation(data).then(function(res) {
         $.hideLoading();
         if (res.data.code == "0") {
-          
           self.onDayLiqList = res.data.data;
           let i = res.data.data.length;
           //console.log(i);
@@ -337,11 +344,11 @@ export default {
         $.alert("请输入日期", "提示", function() {});
         $.hideLoading();
         return;
-      }else if(self.input_hzxm==''){
+      } else if (self.input_hzxm == "") {
         $.alert("请输入患者姓名", "提示", function() {});
         $.hideLoading();
         return;
-      }else if(self.input_blh==''){
+      } else if (self.input_blh == "") {
         $.alert("请输入病历号", "提示", function() {});
         $.hideLoading();
         return;

@@ -66,7 +66,7 @@ export default {
         loading = true;
         setTimeout(function() {
           var params = new URLSearchParams();
-          params.append("offset", self.page);
+          params.append("offset", self.page+20);
           params.append("limit", "20");
           params.append("promotersGuid", self.promotersGuid);
           self.model.getPatientListByOpenId(params).then(function(res) {
@@ -74,10 +74,10 @@ export default {
               if (res.data.data.length == 0) {
                 $("#th").destroyInfinite();
                 $("#onloading").css("display", "none");
-                self.page = 1;
+                self.page = 0;
               }
 
-              self.page++;
+              self.page = self.page+20;
               for (var i = 0; i < res.data.data.length; i++) {
                 self.users.push(res.data.data[i]);
                 self.$nextTick(function() {

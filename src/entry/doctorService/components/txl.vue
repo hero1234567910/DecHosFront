@@ -1,69 +1,111 @@
 <template>
-  <div style="overflow: auto;height:100%;overflow-x: hidden;background-color: #ecf5ff;" id="th">
-  	<el-card class="box-card">
-	    <div slot="header" class="clearfix">
-	      <div class="card-hero">
-	        <img
-	          src="../../../../static/img/通讯录.png"
-	          style="position: absolute;top: -7px;width: 80%;"
-	        />
-	      </div>
-	      <span style="font-weight: 700;">院内通讯录</span>
-	      <span style="color: darkgray;font-size: 13px;">【左滑查看联系电话】</span>
-	    </div>
-	    
-	    <div>
-	    	<div style="float: left;width: 80%;">
-	    		<div class="weui-search-bar" id="searchBar">
-					  <form class="weui-search-bar__form">
-					    <div class="weui-search-bar__box">
-					      <i class="weui-icon-search"></i>
-					      <input type="search" v-model="search" class="weui-search-bar__input" id="searchInput" @keyup.enter="Search()" placeholder="搜索姓名">
-					      <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-					    </div>
-					    <label class="weui-search-bar__label" id="searchText">
-					      <i class="weui-icon-search"></i>
-					      <span>搜索</span>
-					    </label>
-					  </form>
-					  <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel" @click="getList('','1','30')">取消</a>
-					</div>
-	    	</div>
-	    	<div style="float: right;width: 20%;">
-	    		<a href="javascript:;" class="weui-btn weui-btn_primary" @click="Search()">搜索</a>
-	    	</div>
-	    </div>
-	    
-	    
+  <div
+    style="overflow: auto;height:100%;overflow-x: hidden;background-color: #ecf5ff;"
+    id="th"
+  >
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <div class="card-hero">
+          <img
+            src="../../../../static/img/通讯录.png"
+            style="position: absolute;top: -7px;width: 80%;"
+          />
+        </div>
+        <span style="font-weight: 700;">院内通讯录</span>
+        <span style="color: darkgray;font-size: 13px;"
+          >【左滑查看联系电话】</span
+        >
+      </div>
+
+      <div>
+        <div style="float: left;width: 80%;">
+          <div class="weui-search-bar" id="searchBar">
+            <form class="weui-search-bar__form">
+              <div class="weui-search-bar__box">
+                <i class="weui-icon-search"></i>
+                <input
+                  type="search"
+                  v-model="search"
+                  class="weui-search-bar__input"
+                  id="searchInput"
+                  @keyup.enter="Search()"
+                  placeholder="搜索姓名"
+                />
+                <a
+                  href="javascript:"
+                  class="weui-icon-clear"
+                  id="searchClear"
+                ></a>
+              </div>
+              <label class="weui-search-bar__label" id="searchText">
+                <i class="weui-icon-search"></i>
+                <span>搜索</span>
+              </label>
+            </form>
+            <a
+              href="javascript:"
+              class="weui-search-bar__cancel-btn"
+              id="searchCancel"
+              @click="getList('', '1', '30')"
+              >取消</a
+            >
+          </div>
+        </div>
+        <div style="float: right;width: 20%;">
+          <a
+            href="javascript:;"
+            class="weui-btn weui-btn_primary"
+            @click="Search()"
+            >搜索</a
+          >
+        </div>
+      </div>
     </el-card>
     <div class="weui-cells" style="background-color: #f8fcff;">
-		  <div class="weui-cell weui-cell_swiped" id="item.rowId" v-for="item in users" :key="item.rowId">
+      <div
+        class="weui-cell weui-cell_swiped"
+        id="item.rowId"
+        v-for="item in users"
+        :key="item.rowId"
+      >
         <div class="weui-cell__bd">
           <div class="weui-cell">
             <div class="weui-cell__bd">
-              <p>{{item.deptName}}</p>
+              <p>{{ item.deptName }}</p>
             </div>
-            <div class="weui-cell__ft">{{item.userName}}</div>
+            <div class="weui-cell__ft">{{ item.userName }}</div>
           </div>
         </div>
         <div class="weui-cell__ft" v-show="item.mobile != null">
-          <a class="weui-swiped-btn weui-swiped-btn_default delete-swipeout" href="javascript:">{{item.mobile}}</a>
-          <a class="weui-swiped-btn weui-swiped-btn_warn close-swipeout" :href="'tel:' + item.mobile">拨号</a>
+          <a
+            class="weui-swiped-btn weui-swiped-btn_default delete-swipeout"
+            href="javascript:"
+            >{{ item.mobile }}</a
+          >
+          <a
+            class="weui-swiped-btn weui-swiped-btn_warn close-swipeout"
+            :href="'tel:' + item.mobile"
+            >拨号</a
+          >
         </div>
-        
-        <div class="weui-cell__ft" v-show="item.mobile == null || item.mobile == ''">
-          <a class="weui-swiped-btn weui-swiped-btn_default close-swipeout" href="javaScript:;">暂无</a>
+
+        <div
+          class="weui-cell__ft"
+          v-show="item.mobile == null || item.mobile == ''"
+        >
+          <a
+            class="weui-swiped-btn weui-swiped-btn_default close-swipeout"
+            href="javaScript:;"
+            >暂无</a
+          >
         </div>
       </div>
-      
+
       <div v-if="isshow()" class="weui-loadmore" id="onloading">
-			  <i class="weui-loading"></i>
-			  <span class="weui-loadmore__tips">正在加载</span>
-			</div>
-      
-		</div>
-		
-		
+        <i class="weui-loading"></i>
+        <span class="weui-loadmore__tips">正在加载</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -73,114 +115,112 @@ export default {
   data() {
     this.model = model(this.axios);
     return {
-     users:[],
-     search:'',
-     loading:false,
-  	 page:2
+      users: [],
+      search: "",
+      loading: false,
+      page: 2
     };
   },
-  created(){
-  },
+  created() {},
   mounted() {
-  	this.getList('','1','30'),
-  	this.init()
+    this.getList("", "1", "30"), this.init();
   },
   methods: {
-  	init(){
-  			let self = this;
-  			var loading = false;  //状态标记
-				$('#th').infinite();
-  			$('#th').on("infinite", function() {
-				 	 if(loading) return;
-					  loading = true;
-					  setTimeout(function() {
-					  	var params = new URLSearchParams();
-							params.append('page', self.page);
-								params.append('limit', '30');
-								params.append('userName',self.search);
-					  	
-//					  	if(self.search != ''){
-//					  		
-//					  		params.append('page', self.page);
-//								params.append('limit', '20');
-//								params.append('userName',self.search);
-//					  		
-//					  	}else{
-//					  		
-//					  		params.append('page', self.page);
-//								params.append('limit', '20');
-//								params.append('userName','');
-//					  	}
-					  	console.log(self.page)
-					  	self.model.getOaUserList(params).then(function(res){
-			  				if(res.data.code == '0'){
-			  					if(res.data.data.length == 0){
-			  						$('#th').destroyInfinite();
-			  						$('#onloading').css('display','none');
-			  						self.page = 2;
-			  					}
-			  					
-			  					self.page++;
-			  					for(var i=0;i<res.data.data.length;i++){
-			  						self.users.push(res.data.data[i])
-			  						self.$nextTick(function(){
-											$('.weui-cell_swiped').swipeout()
-										})
-			  					}
-			  				}else{
-			  					$.toptip(res.data.msg, 'error');
-			  				}
-			  			})
-					    loading = false;
-					  }, 1500);   //模拟延迟
-				});
-  		},
-  	isshow(){
-				if(this.users.length >= 30){
-					return true;
-				}else{
-					return false;
-				}
-  		},
-    getList(searchaVal,page,limit){
-    	let self = this;
-    	var params = new URLSearchParams();
-			params.append('page', '1');
-			params.append('limit', limit);
-			params.append('userName',searchaVal);
-			$.showLoading();
-    	this.model.getOaUserList(params).then(function(res){
-    		$.hideLoading();
-    		if(res.data.code == 0){
-    			self.users = res.data.data;
-					self.$nextTick(function(){
-						$('.weui-cell_swiped').swipeout()
-					})
-    		}else{
-    			$.toptip(res.data.msg, "error");
-    		}
-    	})
+    init() {
+      let self = this;
+      var loading = false; //状态标记
+      $("#th").infinite();
+      $("#th").on("infinite", function() {
+        if (loading) return;
+        loading = true;
+        setTimeout(function() {
+          var params = new URLSearchParams();
+          params.append("page", self.page);
+          params.append("limit", "30");
+          params.append("userName", self.search);
+
+          //					  	if(self.search != ''){
+          //
+          //					  		params.append('page', self.page);
+          //								params.append('limit', '20');
+          //								params.append('userName',self.search);
+          //
+          //					  	}else{
+          //
+          //					  		params.append('page', self.page);
+          //								params.append('limit', '20');
+          //								params.append('userName','');
+          //					  	}
+          console.log(self.page);
+          self.model.getOaUserList(params).then(function(res) {
+            if (res.data.code == "0") {
+              if (res.data.data.length == 0) {
+                $("#th").destroyInfinite();
+                $("#onloading").css("display", "none");
+                self.page = 2;
+              }
+
+              self.page++;
+              for (var i = 0; i < res.data.data.length; i++) {
+                self.users.push(res.data.data[i]);
+                self.$nextTick(function() {
+                  $(".weui-cell_swiped").swipeout();
+                });
+              }
+            } else {
+              $.toptip(res.data.msg, "error");
+            }
+          });
+          loading = false;
+        }, 1500); //模拟延迟
+      });
     },
-    Search(){
-    	let self = this;
-    	let searchVal = $('#searchInput').val();
-      self.getList(searchVal,'1','30');
+    isshow() {
+      if (this.users.length >= 30) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    getList(searchaVal, page, limit) {
+      let self = this;
+      var params = new URLSearchParams();
+      params.append("page", "1");
+      params.append("limit", limit);
+      params.append("userName", searchaVal);
+      $.showLoading();
+      this.model.getOaUserList(params).then(function(res) {
+        $.hideLoading();
+        if (res.data.code == 0) {
+          self.users = res.data.data;
+          self.$nextTick(function() {
+            $(".weui-cell_swiped").swipeout();
+          });
+        } else {
+          $.toptip(res.data.msg, "error");
+        }
+      });
+    },
+    Search() {
+      let self = this;
+      let searchVal = $("#searchInput").val();
+      self.getList(searchVal, "1", "30");
     }
   }
 };
 </script>
 <style>
-	.el-card__body{
-		padding: 5px;
-	}
+.el-card__body {
+  padding: 5px;
+}
 </style>
 <style scoped>
-	.weui-btn{
-		width: 100% !important;
-		margin-bottom: 5px !important;
-		padding-left: 5px !important;
-    padding-right: 5px !important;
-	}
+.weui-btn {
+  width: 100% !important;
+  margin-bottom: 5px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+}
 .weui-cells__title-wzl {
   background-color: whitesmoke;
   margin-top: 0px;
