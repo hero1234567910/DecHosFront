@@ -95,7 +95,7 @@ export default {
     return {
       users: [],
       loading: false,
-      page: 1,
+      page: 0,
       count: "",
       cardStyle: { padding: "0px" }
     };

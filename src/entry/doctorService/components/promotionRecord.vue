@@ -94,7 +94,7 @@ export default {
       users: [],
       promotersGuid: localStorage.getItem("m_user_rowGuid"),
       loading: false,
-      page: 1,
+      page: 0,
       count: "",
       cardStyle: {padding: '0px'}
     };
