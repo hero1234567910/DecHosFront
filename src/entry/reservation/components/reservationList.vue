@@ -28,7 +28,7 @@
             <div class="re-main-wzl">
               <div class="re-content-wzl">
                 <p style="font-size: 15px;margin-top: 11px;">科室名称: {{item.ksmc}}</p>
-                <p style="color: #688795;font-size:14px;">预约时间: {{item.yyrq | formatDate}}</p>
+                <p style="color: #688795;font-size:14px;">预约时间: {{item | formatDate}}</p>
                 <p style="color: #688795;font-size:14px;">支付金额: {{item.zlf}} 元</p>
                 <p style="color: #999999;font-size:14px;">收费类型:
                   <span style="color:black;">{{item.zfzt==1?'已支付':'未支付'}}</span>
@@ -299,7 +299,9 @@ export default {
           "&patid=" +
           ele.patid +
           "&pbxh=" +
-          ele.pbxh 
+          ele.pbxh +
+          "&yysjd=" +
+          ele.yysjd
       );
     },
     handleCall(res) {
@@ -358,13 +360,14 @@ export default {
   },
   filters: {
     formatDate: function(value) {
-      var y = value.substr(0, 4);
-      var M = value.substr(4, 2);
-      var D = value.substr(6, 2);
-      var H = value.substr(8, 2);
+    	let d = value.ghrq;
+      var y = d.substr(0, 4);
+      var M = d.substr(4, 2);
+      var D = d.substr(6, 2);
+      /*var H = value.substr(8, 2);
       var m = value.substr(10, 2);
-      var s = value.substr(12, 2);
-      var time = y + "-" + M + "-" + D + " " + H + ":" + m + ":" + s;
+      var s = value.substr(12, 2);*/
+      var time = y + "-" + M + "-" + D + " " + value.yysjd;
       //console.log(time);
       return time;
     }

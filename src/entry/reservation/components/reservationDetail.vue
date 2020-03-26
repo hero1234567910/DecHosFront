@@ -234,7 +234,8 @@ export default {
       yyhx: "",
       zfzt: "",
       patid: "",
-      pbxh: ""
+      pbxh: "",
+      yysjd:""
     };
   },
   //props:['patid'],
@@ -244,7 +245,7 @@ export default {
   },
   filters: {
     dateForm: function(ele) {
-      return moment(ele).format("YYYY-MM-DD");
+      return moment(ele).format("YYYY-MM-DD")+' '+yysjd;
     }
   },
   methods: {
@@ -287,6 +288,7 @@ export default {
       self.patid = this.$route.query.patid;
       self.pbxh = this.$route.query.pbxh;
       self.zfzt = this.$route.query.zfzt;
+      self.yysjd = this.$route.query.yysjd;
       //console.log(self.zfzt);
       //console.log(data);
     },
