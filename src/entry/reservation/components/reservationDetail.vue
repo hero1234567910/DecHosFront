@@ -211,6 +211,7 @@
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
 import moment from "moment";
+let appAll;
 export default {
   data() {
     this.model = model(this.axios);
@@ -238,6 +239,9 @@ export default {
       yysjd:""
     };
   },
+  beforeCreate(){
+  	appAll = this;
+  },
   //props:['patid'],
   mounted() {
     this.showDetail();
@@ -245,7 +249,7 @@ export default {
   },
   filters: {
     dateForm: function(ele) {
-      return moment(ele).format("YYYY-MM-DD")+' '+yysjd;
+      return moment(ele).format("YYYY-MM-DD")+' '+appAll.yysjd;
     }
   },
   methods: {

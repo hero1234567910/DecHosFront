@@ -167,9 +167,21 @@
 			})
   		},
   		init(){
+  			
+  			if(localStorage.getItem('sec_flag') == 'cb'){
+					$.alert("查询到您是医保用户,请到付费窗口缴费", "提示", function() {
+					  //点击确认后的回调函数
+					  if (process.env.NODE_ENV == 'dev') {
+							  window.location='../index.html'
+							} else if (process.env.NODE_ENV == 'production') {
+							  window.location='../2ysechos/index.html'
+							}
+					});
+					return;
+				}
+  			
   			let self = this;
   			let da = this.$route.query;
-  			console.log(da);
   			this.patid = da.patid;
   			this.pbxh = da.pbxh;
 

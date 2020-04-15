@@ -162,7 +162,6 @@ export default {
           localStorage.setItem("sec_cardno", res.data.data.patientIdcard);
           localStorage.setItem("sec_lxdh", res.data.data.lxdh);
 
-          
         } else {
           $.toptip(res.data.msg, "error");
         }

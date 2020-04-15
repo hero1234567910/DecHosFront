@@ -161,9 +161,6 @@ export default {
       var lxdz = $("#lxdz").val();
       var zjh = this.$route.query.zjh;
       var openid = localStorage.getItem("sec_openId");
-      console.log(this.$route.query);
-      console.log(hzxm + "  " + zjh);
-      console.log(self.lxdh);
       if (this.phoneCheck(self.lxdh)) {
         return;
       }

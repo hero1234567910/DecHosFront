@@ -142,7 +142,6 @@ export default {
 		let hzxm = $('#hzxm').val();
 		let zjh = $('#zjh').val();
 		let a = this.checkIdcard(zjh);
-		console.log(a);
 		if(a != true){
 			$.toptip(a,'error');
 			return;
@@ -158,26 +157,7 @@ export default {
 					$.toast('绑定成功', function() {
 							
 							data.action = 'mz';
-							console.log(data);
 							self.model.getInfo(data).then(function(res){
-//								if(res.data.code == '0'){
-//									//预约模块 就取病历号最大的
-//									let arr = [];
-//									let outArray = res.data.data;
-//									for(var i=0;i<outArray.length;i++){
-//											let blh = outArray[i].blh;
-//											arr.push(parseInt(blh));
-//									}
-//									arr.sort().reverse();
-//									let val = arr[0];
-//									for(var i=0;i<outArray.length;i++){
-//										if(val == outArray[i].blh){
-//											self.patid = outArray[i].patid;
-//											localStorage.setItem('sec_patid',self.patid);
-//											localStorage.setItem('sec_blh',val);
-//										}
-//									}
-//								}
 								if(res.data.msg == '未查询到门诊患者'){
 									$.alert("未查询到您在医院的预留信息，请先完善信息", "提示", function() {
 									  //点击确认后的回调函数

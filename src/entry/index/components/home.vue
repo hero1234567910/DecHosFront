@@ -129,23 +129,14 @@ export default {
   	let userName = this.GetQueryString('un');
   	let loginId = this.GetQueryString('loginId');
   	if(rowGuid){
-  		console.log(rowGuid+"   >>>>>>>>>>>>>")
   		this.addUserCount(rowGuid,userName,loginId);	
   	}
-  	
-  	
-  	
     this.getDepartmentOnDuty();
   },
   mounted() {
     this.getTGInfo();
     //横向滚动
     $("#s").textScroll();
-    // new Swiper(".swiper-container", {
-    //   delay: 2000,
-    //   autoplay: true,
-	//   loop:true
-    // });
   },
   methods: {
   	addUserCount(rowGuid,userName,loginId){
@@ -155,8 +146,6 @@ export default {
   			'popuPersonGuid':localStorage.getItem('sec_patientGuid'),
   			'loginId':loginId
   		}
-  		
-  		
   		this.model.addUserCount(data).then(function(res){
       	if(res.data.code == 0){
       		

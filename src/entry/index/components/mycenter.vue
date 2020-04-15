@@ -60,9 +60,16 @@
                   <!-- <h4 style="font-size: 8px;position: absolute;margin-left: -19%;margin-top: 3%;" >点击出示二维码</h4> -->
                 </div>
               </a>
+              
+              <div style="height: 50px;text-align: center;">
+								<el-button id="zf" @click="chooseWay('zf')">自费</el-button>
+								<el-button id="cb" @click="chooseWay('cb')">参保</el-button>	
+							</div>
+              
             </div>
+            
+            
           </div>
-
           <div class="weui-panel weui-panel_access" style="height:20px;margin-top: 0px;">
             <div class="weui-panel__bd">
               <a
@@ -231,7 +238,9 @@ export default {
       zjh: "",
       hzxm: "",
       blh: "",
-      showFlag:localStorage.getItem('sec_patientIdcard')!=null
+      showFlag:localStorage.getItem('sec_patientIdcard')!=null,
+      zfblh:'',
+      cbblh:''
     };
   },
   props: ["patientName"],
@@ -254,15 +263,48 @@ export default {
     }
   },
   mounted() {
-    //  	this.checkShow();
-    // console.log(this.showFlag);
-    // console.log(localStorage.getItem("sec_patientIdcard"));
     
   },
   updated(){
-    this.getblh()
+  	let self = this;
+  	if(localStorage.getItem('sec_flag') == 'zf'){
+				self.blh = localStorage.getItem('zfblh');
+				$('#zf').css({'background-color':'rgb(103,194,58)','color':'white'});
+				$('#cb').css({'background-color':'white','color':'black'})
+			}
+			if(localStorage.getItem('sec_flag') == 'cb'){
+				self.blh = localStorage.getItem('cbblh');
+				$('#cb').css({'background-color':'rgb(103,194,58)','color':'white'});
+				$('#zf').css({'background-color':'white','color':'black'})
+			}
+			if(localStorage.getItem('sec_flag') == undefined || localStorage.getItem('sec_flag') == ''){
+				this.getblh()
+			}
   },
   methods: {
+	chooseWay(str){
+		let self = this;
+		//选择付款方式
+		if(str == 'zf'){
+			//切换自费方式
+			if(localStorage.getItem('zfblh')){
+				localStorage.setItem('sec_flag','zf');
+				this.blh = this.zfblh;
+				$('#zf').css({'background-color':'rgb(103,194,58)','color':'white'});
+				$('#cb').css({'background-color':'white','color':'black'})
+			}
+		}else{
+			//切换参保方式
+			if(localStorage.getItem('cbblh')){
+				localStorage.setItem('sec_flag','cb');
+				this.blh = this.cbblh;
+				$('#cb').css({'background-color':'rgb(103,194,58)','color':'white'});
+				$('#zf').css({'background-color':'white','color':'black'})
+			}else{
+				$.toptip('暂无参保账户','error')
+			}
+		}
+	},
     toWait() {
       this.$router.push("/waitPatient");
     },
@@ -369,7 +411,6 @@ export default {
       }
     },
     getblh() {
-      // console.log("replay")
       let self = this;
       this.zjh = localStorage.getItem("sec_patientIdcard");
       this.hzxm = localStorage.getItem("sec_patientName");
@@ -386,15 +427,45 @@ export default {
           if (res.data.code == "0") {
             //门诊模块 就取门诊自费并且病历号最大的
             let outArray = res.data.data;
+            let arr = [];
             for (var i = 0; i < outArray.length; i++) {
               if (outArray[i].ybdm == "101") {
-                self.blh = outArray[i].blh;
-                break;
+                self.zfblh = outArray[i].blh;
+                let d = {
+                	blh:outArray[i].blh,
+                	patid:outArray[i].patid
+                }
+                arr.push(d)
               }
               //门诊医保病人
               if (outArray[i].ybdm == "701") {
-                self.blh = outArray[i].blh;
+                self.cbblh = outArray[i].blh;
+                self.cbpatid = outArray[i].patid;
               }
+            }
+            localStorage.setItem('zfblh',arr[0].blh);
+            localStorage.setItem('zfpatid',arr[0].patid);
+            localStorage.setItem('cbblh',self.cbblh);
+            localStorage.setItem('cbpatid',self.cbpatid);
+            //若参保存在 则默认取参保
+            if(self.cbblh){
+            	localStorage.setItem('sec_flag','cb');
+            	localStorage.setItem('sec_yb',true);
+            	self.chooseWay('cb');
+            }else{
+            	if(self.zfblh){
+            		localStorage.setItem('sec_flag','zf');
+            		self.chooseWay('zf');
+            	}else{
+            		//注册信息
+            		$.alert("未查询到您的信息，请先建档", "提示", function() {
+								  	if (process.env.NODE_ENV == 'dev') {
+										  window.location='../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+										} else if (process.env.NODE_ENV == 'production') {
+										  window.location='../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+										}
+								});
+            	}
             }
           }
         });
@@ -483,7 +554,7 @@ export default {
   box-shadow: 1px 1px 6px #888888;
 }
 .hero-panew {
-  height: 200px;
+  height: 255px;
   width: 100%;
   position: relative;
   top: -70px;
