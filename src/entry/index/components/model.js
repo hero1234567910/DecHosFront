@@ -85,7 +85,14 @@ function model(http) {
 	    			contentType:'application/json;charset=utf-8'
 	    		}
 			})
-		},
+		},//增加推广次数
+		updatePatient(data){
+			return http.post(evn.SEC_HOSAPI+'/sys/patient/update',data,{
+				headers:{
+	    			contentType:'application/json;charset=utf-8'
+	    		}
+			})
+		}
   }
 
 }

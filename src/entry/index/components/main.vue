@@ -122,6 +122,14 @@ export default {
             localStorage.setItem("sec_headImg", res.data.data.headImgUrl);
             localStorage.setItem("sec_sex", res.data.data.patientSex);
             localStorage.setItem("sec_birth", res.data.data.patientBirth);
+            
+            if(res.data.data.patientJztype == '1'){
+            	localStorage.setItem("sec_flag", 'zf');
+            }else if(res.data.data.patientJztype == '2'){
+            	localStorage.setItem("sec_flag", 'cb');
+            }else if(res.data.data.patientJztype == null){
+            	localStorage.setItem("sec_flag", '');
+            }
             localStorage.setItem(
               "sec_patientIdcard",
               res.data.data.patientIdcard
@@ -187,6 +195,13 @@ export default {
               "sec_patientIdcard",
               res.data.data.patientIdcard
             );
+            if(res.data.data.patientJztype == '1'){
+            	localStorage.setItem("sec_flag", 'zf');
+            }else if(res.data.data.patientJztype == '2'){
+            	localStorage.setItem("sec_flag", 'cb');
+            }else if(res.data.data.patientJztype == null){
+            	localStorage.setItem("sec_flag", '');
+            }
             localStorage.setItem("sec_patientGuid", res.data.data.rowGuid);
             localStorage.setItem("sec_cardno", res.data.data.patientIdcard);
             localStorage.setItem("sec_lxdh", res.data.data.patientMobile);
