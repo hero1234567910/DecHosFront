@@ -93,6 +93,12 @@
         </div>
         <p class="weui-grid__label">体检报告查询</p>
       </a>
+      <a href="javascript:;" class="weui-grid js_grid" @click="toInformation('mzgn')">
+        <div class="weui-grid__icon">
+          <img src="../../../../static/images/介绍.png" alt />
+        </div>
+        <p class="weui-grid__label">门诊功能介绍</p>
+      </a>
       <el-dialog title="通告详情" :visible.sync="isShow">
         <commonSelect v-bind:mzData="mzData" @handleCall="handleCall"></commonSelect>
       </el-dialog>
@@ -378,6 +384,9 @@ export default {
         if (str == "tjyy") {
           window.location = "../../hosProfile.html?infoType=MedicalAppointment";
         }
+        if (str == "mzgn") {
+          window.location = "../../hosProfile.html?infoType=MZGN";
+        }
       } else if (process.env.NODE_ENV == "production") {
         if (str == "jzxz") {
           window.location =
@@ -398,6 +407,10 @@ export default {
         if (str == "tjyy") {
           window.location =
             "../../2ysechos/hosProfile.html?infoType=MedicalAppointment";
+        }
+        if (str == "mzgn") {
+          window.location =
+            "../../2ysechos/hosProfile.html?infoType=MZGN";
         }
       }
     },

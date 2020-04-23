@@ -116,6 +116,22 @@ function model(http) {
             }
         });
     },
+    //门诊介绍
+    getWxInfo(data){
+        return http.get(evn.SEC_HOSAPI+'/wx/sys/informationinfo/getWxInfo',data,{
+            headers:{
+                contentType:'application/json;charset=utf-8'
+            }
+        });
+    },
+    //住院介绍
+    getWxInfo2(data){
+        return http.get(evn.SEC_HOSAPI+'/wx/sys/informationinfo/getWxInfo2',data,{
+            headers:{
+                contentType:'application/json;charset=utf-8'
+            }
+        });
+    },
     //获取附件
     getAttachList(data){
         return http.post(evn.SEC_HOSAPI+'/wx/sys/frameAttach/getAttachList',data,{

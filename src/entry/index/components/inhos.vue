@@ -39,7 +39,12 @@
         </div>
         <p class="weui-grid__label">食堂点餐</p>
       </a>
-      
+      <a href="javascript:;" class="weui-grid js_grid" @click="toInformation('zygn')">
+        <div class="weui-grid__icon">
+          <img src="../../../../static/images/介绍.png" alt />
+        </div>
+        <p class="weui-grid__label">住院功能介绍</p>
+      </a>
     </div>
   </div>
 </template>
@@ -227,6 +232,9 @@ export default {
         if (str == "tjyy") {
           window.location = "../../hosProfile.html?infoType=MedicalAppointment";
         }
+        if (str == "zygn") {
+          window.location = "../../hosProfile.html?infoType=ZYGN";
+        }
       } else if (process.env.NODE_ENV == "production") {
         if (str == "jzxz") {
           window.location =
@@ -247,6 +255,10 @@ export default {
         if (str == "tjyy") {
           window.location =
             "../../2ysechos/hosProfile.html?infoType=MedicalAppointment";
+        }
+        if (str == "zygn") {
+          window.location =
+            "../../2ysechos/hosProfile.html?infoType=ZYGN";
         }
       }
     },
