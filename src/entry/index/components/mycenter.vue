@@ -124,7 +124,7 @@
       </a>
       <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;" ></div>
 
-      <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);" v-if="showFlag">
+      <!-- <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);" v-if="showFlag">
         <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
           <div class="weui-cells-wzl">
             <a class="weui-cell weui-cell_access-wzl" href="javascript:;" v-on:click="patientManage()">
@@ -140,7 +140,7 @@
           </div>
         </div>
       </div>
-      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;" v-if="showFlag"></div>
+      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;" v-if="showFlag"></div> -->
 
       <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
         <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
