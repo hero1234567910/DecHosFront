@@ -266,6 +266,7 @@ export default {
     
   },
   updated(){
+  	console.log('我走了')
   	let self = this;
   	if(localStorage.getItem('sec_flag') == 'zf'){
 				self.blh = localStorage.getItem('zfblh');
@@ -280,6 +281,7 @@ export default {
 			if(localStorage.getItem('sec_flag') == undefined || localStorage.getItem('sec_flag') == ''){
 				this.getblh()
 			}
+  	
   },
   methods: {
 	chooseWay(str){
@@ -449,12 +451,25 @@ export default {
             localStorage.setItem('cbpatid',self.cbpatid);
             //若参保存在 则默认取参保
             if(self.cbblh){
-            	localStorage.setItem('sec_flag','cb');
+//          	localStorage.setItem('sec_flag','cb');
+							//保存用户就诊方式
+							let d = {
+								rowGuid:localStorage.getItem('sec_patientGuid'),
+								patientJztype:2
+							}
+							self.model.updatePatient(d).then(function(res){})
+							
             	localStorage.setItem('sec_yb',true);
             	self.chooseWay('cb');
             }else{
             	if(self.zfblh){
-            		localStorage.setItem('sec_flag','zf');
+//          		localStorage.setItem('sec_flag','zf');
+								//保存用户就诊方式
+								let d = {
+									rowGuid:localStorage.getItem('sec_patientGuid'),
+									patientJztype:1
+								}
+								self.model.updatePatient(d).then(function(res){})
             		self.chooseWay('zf');
             	}else{
             		//注册信息
