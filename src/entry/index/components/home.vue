@@ -221,7 +221,7 @@ export default {
     getDepartmentOnDuty() {
     	let self = this;
     	if(sessionStorage.getItem('hero-dtmz') != null && sessionStorage.getItem('hero-dtmz')!= ''){
-    		this.arr = JSON.format(sessionStorage.getItem('hero-dtmz'))
+    		this.arr = JSON.parse(sessionStorage.getItem('hero-dtmz'))
     	}
     	
       $.showLoading();
