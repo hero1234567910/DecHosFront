@@ -156,14 +156,6 @@ function model(http) {
         }
       });
     },
-    //  getImg(data){
-    //  	return http.get("https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+data, {
-    //      headers: {
-    //        "Content-Type": "application/x-www-form-urlencoded",
-    //        "Access-Control-Allow-Origin":"*"
-    //      }
-    //    });
-    //  }
     /**
      * 获取推广次数
      * @param {*} data 
@@ -184,7 +176,7 @@ function model(http) {
      * 获取推广列表
      */
     getPatientListByOpenId(data) {
-      return http.post(
+      return http.get(
         evn.SEC_HOSAPI +
           "/wx/sys/sechosconsultation/getPatientListByOpenId?" +
           data,
