@@ -14,7 +14,6 @@
               placeholder="搜索"
               required
               v-model="souInput"
-              @click="getAllInfo"
             />
             <a @click="clear()" class="weui-icon-clear" id="searchClear"></a>
           </div>
@@ -192,7 +191,7 @@ export default {
   	},
     getAllInfo() {
       this.seller = this.arr;
-      //console.log(this.seller);
+        console.log(this.seller);
     },
     getMore() {
       this.InfoData.content.replace(
@@ -220,8 +219,13 @@ export default {
     },
     getDepartmentOnDuty() {
     	let self = this;
+//  	$('#searchInput').bind('keyup', function() {
+//			        
+//			    });
     	if(sessionStorage.getItem('hero-dtmz') != null && sessionStorage.getItem('hero-dtmz')!= ''){
     		this.arr = JSON.parse(sessionStorage.getItem('hero-dtmz'))
+    		this.seller = this.arr;
+    		return;
     	}
     	
       $.showLoading();
@@ -238,6 +242,7 @@ export default {
                   ch[j].ksmc += "(专家)";
                 }
                 self.arr.push(ch[j]);
+                self.seller = self.arr;
               }
             }
           }

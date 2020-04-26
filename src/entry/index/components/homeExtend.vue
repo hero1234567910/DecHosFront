@@ -19,19 +19,17 @@
     },
     props:['seller','souInput'],
     watch:{
-//  	'seller':function(newVal){
-//  		
-//  	},
-//  	'souInput':function(newVal){
-//  		
-//  	},
     	souInput:{
     		handler(newName,oldName){
-    			this.$emit('tohomeShow');
+    			console.log(newName,oldName)
+    			if(oldName == undefined || newName == ''){
+    				//调用父组件清除
+    				this.$parent.clear()
+    				return;
+    			}
 	    		let self = this;
-			    $('#searchInput').bind('keyup', function() {
-			        self.sousuo(newName)
-			    });
+	    		self.sousuo(newName)
+			    self.$emit('tohomeShow');
     		},
     		immediate:true
     	}

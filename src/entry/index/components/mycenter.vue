@@ -266,22 +266,21 @@ export default {
     
   },
   updated(){
-  	console.log('我走了')
   	let self = this;
-  	if(localStorage.getItem('sec_flag') == 'zf'){
-				self.blh = localStorage.getItem('zfblh');
-				$('#zf').css({'background-color':'rgb(103,194,58)','color':'white'});
-				$('#cb').css({'background-color':'white','color':'black'})
-			}
-			if(localStorage.getItem('sec_flag') == 'cb'){
-				self.blh = localStorage.getItem('cbblh');
-				$('#cb').css({'background-color':'rgb(103,194,58)','color':'white'});
-				$('#zf').css({'background-color':'white','color':'black'})
-			}
-			if(localStorage.getItem('sec_flag') == undefined || localStorage.getItem('sec_flag') == ''){
-				this.getblh()
-			}
-  	
+  	this.getblh()
+//	if(localStorage.getItem('sec_flag') == 'zf'){
+//				self.blh = localStorage.getItem('zfblh');
+//				$('#zf').css({'background-color':'rgb(103,194,58)','color':'white'});
+//				$('#cb').css({'background-color':'white','color':'black'})
+//			}
+//			if(localStorage.getItem('sec_flag') == 'cb'){
+//				self.blh = localStorage.getItem('cbblh');
+//				$('#cb').css({'background-color':'rgb(103,194,58)','color':'white'});
+//				$('#zf').css({'background-color':'white','color':'black'})
+//			}
+//			if(localStorage.getItem('sec_flag') == undefined || localStorage.getItem('sec_flag') == ''){
+//				
+//			}
   },
   methods: {
 	chooseWay(str){
@@ -294,6 +293,15 @@ export default {
 				this.blh = this.zfblh;
 				$('#zf').css({'background-color':'rgb(103,194,58)','color':'white'});
 				$('#cb').css({'background-color':'white','color':'black'})
+			}else{
+				//注册信息
+    		$.alert("未查询到您的信息，请先建档", "提示", function() {
+						  	if (process.env.NODE_ENV == 'dev') {
+								  window.location='../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								} else if (process.env.NODE_ENV == 'production') {
+								  window.location='../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								}
+						});
 			}
 		}else{
 			//切换参保方式
@@ -445,42 +453,74 @@ export default {
                 self.cbpatid = outArray[i].patid;
               }
             }
-            localStorage.setItem('zfblh',arr[0].blh);
-            localStorage.setItem('zfpatid',arr[0].patid);
-            localStorage.setItem('cbblh',self.cbblh);
-            localStorage.setItem('cbpatid',self.cbpatid);
-            //若参保存在 则默认取参保
-            if(self.cbblh){
-//          	localStorage.setItem('sec_flag','cb');
-							//保存用户就诊方式
-							let d = {
-								rowGuid:localStorage.getItem('sec_patientGuid'),
-								patientJztype:2
-							}
-							self.model.updatePatient(d).then(function(res){})
-							
-            	localStorage.setItem('sec_yb',true);
-            	self.chooseWay('cb');
+            if(arr.length !=0 && arr[0].blh){
+            	localStorage.setItem('zfblh',arr[0].blh);
+            	localStorage.setItem('zfpatid',arr[0].patid);
             }else{
-            	if(self.zfblh){
-//          		localStorage.setItem('sec_flag','zf');
+            	localStorage.removeItem('zfblh');
+            	localStorage.removeItem('zfpatid');
+            }
+            if(self.cbblh){
+            	localStorage.setItem('cbblh',self.cbblh);
+            	localStorage.setItem('cbpatid',self.cbpatid);
+            }else{
+            	localStorage.removeItem('cbblh');
+            	localStorage.removeItem('cbpatid');
+            }
+            //若参保存在 则默认取参保
+            if(localStorage.getItem('sec_flag') == undefined || localStorage.getItem('sec_flag') == ''){
+            	
+            	if(self.cbblh){
+	//          	localStorage.setItem('sec_flag','cb');
 								//保存用户就诊方式
 								let d = {
 									rowGuid:localStorage.getItem('sec_patientGuid'),
-									patientJztype:1
+									patientJztype:2
 								}
 								self.model.updatePatient(d).then(function(res){})
-            		self.chooseWay('zf');
-            	}else{
-            		//注册信息
-            		$.alert("未查询到您的信息，请先建档", "提示", function() {
-								  	if (process.env.NODE_ENV == 'dev') {
-										  window.location='../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
-										} else if (process.env.NODE_ENV == 'production') {
-										  window.location='../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
-										}
-								});
+								
+	            	localStorage.setItem('sec_yb',true);
+	            	self.chooseWay('cb');
+	            }else{
+	            	if(self.zfblh){
+	//          		localStorage.setItem('sec_flag','zf');
+									//保存用户就诊方式
+									let d = {
+										rowGuid:localStorage.getItem('sec_patientGuid'),
+										patientJztype:1
+									}
+									self.model.updatePatient(d).then(function(res){})
+	            		self.chooseWay('zf');
+	            	}else{
+	            		//注册信息
+	            		$.alert("未查询到您的信息，请先建档", "提示", function() {
+									  	if (process.env.NODE_ENV == 'dev') {
+											  window.location='../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+											} else if (process.env.NODE_ENV == 'production') {
+											  window.location='../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+											}
+									});
+	            	}
             	}
+            
+            }else if(localStorage.getItem('sec_flag') == 'zf'){
+	//          		localStorage.setItem('sec_flag','zf');
+									//保存用户就诊方式
+									let d = {
+										rowGuid:localStorage.getItem('sec_patientGuid'),
+										patientJztype:1
+									}
+									self.model.updatePatient(d).then(function(res){})
+	            		self.chooseWay('zf');
+            }else if(localStorage.getItem('sec_flag') == 'cb'){
+            	let d = {
+									rowGuid:localStorage.getItem('sec_patientGuid'),
+									patientJztype:2
+								}
+								self.model.updatePatient(d).then(function(res){})
+								
+	            	localStorage.setItem('sec_yb',true);
+	            	self.chooseWay('cb');
             }
           }
         });
