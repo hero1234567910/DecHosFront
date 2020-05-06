@@ -65,7 +65,6 @@
               type="number"
               placeholder="请选择下列缴费金额"
               v-model="yjMoney"
-              readonly="readonly"
             />
           </div>
         </div>

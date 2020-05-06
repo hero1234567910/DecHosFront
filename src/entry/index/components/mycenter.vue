@@ -259,7 +259,9 @@ export default {
         this.sex = sex;
         this.show = false;
         this.patientIdCard = patientIdCard;
+        this.getblh()
       }
+      
     }
   },
   mounted() {
@@ -267,20 +269,7 @@ export default {
   },
   updated(){
   	let self = this;
-  	this.getblh()
-//	if(localStorage.getItem('sec_flag') == 'zf'){
-//				self.blh = localStorage.getItem('zfblh');
-//				$('#zf').css({'background-color':'rgb(103,194,58)','color':'white'});
-//				$('#cb').css({'background-color':'white','color':'black'})
-//			}
-//			if(localStorage.getItem('sec_flag') == 'cb'){
-//				self.blh = localStorage.getItem('cbblh');
-//				$('#cb').css({'background-color':'rgb(103,194,58)','color':'white'});
-//				$('#zf').css({'background-color':'white','color':'black'})
-//			}
-//			if(localStorage.getItem('sec_flag') == undefined || localStorage.getItem('sec_flag') == ''){
-//				
-//			}
+//	this.getblh()
   },
   methods: {
 	chooseWay(str){
