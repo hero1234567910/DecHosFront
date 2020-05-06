@@ -259,9 +259,7 @@ export default {
         this.sex = sex;
         this.show = false;
         this.patientIdCard = patientIdCard;
-        this.getblh()
       }
-      
     }
   },
   mounted() {
@@ -269,7 +267,7 @@ export default {
   },
   updated(){
   	let self = this;
-//	this.getblh()
+	this.getblh()
   },
   methods: {
 	chooseWay(str){

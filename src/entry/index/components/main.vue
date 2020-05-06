@@ -164,6 +164,7 @@ export default {
                   "sec_refreshToken",
                   self.getAesString(res.data.data.refresh_token)
                 );
+                self.patientName = localStorage.getItem('sec_patientName');
               } else {
                 $.toptip(res.data.msg, "error");
               }
@@ -232,6 +233,7 @@ export default {
                   "sec_refreshToken",
                   self.getAesString(res.data.data.refresh_token)
                 );
+                self.patientName = localStorage.getItem('sec_patientName');
               } else {
                 $.toptip(res.data.msg, "error");
               }
