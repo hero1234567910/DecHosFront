@@ -77,16 +77,26 @@ export default {
     },
     toSubmit(ele) {
       let self = this;
-      $.confirm(
-        "您确定要预约吗？",
-        "提示",
-        function() {
-          self.sub(ele);
-        },
-        function() {
-          return;
-        }
-      );
+      if (!self.forbidAge(ele)) {
+        $.alert({
+          title: "温馨提示",
+          text: "抱歉，您的年龄已经不能挂儿科号了！",
+          onOK: function() {
+            return
+          }
+        });
+      } else {
+        $.confirm(
+          "您确定要预约吗？",
+          "提示",
+          function() {
+            self.sub(ele);
+          },
+          function() {
+            return;
+          }
+        );
+      }
     },
     sub(ele) {
       let self = this;
@@ -103,7 +113,7 @@ export default {
 
       this.model.getOutpatientAppointmentReg(data).then(function(res) {
         if (res.data.code == 0) {
-          if (localStorage.getItem("sec_yb") == 'true') {
+          if (localStorage.getItem("sec_yb") == "true") {
             $.alert("请您使用医保到相应柜台完成缴费", "预约成功", function() {
               //点击确认后的回调函数
               if (process.env.NODE_ENV == "dev") {
@@ -143,6 +153,35 @@ export default {
           $.toptip(res.data.msg, "error");
         }
       });
+    },
+    getAge() {
+      let userCard = localStorage.getItem("sec_patientIdcard");
+      let yearBirth = userCard.substring(6, 10);
+      let monthBirth = userCard.substring(10, 12);
+      let dayBirth = userCard.substring(12, 14);
+      //获取当前年月日并计算年龄
+      let myDate = new Date();
+      let monthNow = myDate.getMonth() + 1;
+      let dayNow = myDate.getDay();
+      let age = myDate.getFullYear() - yearBirth;
+      if (
+        monthNow < monthBirth ||
+        (monthNow == monthBirth && dayNow < dayBirth)
+      ) {
+        age--;
+      }
+      //得到年龄;
+      return age;
+    },
+    forbidAge(ele) {
+      let self = this;
+      let age = self.getAge();
+      // 如果年龄大于14岁，无法选中儿科
+      if (age >= 14 && (ele.pbmc == "儿科门诊" || ele.pbmc == "急诊儿科")) {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 };

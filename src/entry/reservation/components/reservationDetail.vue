@@ -139,6 +139,20 @@
           </div>
           <div class="weui-cell">
             <div class="weui-cell__hd">
+              <label class="weui-label">门诊病历号</label>
+            </div>
+            <div class="weui-cell__bd">
+              <input
+                class="weui-input"
+                type="text"
+                disabled="true"
+                v-bind:value="mzblh"
+                style="text-align: right;color: #999999"
+              />
+            </div>
+          </div>
+          <div class="weui-cell">
+            <div class="weui-cell__hd">
               <label class="weui-label">证件号</label>
             </div>
             <div class="weui-cell__bd">
@@ -236,23 +250,36 @@ export default {
       zfzt: "",
       patid: "",
       pbxh: "",
-      yysjd:""
+      yysjd: "",
+      mzblh: ""
     };
   },
-  beforeCreate(){
-  	appAll = this;
+  beforeCreate() {
+    appAll = this;
   },
   //props:['patid'],
+  created() {
+    this.initMZBLH()
+  },
   mounted() {
     this.showDetail();
     this.buttonInit();
   },
   filters: {
     dateForm: function(ele) {
-      return moment(ele).format("YYYY-MM-DD")+' '+appAll.yysjd;
+      return moment(ele).format("YYYY-MM-DD") + " " + appAll.yysjd;
     }
   },
   methods: {
+    initMZBLH() {
+      let self = this;
+      let mzlx = localStorage.getItem("sec_flag");
+      if (mzlx == "zf") {
+        self.mzblh = localStorage.getItem("zfblh");
+      } else {
+        self.mzblh = localStorage.getItem("cbblh");
+      }
+    },
     handleChange(val) {},
     buttonInit() {
       let self = this;

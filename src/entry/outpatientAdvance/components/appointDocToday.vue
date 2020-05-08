@@ -61,7 +61,7 @@ export default {
     return {
       tabPosition: "left",
       doctorList: "",
-      kghys:''
+      kghys: ""
     };
   },
   created() {},
@@ -81,11 +81,50 @@ export default {
         }
       });
     },
-    toSelect(ele){
-      	var da = this.$route.query;
-      	this.$router.push('/docTodaySource?ysdm='+ele.ysdm);
+    toSelect(ele) {
+      var da = this.$route.query;
+      let self = this;
+      if (!self.forbidAge(ele)) {
+        $.alert({
+          title: "温馨提示",
+          text: "抱歉，您的年龄已经不能挂儿科号了！",
+          onOK: function() {
+            return;
+          }
+        });
+      } else {
+        this.$router.push("/docTodaySource?ysdm=" + ele.ysdm);
       }
-    
+    },
+    getAge() {
+      let userCard = localStorage.getItem("sec_patientIdcard");
+      let yearBirth = userCard.substring(6, 10);
+      let monthBirth = userCard.substring(10, 12);
+      let dayBirth = userCard.substring(12, 14);
+      //获取当前年月日并计算年龄
+      let myDate = new Date();
+      let monthNow = myDate.getMonth() + 1;
+      let dayNow = myDate.getDay();
+      let age = myDate.getFullYear() - yearBirth;
+      if (
+        monthNow < monthBirth ||
+        (monthNow == monthBirth && dayNow < dayBirth)
+      ) {
+        age--;
+      }
+      //得到年龄;
+      return age;
+    },
+    forbidAge(ele) {
+      let self = this;
+      let age = self.getAge();
+      // 如果年龄大于14岁，无法选中儿科
+      if (age >= 14 && (ele.ksmc == "儿科门诊" || ele.ksmc == "急诊儿科")) {
+        return false;
+      } else {
+        return true;
+      }
+    }
   }
 };
 </script>
