@@ -15,7 +15,7 @@
     </div>
 
     <div class="flow" style="margin-top: 0px;">
-      <div class="weui-cells"  style="margin-top: 4.176471em;">
+      <div class="weui-cells" style="margin-top: 4.176471em;">
         <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="pfk()">
           <div class="weui-cell__hd">
             <img src="../../../../static/images/皮肤科1.png" />
@@ -104,7 +104,7 @@
             <p>神经外科</p>
           </div>
           <div class="weui-cell__ft"></div>
-        </a>        
+        </a>
 
         <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="erk()">
           <div class="weui-cell__hd">
@@ -145,13 +145,75 @@
           </div>
           <div class="weui-cell__ft"></div>
         </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="gdwk()">
+          <div class="weui-cell__hd">
+            <img src="../../../../static/images/肝.png" />
+          </div>
+          <div class="weui-cell__bd">
+            <p>肝胆外科</p>
+          </div>
+          <div class="weui-cell__ft"></div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="jzk()">
+          <div class="weui-cell__hd">
+            <img src="../../../../static/images/急诊科.png" />
+          </div>
+          <div class="weui-cell__bd">
+            <p>急诊科</p>
+          </div>
+          <div class="weui-cell__ft"></div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="snk()">
+          <div class="weui-cell__hd">
+            <img src="../../../../static/images/肾.png" />
+          </div>
+          <div class="weui-cell__bd">
+            <p>肾内科</p>
+          </div>
+          <div class="weui-cell__ft"></div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="gcwk()">
+          <div class="weui-cell__hd">
+            <img src="../../../../static/images/肛肠外科.png" />
+          </div>
+          <div class="weui-cell__bd">
+            <p>肛肠科</p>
+          </div>
+          <div class="weui-cell__ft"></div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="xxwk()">
+          <div class="weui-cell__hd">
+            <img src="../../../../static/images/胸外科.png" />
+          </div>
+          <div class="weui-cell__bd">
+            <p>胸心外科</p>
+          </div>
+          <div class="weui-cell__ft"></div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="mnwk()">
+          <div class="weui-cell__hd">
+            <img src="../../../../static/images/泌尿.png" />
+          </div>
+          <div class="weui-cell__bd">
+            <p>泌尿外科</p>
+          </div>
+          <div class="weui-cell__ft"></div>
+        </a>
+        <a class="weui-cell weui-cell_access" href="javascript:;" v-on:click="csk()">
+          <div class="weui-cell__hd">
+            <img src="../../../../static/images/超声波.png" />
+          </div>
+          <div class="weui-cell__bd">
+            <p>超声科</p>
+          </div>
+          <div class="weui-cell__ft"></div>
+        </a>
 
-      <div style="margin-top: 10px;margin-bottom: 10px;">
-      <div>
-        <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回主页面</a>
-      </div>
-    </div>
-
+        <div style="margin-top: 10px;margin-bottom: 10px;">
+          <div>
+            <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回主页面</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -163,7 +225,7 @@ export default {
     // this.model = model(this.axios);
     return {};
   },
-  methods:{
+  methods: {
     tomainList() {
       if (process.env.NODE_ENV == "dev") {
         window.location = "../../index.html";
@@ -171,52 +233,72 @@ export default {
         window.location = "../../2ysechos/index.html";
       }
     },
-      pfk(){
-          this.$router.push('/professorList?ksmc='+'pfk');
-      },
-      nfmk(){
-          this.$router.push('/professorList?ksmc='+'nfmk');
-      },
-      xxgnk(){
-          this.$router.push('/professorList?ksmc='+'xxgnk');
-      },
-      hxnk(){
-          this.$router.push('/professorList?ksmc='+'hxnk');
-      },
-      xhnk(){
-          this.$router.push('/professorList?ksmc='+'xhnk');
-      },
-      gk(){
-          this.$router.push('/professorList?ksmc='+'gk');
-      },
-      szwk(){
-          this.$router.push('/professorList?ksmc='+'szwk');
-      },
-      pwk(){
-          this.$router.push('/professorList?ksmc='+'pwk');
-      },
-      sjwk(){
-          this.$router.push('/professorList?ksmc='+'sjwk');
-      },
-      fck(){
-          this.$router.push('/professorList?ksmc='+'fck');
-      },
-      erk(){
-          this.$router.push('/professorList?ksmc='+'erk');
-      },
-      erbhk(){
-        this.$router.push('/professorList?ksmc='+'erbhk');
-      },
-      yk(){
-        this.$router.push('/professorList?ksmc='+'yk');
-      },
-      xnk(){
-        this.$router.push('/professorList?ksmc='+'xnk');
-      },
-      xlzxk(){
-         this.$router.push('/professorList?ksmc='+'xlzxk');
-      }
-
+    pfk() {
+      this.$router.push("/professorList?ksmc=" + "pfk");
+    },
+    nfmk() {
+      this.$router.push("/professorList?ksmc=" + "nfmk");
+    },
+    xxgnk() {
+      this.$router.push("/professorList?ksmc=" + "xxgnk");
+    },
+    hxnk() {
+      this.$router.push("/professorList?ksmc=" + "hxnk");
+    },
+    xhnk() {
+      this.$router.push("/professorList?ksmc=" + "xhnk");
+    },
+    gk() {
+      this.$router.push("/professorList?ksmc=" + "gk");
+    },
+    szwk() {
+      this.$router.push("/professorList?ksmc=" + "szwk");
+    },
+    pwk() {
+      this.$router.push("/professorList?ksmc=" + "pwk");
+    },
+    sjwk() {
+      this.$router.push("/professorList?ksmc=" + "sjwk");
+    },
+    fck() {
+      this.$router.push("/professorList?ksmc=" + "fck");
+    },
+    erk() {
+      this.$router.push("/professorList?ksmc=" + "erk");
+    },
+    erbhk() {
+      this.$router.push("/professorList?ksmc=" + "erbhk");
+    },
+    yk() {
+      this.$router.push("/professorList?ksmc=" + "yk");
+    },
+    xnk() {
+      this.$router.push("/professorList?ksmc=" + "xnk");
+    },
+    xlzxk() {
+      this.$router.push("/professorList?ksmc=" + "xlzxk");
+    },
+    gdwk() {
+      this.$router.push("/professorList?ksmc=" + "gdwk");
+    },
+    jzk() {
+      this.$router.push("/professorList?ksmc=" + "jzk");
+    },
+    snk() {
+      this.$router.push("/professorList?ksmc=" + "snk");
+    },
+    gcwk() {
+      this.$router.push("/professorList?ksmc=" + "gcwk");
+    },
+    xxwk() {
+      this.$router.push("/professorList?ksmc=" + "xxwk");
+    },
+    mnwk() {
+      this.$router.push("/professorList?ksmc=" + "mnwk");
+    },
+    csk() {
+      this.$router.push("/professorList?ksmc=" + "csk");
+    }
   }
 };
 </script>
@@ -248,10 +330,10 @@ export default {
 .el-tabs--right {
   height: calc(100vh - 137px);
 }
-.wzl-head{
-    position: absolute;
-    width: 100%;
-    z-index: 99;
+.wzl-head {
+  position: absolute;
+  width: 100%;
+  z-index: 99;
 }
 .weui-btn_primary {
   background-color: #4ccbdb;

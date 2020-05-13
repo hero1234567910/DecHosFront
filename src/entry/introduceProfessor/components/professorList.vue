@@ -78,6 +78,13 @@ import Erk from "../staticvalue/erk.vue";
 import Sjwk from "../staticvalue/sjwk.vue";
 import Xxgnk from "../staticvalue/xxgnk.vue";
 import Xlzxk from "../staticvalue/xlzxk.vue";
+import Gdwk from '../staticvalue/gdwk.vue';
+import Jzk from '../staticvalue/jzk.vue'
+import Snk from '../staticvalue/snk.vue'
+import Gcwk from '../staticvalue/gcwk.vue'
+import Xxwk from '../staticvalue/xxwk.vue'
+import Mnwk from '../staticvalue/mnwk.vue'
+import Csk from '../staticvalue/csk.vue'
 export default {
   data() {
     return {
@@ -198,6 +205,48 @@ export default {
       }
       if (self.ksmc == "xlzxk") {
         self.InfoList = Xlzxk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
+      }
+      if (self.ksmc == "gdwk") {
+        self.InfoList = Gdwk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
+      }
+      if (self.ksmc == "jzk") {
+        self.InfoList = Jzk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
+      }
+      if (self.ksmc == "snk") {
+        self.InfoList = Snk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
+      }
+      if (self.ksmc == "gcwk") {
+        self.InfoList = Gcwk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
+      }
+      if (self.ksmc == "xxwk") {
+        self.InfoList = Xxwk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
+      }
+      if (self.ksmc == "mnwk") {
+        self.InfoList = Mnwk.jsonnfmk;
+        for (var i = 0; i < self.InfoList.length; i++) {
+          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+        }
+      }
+      if (self.ksmc == "csk") {
+        self.InfoList = Csk.jsonnfmk;
         for (var i = 0; i < self.InfoList.length; i++) {
           self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
         }
