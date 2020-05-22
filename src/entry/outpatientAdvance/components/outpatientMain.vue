@@ -100,6 +100,8 @@ export default {
   },
   mounted() {
     this.init();
+    let da = this.$route.query;
+    this.patientId = da.patid;
   },
   methods: {
     Report() {

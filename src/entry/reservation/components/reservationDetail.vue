@@ -180,7 +180,18 @@
             </div>
           </div>
         </div>
-
+				
+				<div class="weui-row">
+          <div class="weui-col-100">
+            <a
+              v-show="buttonShow"
+              href="javascript:;"
+              class="weui-btn weui-btn_primary hero-button"
+              @click="fzClick()"
+            >复诊预约</a>
+          </div>
+        </div>
+				
         <div class="weui-row">
           <div class="weui-col-50">
             <a
@@ -313,6 +324,15 @@ export default {
         case "8":
           return "爽约";
           break;
+      }
+    },
+    fzClick(){
+    	if (process.env.NODE_ENV == "dev") {
+        window.location =
+          "../../outpatientAdvance.html#/outpatientMain?patid=" +this.patid;
+      } else if (process.env.NODE_ENV == "production") {
+        window.location =
+          "../../2ysechos/outpatientAdvance.html#/outpatientMain?patid=" +this.patid;
       }
     },
     returnList() {
