@@ -200,7 +200,7 @@
             <a
               v-show="buttonShow"
               href="javascript:;"
-              class="weui-btn weui-btn_primary hero-button"
+              class="weui-btn weui-btn_primary fz-button"
               @click="fzClick()"
             >复诊预约</a>
           </div>
@@ -211,7 +211,7 @@
             <a
               v-show="zfzt != 1"
               href="javascript:;"
-              class="weui-btn weui-btn_primary hero-button"
+              class="weui-btn weui-btn_warn warn-button"
               @click="cancelAppoint(yyxh, yyzt, patid)"
             >取消挂号预约</a>
           </div>
@@ -432,7 +432,18 @@ export default {
 <style>
 .hero-button {
   background-color: #44c5e3;
-  width: 170px;
+  width: 94%;
+  height: 38px;
+  line-height: 38px;
+}
+.fz-button {
+  background-color: #44c5e3;
+  width: 97%;
+  height: 38px;
+  line-height: 38px;
+}
+.warn-button {
+  width: 94%;
   height: 38px;
   line-height: 38px;
 }
@@ -440,8 +451,9 @@ export default {
   height: 50px;
 }
 .weui-row {
-  margin-top: 20px;
-  height: 50px;
+    margin-top: 10px;
+    height: 50px;
+    margin-bottom: 10px;
 }
 .weui-label {
   color: #999999;
