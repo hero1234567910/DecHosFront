@@ -72,7 +72,7 @@
           <div class="weui-cell__bd">
             <input
               type="text"
-              data-toggle="date"
+              readonly
               id="my-input"
               placeholder="请输入出生年月"
               style="margin-top: 0px;"
@@ -145,10 +145,24 @@ export default {
 
   methods: {
     initY() {
-      $("#my-input").calendar({
-        dateFormat: "yyyy-mm-dd",
-        value: ["1990-6-1"]
-      });
+     let self = this
+      const zjh = this.$route.query.zjh;
+      const birthday = this.getBirthdayFromIdCard(zjh)
+      $("#my-input").val(birthday)
+    },
+    getBirthdayFromIdCard(idCard) {
+      var birthday = "";
+      if (idCard != null && idCard != "") {
+        if (idCard.length == 15) {
+          birthday = "19" + idCard.substr(6, 6);
+        } else if (idCard.length == 18) {
+          birthday = idCard.substr(6, 8);
+        }
+
+        birthday = birthday.replace(/(.{4})(.{2})/, "$1-$2-");
+      }
+
+      return birthday;
     },
     save() {
       //获取提交参数
