@@ -16,14 +16,15 @@
         <el-input type="password" v-model="loginForm.password" auto-complete="off" placeholder="密码"></el-input>
       </el-form-item>
       <!-- <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox> -->
-      
+
       <div>
-		        <div id="captcha1">
-		            <p id="wait1" class="show">正在加载验证码......</p>
-		        </div>
-		    </div>
-		    <br><p id="notice1" class="hide">请先完成验证</p>
-      
+        <div id="captcha1">
+          <p id="wait1" class="show">正在加载验证码......</p>
+        </div>
+      </div>
+      <br />
+      <p id="notice1" class="hide">请先完成验证</p>
+
       <el-form-item style="width:100%;">
         <el-button type="primary" style="width:46%;" @click.native.prevent="Reset">重 置</el-button>
         <el-button
@@ -33,13 +34,18 @@
           :loading="logining"
         >登 录</el-button>
       </el-form-item>
+      <div style="margin-top: 10px;margin-bottom: 10px;">
+        <div>
+          <a href="javascript:;" v-on:click="toDoctor()">医师职工登录</a>
+        </div>
+      </div>
     </el-form>
   </div>
 </template>
 <script>
 import model from "./model.js";
-import CryptoJS from 'crypto-js';
-import gtjs from '../../../../static/lib/geetest/gt.js'
+import CryptoJS from "crypto-js";
+import gtjs from "../../../../static/lib/geetest/gt.js";
 export default {
   data() {
     this.model = model(this.axios);
@@ -55,99 +61,99 @@ export default {
         password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       },
       checked: true,
-      captchaObj:{}
+      captchaObj: {}
     };
   },
   mounted() {},
   created() {
-      //this.getDocInfo();
-      this.getId()
+    //this.getDocInfo();
+    this.getId();
   },
   methods: {
-  	getId() {
-			let self = this;
-			var handler1 = function (captchaObj) {
-				self.captchaObj = captchaObj;
+    toDoctor() {
+      if (process.env.NODE_ENV == "dev") {
+        window.location = "../../doctorService.html";
+      } else if (process.env.NODE_ENV == "production") {
+        window.location = "../../2ysechos/doctorService.html";
+      }
+    },
+    getId() {
+      let self = this;
+      var handler1 = function(captchaObj) {
+        self.captchaObj = captchaObj;
         // 将验证码加到id为captcha的元素里，同时会有三个input的值用于表单提交
         captchaObj.appendTo("#captcha1");
-        captchaObj.onReady(function () {
-            $("#wait1").hide();
+        captchaObj.onReady(function() {
+          $("#wait1").hide();
         });
-    };
-		  this.model.getId().then(function(res){
-					initGeetest({
-                gt: res.data.gt,
-                challenge: res.data.challenge,
-                new_captcha: res.data.new_captcha, // 用于宕机时表示是新验证码的宕机
-                offline: !res.data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
-                product: "popup", // 产品形式，包括：float，popup
-                width: "100%"
-                // 更多配置参数请参见：http://www.geetest.com/install/sections/idx-client-sdk.html#config
-            }, handler1);
-		  })
-		},
+      };
+      this.model.getId().then(function(res) {
+        initGeetest(
+          {
+            gt: res.data.gt,
+            challenge: res.data.challenge,
+            new_captcha: res.data.new_captcha, // 用于宕机时表示是新验证码的宕机
+            offline: !res.data.success, // 表示用户后台检测极验服务器是否宕机，一般不需要关注
+            product: "popup", // 产品形式，包括：float，popup
+            width: "100%"
+            // 更多配置参数请参见：http://www.geetest.com/install/sections/idx-client-sdk.html#config
+          },
+          handler1
+        );
+      });
+    },
     Login(f) {
       let self = this;
-      this.$refs[f].validate((valid)=>{
-      	if(valid){
-      		let userInfo = {
-		        loginId: this.loginForm.loginId,
-		        password: this.loginForm.password
-		      };
-		      var result = this.captchaObj.getValidate();
-			    if (!result) {
-			        $("#notice1").show();
-			        setTimeout(function () {
-			            $("#notice1").hide();
-			        }, 2000);
-			        return;
-			    }
-		      let data = userInfo;
-		      this.model.Login(data).then(function(res) {
-		        if (res.data.code == "0") {
-		          window.sessionStorage.setItem("m_token", res.data.data.token);
-		          window.sessionStorage.setItem(
-		            "m_user_rowGuid",
-		            res.data.data.userRowGuid
-		          );
-		          window.sessionStorage.setItem(
-		            "m_user_userName",
-		            res.data.data.userName
-		          );
-		          window.sessionStorage.setItem(
-		            "m_mobile",
-		            res.data.data.mobile
-		          );
-		          window.sessionStorage.setItem(
-		            "m_deptGuid",
-		            JSON.stringify(res.data.deptGuid)
-		          );
-		          window.sessionStorage.setItem(
-		            "m_deptName",
-		            res.data.data.deptName
-		          );
-		          window.sessionStorage.setItem(
-		            "m_loginId",
-		            res.data.data.loginId
-		          );
-		          window.sessionStorage.setItem(
-		            "m_sex",
-		            res.data.data.sex
-		          );
-		          self.$message({
-		            message: "登录成功",
-		            type: "success"
-		          });
-		          self.$router.push("/maintainMenu");
-		        } else {
-		          self.$message.error(res.data.msg);
-		        }
-		      });
-      	}else{
-      		return;
-      	}
-      })
-      
+      this.$refs[f].validate(valid => {
+        if (valid) {
+          let userInfo = {
+            loginId: this.loginForm.loginId,
+            password: this.loginForm.password
+          };
+          var result = this.captchaObj.getValidate();
+          if (!result) {
+            $("#notice1").show();
+            setTimeout(function() {
+              $("#notice1").hide();
+            }, 2000);
+            return;
+          }
+          let data = userInfo;
+          this.model.Login(data).then(function(res) {
+            if (res.data.code == "0") {
+              window.sessionStorage.setItem("m_token", res.data.data.token);
+              window.sessionStorage.setItem(
+                "m_user_rowGuid",
+                res.data.data.userRowGuid
+              );
+              window.sessionStorage.setItem(
+                "m_user_userName",
+                res.data.data.userName
+              );
+              window.sessionStorage.setItem("m_mobile", res.data.data.mobile);
+              window.sessionStorage.setItem(
+                "m_deptGuid",
+                JSON.stringify(res.data.deptGuid)
+              );
+              window.sessionStorage.setItem(
+                "m_deptName",
+                res.data.data.deptName
+              );
+              window.sessionStorage.setItem("m_loginId", res.data.data.loginId);
+              window.sessionStorage.setItem("m_sex", res.data.data.sex);
+              self.$message({
+                message: "登录成功",
+                type: "success"
+              });
+              self.$router.push("/maintainMenu");
+            } else {
+              self.$message.error(res.data.msg);
+            }
+          });
+        } else {
+          return;
+        }
+      });
     },
     Reset() {
       this.$refs.loginForm.resetFields();
@@ -186,7 +192,7 @@ export default {
       return null;
     }
   }
-}
+};
 </script>
 <style scoped>
 .login-container {
@@ -211,29 +217,28 @@ export default {
   color: #505458;
 }
 #captcha1 {
-    width: 100%;
-    display: inline-block;
+  width: 100%;
+  display: inline-block;
 }
 .show {
-    display: block;
+  display: block;
 }
 .hide {
-    display: none;
+  display: none;
 }
 #notice1 {
-    color: red;
+  color: red;
 }
 label {
-    vertical-align: top;
-    display: inline-block;
-    width: 80px;
-    text-align: right;
+  vertical-align: top;
+  display: inline-block;
+  width: 80px;
+  text-align: right;
 }
 #wait1 {
-    text-align: left;
-    color: #666;
-    margin: 0;
+  text-align: left;
+  color: #666;
+  margin: 0;
 }
-
 </style>
 
