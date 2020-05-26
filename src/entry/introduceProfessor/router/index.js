@@ -10,12 +10,20 @@ export default new Router({
     {
       path: "/",
       name: "departmentList",
-      component: departmentList
+      component: departmentList,
+      meta: {
+        keepAlive: true, //此组件需要被缓存
+        isBack: false 
+      },
     },
     {
       path: "/professorList",
       name: "professorList",
-      component: professorList
+      component: professorList,
+      meta: {
+        keepAlive: true, //此组件需要被缓存
+        isBack: false 
+      },
     }
   ]
 });

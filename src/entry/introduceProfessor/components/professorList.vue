@@ -21,15 +21,16 @@
           class="weui-media-box weui-media-box_appmsg"
           v-for="item in InfoList"
           v-on:click="dialogShow(item)"
+          :key="item.rowGuid"
         >
           <div class="weui-media-box__hd">
-            <img class="weui-media-box__thumb" :src="item.imageurl" style="border-radius: 50%;"/>
+            <img class="weui-media-box__thumb" :src="item.imgUrl | picFilter" style="border-radius: 50%;"/>
           </div>
           <div class="weui-media-box__bd">
-            <h4 class="weui-media-box__title" style="float: left;">{{item.zjxm}}</h4>
+            <h4 class="weui-media-box__title" style="float: left;">{{item.professorName}}</h4>
 
-            <h4 class="weui-media-box__title" style="clear: both;">职称: {{item.zc}}</h4>
-            <h4 class="weui-media-box__title">{{item.zw}}</h4>
+            <h4 class="weui-media-box__title" style="clear: both;">职称: {{item.professorTitle}}</h4>
+            <h4 class="weui-media-box__title">{{item.professorHos}}</h4>
           </div>
         </a>
       </div>
@@ -64,201 +65,89 @@
 
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
-import Nfmk from "../staticvalue/nfmk.vue";
-import Pfk from "../staticvalue/pfk.vue";
-import Xhnk from "../staticvalue/xhnk.vue";
-import Pwk from "../staticvalue/pwk.vue";
-import Fck from "../staticvalue/fck.vue";
-import Gk from "../staticvalue/gk.vue";
-import Xnk from "../staticvalue/xnk.vue";
-import Hxnk from "../staticvalue/hxnk.vue";
-import Erbhk from "../staticvalue/erbhk.vue";
-import Yk from "../staticvalue/yk.vue";
-import Erk from "../staticvalue/erk.vue";
-import Sjwk from "../staticvalue/sjwk.vue";
-import Xxgnk from "../staticvalue/xxgnk.vue";
-import Xlzxk from "../staticvalue/xlzxk.vue";
-import Gdwk from '../staticvalue/gdwk.vue';
-import Jzk from '../staticvalue/jzk.vue'
-import Snk from '../staticvalue/snk.vue'
-import Gcwk from '../staticvalue/gcwk.vue'
-import Xxwk from '../staticvalue/xxwk.vue'
-import Mnwk from '../staticvalue/mnwk.vue'
-import Csk from '../staticvalue/csk.vue'
+import model from "./model.js";
+import env from "../utils/evn"
 export default {
   data() {
+    this.model = model(this.axios);
     return {
       tabPosition: "left",
       InfoList: [],
       dialogVisible: false,
       zw: "",
       zjxm: "",
-      ysms: ""
+      ysms: "",
+      departmentGuid: ''
     };
+  },
+  
+  activated() {
+    if (!this.$route.meta.isBack) {
+      // 如果isBack是false，表明需要获取新数据，否则就不再请求，直接使用缓存的数据
+      this.showList();
+    }
+    // 恢复成默认的false，避免isBack一直是true，导致下次无法获取数据
+    this.$route.meta.isBack = false;
+  },
+  filters: {
+    picFilter: function(value) {
+      let imgUrl = "";
+      let netlocal = env.SEC_HOSAPI + "/file/";
+      if (value == "" || value == null) {
+        imgUrl = require("../../../../static/dochead/400398144.png");
+      } else {
+        imgUrl = netlocal + value;
+      }
+      return imgUrl;
+    }
   },
   mounted() {
     this.showList();
   },
   methods: {
     tomainList() {
-      if (process.env.NODE_ENV == "dev") {
-        window.location = "../../introduceProfessor.html";
-      } else if (process.env.NODE_ENV == "production") {
-        window.location = "../../2ysechos/introduceProfessor.html";
-      }
+      // if (process.env.NODE_ENV == "dev") {
+      //   window.location = "../../introduceProfessor.html";
+      // } else if (process.env.NODE_ENV == "production") {
+      //   window.location = "../../2ysechos/introduceProfessor.html";
+      // }
+      this.$router.push('/')
     },
     dialogShow(item) {
       let self = this;
-      self.zw = item.zw;
-      self.zjxm = item.zjxm;
-      self.ysms = item.ysms;
+      self.zw = item.professorTitle;
+      self.zjxm = item.professorName;
+      self.ysms = item.professorContent;
       self.dialogVisible = true;
     },
     handleClose(done) {
-      // this.$confirm("确认离开？")
-      //   .then(_ => {
-      //     done();
-      //   })
-      //   .catch(_ => {});
       this.dialogVisible = false;
     },
     showList() {
+      $.showLoading();
       let self = this;
-      self.ksmc = this.$route.query.ksmc;
-      if (self.ksmc == "nfmk") {
-        self.InfoList = Nfmk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+      self.departmentGuid = this.$route.query.departmentGuid;
+      this.model.getListByGuid(self.departmentGuid).then(function(res) {
+        $.hideLoading();
+        if (res.data.code == "0") {
+          self.InfoList = res.data.data;
+        } else {
+          $.toptip(res.data.msg, "error");
         }
-      }
-      if (self.ksmc == "pfk") {
-        self.InfoList = Pfk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "xhnk") {
-        self.InfoList = Xhnk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "pwk") {
-        self.InfoList = Pwk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "fck") {
-        self.InfoList = Fck.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "gk") {
-        self.InfoList = Gk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "xnk") {
-        self.InfoList = Xnk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "hxnk") {
-        self.InfoList = Hxnk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "erbhk") {
-        self.InfoList = Erbhk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "yk") {
-        self.InfoList = Yk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "erk") {
-        self.InfoList = Erk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "sjwk") {
-        self.InfoList = Sjwk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "xxgnk") {
-        self.InfoList = Xxgnk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "xlzxk") {
-        self.InfoList = Xlzxk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "gdwk") {
-        self.InfoList = Gdwk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "jzk") {
-        self.InfoList = Jzk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "snk") {
-        self.InfoList = Snk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "gcwk") {
-        self.InfoList = Gcwk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "xxwk") {
-        self.InfoList = Xxwk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "mnwk") {
-        self.InfoList = Mnwk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
-      if (self.ksmc == "csk") {
-        self.InfoList = Csk.jsonnfmk;
-        for (var i = 0; i < self.InfoList.length; i++) {
-          self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
-        }
-      }
+      });
+      // if (self.ksmc == "csk") {
+      //   self.InfoList = Csk.jsonnfmk;
+      //   for (var i = 0; i < self.InfoList.length; i++) {
+      //     self.InfoList[i].imageurl = require("../../../../static/dochead/" + self.InfoList[i].imageurl);
+      //   }
+      // }
     }
   }
 };
 </script>
 
 <style>
-.el-dialog {
-}
+
 .el-dialog {
   width: calc(100vw - 20px);
 }
