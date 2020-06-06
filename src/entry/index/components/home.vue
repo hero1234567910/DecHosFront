@@ -84,7 +84,7 @@
         <div class="weui-grid__icon">
           <img src="../../../../static/img/通知.png" alt />
         </div>
-        <p class="weui-grid__label">通知公告</p>
+        <p class="weui-grid__label">停诊公告</p>
       </a>
       <a href="javascript:;" class="weui-grid js_grid" @click="toInformation('tjyy')">
         <div class="weui-grid__icon">
