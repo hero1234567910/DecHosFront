@@ -163,10 +163,12 @@
   			let da = this.$route.query;
   			this.patid = da.patid;
   			this.cfxh = da.cfxh;
+  			this.ghxh = da.ghxh;
 
   			let data = {
   				patid:this.patid,
   				cfxhhj:this.cfxh,
+  				ghxh:this.ghxh,
   				isynzh:0
   			}
   			this.model.getOutpatientFeeBudget(data).then(function(res){

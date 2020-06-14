@@ -281,12 +281,16 @@ export default {
 				$('#zf').css({'background-color':'rgb(103,194,58)','color':'white'});
 				$('#cb').css({'background-color':'white','color':'black'})
 			}else{
+				this.zjh = localStorage.getItem("sec_patientIdcard");
+      	this.hzxm = localStorage.getItem("sec_patientName");
 				//注册信息
+				let self = this;
     		$.alert("未查询到您的信息，请先建档", "提示", function() {
+    						console.log(self.zjh+"   "+this.zjh)
 						  	if (process.env.NODE_ENV == 'dev') {
-								  window.location='../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								  window.location='../index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
 								} else if (process.env.NODE_ENV == 'production') {
-								  window.location='../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+								  window.location='../2ysechos/index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
 								}
 						});
 			}
@@ -411,7 +415,7 @@ export default {
       let self = this;
       this.zjh = localStorage.getItem("sec_patientIdcard");
       this.hzxm = localStorage.getItem("sec_patientName");
-      if (this.zjh == "null" || this.zjh == "" || this.zjh == null) {
+      if (this.zjh == "null" || this.zjh == "" || this.zjh == null || this.zjh == undefined) {
         return;
       } else {
         let data = {
@@ -482,9 +486,9 @@ export default {
 	            		//注册信息
 	            		$.alert("未查询到您的信息，请先建档", "提示", function() {
 									  	if (process.env.NODE_ENV == 'dev') {
-											  window.location='../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+											  window.location='../index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
 											} else if (process.env.NODE_ENV == 'production') {
-											  window.location='../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+											  window.location='../2ysechos/index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
 											}
 									});
 	            	}

@@ -21,10 +21,10 @@
           <div class="weui-cell__ft">{{item.evaluationTime}}</div>
         </a>
       </div>
-      <div v-if="isshow()" class="weui-loadmore" id="onloading">
+      <!-- <div v-if="isshow()" class="weui-loadmore" id="onloading">
         <i class="weui-loading"></i>
         <span class="weui-loadmore__tips">正在加载</span>
-      </div>
+      </div> -->
       <div style="margin-top: 30px;">
         <div>
           <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="toindex()">返回主页</a>
