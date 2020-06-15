@@ -439,7 +439,7 @@ export default {
                 arr.push(d)
               }
               //门诊医保病人
-              if (outArray[i].ybdm == "701") {
+              if (outArray[i].ybdm == "701" || outArray[i].ybdm == "704" || outArray[i].ybdm == "707") {
                 self.cbblh = outArray[i].blh;
                 self.cbpatid = outArray[i].patid;
               }
