@@ -99,9 +99,9 @@
 					$.alert("未查询到您的信息，请先建档", "提示", function() {
 						  //点击确认后的回调函数
 					  if (process.env.NODE_ENV == 'dev') {
-							  window.location='../../index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+							  window.location='../../index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
 							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../../2ysechos/index.html#/userFiling?zjh='+this.zjh+'&hzxm='+this.hzxm;
+							  window.location='../../2ysechos/index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
 							}
 						});
 				}
