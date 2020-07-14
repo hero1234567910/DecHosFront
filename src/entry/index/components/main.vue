@@ -115,64 +115,7 @@ export default {
         to == "null" ||
         this.getDAesString(to) == "null"
       ) {
-        this.model.getUserInfo(data).then(function(res) {
-          if (res.data.code == "0") {
-            localStorage.setItem("sec_openId", res.data.data.openid);
-            localStorage.setItem("sec_patientName", res.data.data.patientName);
-            localStorage.setItem("sec_headImg", res.data.data.headImgUrl);
-            localStorage.setItem("sec_sex", res.data.data.patientSex);
-            localStorage.setItem("sec_birth", res.data.data.patientBirth);
-            
-            if(res.data.data.patientJztype == '1'){
-            	localStorage.setItem("sec_flag", 'zf');
-            }else if(res.data.data.patientJztype == '2'){
-            	localStorage.setItem("sec_flag", 'cb');
-            }else if(res.data.data.patientJztype == null){
-            	localStorage.setItem("sec_flag", '');
-            }
-            localStorage.setItem(
-              "sec_patientIdcard",
-              res.data.data.patientIdcard
-            );
-            localStorage.setItem("sec_patientGuid", res.data.data.rowGuid);
-            localStorage.setItem("sec_cardno", res.data.data.patientIdcard);
-            localStorage.setItem("sec_lxdh", res.data.data.patientMobile);
-            localStorage.setItem(
-              "sec_acessToken",
-              self.getAesString(res.data.data.accessToken)
-            );
-            localStorage.setItem(
-              "sec_refreshToken",
-              self.getAesString(res.data.data.refreshToken)
-            );
-            self.patientName = res.data.data.patientName;
-          } else if (res.data.data == "42001") {
-            //token过期 刷新
-            let data = {
-              refresh_token: self.getDAesString(
-                localStorage.getItem("sec_refreshToken")
-              ),
-              code:code
-            };
-            self.model.refreshToken(data).then(function(res) {
-              if (res.data.code == 0) {
-                localStorage.setItem(
-                  "sec_acessToken",
-                  self.getAesString(res.data.data.access_token)
-                );
-                localStorage.setItem(
-                  "sec_refreshToken",
-                  self.getAesString(res.data.data.refresh_token)
-                );
-                self.patientName = localStorage.getItem('sec_patientName');
-              } else {
-                $.toptip(res.data.msg, "error");
-              }
-            });
-          } else {
-            $.toptip(res.data.msg, "error");
-          }
-        });
+        getfunUserInfo(data);
       } else {
       	let data = {
           openid: localStorage.getItem("sec_openId"),
@@ -216,34 +159,85 @@ export default {
             );
             self.patientName = res.data.data.patientName;
           } else if (res.data.data == "42001") {
-            //token过期 刷新
-            let data = {
-              refresh_token: self.getDAesString(
-                localStorage.getItem("sec_refreshToken")
-              ),
-              code:code
-            };
-            self.model.refreshToken(data).then(function(res) {
-              if (res.data.code == 0) {
-                localStorage.setItem(
-                  "sec_acessToken",
-                  self.getAesString(res.data.data.access_token)
-                );
-                localStorage.setItem(
-                  "sec_refreshToken",
-                  self.getAesString(res.data.data.refresh_token)
-                );
-                self.patientName = localStorage.getItem('sec_patientName');
-              } else {
-                $.toptip(res.data.msg, "error");
-              }
-            });
+            	refreshToken()
+          } else if(res.data.data == "40014"){
+          		let data = self.GetQueryString("code");
+          		getfunUserInfo(data)
           } else {
             $.toptip(res.data.msg, "error");
           }
         });
       }
     },
+    
+    refreshToken(){
+    	let self = this;
+    	//token过期 刷新
+        let data = {
+          refresh_token: self.getDAesString(
+            localStorage.getItem("sec_refreshToken")
+          ),
+          code:code
+        };
+        self.model.refreshToken(data).then(function(res) {
+          if (res.data.code == 0) {
+            localStorage.setItem(
+              "sec_acessToken",
+              self.getAesString(res.data.data.access_token)
+            );
+            localStorage.setItem(
+              "sec_refreshToken",
+              self.getAesString(res.data.data.refresh_token)
+            );
+            self.patientName = localStorage.getItem('sec_patientName');
+          } else {
+            $.toptip(res.data.msg, "error");
+          }
+        });
+    }
+    
+    
+    getfunUserInfo(data){
+    	let self = this;
+    	this.model.getUserInfo(data).then(function(res) {
+          if (res.data.code == "0") {
+            localStorage.setItem("sec_openId", res.data.data.openid);
+            localStorage.setItem("sec_patientName", res.data.data.patientName);
+            localStorage.setItem("sec_headImg", res.data.data.headImgUrl);
+            localStorage.setItem("sec_sex", res.data.data.patientSex);
+            localStorage.setItem("sec_birth", res.data.data.patientBirth);
+            
+            if(res.data.data.patientJztype == '1'){
+            	localStorage.setItem("sec_flag", 'zf');
+            }else if(res.data.data.patientJztype == '2'){
+            	localStorage.setItem("sec_flag", 'cb');
+            }else if(res.data.data.patientJztype == null){
+            	localStorage.setItem("sec_flag", '');
+            }
+            localStorage.setItem(
+              "sec_patientIdcard",
+              res.data.data.patientIdcard
+            );
+            localStorage.setItem("sec_patientGuid", res.data.data.rowGuid);
+            localStorage.setItem("sec_cardno", res.data.data.patientIdcard);
+            localStorage.setItem("sec_lxdh", res.data.data.patientMobile);
+            localStorage.setItem(
+              "sec_acessToken",
+              self.getAesString(res.data.data.accessToken)
+            );
+            localStorage.setItem(
+              "sec_refreshToken",
+              self.getAesString(res.data.data.refreshToken)
+            );
+            self.patientName = res.data.data.patientName;
+          } else if (res.data.data == "42001") {
+            
+          } else {
+            $.toptip(res.data.msg, "error");
+          }
+        });
+    }
+    
     //获取url中的参数
     GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
