@@ -62,7 +62,7 @@
                   <img class="weui-media-box__thumb1" src="../../../../static/img/扫码.png" />
                   <h4
                     style="font-size: 8px;position: absolute;margin-left: -17%;margin-top: 3%;"
-                  >出示病例码</h4>
+                  >出示病历码</h4>
                 </div>
               </a>
 
