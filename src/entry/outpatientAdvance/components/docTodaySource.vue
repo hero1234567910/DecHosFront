@@ -28,7 +28,7 @@
         <a
           href="javascript:void(0);"
           class="weui-media-box weui-media-box_appmsg"
-          v-for="(item,index) in arr"
+          v-for="(item,index) in arr" 
           :key="index"
         >
           <div class="weui-media-box__hd">
