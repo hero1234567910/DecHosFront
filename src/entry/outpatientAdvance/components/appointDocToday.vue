@@ -28,8 +28,8 @@
         <a
           href="javascript:void(0);"
           class="weui-media-box weui-media-box_appmsg"
-          v-for="item in doctorList"
-          :key="item.pbxh"
+          v-for="(item, index) in doctorList"
+          :key="index"
         >
           <div class="weui-media-box__hd">
             <img class="weui-media-box__thumb" src="../../../../static/img/400398144.png" />

@@ -28,8 +28,8 @@
         <a
           href="javascript:void(0);"
           class="weui-media-box weui-media-box_appmsg"
-          v-for="item in arr"
-          :key="item.yyrq"
+          v-for="(item,index) in arr"
+          :key="index"
         >
           <div class="weui-media-box__hd">
             <img class="weui-media-box__thumb" src="../../../../static/img/科室.png" />
@@ -104,7 +104,7 @@ export default {
       };
       this.model.getOutpatientAppointmentReg(data).then(function(res) {
         if (res.data.code == 0) {
-          if (localStorage.getItem("sec_yb") == 'true') {
+          if (localStorage.getItem("sec_yb") == "true") {
             $.alert("请您使用医保到相应柜台完成缴费", "预约成功", function() {
               //点击确认后的回调函数
               if (process.env.NODE_ENV == "dev") {

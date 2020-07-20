@@ -12,7 +12,7 @@
           <span style="font-weight: 700;	">门诊预约</span>
         </div>
 
-        <div class="re-header-select">
+        <!-- <div class="re-header-select">
           <div class="select-left">
             <input type="text" class="select-input" data-toggle="date" id="ksrq" placeholder="开始日期" />
           </div>
@@ -34,7 +34,7 @@
               v-on:click="Report()"
             />
           </div>
-        </div>
+        </div>-->
       </el-card>
 
       <div class="hero-main">
@@ -98,24 +98,28 @@ export default {
       this.patientId = val;
     }
   },
+  created() {
+    this.dateGenerate();
+  },
   mounted() {
-    this.init();
+    //this.init();
     let da = this.$route.query;
     this.patientId = da.patid;
+    this.Report();
   },
   methods: {
     Report() {
       $.showLoading();
       let self = this;
-      let date1 = $("#ksrq").val();
-      let date2 = $("#jsrq").val();
+      //let date1 = $("#ksrq").val();
+      //let date2 = $("#jsrq").val();
 
       let data = {
-        ksrq: date1.replace(/\-/g, ""),
-        jsrq: date2.replace(/\-/g, "")
+        ksrq: this.ksrq,
+        jsrq: this.jsrq
       };
-      this.ksrq = data.ksrq;
-      this.jsrq = data.jsrq;
+      //this.ksrq = data.ksrq;
+      //this.jsrq = data.jsrq;
       this.model.getAppointRoomInfo(data).then(function(res) {
         $.hideLoading();
         if (res.data.code == 0) {
@@ -164,6 +168,40 @@ export default {
             this.jsrq
         );
       }
+    },
+    dateGenerate() {
+      //配置默认预约日期
+      let today = new Date();
+      let monthTemp = "";
+      today.setTime(today.getTime() + 24 * 60 * 60 * 1000);
+      //若到了10月
+      if (today.getMonth() + 1 > 9) {
+        monthTemp = today.getMonth() + 1;
+      } else {
+        monthTemp = "0" + (today.getMonth() + 1);
+      }
+      let tomorrow =
+        today.getFullYear() +
+        "" +
+        monthTemp +
+        "" +
+        today.getDate();
+      this.ksrq = tomorrow;
+      today.setTime(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+      //若到了10月
+      if (today.getMonth() + 1 > 9) {
+        monthTemp = today.getMonth() + 1;
+      } else {
+        monthTemp = "0" + (today.getMonth() + 1);
+      }
+      this.jsrq =
+        today.getFullYear() +
+        "" +
+        monthTemp +
+        "" +
+        today.getDate();
+      console.log(this.ksrq);
+      console.log(this.jsrq);
     }
   }
 };
