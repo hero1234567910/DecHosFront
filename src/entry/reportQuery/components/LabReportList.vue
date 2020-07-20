@@ -19,7 +19,7 @@
         />
       </div>
     </div>-->
-    <div class="re-row" v-for="item in LabReportList" >
+    <div class="re-row" v-for="(item,index) in LabReportList" :key="index">
       <a href="javascript:;" @click="toDetail(item)">
         <div class="row-cen">
           <div class="re-img">
@@ -44,18 +44,18 @@
       </a>
     </div>
     <div style="margin-top: 30px;">
-				<div>
-					<a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="LabReport()">选择就诊类别</a>
-				</div>
-		</div>
+      <div>
+        <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="LabReport()">选择就诊类别</a>
+      </div>
+    </div>
     <div style="margin-top: 5px;margin-bottom: 30px;">
-				<div>
-					<a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回主页</a>
-				</div>
-		</div>
-     <!--<el-dialog title="选择要查看的病历" :visible.sync="isShow">
+      <div>
+        <a href="javascript:;" class="weui-btn weui-btn_primary" v-on:click="tomainList()">返回主页</a>
+      </div>
+    </div>
+    <!--<el-dialog title="选择要查看的病历" :visible.sync="isShow">
 			<commonSelect v-bind:mzData='mzData' @handleCall="handleCall"></commonSelect>
-		</el-dialog>-->
+    </el-dialog>-->
   </div>
 </template>
 
@@ -63,37 +63,37 @@
 <script>
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
-import commonSelect from './commonSelect.vue'
+import commonSelect from "./commonSelect.vue";
 
 export default {
-  components: {commonSelect},
+  components: { commonSelect },
   data() {
     this.model = model(this.axios);
     return {
-		LabReportList:[],
-		zjh:localStorage.getItem('sec_patientIdcard'),
-		hzxm:localStorage.getItem('sec_patientName'),
-		isShow:false,
-		mzData:[],
-		patid:'',
-		jzlb:'',
-		jzlsh:''
-		};
+      LabReportList: [],
+      zjh: localStorage.getItem("sec_patientIdcard"),
+      hzxm: localStorage.getItem("sec_patientName"),
+      isShow: false,
+      mzData: [],
+      patid: "",
+      jzlb: "",
+      jzlsh: ""
+    };
   },
   created() {
     // this.LabReport();
   },
   mounted() {
-//  this.init();
-//		this.LabReport();
+    //  this.init();
+    //		this.LabReport();
   },
   methods: {
     tomainList() {
-      if (process.env.NODE_ENV == 'dev') {
-					  window.location='../../index.html';
-					} else if (process.env.NODE_ENV == 'production') {
-					  window.location='../../2ysechos/index.html';
-					}
+      if (process.env.NODE_ENV == "dev") {
+        window.location = "../../index.html";
+      } else if (process.env.NODE_ENV == "production") {
+        window.location = "../../2ysechos/index.html";
+      }
     },
     toDetail(ele) {
       this.$router.push(
@@ -115,11 +115,11 @@ export default {
         dateFormat: "yyyy-mm-dd"
       });
     },
-    handleCall(res){
-			this.isShow = false;
-			this.patid = res.patid;
-			this.reportFun();
-		},
+    handleCall(res) {
+      this.isShow = false;
+      this.patid = res.patid;
+      this.reportFun();
+    },
     //获取url中的参数
     GetQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -127,239 +127,256 @@ export default {
       if (r != null) return decodeURI(r[2]);
       return null;
     },
-    selectMz(){
-    	$.showLoading();
-    	let self = this;
-				this.zjh = localStorage.getItem('sec_patientIdcard');
-				this.hzxm = localStorage.getItem('sec_patientName');
-				if(this.zjh == 'null' || this.zjh == '' || this.zjh == null){
-					$.confirm("您并未绑定身份证，请先绑定","提示",function() {
-							if (process.env.NODE_ENV == 'dev') {
-							  window.location='../index.html#/userBinding'
-							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/index.html#/userBinding'
-							}
-						}, function() {
-					  	if (process.env.NODE_ENV == 'dev') {
-							  window.location='../index.html'
-							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/index.html'
-							}
-					  });
-					  return;
-				}
-				$.hideLoading();
-				if(localStorage.getItem('sec_flag') == 'zf'){
-					self.patid = localStorage.getItem('zfpatid');
-					self.reportFun();
-				}
-				if(localStorage.getItem('sec_flag') == 'cb'){
-					self.patid = localStorage.getItem('cbpatid');
-					self.reportFun();
-				}
-				if(localStorage.getItem('sec_flag') == ''){
-					$.alert("未查询到您的信息，请先建档", "提示", function() {
-						  //点击确认后的回调函数
-					  self.$router.push('/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm);
-					});
-				}
-				
-//				let data={
-//					hzxm:this.hzxm,
-//					zjh:this.zjh,
-//					action:'mz',
-//					openid:localStorage.getItem('sec_openId')
-//				}
-//				
-//				this.model.selectPatient(data).then(function(res){
-//					if(res.data.code == '0'){
-//						//门诊模块 就取门诊自费并且病历号最大的
-//						let blh = '';
-//						let outArray = res.data.data;
-//						for(var i=0;i<outArray.length;i++){
-//								if(outArray[i].ybdm == '101'){
-//									blh = outArray[i].blh;
-//									self.patid = outArray[i].patid;
-//									break;
-//								}
-//								//门诊医保病人
-//								if(outArray[i].ybdm == '701'){
-//									blh = outArray[i].blh;
-//									self.patid = outArray[i].patid;
-//									localStorage.setItem('sec_yb',true);								
-//								}
-//						}
-//						if(blh == ''){
-//							$.hideLoading();
-//							$.toptip('未查找到相应数据');
-//							return;
-//						}
-//						self.reportFun();
-//					}
-					
-//					if(res.data.code == '0'){
-//						//门诊模块 就取门诊自费并且病历号最大的
-//						let arr = [];
-//						let outArray = res.data.data;
-//						for(var i=0;i<outArray.length;i++){
-//								if(outArray[i].ybdm == '101'){
-//									let blh = outArray[i].blh;
-//									arr.push(parseInt(blh));
-//								}
-//						}
-//						if(arr.length == 0){
-//							$.hideLoading();
-//							$.toptip('未查找到相应数据');
-//							return;
-//						}
-//						arr.sort().reverse();
-//						let val = arr[0];
-//						for(var i=0;i<outArray.length;i++){
-//							if(val == outArray[i].blh){
-//								self.patid = outArray[i].patid;
-//								self.reportFun();
-//							}
-//						}
-//					}
-//					if(res.data.msg == '未查询到门诊患者'){
-//						$.hideLoading();
-//						$.alert("未查询到您的信息，请先建档", "提示", function() {
-//						  //点击确认后的回调函数
-////						  self.$router.push('/userFiling?zjh='+self.zjh)
-////						  if (process.env.NODE_ENV == 'dev') {
-////								  window.location='../../index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
-////								} else if (process.env.NODE_ENV == 'production') {
-////								  window.location='../../2ysechos/index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
-////								}
-//									self.$router.push('/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm);
-//						});
-//					}
-//				})
-	},
-	selectZy(){
-		$.showLoading();
-		let self = this;
-				this.zjh = localStorage.getItem('sec_patientIdcard');
-				this.hzxm = localStorage.getItem('sec_patientName');
-				if(this.zjh == 'null' || this.zjh == '' || this.zjh == null){
-					$.confirm("您并未绑定身份证，请先绑定","提示",function() {
-							if (process.env.NODE_ENV == 'dev') {
-							  window.location='../index.html#/userBinding'
-							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/index.html#/userBinding'
-							}
-						}, function() {
-					  	if (process.env.NODE_ENV == 'dev') {
-							  window.location='../index.html'
-							} else if (process.env.NODE_ENV == 'production') {
-							  window.location='../2ysechos/index.html'
-							}
-					  });
-					  return;
-				}
-				
-				let data={
-					hzxm:this.hzxm,
-					zjh:this.zjh,
-					action:'zy',
-					openid:localStorage.getItem('sec_openId')
-				}
-				
-				this.model.selectPatient(data).then(function(res){
-					if(res.data.code == '0'){
-						//住院缴费模块 就取病历号最大的
-						let arr = [];
-						let hosArray = res.data.data;
-						for(var i=0;i<hosArray.length;i++){
-								let blh = hosArray[i].blh;
-								arr.push(parseInt(blh));
-						}
-						if(arr.length == 0){
-							$.hideLoading();
-							$.toptip('未查找到相应数据');
-							return;
-						}
-						arr.sort().reverse();
-						let val = arr[0];
-						for(var i=0;i<hosArray.length;i++){
-							if(val == hosArray[i].blh){
-								self.patid = hosArray[i].patid;
-								self.blh = hosArray[i].blh;
-//								self.zyzt = hosArray[i].zyzt;
-								self.getInPatientInfoByPatid();
-							}
-						}
-					}else{
-						$.hideLoading();
-						$.alert("未查询到您的住院信息", "提示", function() {
-						});
-					}
-				})
-	},
-	getInPatientInfoByPatid(){
+    selectMz() {
+      $.showLoading();
+      let self = this;
+      this.zjh = localStorage.getItem("sec_patientIdcard");
+      this.hzxm = localStorage.getItem("sec_patientName");
+      if (this.zjh == "null" || this.zjh == "" || this.zjh == null) {
+        $.confirm(
+          "您并未绑定身份证，请先绑定",
+          "提示",
+          function() {
+            if (process.env.NODE_ENV == "dev") {
+              window.location = "../index.html#/userBinding";
+            } else if (process.env.NODE_ENV == "production") {
+              window.location = "../2ysechos/index.html#/userBinding";
+            }
+          },
+          function() {
+            if (process.env.NODE_ENV == "dev") {
+              window.location = "../index.html";
+            } else if (process.env.NODE_ENV == "production") {
+              window.location = "../2ysechos/index.html";
+            }
+          }
+        );
+        return;
+      }
+      $.hideLoading();
+      if (localStorage.getItem("sec_flag") == "zf") {
+        self.patid = localStorage.getItem("zfpatid");
+        self.reportFun();
+      }
+      if (localStorage.getItem("sec_flag") == "cb") {
+        self.patid = localStorage.getItem("cbpatid");
+        self.reportFun();
+      }
+      if (localStorage.getItem("sec_flag") == "") {
+        $.alert("未查询到您的信息，请先建档", "提示", function() {
+          //点击确认后的回调函数
+          self.$router.push(
+            "/userFiling?zjh=" + self.zjh + "&hzxm=" + self.hzxm
+          );
+        });
+      }
+
+      //				let data={
+      //					hzxm:this.hzxm,
+      //					zjh:this.zjh,
+      //					action:'mz',
+      //					openid:localStorage.getItem('sec_openId')
+      //				}
+      //
+      //				this.model.selectPatient(data).then(function(res){
+      //					if(res.data.code == '0'){
+      //						//门诊模块 就取门诊自费并且病历号最大的
+      //						let blh = '';
+      //						let outArray = res.data.data;
+      //						for(var i=0;i<outArray.length;i++){
+      //								if(outArray[i].ybdm == '101'){
+      //									blh = outArray[i].blh;
+      //									self.patid = outArray[i].patid;
+      //									break;
+      //								}
+      //								//门诊医保病人
+      //								if(outArray[i].ybdm == '701'){
+      //									blh = outArray[i].blh;
+      //									self.patid = outArray[i].patid;
+      //									localStorage.setItem('sec_yb',true);
+      //								}
+      //						}
+      //						if(blh == ''){
+      //							$.hideLoading();
+      //							$.toptip('未查找到相应数据');
+      //							return;
+      //						}
+      //						self.reportFun();
+      //					}
+
+      //					if(res.data.code == '0'){
+      //						//门诊模块 就取门诊自费并且病历号最大的
+      //						let arr = [];
+      //						let outArray = res.data.data;
+      //						for(var i=0;i<outArray.length;i++){
+      //								if(outArray[i].ybdm == '101'){
+      //									let blh = outArray[i].blh;
+      //									arr.push(parseInt(blh));
+      //								}
+      //						}
+      //						if(arr.length == 0){
+      //							$.hideLoading();
+      //							$.toptip('未查找到相应数据');
+      //							return;
+      //						}
+      //						arr.sort().reverse();
+      //						let val = arr[0];
+      //						for(var i=0;i<outArray.length;i++){
+      //							if(val == outArray[i].blh){
+      //								self.patid = outArray[i].patid;
+      //								self.reportFun();
+      //							}
+      //						}
+      //					}
+      //					if(res.data.msg == '未查询到门诊患者'){
+      //						$.hideLoading();
+      //						$.alert("未查询到您的信息，请先建档", "提示", function() {
+      //						  //点击确认后的回调函数
+      ////						  self.$router.push('/userFiling?zjh='+self.zjh)
+      ////						  if (process.env.NODE_ENV == 'dev') {
+      ////								  window.location='../../index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
+      ////								} else if (process.env.NODE_ENV == 'production') {
+      ////								  window.location='../../2ysechos/index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
+      ////								}
+      //									self.$router.push('/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm);
+      //						});
+      //					}
+      //				})
+    },
+    selectZy() {
+      $.showLoading();
+      let self = this;
+      this.zjh = localStorage.getItem("sec_patientIdcard");
+      this.hzxm = localStorage.getItem("sec_patientName");
+      if (this.zjh == "null" || this.zjh == "" || this.zjh == null) {
+        $.confirm(
+          "您并未绑定身份证，请先绑定",
+          "提示",
+          function() {
+            if (process.env.NODE_ENV == "dev") {
+              window.location = "../index.html#/userBinding";
+            } else if (process.env.NODE_ENV == "production") {
+              window.location = "../2ysechos/index.html#/userBinding";
+            }
+          },
+          function() {
+            if (process.env.NODE_ENV == "dev") {
+              window.location = "../index.html";
+            } else if (process.env.NODE_ENV == "production") {
+              window.location = "../2ysechos/index.html";
+            }
+          }
+        );
+        return;
+      }
+
+      let data = {
+        hzxm: this.hzxm,
+        zjh: this.zjh,
+        action: "zy",
+        openid: localStorage.getItem("sec_openId")
+      };
+
+      this.model.selectPatient(data).then(function(res) {
+        if (res.data.code == "0") {
+          //住院缴费模块 就取病历号最大的
+          let arr = [];
+          let hosArray = res.data.data;
+          for (var i = 0; i < hosArray.length; i++) {
+            let blh = hosArray[i].blh;
+            arr.push(parseInt(blh));
+          }
+          if (arr.length == 0) {
+            $.hideLoading();
+            $.toptip("未查找到相应数据");
+            return;
+          }
+          arr.sort().reverse();
+          let val = arr[0];
+          for (var i = 0; i < hosArray.length; i++) {
+            if (val == hosArray[i].blh) {
+              self.patid = hosArray[i].patid;
+              self.blh = hosArray[i].blh;
+              //								self.zyzt = hosArray[i].zyzt;
+              self.getInPatientInfoByPatid();
+            }
+          }
+        } else {
+          $.hideLoading();
+          $.alert("未查询到您的住院信息", "提示", function() {});
+        }
+      });
+    },
+    getInPatientInfoByPatid() {
       //console.log(this.$route.query.patid);
       let self = this;
-      let data={
-        hzxm:self.hzxm,
-        patid:self.patid,
-        zyzt:'0'
-      }
-      this.model.getInPatientInfoByPatid(data).then(function(res){
-        if(res.data.code == "0"){
-            self.patid = res.data.data[0].jzlsh;
-            self.reportFun()
-        }else {
+      let data = {
+        hzxm: self.hzxm,
+        patid: self.patid,
+        zyzt: "0"
+      };
+      this.model.getInPatientInfoByPatid(data).then(function(res) {
+        if (res.data.code == "0") {
+          self.patid = res.data.data[0].jzlsh;
+          self.reportFun();
+        } else {
           $.toptip(res.data.msg, "error");
         }
       });
     },
     LabReport() {
-			let self = this;
-			 $.modal({
-			  title: "提示",
-			  text: "请选择门诊报告还是住院报告",
-			  buttons: [
-			    { text: "门诊", onClick: function(){
-			    	self.jzlb = 1;
-			    	self.selectMz();
-			    } },
-			    { text: "住院", onClick: function(){
-			    	self.jzlb = 2;
-			    	self.selectZy();
-			    } },
-			    { text: "取消", className: "default", onClick: function(){} },
-			  ]
-			});    
-    },
-   	reportFun(){
       let self = this;
-   		let hzxm = localStorage.getItem("sec_patientName");
+      $.modal({
+        title: "提示",
+        text: "请选择门诊报告还是住院报告",
+        buttons: [
+          {
+            text: "门诊",
+            onClick: function() {
+              self.jzlb = 1;
+              self.selectMz();
+            }
+          },
+          {
+            text: "住院",
+            onClick: function() {
+              self.jzlb = 2;
+              self.selectZy();
+            }
+          },
+          { text: "取消", className: "default", onClick: function() {} }
+        ]
+      });
+    },
+    reportFun() {
+      let self = this;
+      let hzxm = localStorage.getItem("sec_patientName");
       let patid = this.patid;
       let jzlb = this.jzlb;
-      
-//    let date1 = $("#ksrq1").val();
-//    let ksrq = date1.replace(/\-/g, "");
-//    let date2 = $("#jsrq1").val();
-//    let jsrq = date2.replace(/\-/g, "");
+
+      //    let date1 = $("#ksrq1").val();
+      //    let ksrq = date1.replace(/\-/g, "");
+      //    let date2 = $("#jsrq1").val();
+      //    let jsrq = date2.replace(/\-/g, "");
       let data = {
         hzxm: hzxm,
         patid: patid,
-        jzlb: jzlb,
-//      ksrq: ksrq,
-//      jsrq: jsrq
+        jzlb: jzlb
+        //      ksrq: ksrq,
+        //      jsrq: jsrq
       };
       this.model.getLabReportList(data).then(function(res) {
-      	$.hideLoading();
+        $.hideLoading();
         if (res.data.code == "0") {
           let LabReportList = res.data.data;
           self.LabReportList = LabReportList;
-//        self.isShow = false;
+          //        self.isShow = false;
           //console.log(self.LabReportList);
         } else {
           $.toptip(res.data.msg, "error");
         }
       });
-   	}
+    }
   }
 };
 </script>
