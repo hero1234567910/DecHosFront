@@ -49,7 +49,7 @@
                   <strong>{{item.ksmc}}</strong>
                 </div>
               </div>
-              <div class="row">
+              <div class="row" style="overflow-y: auto;height: calc(100vh - 206px);">
                 <a
                   href="javascript:;"
                   @click="toChoseDoc(it)"

@@ -1,5 +1,5 @@
 <template>
-  <div style="height: 100%;background-color: #EFF7FD;">
+  <div style="height: 100%;background-color: #EFF7FD;overflow: auto;">
  		<router-view :key="$route.fullPath" :patid="patid"></router-view>
   </div>
 </template>

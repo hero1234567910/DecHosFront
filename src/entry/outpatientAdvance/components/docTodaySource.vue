@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow: auto;">
     <!--<div class="hero-search">
       <div class="weui-search-bar" id="searchBar">
         <form class="weui-search-bar__form">
