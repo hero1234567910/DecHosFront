@@ -22,7 +22,8 @@
         <a
           href="javascript:void(0);"
           class="weui-media-box weui-media-box_appmsg"
-          v-for="item in arr"
+          v-for="(item,index) in arr"
+          :key="index"
         >
           <div class="weui-media-box__hd">
             <img class="weui-media-box__thumb" src="../../../../static/img/400398144.png" />
@@ -73,8 +74,8 @@ export default {
     },
     toSelect(ele) {
       var da = this.$route.query;
-	  let self = this;
-	  
+      let self = this;
+
       if (!self.forbidAge(ele)) {
         $.alert({
           title: "温馨提示",
@@ -116,7 +117,7 @@ export default {
     forbidAge(ele) {
       let self = this;
       let age = self.getAge();
-	  // 如果年龄大于14岁，无法选中儿科
+      // 如果年龄大于14岁，无法选中儿科
       if (age >= 14 && (ele.ksmc == "儿科门诊" || ele.ksmc == "急诊儿科")) {
         return false;
       } else {

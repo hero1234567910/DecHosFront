@@ -48,27 +48,29 @@
                     class="weui-media-box__title"
                     style="font-weight:600;margin-top:10px;width:50%"
                   >{{patientName}}</h4>
-                  <h4 class="weui-media-box__title"  style="font-size:15px;margin-top:4px">门诊病历号:{{blh}}</h4>
+                  <h4
+                    class="weui-media-box__title"
+                    style="font-size:15px;margin-top:4px"
+                  >门诊病历号:{{blh}}</h4>
                   <!-- <h4 class="weui-media-box__title" style="font-size:15px;margin-top:8px">{{sex}} / {{birth}}</h4> -->
                   <h4
                     class="weui-media-box__title"
                     style="font-size:15px;margin-top:8px"
                   >证件号:{{patientIdCard}}</h4>
                 </div>
-                <div class="weui-media-box__hd1">
-                  <img class="weui-media-box__thumb1" src="../../../../static/images/医院-2.png" />
-                  <!-- <h4 style="font-size: 8px;position: absolute;margin-left: -19%;margin-top: 3%;" >点击出示二维码</h4> -->
+                <div class="weui-media-box__hd1" @click="showBarcode()">
+                  <img class="weui-media-box__thumb1" src="../../../../static/img/扫码.png" />
+                  <h4
+                    style="font-size: 8px;position: absolute;margin-left: -17%;margin-top: 3%;"
+                  >出示病历码</h4>
                 </div>
               </a>
-              
+
               <div style="height: 50px;text-align: center;">
-								<el-button id="zf" @click="chooseWay('zf')">自费</el-button>
-								<el-button id="cb" @click="chooseWay('cb')">参保</el-button>	
-							</div>
-              
+                <el-button id="zf" @click="chooseWay('zf')">自费</el-button>
+                <el-button id="cb" @click="chooseWay('cb')">参保</el-button>
+              </div>
             </div>
-            
-            
           </div>
           <div class="weui-panel weui-panel_access" style="height:20px;margin-top: 0px;">
             <div class="weui-panel__bd">
@@ -122,7 +124,7 @@
           </div>
         </div>
       </a>
-      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;" ></div>
+      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;"></div>
 
       <!-- <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);" v-if="showFlag">
         <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
@@ -140,7 +142,7 @@
           </div>
         </div>
       </div>
-      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;" v-if="showFlag"></div> -->
+      <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;" v-if="showFlag"></div>-->
 
       <div style="margin-top: 0px;margin-left: 13px;margin-right: 13px;width: calc(100% - 26px);">
         <div style="margin-left: 20px;margin-right: 20px;height: 70px;">
@@ -218,6 +220,13 @@
       </div>
       <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;"></div>
     </div>
+    <div>
+      <el-dialog title="病历号条纹码" :visible.sync="centerDialogVisible" width="80%" center>
+        <div style="margin:0 auto;text-align:center;">
+          <barcode :barCodeBlh="blh"></barcode>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
@@ -226,6 +235,7 @@
 import weui from "jquery-weui/dist/js/jquery-weui.min";
 import model from "./model.js";
 import CryptoJS from "crypto-js";
+import barcode from "@/entry/index/components/barcode";
 export default {
   data() {
     this.model = model(this.axios);
@@ -238,11 +248,13 @@ export default {
       zjh: "",
       hzxm: "",
       blh: "",
-      showFlag:localStorage.getItem('sec_patientIdcard')!=null,
-      zfblh:'',
-      cbblh:''
+      showFlag: localStorage.getItem("sec_patientIdcard") != null,
+      zfblh: "",
+      cbblh: "",
+      centerDialogVisible: false
     };
   },
+  components: { barcode },
   props: ["patientName"],
   watch: {
     patientName(val, oldVal) {
@@ -262,50 +274,62 @@ export default {
       }
     }
   },
-  mounted() {
-    
-  },
-  updated(){
-  	let self = this;
-	this.getblh()
+  mounted() {},
+  updated() {
+    let self = this;
+    this.getblh();
   },
   methods: {
-	chooseWay(str){
-		let self = this;
-		//选择付款方式
-		if(str == 'zf'){
-			//切换自费方式
-			if(localStorage.getItem('zfblh')){
-				localStorage.setItem('sec_flag','zf');
-				this.blh = this.zfblh;
-				$('#zf').css({'background-color':'rgb(103,194,58)','color':'white'});
-				$('#cb').css({'background-color':'white','color':'black'})
-			}else{
-				this.zjh = localStorage.getItem("sec_patientIdcard");
-      	this.hzxm = localStorage.getItem("sec_patientName");
-				//注册信息
-				let self = this;
-    		$.alert("未查询到您的信息，请先建档", "提示", function() {
-    						console.log(self.zjh+"   "+this.zjh)
-						  	if (process.env.NODE_ENV == 'dev') {
-								  window.location='../index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
-								} else if (process.env.NODE_ENV == 'production') {
-								  window.location='../2ysechos/index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
-								}
-						});
-			}
-		}else{
-			//切换参保方式
-			if(localStorage.getItem('cbblh')){
-				localStorage.setItem('sec_flag','cb');
-				this.blh = this.cbblh;
-				$('#cb').css({'background-color':'rgb(103,194,58)','color':'white'});
-				$('#zf').css({'background-color':'white','color':'black'})
-			}else{
-				$.toptip('暂无参保账户','error')
-			}
-		}
-	},
+    chooseWay(str) {
+      let self = this;
+      //选择付款方式
+      if (str == "zf") {
+        //切换自费方式
+        if (localStorage.getItem("zfblh")) {
+          localStorage.setItem("sec_flag", "zf");
+          this.blh = this.zfblh;
+          $("#zf").css({
+            "background-color": "rgb(103,194,58)",
+            color: "white"
+          });
+          $("#cb").css({ "background-color": "white", color: "black" });
+        } else {
+          this.zjh = localStorage.getItem("sec_patientIdcard");
+          this.hzxm = localStorage.getItem("sec_patientName");
+          //注册信息
+          let self = this;
+          $.alert("未查询到您的信息，请先建档", "提示", function() {
+            console.log(self.zjh + "   " + this.zjh);
+            if (process.env.NODE_ENV == "dev") {
+              window.location =
+                "../index.html#/userFiling?zjh=" +
+                self.zjh +
+                "&hzxm=" +
+                self.hzxm;
+            } else if (process.env.NODE_ENV == "production") {
+              window.location =
+                "../2ysechos/index.html#/userFiling?zjh=" +
+                self.zjh +
+                "&hzxm=" +
+                self.hzxm;
+            }
+          });
+        }
+      } else {
+        //切换参保方式
+        if (localStorage.getItem("cbblh")) {
+          localStorage.setItem("sec_flag", "cb");
+          this.blh = this.cbblh;
+          $("#cb").css({
+            "background-color": "rgb(103,194,58)",
+            color: "white"
+          });
+          $("#zf").css({ "background-color": "white", color: "black" });
+        } else {
+          $.toptip("暂无参保账户", "error");
+        }
+      }
+    },
     toWait() {
       this.$router.push("/waitPatient");
     },
@@ -404,7 +428,7 @@ export default {
         window.location = "../../2ysechos/outPaymentRecords.html";
       }
     },
-    patientManage(){
+    patientManage() {
       if (process.env.NODE_ENV == "dev") {
         window.location = "../../patientManage.html";
       } else if (process.env.NODE_ENV == "production") {
@@ -415,7 +439,12 @@ export default {
       let self = this;
       this.zjh = localStorage.getItem("sec_patientIdcard");
       this.hzxm = localStorage.getItem("sec_patientName");
-      if (this.zjh == "null" || this.zjh == "" || this.zjh == null || this.zjh == undefined) {
+      if (
+        this.zjh == "null" ||
+        this.zjh == "" ||
+        this.zjh == null ||
+        this.zjh == undefined
+      ) {
         return;
       } else {
         let data = {
@@ -433,89 +462,107 @@ export default {
               if (outArray[i].ybdm == "101") {
                 self.zfblh = outArray[i].blh;
                 let d = {
-                	blh:outArray[i].blh,
-                	patid:outArray[i].patid
-                }
-                arr.push(d)
+                  blh: outArray[i].blh,
+                  patid: outArray[i].patid
+                };
+                arr.push(d);
               }
               //门诊医保病人
-              if (outArray[i].ybdm == "701" || outArray[i].ybdm == "704" || outArray[i].ybdm == "707") {
+              if (
+                outArray[i].ybdm == "701" ||
+                outArray[i].ybdm == "704" ||
+                outArray[i].ybdm == "707"
+              ) {
                 self.cbblh = outArray[i].blh;
                 self.cbpatid = outArray[i].patid;
               }
             }
-            if(arr.length !=0 && arr[0].blh){
-            	localStorage.setItem('zfblh',arr[0].blh);
-            	localStorage.setItem('zfpatid',arr[0].patid);
-            }else{
-            	localStorage.removeItem('zfblh');
-            	localStorage.removeItem('zfpatid');
+            if (arr.length != 0 && arr[0].blh) {
+              localStorage.setItem("zfblh", arr[0].blh);
+              localStorage.setItem("zfpatid", arr[0].patid);
+            } else {
+              localStorage.removeItem("zfblh");
+              localStorage.removeItem("zfpatid");
             }
-            if(self.cbblh){
-            	localStorage.setItem('cbblh',self.cbblh);
-            	localStorage.setItem('cbpatid',self.cbpatid);
-            }else{
-            	localStorage.removeItem('cbblh');
-            	localStorage.removeItem('cbpatid');
+            if (self.cbblh) {
+              localStorage.setItem("cbblh", self.cbblh);
+              localStorage.setItem("cbpatid", self.cbpatid);
+            } else {
+              localStorage.removeItem("cbblh");
+              localStorage.removeItem("cbpatid");
             }
             //若参保存在 则默认取参保
-            if(localStorage.getItem('sec_flag') == undefined || localStorage.getItem('sec_flag') == ''){
-            	
-            	if(self.cbblh){
-	//          	localStorage.setItem('sec_flag','cb');
-								//保存用户就诊方式
-								let d = {
-									rowGuid:localStorage.getItem('sec_patientGuid'),
-									patientJztype:2
-								}
-								self.model.updatePatient(d).then(function(res){})
-								
-	            	localStorage.setItem('sec_yb',true);
-	            	self.chooseWay('cb');
-	            }else{
-	            	if(self.zfblh){
-	//          		localStorage.setItem('sec_flag','zf');
-									//保存用户就诊方式
-									let d = {
-										rowGuid:localStorage.getItem('sec_patientGuid'),
-										patientJztype:1
-									}
-									self.model.updatePatient(d).then(function(res){})
-	            		self.chooseWay('zf');
-	            	}else{
-	            		//注册信息
-	            		$.alert("未查询到您的信息，请先建档", "提示", function() {
-									  	if (process.env.NODE_ENV == 'dev') {
-											  window.location='../index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
-											} else if (process.env.NODE_ENV == 'production') {
-											  window.location='../2ysechos/index.html#/userFiling?zjh='+self.zjh+'&hzxm='+self.hzxm;
-											}
-									});
-	            	}
-            	}
-            
-            }else if(localStorage.getItem('sec_flag') == 'zf'){
-	//          		localStorage.setItem('sec_flag','zf');
-									//保存用户就诊方式
-									let d = {
-										rowGuid:localStorage.getItem('sec_patientGuid'),
-										patientJztype:1
-									}
-									self.model.updatePatient(d).then(function(res){})
-	            		self.chooseWay('zf');
-            }else if(localStorage.getItem('sec_flag') == 'cb'){
-            	let d = {
-									rowGuid:localStorage.getItem('sec_patientGuid'),
-									patientJztype:2
-								}
-								self.model.updatePatient(d).then(function(res){})
-								
-	            	localStorage.setItem('sec_yb',true);
-	            	self.chooseWay('cb');
+            if (
+              localStorage.getItem("sec_flag") == undefined ||
+              localStorage.getItem("sec_flag") == ""
+            ) {
+              if (self.cbblh) {
+                //          	localStorage.setItem('sec_flag','cb');
+                //保存用户就诊方式
+                let d = {
+                  rowGuid: localStorage.getItem("sec_patientGuid"),
+                  patientJztype: 2
+                };
+                self.model.updatePatient(d).then(function(res) {});
+
+                localStorage.setItem("sec_yb", true);
+                self.chooseWay("cb");
+              } else {
+                if (self.zfblh) {
+                  //          		localStorage.setItem('sec_flag','zf');
+                  //保存用户就诊方式
+                  let d = {
+                    rowGuid: localStorage.getItem("sec_patientGuid"),
+                    patientJztype: 1
+                  };
+                  self.model.updatePatient(d).then(function(res) {});
+                  self.chooseWay("zf");
+                } else {
+                  //注册信息
+                  $.alert("未查询到您的信息，请先建档", "提示", function() {
+                    if (process.env.NODE_ENV == "dev") {
+                      window.location =
+                        "../index.html#/userFiling?zjh=" +
+                        self.zjh +
+                        "&hzxm=" +
+                        self.hzxm;
+                    } else if (process.env.NODE_ENV == "production") {
+                      window.location =
+                        "../2ysechos/index.html#/userFiling?zjh=" +
+                        self.zjh +
+                        "&hzxm=" +
+                        self.hzxm;
+                    }
+                  });
+                }
+              }
+            } else if (localStorage.getItem("sec_flag") == "zf") {
+              //          		localStorage.setItem('sec_flag','zf');
+              //保存用户就诊方式
+              let d = {
+                rowGuid: localStorage.getItem("sec_patientGuid"),
+                patientJztype: 1
+              };
+              self.model.updatePatient(d).then(function(res) {});
+              self.chooseWay("zf");
+            } else if (localStorage.getItem("sec_flag") == "cb") {
+              let d = {
+                rowGuid: localStorage.getItem("sec_patientGuid"),
+                patientJztype: 2
+              };
+              self.model.updatePatient(d).then(function(res) {});
+
+              localStorage.setItem("sec_yb", true);
+              self.chooseWay("cb");
             }
           }
         });
       }
+    },
+    showBarcode() {
+      let self = this;
+      this.centerDialogVisible = true;
+      this.$nextTick();
     }
   }
 };
@@ -666,7 +713,7 @@ a.weui-media-box {
   border: 1px solid #05c8f3;
   font-size: small;
 }
-.weui-cell{
+.weui-cell {
   padding-top: 15px;
   padding-bottom: 15px;
 }
