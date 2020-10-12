@@ -36,7 +36,7 @@
         </div>
         <p class="weui-grid__label">院内通讯录</p>
       </a>
-      <a href="javascript:;" class="weui-grid js_grid" @click="showImg()">
+      <!--<a href="javascript:;" class="weui-grid js_grid" @click="showImg()">
         <div class="weui-grid__icon">
           <img src="../../../../static/images/二维码.png" alt />
         </div>
@@ -53,7 +53,7 @@
           <img src="../../../../static/images/管理员.png" alt />
         </div>
         <p class="weui-grid__label">管理员查看推广</p>
-      </a>
+      </a>-->
     </div>
     
     <el-dialog title="二维码详情" :visible.sync="isShow" width="240px" :before-close="handleClose">
