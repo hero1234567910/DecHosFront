@@ -1,5 +1,7 @@
 <template>
-  <svg id="barcode" />
+  <div style="width:100%;">
+    <svg id="barcode" class="svg-container" />
+  </div>
 </template>
 
 <script>
@@ -21,10 +23,18 @@ export default {
       width: 3, //条宽度
       fontOptions: "bold"
     });
+    this.$nextTick();
   },
   methods: {}
 };
 </script>
 
-<style>
+<style scoped>
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  vertical-align: middle;
+  overflow: hidden;
+}
 </style>

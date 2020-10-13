@@ -12,7 +12,7 @@
           <span style="font-weight: 700;	">门诊预约</span>
         </div>
 
-        <!-- <div class="re-header-select">
+        <div class="re-header-select">
           <div class="select-left">
             <input type="text" class="select-input" data-toggle="date" id="ksrq" placeholder="开始日期" />
           </div>
@@ -34,7 +34,7 @@
               v-on:click="Report()"
             />
           </div>
-        </div>-->
+        </div>
       </el-card>
 
       <div class="hero-main">
@@ -89,20 +89,20 @@ export default {
       tabPosition: "left",
       arrItem: [],
       ksrq: "",
-      jsrq: ""
+      jsrq: "",
     };
   },
   props: ["patid"],
   watch: {
-    patientId: function(val) {
+    patientId: function (val) {
       this.patientId = val;
-    }
+    },
   },
   created() {
     this.dateGenerate();
   },
   mounted() {
-    //this.init();
+    this.init();
     let da = this.$route.query;
     this.patientId = da.patid;
     this.Report();
@@ -111,16 +111,17 @@ export default {
     Report() {
       $.showLoading();
       let self = this;
-      //let date1 = $("#ksrq").val();
-      //let date2 = $("#jsrq").val();
+      this.ksrq = $("#ksrq").val();
+      this.jsrq = $("#jsrq").val();
 
       let data = {
-        ksrq: this.ksrq,
-        jsrq: this.jsrq
+        ksrq: this.ksrq.replace(/\//g, ""),
+        jsrq: this.jsrq.replace(/\//g, ""),
       };
+      //console.log(data);
       //this.ksrq = data.ksrq;
       //this.jsrq = data.jsrq;
-      this.model.getAppointRoomInfo(data).then(function(res) {
+      this.model.getAppointRoomInfo(data).then(function (res) {
         $.hideLoading();
         if (res.data.code == 0) {
           self.arrItem = res.data.data;
@@ -130,22 +131,26 @@ export default {
       });
     },
     init() {
-      let date = new Date();
-      let date2 = new Date();
-      date.setDate(date.getDate());
-      date2.setDate(date2.getDate());
-      //console.log(date);
-      //console.log(date2);
+      // let date = new Date();
+      // let date2 = new Date();
+      // date.setDate(date.getDate());
+      // date2.setDate(date2.getDate());
+      // console.log(date);
+      // console.log(date2);
+
       $("#ksrq").calendar({
-        dateFormat: "yyyy-mm-dd",
-        value: date,
-        minDate: date
+        dateFormat: "yyyy/mm/dd",
+        value: [this.ksrq],
+        minDate: this.ksrq,
       });
+      $('#ksrq').val(this.ksrq)
+
       $("#jsrq").calendar({
-        dateFormat: "yyyy-mm-dd",
-        value: date2,
-        minDate: date2
+        dateFormat: "yyyy/mm/dd",
+        value: [this.jsrq],
+        minDate: this.jsrq,
       });
+       $('#jsrq').val(this.jsrq)
     },
     toChoseDoc(ele) {
       if (ele.czlx == 0) {
@@ -153,9 +158,9 @@ export default {
           "/selectDepartment?ksdm=" +
             ele.ksdm +
             "&ksrq=" +
-            this.ksrq +
+            this.ksrq.replace(/\//g, "") +
             "&jsrq=" +
-            this.jsrq
+            this.jsrq.replace(/\//g, "")
         );
       }
       if (ele.czlx == 1) {
@@ -163,47 +168,50 @@ export default {
           "/appointDoc?ksdm=" +
             ele.ksdm +
             "&ksrq=" +
-            this.ksrq +
+            this.ksrq.replace(/\//g, "") +
             "&jsrq=" +
-            this.jsrq
+            this.jsrq.replace(/\//g, "")
         );
       }
     },
     dateGenerate() {
       //配置默认预约日期
       let today = new Date();
-      let monthTemp = "";
       today.setTime(today.getTime() + 24 * 60 * 60 * 1000);
       //若到了10月
-      if (today.getMonth() + 1 > 9) {
-        monthTemp = today.getMonth() + 1;
-      } else {
-        monthTemp = "0" + (today.getMonth() + 1);
-      }
       let tomorrow =
         today.getFullYear() +
-        "" +
-        monthTemp +
-        "" +
-        today.getDate();
+        "/" +
+        this.checkMonth(today.getMonth()) +
+        "/" +
+        this.checkDay(today.getDate());
       this.ksrq = tomorrow;
       today.setTime(today.getTime() + 7 * 24 * 60 * 60 * 1000);
       //若到了10月
-      if (today.getMonth() + 1 > 9) {
-        monthTemp = today.getMonth() + 1;
-      } else {
-        monthTemp = "0" + (today.getMonth() + 1);
-      }
       this.jsrq =
         today.getFullYear() +
-        "" +
-        monthTemp +
-        "" +
-        today.getDate();
-      console.log(this.ksrq);
-      console.log(this.jsrq);
-    }
-  }
+        "/" +
+        this.checkMonth(today.getMonth()) +
+        "/" +
+        this.checkDay(today.getDate());
+      //console.log(this.ksrq);
+      //console.log(this.jsrq);
+    },
+    checkMonth(month) {
+      if (month + 1 > 9) {
+        return month + 1;
+      } else {
+        return "0" + (month + 1);
+      }
+    },
+    checkDay(day) {
+      if (day < 10) {
+        return "0" + day;
+      } else {
+        return day;
+      }
+    },
+  },
 };
 </script>
 

@@ -58,17 +58,23 @@
                     style="font-size:15px;margin-top:8px"
                   >证件号:{{patientIdCard}}</h4>
                 </div>
-                <div class="weui-media-box__hd1" @click="showBarcode()">
-                  <img class="weui-media-box__thumb1" src="../../../../static/img/扫码.png" />
-                  <h4
+                <div class="weui-media-box__hd1">
+                  <!-- <h4
                     style="font-size: 8px;position: absolute;margin-left: -17%;margin-top: 3%;"
-                  >出示病历码</h4>
+                  >出示病历码</h4>-->
+                  <img class="weui-media-box__thumb1" src="../../../../static/images/医院-2.png" />
                 </div>
               </a>
 
               <div style="height: 50px;text-align: center;">
                 <el-button id="zf" @click="chooseWay('zf')">自费</el-button>
                 <el-button id="cb" @click="chooseWay('cb')">参保</el-button>
+                <el-button id="showCode" icon="el-icon-position" type="primary" @click="showBarcode()">出示病历码</el-button>
+                <!-- <img
+                  class="weui-media-box__thumb1"
+                  src="../../../../static/img/扫码.png"
+                  @click="showBarcode()"
+                /> -->
               </div>
             </div>
           </div>
@@ -221,7 +227,7 @@
       <div style="height: 4px;width: 100%;margin-top: 0px;background-color: #eff7fd;"></div>
     </div>
     <div>
-      <el-dialog title="病历号条纹码" :visible.sync="centerDialogVisible" width="80%" center>
+      <el-dialog title="病历号条纹码" v-if="centerDialogVisible" :visible.sync="centerDialogVisible" width="80%" center>
         <div style="margin:0 auto;text-align:center;">
           <barcode :barCodeBlh="blh"></barcode>
         </div>
