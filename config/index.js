@@ -61,7 +61,7 @@ module.exports = {
     /**
      * Source Maps
      */
-    productionSourceMap: false,   // 改成false运行时不会出现map调试文件。;是否生成生产环境的sourcmap，sourcmap是用来debug编译后文件的，通过映射到编译前文件来实现
+    productionSourceMap: true,   // 改成false运行时不会出现map调试文件。;是否生成生产环境的sourcmap，sourcmap是用来debug编译后文件的，通过映射到编译前文件来实现
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

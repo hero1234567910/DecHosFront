@@ -1,5 +1,6 @@
 <template>
-  <div class="doctorLogin">
+<div style="position: absolute;width: 100%;height: 100%;background-size: 100% 100%;background: url('/2ysechos/static/img/doctor.png') no-repeat;">
+<div class="doctorLogin" style="height:417px;">
     <el-form
       :model="loginForm"
       :rules="fieldRules"
@@ -39,6 +40,8 @@
     </el-form>
     <!--@click.native.prevent="Login"-->
   </div>
+</div>
+  
 </template>
 <script>
 import model from "./model.js";
@@ -215,11 +218,12 @@ export default {
 		width: 100% !important;
 	}*/
 .login-container {
+  margin: calc((100vh - 420px)/2) auto;
   -webkit-border-radius: 5px;
   border-radius: 5px;
   -moz-border-radius: 5px;
   background-clip: padding-box;
-  margin: 180px auto;
+  /* margin: 180px auto; */
   width: 70%;
   padding: 35px 35px 15px 35px;
   background: #fff;

@@ -36,6 +36,12 @@
         </div>
         <p class="weui-grid__label">院内通讯录</p>
       </a>
+      <a href="javascript:;" class="weui-grid js_grid" @click="toDisease()">
+        <div class="weui-grid__icon">
+          <img src="../../../../static/img/咨询图标.png" alt />
+        </div>
+        <p class="weui-grid__label">填报信息查看</p>
+      </a>
       <!--<a href="javascript:;" class="weui-grid js_grid" @click="showImg()">
         <div class="weui-grid__icon">
           <img src="../../../../static/images/二维码.png" alt />
@@ -286,6 +292,13 @@ export default {
     },
     toPersonCenter(){
       this.$router.push("/personCenter");
+    },
+    toDisease() {
+      if (process.env.NODE_ENV == "dev") {
+        window.location = "../../diseaseManage.html#/infoList";
+      } else if (process.env.NODE_ENV == "production") {
+        window.location = "../../2ysechos/diseaseManage.html#/infoList";
+      }
     },
     countSats() {
       let self = this;

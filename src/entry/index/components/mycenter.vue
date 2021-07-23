@@ -465,6 +465,11 @@ export default {
             let outArray = res.data.data;
             let arr = [];
             for (var i = 0; i < outArray.length; i++) {
+            	
+//          	if(outArray[i].ybdm == "501"){
+//          		continue;
+//          	}
+            	
               if (outArray[i].ybdm == "101") {
                 self.zfblh = outArray[i].blh;
                 let d = {

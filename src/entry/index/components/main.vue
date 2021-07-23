@@ -113,7 +113,7 @@ export default {
         to == null ||
         to == "" ||
         to == "null" ||
-        this.getDAesString(to) == "null"
+        this.getDAesString(to) == "null" || this.getDAesString(to) == 'undefined'
       ) {
         this.model.getUserInfo(data).then(function(res) {
           if (res.data.code == "0") {
@@ -184,7 +184,6 @@ export default {
       	}else{
       		data.code = code
       	}
-        
         this.model.getUserByToken(data).then(function(res) {
           if (res.data.code == "0") {
             localStorage.setItem("sec_openId", res.data.data.openid);
@@ -238,7 +237,8 @@ export default {
                 $.toptip(res.data.msg, "error");
               }
             });
-          } else {
+          } 
+          else {
             $.toptip(res.data.msg, "error");
           }
         });

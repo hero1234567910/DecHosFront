@@ -98,6 +98,12 @@
         </div>
         <p class="weui-grid__label">门诊功能介绍</p>
       </a>
+      <a href="javascript:;" class="weui-grid js_grid" @click="toDisease()">
+        <div class="weui-grid__icon">
+          <img src="../../../../static/img/咨询图标.png" alt />
+        </div>
+        <p class="weui-grid__label">慢病管理</p>
+      </a>
       <el-dialog title="通告详情" :visible.sync="isShow">
         <commonSelect v-bind:mzData="mzData" @handleCall="handleCall"></commonSelect>
       </el-dialog>
@@ -253,6 +259,8 @@ export default {
             // $.toptip(res.data.msg, "error");
           }
         }
+      }).catch(err => {
+        $.hideLoading();
       });
     },
 
@@ -445,6 +453,13 @@ export default {
         window.location = "../../introduceProfessor.html";
       } else if (process.env.NODE_ENV == "production") {
         window.location = "../../2ysechos/introduceProfessor.html";
+      }
+    },
+    toDisease() {
+      if (process.env.NODE_ENV == "dev") {
+        window.location = "../../diseaseManage.html";
+      } else if (process.env.NODE_ENV == "production") {
+        window.location = "../../2ysechos/diseaseManage.html";
       }
     }
   }
