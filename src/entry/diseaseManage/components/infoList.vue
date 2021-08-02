@@ -10,6 +10,10 @@
             />
           </div>
           <span style="font-weight: 700">填报信息查看</span>
+
+           <div style="float:right;position: relative;top: -10px;">
+            <van-button icon="plus" type="primary" @click="exportThis()">点我导出</van-button>
+          </div>
         </div>
         <div>
           <van-search
@@ -72,6 +76,7 @@ import { List } from "vant";
 import { Cell, CellGroup } from "vant";
 import { PullRefresh } from "vant";
 import { Search } from "vant";
+import evn from '../utils/evn.js'
 
 Vue.use(Search);
 Vue.use(PullRefresh);
@@ -113,6 +118,12 @@ export default {
       //   // 将 loading 设置为 true，表示处于加载状态
       //   this.loading = true;
       //   this.onLoad();
+    },
+    exportThis(){
+      location.href=evn.SEC_HOSAPI+'/sys/sechosHealthy/exportInfos'
+      //   location.href()
+      //   console.log(res)
+      // })
     },
     onRefresh() {
       // 清空列表数据
